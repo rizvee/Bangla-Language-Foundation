@@ -1,0 +1,90 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/dialogue_act.schema.json",
+  "title": "BLFDialogueAct",
+  "description": "Schema for pragmatic dialogue acts, speech acts, and conversational intents in BLF.",
+  "type": "object",
+  "required": [
+    "act_id",
+    "name",
+    "communicative_intent",
+    "supporting_claim_ids",
+    "typical_constructions",
+    "register_applicability",
+    "honorificity_constraints",
+    "surface_markers",
+    "status"
+  ],
+  "properties": {
+    "act_id": {
+      "type": "string",
+      "pattern": "^DA-[A-Z0-9_-]+$",
+      "description": "Unique dialogue act identifier (e.g. DA-STATEMENT, DA-REQUEST-HONORIFIC)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Descriptive title."
+    },
+    "communicative_intent": {
+      "type": "string",
+      "enum": [
+        "STATEMENT",
+        "INFORMATION_QUESTION",
+        "YES_NO_QUESTION",
+        "REQUEST",
+        "COMMAND",
+        "PROHIBITION",
+        "OFFER",
+        "SUGGESTION",
+        "PERMISSION_REQUEST",
+        "THANKING",
+        "APOLOGY",
+        "GREETING",
+        "FAREWELL",
+        "CONFIRMATION",
+        "DISAGREEMENT",
+        "CLARIFICATION",
+        "WARNING"
+      ],
+      "description": "Core communicative function."
+    },
+    "supporting_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "Supporting atomic claim IDs."
+    },
+    "typical_constructions": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CONST-[A-Z0-9_-]+$"},
+      "description": "Typical syntactic construction IDs used to realize this dialogue act."
+    },
+    "register_applicability": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["FORMAL_STANDARD", "COLLOQUIAL_STANDARD", "FAMILIAR", "INTIMATE", "CROSS_REGISTER"]
+      },
+      "description": "Applicable social registers."
+    },
+    "honorificity_constraints": {
+      "type": "object",
+      "description": "Allowed/required addressee tiers (HON, FAM, INT)."
+    },
+    "surface_markers": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Associated pragmatic particles, intonation contours, or lexical markers."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED"],
+      "description": "Dialogue act lifecycle status."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Pragmatic or cultural context notes."
+    }
+  },
+  "additionalProperties": false
+}
