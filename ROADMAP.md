@@ -41,12 +41,13 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 
 ## Phase Details
 
-### Phase 0: Research Source Landscape & Gap Analysis `[In Progress]`
+### Phase 0: Research Source Landscape & Gap Analysis `[Completed]`
 - [x] Establish research operating system, schemas, and validation suite.
-- [ ] Conduct comprehensive literature survey of Tier A (Bangla Academy) and Tier B (Academic Grammars) references.
-- [ ] Catalog existing open Bangla NLP corpora and identify domain/syntactic representation gaps.
+- [x] Conduct comprehensive literature survey of Tier A (Bangla Academy) and Tier B (Academic Grammars) references.
+- [x] Catalog existing open Bangla NLP corpora and identify domain/syntactic representation gaps.
+- [x] Produce machine-readable evidence matrix (`research/dataset-landscape/evidence-matrix.json`) and 10-dimensional gap analysis.
 
-### Phase 1: Source Registry & Linguistic Knowledge Map `[Planned]`
+### Phase 1: Source Registry & Linguistic Knowledge Map `[Next Active Phase]`
 - [ ] Expand `sources/registry/sources.json` to 25+ verified linguistic references.
 - [ ] Compile systematic rules for constituent ordering, pro-drop, compound verbs, and postpositional clitics.
 - [ ] Define cross-dialectal phonetic and morphosyntactic mapping rules for major regional varieties (Sylheti, Chatgaya, Noakhailla, Rangpuri).

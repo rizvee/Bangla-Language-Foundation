@@ -9,17 +9,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Planned
-- Systematic literature survey across Tier A (Bangla Academy) and Tier B descriptive linguistics.
-- Expansion of `sources/registry/sources.json` to 25+ verified references.
-- Initial formalization of core semantic frames for everyday conversational realizations.
+### Added - Phase 0 Research Source Landscape & Gap Analysis
+- **Machine-Readable Evidence Matrix**: `research/dataset-landscape/evidence-matrix.json` covering 15 verified primary resources across Tier A, B, and D with fine-grained modality and licensing metadata.
+- **Dataset Landscape Review**: `research/dataset-landscape/landscape.md` surveying existing monolingual, syntactic, parallel MT, speech, transliteration, and code-mixed corpora.
+- **Bangla Academy Resource Map**: `research/literature-review/bangla-academy-map.md` cataloging official national grammar, orthography, dialect dictionary, and lexicographical publications.
+- **Descriptive Linguistics Survey**: `research/literature-review/linguistic-sources.md` formalizing syntactic, morphological, and pro-drop models from Chatterji, Azad, Thompson, and Sarkar.
+- **Multi-Dimensional Gap Analysis**: `research/gap-analysis/phase-0-gap-analysis.md` assessing 10 empirical gaps across semantics, sentence families, conversation, Banglish, and regional syntax.
+- **Phase 0 Research Findings**: `research/findings/phase-0-findings.md` synthesizing discoveries, adversarial review results, and recommendations for Phase 1.
+- **Expanded Source Registry**: `sources/registry/sources.json` expanded to 15 verified primary sources with exact citations and checksums.
 
 ---
 
 ## [0.1.0] - 2026-08-27
 
 ### Added
-- **Repository Architecture**: Initial project directory layout spanning `data/`, `ontology/`, `schemas/`, `sources/`, `research/`, `scripts/`, `src/`, `tests/`, and `docs/`.
+- **Repository Architecture & Tooling**: Initial project directory layout spanning `data/`, `ontology/`, `schemas/`, `sources/`, `research/`, `scripts/`, `src/`, `tests/`, and `docs/` (Software and research scaffolding; no public dataset release).
 - **JSON Schemas (v0.1 Draft)**: Draft JSON Schema specifications for `utterance`, `sentence_family`, `source`, and `synthetic_provenance`.
 - **Python Core Library (`src/blf/`)**:
   - `blf.linguistics.normalizer`: Bengali Unicode NFC normalization, Dari mapping, and character range validation.

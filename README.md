@@ -112,6 +112,6 @@ Contributions from linguists, NLP researchers, native speakers, and engineers ar
 
 ## License & Citation
 
-- **Code & Schemas**: Distributed under the MIT License. See [LICENSE](LICENSE) or documentation for details.
-- **Dataset Artifacts**: Specific dataset releases will be published with explicit open research licenses (e.g., CC-BY-4.0).
-- **Citation**: If you use BLF in your research, please refer to [CITATION.cff](CITATION.cff).
+- **Repository Code & Tooling**: Software tools and pipeline scripts are provided under the MIT License. See [LICENSE](LICENSE).
+- **Dataset Artifacts**: Dataset licensing is currently **undecided and pending source-license and redistribution audits**. No public dataset release has been made yet.
+- **Citation**: For citing this research software and repository scaffolding, refer to [CITATION.cff](CITATION.cff).

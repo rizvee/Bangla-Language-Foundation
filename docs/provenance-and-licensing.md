@@ -23,6 +23,7 @@ Every entry in `sources/registry/sources.json` must provide:
 
 ---
 
-## 3. Data Transformation & Derivative Work Rights
-- Feature extraction (such as extracting grammar rules, word frequencies, or syntactic templates) is legally distinct from verbatim copyright reproduction.
-- All derived datasets distributed under BLF will be released under open, permissive research licenses (e.g., CC-BY-4.0 or OpenRAIL) with clear downstream usage guidelines.
+## 3. Data Transformation & Dataset Licensing Status
+- **Repository Code & Tooling**: Software tools and pipeline scripts in this repository are provided under the MIT License.
+- **Dataset Artifacts**: Dataset licensing is currently **UNDECIDED / PENDING SOURCE-LICENSE AND REDISTRIBUTION AUDIT**. No public dataset license (e.g., CC-BY-4.0) has been finalized, and no dataset release has yet been published.
+- **Third-Party Data**: Any ingested third-party reference data strictly retains its original upstream license and redistribution restrictions. Feature extraction (such as extracting abstract grammar rules, phonological patterns, or POS paradigms) is conducted in compliance with applicable fair-use and copyright laws without bulk reproduction of copyrighted prose.
