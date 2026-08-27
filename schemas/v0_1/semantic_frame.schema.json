@@ -1,0 +1,146 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/semantic_frame.schema.json",
+  "title": "BLFSemanticFrame",
+  "description": "Schema for semantic frames, thematic roles, and lexical realization in BLF.",
+  "type": "object",
+  "required": [
+    "frame_id",
+    "frame_name",
+    "frame_definition",
+    "frame_type",
+    "core_roles",
+    "compatible_constructions",
+    "compatible_predicates",
+    "status"
+  ],
+  "properties": {
+    "frame_id": {
+      "type": "string",
+      "pattern": "^FRAME-[A-Z0-9_-]+$",
+      "description": "Unique semantic frame identifier (e.g. FRAME-MOTION-TRANSLOCATION)."
+    },
+    "frame_name": {
+      "type": "string",
+      "description": "Human-readable descriptive frame name."
+    },
+    "frame_definition": {
+      "type": "string",
+      "description": "Semantic definition and event structure."
+    },
+    "frame_type": {
+      "type": "string",
+      "enum": [
+        "CORE_COMMUNICATION",
+        "EVERYDAY_EVENT",
+        "STATIVE_RELATIONAL",
+        "COGNITIVE_EXPERIENCE",
+        "PHYSICAL_ACTION",
+        "SOCIAL_INTERACTION"
+      ],
+      "description": "Functional domain classification."
+    },
+    "core_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "AGENT",
+          "EXPERIENCER",
+          "PATIENT",
+          "THEME",
+          "RECIPIENT",
+          "BENEFICIARY",
+          "SOURCE",
+          "GOAL",
+          "LOCATION",
+          "TIME",
+          "MANNER",
+          "INSTRUMENT",
+          "CAUSE",
+          "STIMULUS",
+          "CONTENT",
+          "ATTRIBUTE",
+          "POSSESSOR"
+        ]
+      },
+      "minItems": 1,
+      "description": "Mandatory participant roles for this event."
+    },
+    "optional_roles": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "AGENT",
+          "EXPERIENCER",
+          "PATIENT",
+          "THEME",
+          "RECIPIENT",
+          "BENEFICIARY",
+          "SOURCE",
+          "GOAL",
+          "LOCATION",
+          "TIME",
+          "MANNER",
+          "INSTRUMENT",
+          "CAUSE",
+          "STIMULUS",
+          "CONTENT",
+          "ATTRIBUTE",
+          "POSSESSOR"
+        ]
+      },
+      "description": "Optional circumstantial roles."
+    },
+    "selectional_constraints": {
+      "type": "object",
+      "description": "Semantic constraints on arguments (e.g. [+Animate], [+Human], [+Concrete])."
+    },
+    "compatible_constructions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^CONST-[A-Z0-9_-]+$"
+      },
+      "minItems": 1,
+      "description": "Compatible syntactic construction IDs."
+    },
+    "compatible_predicates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Bangla verb roots, lemmas, or light verb combinations evoking this frame."
+    },
+    "frame_relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["relation_type", "target_frame_id"],
+        "properties": {
+          "relation_type": {
+            "type": "string",
+            "enum": ["INHERITS", "SUBFRAME_OF", "CAUSES", "PRECEDES", "OPPOSES", "RELATED_TO"]
+          },
+          "target_frame_id": {
+            "type": "string",
+            "pattern": "^FRAME-[A-Z0-9_-]+$"
+          }
+        }
+      },
+      "description": "Ontological relations to other frames."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED"],
+      "description": "Frame lifecycle status."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Linguistic notes."
+    }
+  },
+  "additionalProperties": false
+}

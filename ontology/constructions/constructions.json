@@ -218,6 +218,52 @@
       "notes": "Honorific directive with overt or pro-dropped 'Apni'."
     },
     {
+      "construction_id": "CONST-IMPERATIVE-FAMILIAR",
+      "name": "Familiar Imperative Construction",
+      "construction_type": "IMPERATIVE_DIRECT",
+      "supporting_claim_ids": ["CLM-SYN-IMPERATIVE-35", "CLM-MSYN-PRON-HON-06"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "semantic_function": "Issues an informal directive or request to a familiar addressee (Tumi).",
+      "syntactic_pattern": "([Addressee:'তুমি']) ([Object:NP]) [Verb:VP[Suffix='-o']] !",
+      "required_roles": ["AGENT"],
+      "optional_roles": ["PATIENT", "RECIPIENT"],
+      "constituent_constraints": {
+        "Verb": "Obligatory imperative suffix '-o'"
+      },
+      "word_order": "SOV",
+      "register": "colloquial_standard",
+      "language_variety": "BDSB_STANDARD",
+      "polarity": "AFFIRMATIVE",
+      "productivity": "FULLY_PRODUCTIVE",
+      "exceptions": [],
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Familiar directive with overt or pro-dropped 'Tumi'."
+    },
+    {
+      "construction_id": "CONST-IMPERATIVE-INTIMATE",
+      "name": "Intimate Imperative Construction",
+      "construction_type": "IMPERATIVE_DIRECT",
+      "supporting_claim_ids": ["CLM-SYN-IMPERATIVE-35", "CLM-MSYN-PRON-HON-06"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "semantic_function": "Issues a direct command to an intimate addressee (Tui).",
+      "syntactic_pattern": "([Addressee:'তুই']) ([Object:NP]) [Verb:VP[Suffix='-Ø'|'-is']] !",
+      "required_roles": ["AGENT"],
+      "optional_roles": ["PATIENT", "RECIPIENT"],
+      "constituent_constraints": {
+        "Verb": "Bare root or intimate suffix '-is'"
+      },
+      "word_order": "SOV",
+      "register": "colloquial_standard",
+      "language_variety": "BDSB_STANDARD",
+      "polarity": "AFFIRMATIVE",
+      "productivity": "FULLY_PRODUCTIVE",
+      "exceptions": [],
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Intimate directive with overt or pro-dropped 'Tui'."
+    },
+    {
       "construction_id": "CONST-PROHIBITIVE-NEGATIVE",
       "name": "Negative Imperative (Prohibitive) Construction",
       "construction_type": "PROHIBITIVE_NEGATIVE",
