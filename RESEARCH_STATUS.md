@@ -5,8 +5,8 @@ Last Updated: 2026-08-28
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 1B — Morphosyntactic & Inflectional Paradigm Engine (Complete)
-- **Milestone State**: Phase 1B Operational Morphology Engine & Verified Paradigm Catalogs
+- **Current Phase**: Phase 2A — Semantic Frame Core & Constrained Realization (Operational)
+- **Milestone State**: Phase 1A-1D & 2A Fully Operational Multi-Layer Linguistic OS
 - **Primary Branch**: `main`
 
 ---
@@ -15,7 +15,7 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 9 schemas (`v0.1-draft-1.1`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm |
+| **Schemas Authoring** | 13 schemas (`v0.1-draft-2.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm, Linguistic Construction, Complex Predicate, Dialogue Act, Semantic Frame |
 | **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
@@ -24,11 +24,14 @@ Last Updated: 2026-08-28
 | **Declarative Linguistic Rules** | 20 rules | 100% claim-supported (`ontology/rules/pilot_rules.json`) |
 | **Provenance-Backed Examples** | 22 examples | Source-cited and verified (`ontology/examples/pilot_examples.json`) |
 | **Inflectional Paradigms** | 13 paradigms | Nouns (4), Pronouns (5), Verbs (4) (`ontology/paradigms/`) |
-| **Morphology Engine Coverage** | 100% Deterministic | Nominal Declension, Pronominal Matrix, Verbal Conjugator (`src/blf/linguistics/morphology/`) |
-| **Terminology Mappings** | 14 mappings | Aligned across 5 frameworks (`terminology-crosswalk.json`) |
-| **Framework Conflict Relations** | 3 relations | Resolved with canonical BLF modeling (`conflicts.json`) |
-| **Test Fixtures** | 2 fixtures | 1 Gold BDSB Canonical, 1 Synthetic Sylheti Variant |
-| **Automated Tests** | 44 unit tests | 100% passing across normalizer, schemas, sources, knowledge layer, morphology engine, docs, anti-slop |
+| **Syntactic Constructions** | 22 constructions | SOV, SV, Ditransitive, Copular, Existential, Polar Ki, Imperatives (`ontology/constructions/`) |
+| **Complex Predicates** | 8 predicates | Telic `phela`, Benefactive `neoa`/`dewa`, Inceptive `utha`, LVC `kora`/`howa` (`ontology/complex_predicates/`) |
+| **Pragmatic Dialogue Acts** | 17 dialogue acts | Speech acts, honorificity constraints, clitics (`ontology/pragmatics/`) |
+| **Pragmatic Particles** | 7 particles | Focus clitics (`-i`, `-o`), discourse markers (`to`, `na`, `je`, `ba`, `ki`) |
+| **Semantic Frames** | 24 core frames | Motion, Ingestion, Transfer, Cognition, Emotion, Activity (`ontology/frames/`) |
+| **Diagnostic Sentence Families** | 10 families (~50 realizations) | Minimal pairs, Invariant validation (`data/validation/sentence_families_diagnostic.json`) |
+| **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
+| **Automated Tests** | 68 unit tests | 100% passing across normalizer, schemas, sources, knowledge, morphology, constructions, frames, realization, adversarial invariants |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
 

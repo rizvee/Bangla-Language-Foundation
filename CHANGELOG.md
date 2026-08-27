@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A Semantic Frame Core & Constrained Realization Prototype
+- **Semantic Frame Schema**: Created `schemas/v0_1/semantic_frame.schema.json` formalizing 24 core everyday communicative frames, standardized thematic role sets, selectional restrictions, and predicate linkages.
+- **Core Semantic Frames Catalog**: Authored `ontology/frames/core_frames.json` covering Motion, Ingestion, Commerce, Transfer, Cognition, Perception, Emotion, Work, and Stative domains.
+- **Sentence Family Realization Engine**: Implemented `ConstrainedRealizer` in `src/blf/generation/realizer.py` enforcing DOM, agreement, and morphotactic invariants.
+- **Diagnostic Sentence Families**: Authored `data/validation/sentence_families_diagnostic.json` (10 families, ~50 realizations) testing minimal pairs across questions, negation, honorificity, and vector predicates.
+- **Cross-Layer Provenance Integrity Validator**: Implemented `scripts/validate_provenance_graph.py` verifying 100% complete derivation backward tracing with 0 broken links.
+- **Master Validation Suite**: Implemented `scripts/validate_all.py` executing 9 authoritative project verification suites.
+- **Adversarial Invariant Test Suite**: Added `tests/test_adversarial_invariants.py` asserting strict rejection of illegal affix stacking, stative-telic vectors, and honorific mismatches.
+
+### Added - Phase 1D Conversational Register, Social Deixis & Pragmatic Layer
+- **Dialogue Act Schema**: Created `schemas/v0_1/dialogue_act.schema.json` formalizing 17 communicative intents.
+- **Pragmatics & Social Deixis Engine**: Implemented `PragmaticsEngine` in `src/blf/linguistics/pragmatics.py` providing 3-tier honorific transformations (`Apni`/`Tumi`/`Tui`), particle semantics, and `কি` vs `কী` disambiguation.
+- **Pragmatic Catalogs**: Authored `ontology/pragmatics/dialogue_acts.json` and `pragmatic_particles.json`.
+- **Linguistic Specification**: Authored `research/linguistic-knowledge/conversational-pragmatics.md`.
+
+### Added - Phase 1C Construction Grammar & Complex Predicates
+- **Construction & Complex Predicate Schemas**: Created `schemas/v0_1/linguistic_construction.schema.json` and `schemas/v0_1/complex_predicate.schema.json`.
+- **Construction Catalog**: Authored `ontology/constructions/constructions.json` (22 verified clause constructions across Transitive, Intransitive, Ditransitive, Copular, Existential, Polar Ki, Imperatives, Correlatives).
+- **Complex Predicate Engine**: Implemented `ComplexPredicateEngine` in `src/blf/linguistics/complex_predicates.py` validating selectional restrictions and synthesizing compound/vector verbs and LVCs.
+- **Linguistic Specifications**: Authored `research/linguistic-knowledge/construction-catalog.md` and `complex-predicates.md`.
+
 ### Added - Phase 1B Morphosyntactic & Inflectional Paradigm Engine
 - **Inflectional Paradigm Schema**: Created `schemas/v0_1/inflectional_paradigm.schema.json` supporting multidimensional morphological matrices (noun declension, pronominal paradigms, verbal conjugation) indexed by grammatical dimensions.
 - **Nominal Declension Engine**: Implemented `NominalDeclensionEngine` in `src/blf/linguistics/morphology/nominal_declension.py` handling case allomorphy (NOM, ACC `-ke`/`-Ø`, GEN `-r`/`-yer`/`-er`, LOC `-e`/`-te`/`-y`/`-ye`), classifier-definiteness suffix stacking order (`[NounRoot] + [Classifier] + [Plural] + [Case]`), and human vs inanimate animacy splits.

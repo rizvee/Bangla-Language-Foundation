@@ -7,16 +7,22 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 ## Phase Overview & Current Status
 
 ```
-[Phase 0: Source Landscape & Gap Analysis]  <-- CURRENT ACTIVE PHASE
+[Phase 0: Source Landscape & Evidence Baseline]  [COMPLETED / FROZEN]
        │
        ▼
-[Phase 1: Source Registry & Linguistic Knowledge Map]
+[Phase 1: Linguistic Knowledge, Paradigms & Constructions] [COMPLETED]
+  ├─ Phase 1A: Evidence-to-Knowledge Layer (Completed)
+  ├─ Phase 1B: Morphosyntactic Paradigm Engine (Completed)
+  ├─ Phase 1C: Construction Grammar & Complex Predicates (Completed)
+  └─ Phase 1D: Conversational Register, Deixis & Pragmatics (Completed)
        │
        ▼
-[Phase 2: Formal Ontology & Schemas v0.1]
+[Phase 2: Formal Semantic Frames & Constrained Realization] [ACTIVE / PHASE 2A COMPLETE]
+  ├─ Phase 2A: Semantic Frame Core & Realization Prototype (Completed)
+  └─ Phase 2B: Full Ontology Graph & Cross-Framework Mapping (In Progress)
        │
        ▼
-[Phase 3: Gold Seed Dataset (Linguistic Primitives)]
+[Phase 3: Gold Seed Dataset (Linguistic Primitives)] [PLANNED]
        │
        ▼
 [Phase 4: Collection & Normalization Pipelines]
@@ -46,16 +52,19 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 - [x] Conduct comprehensive literature survey of Tier A (Bangla Academy) and Tier B (Academic Grammars) references.
 - [x] Catalog existing open Bangla NLP corpora and identify domain/syntactic representation gaps.
 - [x] Produce machine-readable evidence matrix (`research/dataset-landscape/evidence-matrix.json`) and 10-dimensional gap analysis.
+- [x] Freeze verified evidence baseline with cryptographic SHA-256 manifest (`research/phase-0-manifest.json`).
 
-### Phase 1: Source Registry & Linguistic Knowledge Map `[Next Active Phase]`
-- [ ] Expand `sources/registry/sources.json` to 25+ verified linguistic references.
-- [ ] Compile systematic rules for constituent ordering, pro-drop, compound verbs, and postpositional clitics.
-- [ ] Define cross-dialectal phonetic and morphosyntactic mapping rules for major regional varieties (Sylheti, Chatgaya, Noakhailla, Rangpuri).
+### Phase 1: Linguistic Knowledge, Paradigms & Constructions `[Completed]`
+- [x] **Phase 1A**: Operationalize atomic linguistic claims (36), declarative rules (20), examples (22), and terminology crosswalk.
+- [x] **Phase 1B**: Implement deterministic morphosyntactic paradigm engine (nominal allomorphy, pronominal honorific matrices, verbal conjugator).
+- [x] **Phase 1C**: Author construction grammar catalog (22 constructions) and complex predicate engine (8 vector verbs & LVCs).
+- [x] **Phase 1D**: Formalize 3-tier social deixis (`আপনি`/`তুমি`/`তুই`), 17 dialogue acts, and particle semantics.
 
-### Phase 2: Formal Ontology & Schemas v0.1 `[Planned]`
-- [ ] Author formal FrameNet-style semantic frame catalog in `ontology/semantic-frames/`.
-- [ ] Finalize production-ready JSON schemas for lexical, morphological, constructional, and dialogue entities.
-- [ ] Implement automated schema migration and validation tooling.
+### Phase 2: Formal Ontology & Constrained Realization `[Phase 2A Completed]`
+- [x] **Phase 2A**: Author 24 core semantic frames (`ontology/frames/core_frames.json`) and prototype constrained realizer (`src/blf/generation/realizer.py`).
+- [x] Generate diagnostic minimal-pair sentence families (`data/validation/sentence_families_diagnostic.json`).
+- [x] Establish 100% complete end-to-end derivation provenance backward tracing.
+- [ ] **Phase 2B**: Expand ontology graph and external UD/WordNet alignments.
 
 ### Phase 3: Gold Seed Dataset `[Planned]`
 - [ ] Construct initial seed set of 1,000+ hand-curated canonical utterances across core everyday semantic frames.
