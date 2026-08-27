@@ -1,0 +1,121 @@
+{
+  "version": "1.0.0",
+  "total_paradigms": 5,
+  "paradigms": [
+    {
+      "paradigm_id": "PARADIGM-PRON-1P",
+      "lemma": "আমি",
+      "pos": "PRONOUN",
+      "stem_type": "personal_1st_person",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "dimensions": ["number", "case"],
+      "cells": {
+        "SG.NOM": "আমি",
+        "SG.ACC": "আমাকে",
+        "SG.GEN": "আমার",
+        "SG.LOC": "আমাতে",
+        "PL.NOM": "আমরা",
+        "PL.ACC": "আমাদেরকে",
+        "PL.GEN": "আমাদের",
+        "PL.LOC": "আমাদেরতে"
+      },
+      "supporting_claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "status": "ACTIVE",
+      "notes": "First person personal pronoun paradigm."
+    },
+    {
+      "paradigm_id": "PARADIGM-PRON-2P-HON",
+      "lemma": "আপনি",
+      "pos": "PRONOUN",
+      "stem_type": "personal_2nd_person_honorific",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "dimensions": ["number", "case"],
+      "cells": {
+        "SG.NOM": "আপনি",
+        "SG.ACC": "আপনাকে",
+        "SG.GEN": "আপনার",
+        "SG.LOC": "আপনাতে",
+        "PL.NOM": "আপনারা",
+        "PL.ACC": "আপনাদেরকে",
+        "PL.GEN": "আপনাদের",
+        "PL.LOC": "আপনাদেরতে"
+      },
+      "supporting_claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "status": "ACTIVE",
+      "notes": "Second person honorific personal pronoun paradigm."
+    },
+    {
+      "paradigm_id": "PARADIGM-PRON-2P-FAM",
+      "lemma": "তুমি",
+      "pos": "PRONOUN",
+      "stem_type": "personal_2nd_person_familiar",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "dimensions": ["number", "case"],
+      "cells": {
+        "SG.NOM": "তুমি",
+        "SG.ACC": "তোমাকে",
+        "SG.GEN": "তোমার",
+        "SG.LOC": "তোমাতে",
+        "PL.NOM": "তোমরা",
+        "PL.ACC": "তোমাদেরকে",
+        "PL.GEN": "তোমাদের",
+        "PL.LOC": "তোমাদেরতে"
+      },
+      "supporting_claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "status": "ACTIVE",
+      "notes": "Second person familiar personal pronoun paradigm."
+    },
+    {
+      "paradigm_id": "PARADIGM-PRON-3P-DIST-HON",
+      "lemma": "তিনি",
+      "pos": "PRONOUN",
+      "stem_type": "personal_3rd_person_distal_honorific",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "dimensions": ["number", "case"],
+      "cells": {
+        "SG.NOM": "তিনি",
+        "SG.ACC": "তাঁকে",
+        "SG.GEN": "তাঁর",
+        "SG.LOC": "তাঁতে",
+        "PL.NOM": "তাঁরা",
+        "PL.ACC": "তাঁদেরকে",
+        "PL.GEN": "তাঁদের",
+        "PL.LOC": "তাঁদেরতে"
+      },
+      "supporting_claim_ids": ["CLM-MSYN-PRON-HON-06", "CLM-MSYN-PRON-DEIXIS-36"],
+      "supporting_rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "status": "ACTIVE",
+      "notes": "Third person distal honorific pronoun with nasalization graph."
+    },
+    {
+      "paradigm_id": "PARADIGM-PRON-INTERROGATIVE",
+      "lemma": "কে",
+      "pos": "PRONOUN",
+      "stem_type": "interrogative_human",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "dimensions": ["number", "case"],
+      "cells": {
+        "SG.NOM": "কে",
+        "SG.ACC": "কাকে",
+        "SG.GEN": "কার",
+        "SG.LOC": "কাতে",
+        "PL.NOM": "কারা",
+        "PL.ACC": "কাদেরকে",
+        "PL.GEN": "কাদের",
+        "PL.LOC": "কাদেরতে"
+      },
+      "supporting_claim_ids": ["CLM-SYN-WH-INSITU-31"],
+      "supporting_rule_ids": [],
+      "status": "ACTIVE",
+      "notes": "Human interrogative pronoun paradigm."
+    }
+  ]
+}

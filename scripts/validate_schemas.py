@@ -66,6 +66,9 @@ def main():
         (root_dir / "ontology" / "claims" / "pilot_claims.json", "claims", schemas_dir / "linguistic_claim.schema.json"),
         (root_dir / "ontology" / "rules" / "pilot_rules.json", "rules", schemas_dir / "linguistic_rule.schema.json"),
         (root_dir / "ontology" / "examples" / "pilot_examples.json", "examples", schemas_dir / "linguistic_example.schema.json"),
+        (root_dir / "ontology" / "paradigms" / "nominal_paradigms.json", "paradigms", schemas_dir / "inflectional_paradigm.schema.json"),
+        (root_dir / "ontology" / "paradigms" / "pronominal_paradigms.json", "paradigms", schemas_dir / "inflectional_paradigm.schema.json"),
+        (root_dir / "ontology" / "paradigms" / "verbal_paradigms.json", "paradigms", schemas_dir / "inflectional_paradigm.schema.json"),
     ]
 
     print("\nValidating ontology instances against JSON schemas...")

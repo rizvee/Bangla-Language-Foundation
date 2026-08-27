@@ -5,8 +5,8 @@ Last Updated: 2026-08-28
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 1A — Evidence-to-Linguistic-Knowledge System (Complete)
-- **Milestone State**: Phase 1A Operational Linguistic Knowledge Layer & Frozen Phase 0 Baseline
+- **Current Phase**: Phase 1B — Morphosyntactic & Inflectional Paradigm Engine (Complete)
+- **Milestone State**: Phase 1B Operational Morphology Engine & Verified Paradigm Catalogs
 - **Primary Branch**: `main`
 
 ---
@@ -15,7 +15,7 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 8 schemas (`v0.1-draft-1.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example |
+| **Schemas Authoring** | 9 schemas (`v0.1-draft-1.1`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm |
 | **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
@@ -23,10 +23,12 @@ Last Updated: 2026-08-28
 | **Atomic Linguistic Claims** | 36 claims | 100% evidence-grounded across 5 levels (`ontology/claims/pilot_claims.json`) |
 | **Declarative Linguistic Rules** | 20 rules | 100% claim-supported (`ontology/rules/pilot_rules.json`) |
 | **Provenance-Backed Examples** | 22 examples | Source-cited and verified (`ontology/examples/pilot_examples.json`) |
+| **Inflectional Paradigms** | 13 paradigms | Nouns (4), Pronouns (5), Verbs (4) (`ontology/paradigms/`) |
+| **Morphology Engine Coverage** | 100% Deterministic | Nominal Declension, Pronominal Matrix, Verbal Conjugator (`src/blf/linguistics/morphology/`) |
 | **Terminology Mappings** | 14 mappings | Aligned across 5 frameworks (`terminology-crosswalk.json`) |
 | **Framework Conflict Relations** | 3 relations | Resolved with canonical BLF modeling (`conflicts.json`) |
 | **Test Fixtures** | 2 fixtures | 1 Gold BDSB Canonical, 1 Synthetic Sylheti Variant |
-| **Automated Tests** | 34 unit tests | 100% passing across normalizer, schemas, sources, knowledge layer, docs, anti-slop, authorship |
+| **Automated Tests** | 44 unit tests | 100% passing across normalizer, schemas, sources, knowledge layer, morphology engine, docs, anti-slop |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
 

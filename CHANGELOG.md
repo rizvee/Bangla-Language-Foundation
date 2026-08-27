@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 1B Morphosyntactic & Inflectional Paradigm Engine
+- **Inflectional Paradigm Schema**: Created `schemas/v0_1/inflectional_paradigm.schema.json` supporting multidimensional morphological matrices (noun declension, pronominal paradigms, verbal conjugation) indexed by grammatical dimensions.
+- **Nominal Declension Engine**: Implemented `NominalDeclensionEngine` in `src/blf/linguistics/morphology/nominal_declension.py` handling case allomorphy (NOM, ACC `-ke`/`-Ø`, GEN `-r`/`-yer`/`-er`, LOC `-e`/`-te`/`-y`/`-ye`), classifier-definiteness suffix stacking order (`[NounRoot] + [Classifier] + [Plural] + [Case]`), and human vs inanimate animacy splits.
+- **Pronominal Paradigm Engine**: Implemented `PronominalParadigmEngine` in `src/blf/linguistics/morphology/pronominal_paradigms.py` providing exhaustive declension tables across 1st person (`Ami/Amra`), 2nd person honorificity tiers (`Apni`, `Tumi`, `Tui`), 3rd person deictic systems (`E/Ini`, `O/Uni`, `Se/Tini`), interrogatives (`Ke`, `Ki`), and relatives (`Je`).
+- **Verbal Conjugation Engine**: Implemented `VerbalConjugatorEngine` in `src/blf/linguistics/morphology/verbal_conjugator.py` generating full tense-aspect matrices (PresSimp, PresCont, PresPerf, PastSimp, PastCont, PastPerf, PastHabitual, FutSimp, Imperative) and non-finite participles (Conjunctive `-e`, Conditional `-le`, Infinitive `-te`) across regular, vowel-mutating (`de-`, `kha-`, `ne-`), and irregular (`ja-` -> `ge-`) roots.
+- **Golden Paradigm Catalogs**: Authored verified paradigm catalogs in `ontology/paradigms/` (`nominal_paradigms.json`, `pronominal_paradigms.json`, `verbal_paradigms.json`).
+- **Paradigm Validator & Test Suite**: Added `scripts/validate_paradigms.py` and `tests/test_morphology.py` (total 44 unit tests passing, 100% compliant).
+- **Linguistic Specification**: Authored `research/linguistic-knowledge/morphological-paradigms.md`.
+
 ### Added - Phase 1A Evidence-to-Linguistic-Knowledge System
 - **Linguistic Knowledge Schemas**: Implemented 4 strict JSON Draft-07 schemas (`schemas/v0_1/`):
   - `linguistic_evidence.schema.json`: Fine-grained locator references, excerpt/paraphrase captures, and copyright handling classes (`DIRECT_EXCERPT_SHORT`, `SCHOLARLY_PARAPHRASE`, `RULE_CITATION`, `PUBLIC_DOMAIN_REPRODUCTION`).

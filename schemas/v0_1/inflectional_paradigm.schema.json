@@ -1,0 +1,87 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/inflectional_paradigm.schema.json",
+  "title": "BLFInflectionalParadigm",
+  "description": "Schema for multidimensional inflectional paradigms (nominal declension, pronominal forms, verbal conjugation matrices) in BLF.",
+  "type": "object",
+  "required": [
+    "paradigm_id",
+    "lemma",
+    "pos",
+    "language_variety",
+    "dimensions",
+    "cells",
+    "supporting_claim_ids",
+    "status"
+  ],
+  "properties": {
+    "paradigm_id": {
+      "type": "string",
+      "pattern": "^PARADIGM-[A-Z0-9_-]+$",
+      "description": "Unique paradigm identifier (e.g. PARADIGM-VERB-KOR)."
+    },
+    "lemma": {
+      "type": "string",
+      "description": "Base citation form or root morpheme (e.g. 'করা', 'বই', 'আমি')."
+    },
+    "pos": {
+      "type": "string",
+      "enum": ["NOUN", "PRONOUN", "VERB", "ADJECTIVE", "POSTPOSITION"],
+      "description": "Part of speech category."
+    },
+    "stem_type": {
+      "type": ["string", "null"],
+      "description": "Phonological or morphological stem classification (e.g. 'consonant_closed', 'vowel_open_a', 'monosyllabic')."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Language variety scope."
+    },
+    "register": {
+      "type": ["string", "null"],
+      "description": "Register constraints (e.g. 'colloquial_standard_cholit', 'formal_sadhu')."
+    },
+    "dimensions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Morphological dimensions indexing the cells (e.g. ['case', 'number', 'definiteness'] or ['tense', 'aspect', 'person'])."
+    },
+    "cells": {
+      "type": "object",
+      "additionalProperties": {"type": "string"},
+      "description": "Mapping from dimension coordinate keys (e.g. 'NOM.SG.INDEF', 'PRES_SIMP.1') to surface inflected forms."
+    },
+    "supporting_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "Atomic claim IDs grounding this paradigm."
+    },
+    "supporting_rule_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^RUL-[A-Z0-9_-]+$"},
+      "description": "Declarative rule IDs executed in generating this paradigm."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED", "SUPERSEDED"],
+      "description": "Paradigm lifecycle status."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Phonological or morphological annotations."
+    }
+  },
+  "additionalProperties": false
+}
