@@ -1,0 +1,94 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/source.schema.json",
+  "title": "BLFSource",
+  "description": "Schema for sources registered in the BLF research source registry.",
+  "type": "object",
+  "required": [
+    "source_id",
+    "title",
+    "author_or_org",
+    "source_tier",
+    "language",
+    "year",
+    "license",
+    "redistribution",
+    "verification_status",
+    "citation"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_-]+$",
+      "description": "Unique stable source identifier (e.g. BA-GRAM-2012)."
+    },
+    "title": {
+      "type": "string",
+      "description": "Full title of the publication, dataset, or resource."
+    },
+    "author_or_org": {
+      "type": "string",
+      "description": "Author(s), editors, or publishing institution."
+    },
+    "source_tier": {
+      "type": "string",
+      "enum": ["TIER_A", "TIER_B", "TIER_C", "TIER_D", "TIER_E"],
+      "description": "BLF research source priority tier."
+    },
+    "language": {
+      "type": "string",
+      "description": "Primary language of source (e.g. 'bn', 'en', 'bn-BD')."
+    },
+    "region": {
+      "type": "string",
+      "description": "Geographic focus (e.g. 'Bangladesh', 'Dhaka', 'West Bengal')."
+    },
+    "year": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 2100,
+      "description": "Publication year."
+    },
+    "publisher": {
+      "type": "string",
+      "description": "Publisher name or academic institution."
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Direct persistent URL or repository link."
+    },
+    "identifier": {
+      "type": "string",
+      "description": "Standard identifier such as ISBN, DOI, or catalog ID."
+    },
+    "license": {
+      "type": "string",
+      "description": "Canonical license (e.g., 'CC-BY-4.0', 'Public Domain', 'All-Rights-Reserved', 'MIT')."
+    },
+    "redistribution": {
+      "type": "string",
+      "enum": ["open_redistribution", "derived_features_only", "restricted_internal"],
+      "description": "Allowed redistribution scope under BLF policy."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["VERIFIED", "PROVISIONAL", "UNVERIFIED"],
+      "description": "Epistemic verification state."
+    },
+    "checksum": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 checksum of referenced digital artifact."
+    },
+    "citation": {
+      "type": "string",
+      "description": "Full bibliographic citation in standard academic format."
+    },
+    "notes": {
+      "type": "string",
+      "description": "Methodological, extraction, or scope notes."
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,97 @@
+{
+  "utterance_id": "UTT-00001",
+  "sentence_family_id": "SF-00001",
+  "raw_text": "আমি কাল সকালে লাইব্রেরিতে বই পড়তে যাব।",
+  "normalized_text": "আমি কাল সকালে লাইব্রেরিতে বই পড়তে যাব।",
+  "canonical_bangla": "আমি কাল সকালে লাইব্রেরিতে বই পড়তে যাব।",
+  "english_translation": "I will go to the library tomorrow morning to read books.",
+  "transliteration_banglish": "ami kal sokale libraryte boi porte jabo.",
+  "register": "colloquial_standard",
+  "dialect": "bdsb_standard",
+  "code_switching_type": "loanword_bangla_script",
+  "domain": "education",
+  "intent": "inform",
+  "semantic_frame": {
+    "frame_id": "FRAME-MOTION-DIRECTIONAL",
+    "frame_name": "Motion_directional",
+    "roles": {
+      "Theme": "আমি",
+      "Time": "কাল সকালে",
+      "Goal": "লাইব্রেরিতে",
+      "Purpose": "বই পড়তে"
+    }
+  },
+  "construction": {
+    "construction_id": "CONST-PURPOSIVE-MOTION",
+    "name": "Purposive Motion Construction",
+    "voice": "active",
+    "word_order": "SOV"
+  },
+  "tokens": [
+    {
+      "token_id": 1,
+      "surface_form": "আমি",
+      "lemma": "আমি",
+      "pos_tag": "PRON",
+      "morphology": {
+        "person": "1st",
+        "number": "singular",
+        "case": "nominative"
+      }
+    },
+    {
+      "token_id": 2,
+      "surface_form": "কাল",
+      "lemma": "কাল",
+      "pos_tag": "ADV",
+      "morphology": { "definiteness": "generic" }
+    },
+    {
+      "token_id": 3,
+      "surface_form": "সকালে",
+      "lemma": "সকাল",
+      "pos_tag": "NOUN",
+      "morphology": { "case": "locative" }
+    },
+    {
+      "token_id": 4,
+      "surface_form": "লাইব্রেরিতে",
+      "lemma": "লাইব্রেরি",
+      "pos_tag": "NOUN",
+      "morphology": { "case": "locative" }
+    },
+    {
+      "token_id": 5,
+      "surface_form": "বই",
+      "lemma": "বই",
+      "pos_tag": "NOUN",
+      "morphology": { "case": "nominative", "number": "plural" }
+    },
+    {
+      "token_id": 6,
+      "surface_form": "পড়তে",
+      "lemma": "পড়া",
+      "pos_tag": "VERB",
+      "morphology": { "mood": "indicative" }
+    },
+    {
+      "token_id": 7,
+      "surface_form": "যাব",
+      "lemma": "যাওয়া",
+      "pos_tag": "VERB",
+      "morphology": {
+        "tense": "future",
+        "aspect": "simple",
+        "person": "1st",
+        "mood": "indicative"
+      }
+    }
+  ],
+  "polarity": "affirmative",
+  "difficulty_level": "beginner",
+  "source_id": "BA-GRAM-2012",
+  "quality_tier": "GOLD",
+  "quality_score": 1.0,
+  "validation_status": "passed",
+  "notes": "Verified canonical BDSB realization of purposive motion frame."
+}

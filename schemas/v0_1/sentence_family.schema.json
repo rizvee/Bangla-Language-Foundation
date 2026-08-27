@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/sentence_family.schema.json",
+  "title": "BLFSentenceFamily",
+  "description": "A conceptual sentence family grouping realizations sharing an identical semantic proposition.",
+  "type": "object",
+  "required": [
+    "sentence_family_id",
+    "proposition_description",
+    "semantic_frame_id",
+    "canonical_utterance_id",
+    "realization_utterance_ids",
+    "quality_tier"
+  ],
+  "properties": {
+    "sentence_family_id": {
+      "type": "string",
+      "pattern": "^SF-[A-Z0-9_-]+$",
+      "description": "Unique sentence family identifier (e.g. SF-00001)."
+    },
+    "proposition_description": {
+      "type": "string",
+      "description": "English description of core underlying semantic proposition."
+    },
+    "semantic_frame_id": {
+      "type": "string",
+      "description": "ID of underlying semantic frame (e.g., FRAME-COMMERCE-BUY)."
+    },
+    "canonical_utterance_id": {
+      "type": "string",
+      "description": "ID of the canonical Bangladesh Standard Bangla (BDSB) realization."
+    },
+    "realization_utterance_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "List of all realization utterance IDs belonging to this family."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Domain classification (e.g., 'daily_life', 'education', 'commerce', 'healthcare')."
+    },
+    "quality_tier": {
+      "type": "string",
+      "enum": ["GOLD", "SILVER", "SYNTHETIC"]
+    }
+  },
+  "additionalProperties": false
+}

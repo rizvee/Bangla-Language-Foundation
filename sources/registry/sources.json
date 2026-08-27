@@ -1,0 +1,71 @@
+{
+  "$schema": "../../schemas/v0_1/source.schema.json",
+  "registry_version": "1.0.0",
+  "updated": "2026-08-27",
+  "sources": [
+    {
+      "source_id": "BA-GRAM-2012",
+      "title": "Pramanik Bangla Byakaran (Standard Bangla Grammar)",
+      "author_or_org": "Bangla Academy",
+      "source_tier": "TIER_A",
+      "language": "bn",
+      "region": "Bangladesh",
+      "year": 2012,
+      "publisher": "Bangla Academy, Dhaka",
+      "identifier": "ISBN 984-07-5201-X",
+      "license": "All-Rights-Reserved",
+      "redistribution": "derived_features_only",
+      "verification_status": "VERIFIED",
+      "citation": "Bangla Academy. (2012). Pramanik Bangla Byakaran (Vols. 1-3, Ed. Rafiqul Islam & Pabitra Sarkar). Dhaka: Bangla Academy.",
+      "notes": "Authoritative standard for Bangladesh grammar, orthography, and morphology. Used strictly for rule extraction and morphological paradigms; no bulk text copying."
+    },
+    {
+      "source_id": "BA-SPELL-2016",
+      "title": "Bangla Academy Promito Bangla Bananer Niyom (Standard Bangla Spelling Rules)",
+      "author_or_org": "Bangla Academy",
+      "source_tier": "TIER_A",
+      "language": "bn",
+      "region": "Bangladesh",
+      "year": 2016,
+      "publisher": "Bangla Academy, Dhaka",
+      "identifier": "Bangla Academy Directive 2016",
+      "license": "Public-Notice",
+      "redistribution": "derived_features_only",
+      "verification_status": "VERIFIED",
+      "citation": "Bangla Academy. (2016). Promito Bangla Bananer Niyom. Dhaka: Bangla Academy.",
+      "notes": "Authoritative baseline for orthographic normalization, consonant doubling rules, and vowel harmony orthography."
+    },
+    {
+      "source_id": "ODBL-SKC-1926",
+      "title": "The Origin and Development of the Bengali Language",
+      "author_or_org": "Suniti Kumar Chatterji",
+      "source_tier": "TIER_B",
+      "language": "en",
+      "region": "Bengal",
+      "year": 1926,
+      "publisher": "Calcutta University Press",
+      "identifier": "OCLC 459178229",
+      "license": "Public-Domain",
+      "redistribution": "derived_features_only",
+      "verification_status": "VERIFIED",
+      "citation": "Chatterji, S. K. (1926). The Origin and Development of the Bengali Language. Calcutta: Calcutta University Press.",
+      "notes": "Foundational historical and comparative phonology, morphology, and dialectal evolution treatise."
+    },
+    {
+      "source_id": "UD-BN-BENGAL-2023",
+      "title": "Universal Dependencies Bengali Treebank",
+      "author_or_org": "Universal Dependencies Contributors",
+      "source_tier": "TIER_D",
+      "language": "bn",
+      "region": "South Asia",
+      "year": 2023,
+      "url": "https://universaldependencies.org/treebanks/bn_bengal/index.html",
+      "identifier": "UD-bn-v2.12",
+      "license": "CC-BY-SA-4.0",
+      "redistribution": "open_redistribution",
+      "verification_status": "VERIFIED",
+      "citation": "Universal Dependencies Consortium. (2023). Universal Dependencies Treebank for Bengali (Release 2.12).",
+      "notes": "Reference for cross-linguistic dependency relations, UPOS tagging, and morphological feature mapping."
+    }
+  ]
+}

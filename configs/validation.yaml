@@ -1,0 +1,24 @@
+# Validation Configuration for BLF Pipelines
+version: "1.0.0"
+
+schemas:
+  root: "schemas/v0_1"
+  utterance: "schemas/v0_1/utterance.schema.json"
+  sentence_family: "schemas/v0_1/sentence_family.schema.json"
+  source: "schemas/v0_1/source.schema.json"
+  synthetic_provenance: "schemas/v0_1/synthetic_provenance.schema.json"
+
+source_registry:
+  path: "sources/registry/sources.json"
+
+quality_thresholds:
+  gold_min_quality_score: 0.90
+  silver_min_quality_score: 0.70
+  synthetic_provenance_required: true
+
+anti_slop:
+  scan_paths:
+    - "docs"
+    - "research"
+    - ".ai/context"
+  strict_mode: true

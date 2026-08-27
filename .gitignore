@@ -1,0 +1,98 @@
+# ==============================================================================
+# Bangla Language Foundation (BLF) - .gitignore
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# 1. Local-Only Operating System & Agent Orchestration (Never Track Publicly)
+# ------------------------------------------------------------------------------
+.ai/
+AGENTS.md
+.agents/
+.antigravity/
+.system_generated/
+scratch/
+tmp/
+*.log
+
+# ------------------------------------------------------------------------------
+# 2. Large Raw Data / External Corpora / Partition Storage (Protect Git History)
+# ------------------------------------------------------------------------------
+data/raw/*
+!data/raw/.gitkeep
+data/external/*
+!data/external/.gitkeep
+data/interim/*
+!data/interim/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/gold/*
+!data/gold/.gitkeep
+data/silver/*
+!data/silver/.gitkeep
+data/synthetic/*
+!data/synthetic/.gitkeep
+data/releases/*
+!data/releases/.gitkeep
+
+# Exclude temporary validation data except tracked test fixtures
+data/validation/tmp/*
+
+# ------------------------------------------------------------------------------
+# 3. Python & Virtual Environments
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+venv/
+env/
+ENV/
+.venv/
+.env
+
+# ------------------------------------------------------------------------------
+# 4. IDE, Editor, & OS Metadata
+# ------------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ------------------------------------------------------------------------------
+# 5. Secrets & Private Credentials
+# ------------------------------------------------------------------------------
+.env*
+secrets/
+*.pem
+*.key
+credentials.json
+
+# ------------------------------------------------------------------------------
+# 6. Test & Coverage Outputs
+# ------------------------------------------------------------------------------
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/

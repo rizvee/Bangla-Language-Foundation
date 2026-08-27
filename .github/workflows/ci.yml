@@ -1,0 +1,45 @@
+name: BLF CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Test & Validate (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Run Unit Tests
+        run: |
+          python -m unittest discover tests -v
+
+      - name: Validate JSON Schemas & Fixtures
+        run: |
+          python scripts/validate_schemas.py
+
+      - name: Validate Source Registry
+        run: |
+          python scripts/validate_sources.py
+
+      - name: Validate Documentation Consistency
+        run: |
+          python scripts/check_docs_consistency.py
+
+      - name: Run Anti-AI-Slop Linter
+        run: |
+          python scripts/check_anti_slop.py --path docs/

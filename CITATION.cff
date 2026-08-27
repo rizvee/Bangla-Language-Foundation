@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use the Bangla Language Foundation dataset, schemas, or software in your research, please cite it as below."
+title: "Bangla Language Foundation (BLF)"
+abstract: "A structured, multi-layer linguistic dataset engineering and NLP research foundation for Bangladesh Standard Bangla and regional language varieties."
+type: dataset
+authors:
+  - name: "Bangla Language Foundation Contributors"
+repository-code: "https://github.com/rizvee/Bangla-Language-Foundation"
+url: "https://github.com/rizvee/Bangla-Language-Foundation"
+license: "MIT"
+version: "0.1.0"
+date-released: "2026-08-27"
+keywords:
+  - "bangla"
+  - "bengali"
+  - "nlp"
+  - "linguistics"
+  - "dataset"
+  - "semantic-frames"
+  - "morphology"
+  - "bangladesh"

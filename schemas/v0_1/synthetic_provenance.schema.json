@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/synthetic_provenance.schema.json",
+  "title": "BLFSyntheticProvenance",
+  "description": "Mandatory generation and provenance metadata for synthetic or model-assisted records.",
+  "type": "object",
+  "required": [
+    "source_type",
+    "generator",
+    "generation_timestamp",
+    "prompt_or_rule_provenance",
+    "conditioning_inputs",
+    "validation_methods"
+  ],
+  "properties": {
+    "source_type": {
+      "type": "string",
+      "enum": ["synthetic_rule", "synthetic_llm", "synthetic_hybrid"],
+      "description": "Mechanism of generation."
+    },
+    "generator": {
+      "type": "string",
+      "description": "Generator engine identifier, model name and version."
+    },
+    "generation_timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 UTC timestamp when record was generated."
+    },
+    "prompt_or_rule_provenance": {
+      "type": "object",
+      "required": ["template_id", "prompt_hash"],
+      "properties": {
+        "template_id": { "type": "string" },
+        "prompt_hash": { "type": "string" },
+        "parameters": { "type": "object" }
+      },
+      "additionalProperties": false
+    },
+    "conditioning_inputs": {
+      "type": "object",
+      "required": ["semantic_frame_id", "target_register", "target_dialect"],
+      "properties": {
+        "semantic_frame_id": { "type": "string" },
+        "construction_id": { "type": "string" },
+        "target_register": { "type": "string" },
+        "target_dialect": { "type": "string" },
+        "lexical_constraints": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "validation_methods": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Automated and/or manual validation procedures applied to this record."
+    },
+    "human_review": {
+      "type": "object",
+      "properties": {
+        "reviewed_by": { "type": "string" },
+        "review_timestamp": { "type": "string", "format": "date-time" },
+        "naturalness_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "review_notes": { "type": "string" }
+      },
+      "required": ["reviewed_by", "review_timestamp", "naturalness_score"],
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

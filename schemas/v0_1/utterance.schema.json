@@ -1,0 +1,203 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/utterance.schema.json",
+  "title": "BLFUtterance",
+  "description": "Schema for a structured Bangla linguistic realization (utterance).",
+  "type": "object",
+  "required": [
+    "utterance_id",
+    "sentence_family_id",
+    "raw_text",
+    "normalized_text",
+    "canonical_bangla",
+    "english_translation",
+    "register",
+    "dialect",
+    "code_switching_type",
+    "quality_tier",
+    "validation_status"
+  ],
+  "properties": {
+    "utterance_id": {
+      "type": "string",
+      "pattern": "^UTT-[A-Z0-9_-]+$",
+      "description": "Unique utterance identifier (e.g. UTT-00001)."
+    },
+    "sentence_family_id": {
+      "type": "string",
+      "pattern": "^SF-[A-Z0-9_-]+$",
+      "description": "Referenced sentence family ID."
+    },
+    "raw_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Original raw text before normalization."
+    },
+    "normalized_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unicode NFC-normalized Bangla text with canonical punctuation."
+    },
+    "canonical_bangla": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Equivalent Bangladesh Standard Bangla (BDSB) canonical sentence."
+    },
+    "english_translation": {
+      "type": "string",
+      "minLength": 1,
+      "description": "High-fidelity English translation."
+    },
+    "transliteration_banglish": {
+      "type": "string",
+      "description": "Standardized Romanized Banglish transliteration."
+    },
+    "register": {
+      "type": "string",
+      "enum": [
+        "formal_standard",
+        "colloquial_standard",
+        "intimate_conversational",
+        "social_chat_shorthand",
+        "archaic_sadhu"
+      ],
+      "description": "Pragmatic register and formality level."
+    },
+    "dialect": {
+      "type": "string",
+      "enum": [
+        "bdsb_standard",
+        "dhaka_colloquial",
+        "chittagong_chatgaya",
+        "sylheti",
+        "noakhali_noakhailla",
+        "rangpur_rajbanshi",
+        "barisal",
+        "rajshahi_varendra",
+        "west_bengal_standard"
+      ],
+      "description": "Geographic or sociolectal variety."
+    },
+    "code_switching_type": {
+      "type": "string",
+      "enum": [
+        "pure_bangla",
+        "loanword_bangla_script",
+        "code_switched_latin",
+        "romanized_banglish",
+        "mixed_script"
+      ],
+      "description": "Contact linguistics and script interaction type."
+    },
+    "domain": {
+      "type": "string",
+      "description": "Thematic domain (e.g. 'daily_life', 'education', 'news', 'healthcare', 'commerce')."
+    },
+    "intent": {
+      "type": "string",
+      "description": "Dialogue act or communicative intent (e.g. 'inform', 'request', 'inquire', 'greet')."
+    },
+    "semantic_frame": {
+      "type": "object",
+      "properties": {
+        "frame_id": { "type": "string" },
+        "frame_name": { "type": "string" },
+        "roles": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        }
+      },
+      "additionalProperties": false
+    },
+    "construction": {
+      "type": "object",
+      "properties": {
+        "construction_id": { "type": "string" },
+        "name": { "type": "string" },
+        "voice": {
+          "type": "string",
+          "enum": ["active", "passive", "impersonal", "causative"]
+        },
+        "word_order": {
+          "type": "string",
+          "enum": ["SOV", "OSV", "SVO", "VSO", "topicalized_variant"]
+        }
+      },
+      "additionalProperties": false
+    },
+    "tokens": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["token_id", "surface_form", "lemma", "pos_tag"],
+        "properties": {
+          "token_id": { "type": "integer" },
+          "surface_form": { "type": "string" },
+          "lemma": { "type": "string" },
+          "pos_tag": { "type": "string" },
+          "morphology": {
+            "type": "object",
+            "properties": {
+              "tense": { "type": "string", "enum": ["present", "past", "future", "habitual_past"] },
+              "aspect": { "type": "string", "enum": ["simple", "continuous", "perfect"] },
+              "mood": { "type": "string", "enum": ["indicative", "imperative", "subjunctive", "conditional"] },
+              "person": { "type": "string", "enum": ["1st", "2nd_ordinary", "2nd_intimate", "2nd_honorific", "3rd_ordinary", "3rd_honorific"] },
+              "number": { "type": "string", "enum": ["singular", "plural"] },
+              "case": { "type": "string", "enum": ["nominative", "accusative", "genitive", "locative", "instrumental"] },
+              "definiteness": { "type": "string", "enum": ["definite", "indefinite", "generic"] },
+              "clitic": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "polarity": {
+      "type": "string",
+      "enum": ["affirmative", "negative", "interrogative_affirmative", "interrogative_negative"]
+    },
+    "named_entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["entity_text", "label", "start_char", "end_char"],
+        "properties": {
+          "entity_text": { "type": "string" },
+          "label": { "type": "string" },
+          "start_char": { "type": "integer" },
+          "end_char": { "type": "integer" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "difficulty_level": {
+      "type": "string",
+      "enum": ["beginner", "intermediate", "advanced", "expert"]
+    },
+    "source_id": {
+      "type": "string",
+      "description": "Identifier linking to sources/registry/sources.json."
+    },
+    "quality_tier": {
+      "type": "string",
+      "enum": ["GOLD", "SILVER", "SYNTHETIC"]
+    },
+    "quality_score": {
+      "type": "number",
+      "minimum": 0.0,
+      "maximum": 1.0
+    },
+    "synthetic_provenance": {
+      "$ref": "synthetic_provenance.schema.json"
+    },
+    "validation_status": {
+      "type": "string",
+      "enum": ["passed", "provisional", "flagged_for_review", "rejected"]
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

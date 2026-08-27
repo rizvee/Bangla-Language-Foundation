@@ -1,0 +1,41 @@
+{
+  "utterance_id": "UTT-00002",
+  "sentence_family_id": "SF-00001",
+  "raw_text": "আমি কাইল বিহানে লাইব্রেরিত বই পড়তে যাইয়াম।",
+  "normalized_text": "আমি কাইল বিহানে লাইব্রেরিত বই পড়তে যাইয়াম।",
+  "canonical_bangla": "আমি কাল সকালে লাইব্রেরিতে বই পড়তে যাব।",
+  "english_translation": "I will go to the library tomorrow morning to read books (Sylheti dialect variant).",
+  "transliteration_banglish": "ami kail bihane libraryt boi porte zaiam.",
+  "register": "intimate_conversational",
+  "dialect": "sylheti",
+  "code_switching_type": "loanword_bangla_script",
+  "domain": "education",
+  "intent": "inform",
+  "polarity": "affirmative",
+  "difficulty_level": "intermediate",
+  "quality_tier": "SYNTHETIC",
+  "quality_score": 0.88,
+  "synthetic_provenance": {
+    "source_type": "synthetic_hybrid",
+    "generator": "blf-dialect-rule-engine-v1",
+    "generation_timestamp": "2026-08-27T16:30:00Z",
+    "prompt_or_rule_provenance": {
+      "template_id": "RULE-SYLHETI-PHONOLOGY-v1",
+      "prompt_hash": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "parameters": { "target_variety": "sylheti", "temporal_adv": "kail bihane" }
+    },
+    "conditioning_inputs": {
+      "semantic_frame_id": "FRAME-MOTION-DIRECTIONAL",
+      "construction_id": "CONST-PURPOSIVE-MOTION",
+      "target_register": "intimate_conversational",
+      "target_dialect": "sylheti",
+      "lexical_constraints": ["library", "boi"]
+    },
+    "validation_methods": [
+      "automated_schema_validation",
+      "morphological_rule_verifier"
+    ]
+  },
+  "validation_status": "provisional",
+  "notes": "Synthetic Sylheti realization of SF-00001 for dialect mapping tests."
+}

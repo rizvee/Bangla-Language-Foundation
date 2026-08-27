@@ -1,0 +1,47 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bangla-language-foundation"
+version = "0.1.0"
+description = "Research operating system, linguistic ontology, dataset engineering pipelines, and validation tools for the Bangla Language Foundation Dataset."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    { name = "Bangla Language Foundation Team" }
+]
+license = { text = "MIT" }
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Intended Audience :: Science/Research",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "jsonschema>=4.20.0",
+    "pydantic>=2.5.0",
+    "pyyaml>=6.0.1",
+    "unicodedata2>=15.1.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0",
+    "pytest-cov>=4.1.0",
+    "ruff>=0.2.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_functions = ["test_*"]
+addopts = "-v --strict-markers"
+
+[tool.setuptools.packages.find]
+where = ["src"]
