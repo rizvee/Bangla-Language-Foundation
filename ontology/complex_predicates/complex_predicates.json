@@ -1,0 +1,200 @@
+{
+  "version": "1.0.0",
+  "total_complex_predicates": 8,
+  "complex_predicates": [
+    {
+      "predicate_id": "CPRED-VECTOR-PHELA-TELIC",
+      "name": "Telic Completive Vector Verb ('phela')",
+      "predicate_type": "ASPECTUAL_VECTOR_VERB",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-PHELA-14"],
+      "host_element": {
+        "pos": "VERB_CONJUNCTIVE",
+        "form": "Conjunctive participle in -e (e.g. kheye, pore, likhe)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "ফেলা",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Encodes telic completion, irreversible finality, or rapid discharge of the pole event.",
+      "selection_restrictions": {
+        "pole_transitivity": ["TRANSITIVE", "UNERGATIVE_DYNAMIC"],
+        "stative_allowed": false
+      },
+      "valency_effect": "NO_VALENCY_CHANGE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "example_ids": ["EX-SEM-VECTOR-PHELA-15"],
+      "status": "ACTIVE",
+      "notes": "Very common in colloquial and literary BDSB."
+    },
+    {
+      "predicate_id": "CPRED-VECTOR-NEOA-SELF-BENEF",
+      "name": "Self-Benefactive Vector Verb ('neoa')",
+      "predicate_type": "BENEFACTIVE_VECTOR_VERB",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-NEOA-15"],
+      "host_element": {
+        "pos": "VERB_CONJUNCTIVE",
+        "form": "Conjunctive participle in -e (e.g. kine, dekhe, bhebe)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "নেওয়া",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Indicates subject-oriented self-benefaction, introspection, or self-absorption.",
+      "selection_restrictions": {
+        "pole_transitivity": ["TRANSITIVE_AGENTIVE"],
+        "agentive_subject_required": true
+      },
+      "valency_effect": "NO_VALENCY_CHANGE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Subject-oriented benefactive axis."
+    },
+    {
+      "predicate_id": "CPRED-VECTOR-DEWA-OTHER-BENEF",
+      "name": "Other-Benefactive Vector Verb ('dewa')",
+      "predicate_type": "BENEFACTIVE_VECTOR_VERB",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-DEWA-16"],
+      "host_element": {
+        "pos": "VERB_CONJUNCTIVE",
+        "form": "Conjunctive participle in -e (e.g. likhe, pathiye, bujhiye)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "দেওয়া",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Encodes action directed toward an external recipient or other-benefactive outcome.",
+      "selection_restrictions": {
+        "pole_transitivity": ["TRANSITIVE_AGENTIVE", "TRANSFER_ACTION"]
+      },
+      "valency_effect": "ADD_BENEFICIARY_ROLE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Other-oriented benefactive axis."
+    },
+    {
+      "predicate_id": "CPRED-VECTOR-UTHA-INCEPTIVE",
+      "name": "Sudden Inceptive Vector Verb ('utha')",
+      "predicate_type": "INCEPTIVE_VECTOR_VERB",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-UTHA-32"],
+      "host_element": {
+        "pos": "VERB_CONJUNCTIVE",
+        "form": "Conjunctive participle in -e (e.g. heshe, kende, chomke)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "উঠা",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Denotes sudden, explosive inception, or spontaneous emergence.",
+      "selection_restrictions": {
+        "pole_type": ["EMOTION_EXPRESSION", "INCHOATIVE", "PHYSIOLOGICAL_RESPONSE"]
+      },
+      "valency_effect": "NO_VALENCY_CHANGE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Sudden inception vector."
+    },
+    {
+      "predicate_id": "CPRED-VECTOR-BOSHA-ADVERSATIVE",
+      "name": "Inadvertent / Adversative Vector Verb ('bosha')",
+      "predicate_type": "ADVERSATIVE_VECTOR_VERB",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-BOSHA-33"],
+      "host_element": {
+        "pos": "VERB_CONJUNCTIVE",
+        "form": "Conjunctive participle in -e (e.g. bole, kore)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "বসা",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Encodes rash, ill-advised, obstinate, or inadvertent action with unexpected consequences.",
+      "selection_restrictions": {
+        "pole_type": ["VOLITIONAL_ACTION", "SPEECH_ACT"]
+      },
+      "valency_effect": "NO_VALENCY_CHANGE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "RESTRICTED",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Adversative vector verb."
+    },
+    {
+      "predicate_id": "CPRED-LVC-KORA-TRANSITIVE",
+      "name": "Transitive Light Verb Construction ('kora')",
+      "predicate_type": "LIGHT_VERB_CONSTRUCTION_TRANSITIVE",
+      "supporting_claim_ids": ["CLM-MSYN-LVC-KORA-34"],
+      "host_element": {
+        "pos": "NOUN",
+        "form": "Nominal or verbal noun host (e.g. kaj, proshno, opeksha)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "করা",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Projects an agentive transitive event structure with nominal lexical head.",
+      "selection_restrictions": {
+        "host_pos": ["NOUN", "ADJECTIVE"]
+      },
+      "valency_effect": "VALENCY_INCREASE_TRANSITIVE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "FULLY_PRODUCTIVE",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Core transitive predicate former in Bangla."
+    },
+    {
+      "predicate_id": "CPRED-LVC-HOWA-INCHOATIVE",
+      "name": "Intransitive / Inchoative Light Verb Construction ('howa')",
+      "predicate_type": "LIGHT_VERB_CONSTRUCTION_INTRANSITIVE",
+      "supporting_claim_ids": ["CLM-MSYN-LVC-KORA-34"],
+      "host_element": {
+        "pos": "NOUN",
+        "form": "Nominal or adjectival host (e.g. shuru, shesh, bhul)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "হওয়া",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Projects an intransitive/inchoative event representing state change or occurrence.",
+      "selection_restrictions": {
+        "host_pos": ["NOUN", "ADJECTIVE"]
+      },
+      "valency_effect": "VALENCY_DECREASE_INCHOATIVE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "FULLY_PRODUCTIVE",
+      "example_ids": [],
+      "status": "ACTIVE",
+      "notes": "Inchoative predicate former."
+    },
+    {
+      "predicate_id": "CPRED-LVC-PAOWA-EXPERIENCER",
+      "name": "Experiencer Light Verb Construction ('paowa')",
+      "predicate_type": "LIGHT_VERB_CONSTRUCTION_EXPERIENCER",
+      "supporting_claim_ids": ["CLM-SYN-DATSUBJ-04"],
+      "host_element": {
+        "pos": "NOUN",
+        "form": "Internal psychological or physiological state noun (e.g. khide, bhoy, lojja)"
+      },
+      "light_or_vector_verb": {
+        "lemma": "পাওয়া",
+        "inflection_bearing": true
+      },
+      "aspectual_or_semantic_contribution": "Projects an experiencer predicate assigning Genitive/Dative to the experiencer subject.",
+      "selection_restrictions": {
+        "host_semantic_field": ["PSYCHOLOGICAL_STATE", "PHYSIOLOGICAL_SENSATION"]
+      },
+      "valency_effect": "ADD_EXPERIENCER_ROLE",
+      "language_variety": "BDSB_STANDARD",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "example_ids": ["EX-SYN-DATSUBJ-05"],
+      "status": "ACTIVE",
+      "notes": "Experiencer subject predicate former."
+    }
+  ]
+}

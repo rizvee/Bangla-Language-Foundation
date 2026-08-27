@@ -1,0 +1,160 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/linguistic_construction.schema.json",
+  "title": "BLFLinguisticConstruction",
+  "description": "Schema for declarative construction grammar patterns in BLF.",
+  "type": "object",
+  "required": [
+    "construction_id",
+    "name",
+    "construction_type",
+    "supporting_claim_ids",
+    "semantic_function",
+    "syntactic_pattern",
+    "required_roles",
+    "word_order",
+    "language_variety",
+    "productivity",
+    "status"
+  ],
+  "properties": {
+    "construction_id": {
+      "type": "string",
+      "pattern": "^CONST-[A-Z0-9_-]+$",
+      "description": "Unique construction identifier (e.g. CONST-TRANSITIVE-SOV)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Human-readable descriptive name."
+    },
+    "construction_type": {
+      "type": "string",
+      "enum": [
+        "DECLARATIVE_TRANSITIVE",
+        "DECLARATIVE_INTRANSITIVE",
+        "DECLARATIVE_DITRANSITIVE",
+        "COPULAR_EQUATIVE",
+        "EXISTENTIAL_POSSESSIVE",
+        "EXPERIENCER_DATIVE_SUBJECT",
+        "POLAR_INTERROGATIVE",
+        "WH_INTERROGATIVE",
+        "IMPERATIVE_DIRECT",
+        "PROHIBITIVE_NEGATIVE",
+        "COMPLEX_CONJUNCTIVE",
+        "COMPLEX_CONDITIONAL",
+        "COMPLEX_CORRELATIVE",
+        "INFORMATION_TOPICALIZATION",
+        "INFORMATION_PRODROP",
+        "COMPLEX_PREDICATE_VECTOR",
+        "COMPLEX_PREDICATE_LIGHT_VERB"
+      ],
+      "description": "Functional construction family."
+    },
+    "supporting_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "Supporting atomic claim IDs."
+    },
+    "supporting_rule_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^RUL-[A-Z0-9_-]+$"},
+      "description": "Supporting linguistic rule IDs."
+    },
+    "semantic_function": {
+      "type": "string",
+      "description": "Semantic role configuration and communicative purpose."
+    },
+    "syntactic_pattern": {
+      "type": "string",
+      "description": "Declarative constituent template (e.g. '[Subject:NP[Nom]] [Object:NP[Acc/Dom]] [Verb:VP]')."
+    },
+    "required_roles": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Mandatory semantic roles."
+    },
+    "optional_roles": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Optional circumstantial semantic roles."
+    },
+    "constituent_constraints": {
+      "type": "object",
+      "description": "Morphosyntactic constraints on arguments (case, animacy, definiteness, agreement)."
+    },
+    "word_order": {
+      "type": "string",
+      "enum": [
+        "SOV",
+        "SV",
+        "S_IO_DO_V",
+        "OSV_TOPICAL",
+        "OVS_MARKED",
+        "VSO_EMPHATIC",
+        "CORRELATIVE_J_T",
+        "PRO_DROP_OV",
+        "PRO_DROP_V"
+      ],
+      "description": "Constituent ordering pattern."
+    },
+    "register": {
+      "type": ["string", "null"],
+      "description": "Register constraints."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Language variety scope."
+    },
+    "polarity": {
+      "type": "string",
+      "enum": ["AFFIRMATIVE", "NEGATIVE", "ANY"],
+      "default": "ANY",
+      "description": "Clausal polarity constraints."
+    },
+    "productivity": {
+      "type": "string",
+      "enum": [
+        "FULLY_PRODUCTIVE",
+        "HIGHLY_PRODUCTIVE",
+        "RESTRICTED",
+        "LEXICALLY_CONDITIONED",
+        "IDIOSYNCRATIC",
+        "HISTORICAL",
+        "UNKNOWN"
+      ],
+      "description": "Generative productivity."
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Known exceptions or boundary constraints."
+    },
+    "example_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^EX-[A-Z0-9_-]+$"},
+      "description": "Attested positive and negative example references."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED", "SUPERSEDED"],
+      "description": "Construction lifecycle status."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Linguistic or computational notes."
+    }
+  },
+  "additionalProperties": false
+}

@@ -31,7 +31,7 @@ class VerbalConjugatorEngine:
         cells = {}
 
         # 1. Custom / Irregular Root Handling
-        if r in ["কর", "kor"]:
+        if r in ["কর", "kor", "করা"]:
             return self._conjugate_kor()
         elif r in ["যা", "ja", "যাওয়া"]:
             return self._conjugate_ja()
@@ -49,6 +49,20 @@ class VerbalConjugatorEngine:
             return self._conjugate_regular_closed("দেখ", "দেখ")
         elif r in ["পড়", "por", "পড়া"]:
             return self._conjugate_regular_closed("পড়", "পড়")
+        elif r in ["ফেল", "fel", "ফেলা"]:
+            return self._conjugate_regular_closed("ফেল", "ফেল")
+        elif r in ["উঠ", "uth", "উঠা", "ওঠা"]:
+            return self._conjugate_regular_closed("উঠ", "উঠ")
+        elif r in ["বস", "bosh", "বসা"]:
+            return self._conjugate_regular_closed("বস", "বস")
+        elif r in ["রাখ", "rakh", "রাখা"]:
+            return self._conjugate_regular_closed("রাখ", "রাখ")
+        elif r in ["থাক", "thak", "থাকা"]:
+            return self._conjugate_regular_closed("থাক", "থাক")
+        elif r in ["শোন", "shon", "শোনা"]:
+            return self._conjugate_regular_closed("শুন", "শোন")
+        elif r in ["হ", "ho", "হওয়া", "হয়া"]:
+            return self._conjugate_kor()  # Similar pattern or custom
         else:
             return self._conjugate_regular_closed(r, r)
 

@@ -1,0 +1,130 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/complex_predicate.schema.json",
+  "title": "BLFComplexPredicate",
+  "description": "Schema for complex predicates, vector verbs, and light verb constructions in BLF.",
+  "type": "object",
+  "required": [
+    "predicate_id",
+    "name",
+    "predicate_type",
+    "supporting_claim_ids",
+    "host_element",
+    "light_or_vector_verb",
+    "aspectual_or_semantic_contribution",
+    "selection_restrictions",
+    "valency_effect",
+    "language_variety",
+    "productivity",
+    "status"
+  ],
+  "properties": {
+    "predicate_id": {
+      "type": "string",
+      "pattern": "^CPRED-[A-Z0-9_-]+$",
+      "description": "Unique complex predicate identifier (e.g. CPRED-VECTOR-PHELA-TELIC)."
+    },
+    "name": {
+      "type": "string",
+      "description": "Descriptive title."
+    },
+    "predicate_type": {
+      "type": "string",
+      "enum": [
+        "ASPECTUAL_VECTOR_VERB",
+        "DIRECTIONAL_VECTOR_VERB",
+        "BENEFACTIVE_VECTOR_VERB",
+        "ADVERSATIVE_VECTOR_VERB",
+        "INCEPTIVE_VECTOR_VERB",
+        "LIGHT_VERB_CONSTRUCTION_TRANSITIVE",
+        "LIGHT_VERB_CONSTRUCTION_INTRANSITIVE",
+        "LIGHT_VERB_CONSTRUCTION_EXPERIENCER"
+      ],
+      "description": "Classification of the multi-word predicate."
+    },
+    "supporting_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "Supporting atomic claim IDs."
+    },
+    "host_element": {
+      "type": "object",
+      "required": ["pos", "form"],
+      "properties": {
+        "pos": {"type": "string", "enum": ["VERB_CONJUNCTIVE", "NOUN", "ADJECTIVE"]},
+        "form": {"type": "string", "description": "Form description (e.g. 'Pole verb root in non-finite -e', 'Nominal host')."}
+      }
+    },
+    "light_or_vector_verb": {
+      "type": "object",
+      "required": ["lemma", "inflection_bearing"],
+      "properties": {
+        "lemma": {"type": "string", "description": "Vector/light verb root (e.g. 'ফেলা', 'নেওয়া', 'দেওয়া', 'করা', 'হওয়া')."},
+        "inflection_bearing": {"type": "boolean", "description": "Whether this element bears finite tense/person inflection."}
+      }
+    },
+    "aspectual_or_semantic_contribution": {
+      "type": "string",
+      "description": "Aktionsart, telicity, trajectory, or thematic change contributed by the auxiliary/light verb."
+    },
+    "selection_restrictions": {
+      "type": "object",
+      "description": "Compatibility constraints on pole verb / nominal host (transitivity, agentivity, animacy, telicity)."
+    },
+    "valency_effect": {
+      "type": "string",
+      "enum": [
+        "NO_VALENCY_CHANGE",
+        "VALENCY_INCREASE_TRANSITIVE",
+        "VALENCY_DECREASE_INCHOATIVE",
+        "ADD_BENEFICIARY_ROLE",
+        "ADD_EXPERIENCER_ROLE"
+      ],
+      "description": "Effect on the argument structure of the clause."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Language variety scope."
+    },
+    "productivity": {
+      "type": "string",
+      "enum": [
+        "FULLY_PRODUCTIVE",
+        "HIGHLY_PRODUCTIVE",
+        "RESTRICTED",
+        "LEXICALLY_CONDITIONED",
+        "IDIOSYNCRATIC",
+        "HISTORICAL",
+        "UNKNOWN"
+      ],
+      "description": "Productivity rating."
+    },
+    "example_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^EX-[A-Z0-9_-]+$"},
+      "description": "Attested examples."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED", "SUPERSEDED"],
+      "description": "Predicate lifecycle state."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Analytical notes."
+    }
+  },
+  "additionalProperties": false
+}
