@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/source.schema.json",
   "title": "BLFSource",
-  "description": "Schema for sources registered in the BLF research source registry.",
+  "description": "Schema for sources registered in the BLF research source registry with field-level evidence and provenance tracking.",
   "type": "object",
   "required": [
     "source_id",
@@ -21,6 +21,10 @@
       "type": "string",
       "pattern": "^[A-Z0-9_-]+$",
       "description": "Unique stable source identifier (e.g. BA-GRAM-2012)."
+    },
+    "canonical_resource_id": {
+      "type": "string",
+      "description": "Stable conceptual resource ID across mirrors/versions."
     },
     "title": {
       "type": "string",
@@ -41,13 +45,21 @@
     },
     "region": {
       "type": "string",
-      "description": "Geographic focus (e.g. 'Bangladesh', 'Dhaka', 'West Bengal')."
+      "description": "Geographic focus (e.g. 'Bangladesh', 'Dhaka', 'West Bengal', 'Sylhet')."
     },
     "year": {
       "type": "integer",
       "minimum": 1000,
       "maximum": 2100,
       "description": "Publication year."
+    },
+    "version": {
+      "type": "string",
+      "description": "Dataset or software release version."
+    },
+    "release": {
+      "type": "string",
+      "description": "Specific benchmark or distribution release (e.g. 'UD v2.12')."
     },
     "publisher": {
       "type": "string",
@@ -60,11 +72,27 @@
     },
     "identifier": {
       "type": "string",
-      "description": "Standard identifier such as ISBN, DOI, or catalog ID."
+      "description": "Standard identifier such as ISBN, DOI, arXiv ID, ACL Anthology ID, or catalog ID."
+    },
+    "paper_id": {
+      "type": "string",
+      "description": "Canonical paper identifier (e.g. 'arXiv:2206.14053', 'ACL:2024.findings-emnlp.859')."
+    },
+    "mirror_of": {
+      "type": "string",
+      "description": "Upstream resource ID if this record is a repository/HuggingFace mirror."
+    },
+    "derived_from": {
+      "type": "string",
+      "description": "Upstream source ID if this dataset is derived from another corpus."
+    },
+    "supersedes": {
+      "type": "string",
+      "description": "Previous source_id superseded by this updated record."
     },
     "license": {
       "type": "string",
-      "description": "Canonical license (e.g., 'CC-BY-4.0', 'Public Domain', 'All-Rights-Reserved', 'MIT')."
+      "description": "Canonical license (e.g., 'CC-BY-4.0', 'Public Domain', 'All-Rights-Reserved', 'MIT', 'CC0-1.0', 'Unknown/Quarantined')."
     },
     "redistribution": {
       "type": "string",
@@ -73,8 +101,71 @@
     },
     "verification_status": {
       "type": "string",
-      "enum": ["VERIFIED", "PROVISIONAL", "UNVERIFIED"],
+      "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "PROVISIONAL", "QUARANTINED", "REJECTED"],
       "description": "Epistemic verification state."
+    },
+    "verification": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "PROVISIONAL", "QUARANTINED", "REJECTED"]
+        },
+        "verified_at": {
+          "type": "string",
+          "description": "ISO date of verification audit."
+        },
+        "verification_method": {
+          "type": "string",
+          "description": "Method of verification (e.g., 'primary_catalog_inspection', 'cross_identifier_api', 'anthology_doi_match')."
+        },
+        "primary_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "publisher_or_host", "evidence_type"],
+            "properties": {
+              "url": {"type": "string"},
+              "publisher_or_host": {"type": "string"},
+              "evidence_type": {"type": "string"},
+              "accessed_at": {"type": "string"},
+              "supports_fields": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "secondary_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["url", "publisher_or_host", "evidence_type"],
+            "properties": {
+              "url": {"type": "string"},
+              "publisher_or_host": {"type": "string"},
+              "evidence_type": {"type": "string"},
+              "accessed_at": {"type": "string"},
+              "supports_fields": {
+                "type": "array",
+                "items": {"type": "string"}
+              }
+            }
+          }
+        },
+        "verified_fields": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "unresolved_fields": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "verifier_notes": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
     },
     "checksum": {
       "type": "string",

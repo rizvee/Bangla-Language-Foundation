@@ -52,3 +52,12 @@ class ValidationStatus(str, Enum):
     PROVISIONAL = "provisional"
     FLAGGED_FOR_REVIEW = "flagged_for_review"
     REJECTED = "rejected"
+
+
+class VerificationStatus(str, Enum):
+    VERIFIED = "VERIFIED"
+    PARTIALLY_VERIFIED = "PARTIALLY_VERIFIED"
+    PROVISIONAL = "PROVISIONAL"
+    QUARANTINED = "QUARANTINED"
+    REJECTED = "REJECTED"
+

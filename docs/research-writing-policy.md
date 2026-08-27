@@ -28,6 +28,17 @@ The following phrases and terms are flagged by automated linters when used as rh
 ---
 
 ## 4. Citation Authenticity Discipline
-- **Zero Hallucination Tolerance**: Never invent paper titles, authors, DOIs, ISBNs, or page numbers.
-- **Verification Marking**: Clearly distinguish `VERIFIED` primary sources from `PROVISIONAL` or secondary citations.
-- **Separation of Source Claim from Interpretation**: Always make clear what the original author asserted versus what the BLF team is inferring or extending.
+- **Zero Hallucination Tolerance**: Never invent paper titles, authors, DOIs, ISBNs, arXiv IDs, or page numbers.
+- **Verification Marking**: Field-level verification (`VERIFIED`, `PARTIALLY_VERIFIED`, `PROVISIONAL`, `QUARANTINED`, `REJECTED`) is mandatory. A source cannot be marked VERIFIED without traceable primary evidence.
+- **Separation of Source Claim from Interpretation**: Always separate what the original source asserted from what the BLF team is inferring or extending.
+
+---
+
+## 5. Epistemic AI Slop: Definition & Guardrails
+Beyond surface rhetorical filler, BLF strictly prohibits **Epistemic AI Slop**, defined as:
+1. **Fabricated or Misattributed Identifiers**: Citing an actual paper's identifier (e.g. arXiv ID, ACL Anthology ID, DOI) for a completely different paper or dataset.
+2. **Blended Metadata**: Conflating authors, datasets, and release years across unrelated publications into a single synthetic citation.
+3. **Invented Dataset Statistics**: Guessing or assuming token counts, sentence counts, speaker counts, or license terms without primary evidence.
+4. **Decorative Precision**: Providing plausible-sounding numbers or dates without a measured or cited source.
+5. **Unsupported Novelty**: Making universal absence claims ("no dataset exists") without an exhaustive, documented search boundary.
+6. **Circular LLM Verification**: Accepting a citation as verified merely because an LLM or subagent claimed it was verified without terminating at external evidence. Verification must always terminate at primary catalog, repository, or DOI evidence.

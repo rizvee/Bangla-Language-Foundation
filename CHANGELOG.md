@@ -9,14 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added - Phase 0 Research Source Landscape & Gap Analysis
-- **Machine-Readable Evidence Matrix**: `research/dataset-landscape/evidence-matrix.json` covering 15 verified primary resources across Tier A, B, and D with fine-grained modality and licensing metadata.
-- **Dataset Landscape Review**: `research/dataset-landscape/landscape.md` surveying existing monolingual, syntactic, parallel MT, speech, transliteration, and code-mixed corpora.
-- **Bangla Academy Resource Map**: `research/literature-review/bangla-academy-map.md` cataloging official national grammar, orthography, dialect dictionary, and lexicographical publications.
-- **Descriptive Linguistics Survey**: `research/literature-review/linguistic-sources.md` formalizing syntactic, morphological, and pro-drop models from Chatterji, Azad, Thompson, and Sarkar.
-- **Multi-Dimensional Gap Analysis**: `research/gap-analysis/phase-0-gap-analysis.md` assessing 10 empirical gaps across semantics, sentence families, conversation, Banglish, and regional syntax.
-- **Phase 0 Research Findings**: `research/findings/phase-0-findings.md` synthesizing discoveries, adversarial review results, and recommendations for Phase 1.
-- **Expanded Source Registry**: `sources/registry/sources.json` expanded to 15 verified primary sources with exact citations and checksums.
+### Added - Phase 0.1 Source Integrity Recovery & Evidence Hardening
+- **Source Integrity Auditor**: Implemented `scripts/audit_sources.py` providing deterministic cross-identifier verification (ACL Anthology IDs, arXiv IDs, UD repository canonical names, and field-level evidence requirements).
+- **Source Audit Ledger**: Established `sources/registry/source-audit.jsonl` tracking corrections and quarantine rationale for historical candidate misattributions.
+- **Field-Level Verification Schema**: Upgraded `schemas/v0_1/source.schema.json` and `sources/registry/sources.json` to require explicit `verification` blocks with primary evidence URLs, access dates, and verified field tuples.
+- **Regression Test Suite**: Added `tests/test_source_audit.py` guaranteeing automated detection and rejection of known false identifier signatures (e.g. arXiv:2206.14051, ACL 2021.wnut-1.14, ACL 2022.findings-emnlp.319).
+- **Hardened Source Registry**: 16 fully verified primary sources across Tier A, B, and D, 1 partially verified source (`BPCC-BENGALI-2023`), and 4 quarantined historical candidate entries.
+- **Epistemic Anti-Slop Expansion**: Updated `docs/research-writing-policy.md` and `.ai/checks/anti-ai-slop.md` with explicit definitions and prohibitions against Epistemic AI Slop (identifier fabrication, blended metadata, invented statistics, circular LLM verification).
+- **Calibrated Gap Analysis**: Updated `research/gap-analysis/phase-0-gap-analysis.md` with explicit epistemic status tags (`[SUPPORTED]`, `[PARTIALLY_SUPPORTED]`, `[NOT_YET_VERIFIED]`).
 
 ---
 
