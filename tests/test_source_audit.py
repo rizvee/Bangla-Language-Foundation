@@ -182,10 +182,11 @@ class TestSourceAudit(unittest.TestCase):
         """
         Tests authorship contamination detection and license matching for BanglaNMT:
         - Contaminated author list (with foreign authors) must FAIL.
-        - Canonical author list with CC-BY-NC-SA-4.0 must PASS.
+        - Misattributed author list (e.g. Md Saiful Islam replacing Masum Hasan & Madhusudan Basak) must FAIL.
+        - Canonical author list from ACL:2020.emnlp-main.207 with CC-BY-NC-SA-4.0 must PASS.
         - Incorrect license (CC-BY-NC-4.0) must FAIL.
         """
-        # 1. Contaminated author list
+        # 1. Contaminated author list with foreign co-authors
         contaminated_banglanmt = {
             "source_id": "BANGLANMT-TEST",
             "title": "Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation",
@@ -204,8 +205,8 @@ class TestSourceAudit(unittest.TestCase):
             f"Expected authorship contamination rejection, got: {errs_contam}"
         )
 
-        # 2. Canonical authors with correct license
-        clean_banglanmt = {
+        # 2. Misattributed author list (Md Saiful Islam instead of Masum Hasan & Madhusudan Basak)
+        misattributed_banglanmt = {
             "source_id": "BANGLANMT-TEST",
             "title": "Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation",
             "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Samin, Md Saiful Islam, M. Sohel Rahman, and Rifat Shahriyar",
@@ -217,8 +218,43 @@ class TestSourceAudit(unittest.TestCase):
             "license": "CC-BY-NC-SA-4.0",
             "citation": "BanglaNMT citation."
         }
+        errs_misattr = validate_semantic_and_authorship_match(misattributed_banglanmt)
+        self.assertTrue(
+            any("Authorship Contamination" in e for e in errs_misattr),
+            f"Expected authorship contamination rejection for Md Saiful Islam replacement, got: {errs_misattr}"
+        )
+
+        # 3. Canonical authors from ACL:2020.emnlp-main.207 with correct license
+        clean_banglanmt = {
+            "source_id": "BANGLANMT-TEST",
+            "title": "Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation",
+            "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Samin, Masum Hasan, Madhusudan Basak, M. Sohel Rahman, and Rifat Shahriyar",
+            "source_tier": "TIER_D",
+            "language": "bn",
+            "year": 2020,
+            "verification_status": "VERIFIED",
+            "paper_id": "ACL:2020.emnlp-main.207",
+            "license": "CC-BY-NC-SA-4.0",
+            "citation": "BanglaNMT citation."
+        }
         errs_clean = validate_semantic_and_authorship_match(clean_banglanmt)
         self.assertEqual(errs_clean, [])
+
+    def test_banglanmt_canonical_authors_match_acl_anthology(self):
+        """Regression test: Canonical author set for ACL:2020.emnlp-main.207 must match authoritative EMNLP 2020 publication."""
+        from scripts.audit_sources import CANONICAL_METADATA_SNAPSHOTS
+        canonical_snap = CANONICAL_METADATA_SNAPSHOTS.get("ACL:2020.emnlp-main.207")
+        self.assertIsNotNone(canonical_snap)
+        expected_authors = [
+            "Tahmid Hasan",
+            "Abhik Bhattacharjee",
+            "Kazi Samin",
+            "Masum Hasan",
+            "Madhusudan Basak",
+            "M. Sohel Rahman",
+            "Rifat Shahriyar"
+        ]
+        self.assertEqual(canonical_snap["authors"], expected_authors)
 
     def test_bnsentmix_license_matching(self):
         """

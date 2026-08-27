@@ -1028,7 +1028,7 @@
       "source_id": "BANGLANMT-2020",
       "canonical_resource_id": "BANGLANMT-PARALLEL-CORPUS",
       "title": "Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation",
-      "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Samin, Md Saiful Islam, M. Sohel Rahman, and Rifat Shahriyar",
+      "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Samin, Masum Hasan, Madhusudan Basak, M. Sohel Rahman, and Rifat Shahriyar",
       "source_tier": "TIER_D",
       "language": "bn",
       "region": "Bangladesh",
@@ -1087,7 +1087,8 @@
               "Tahmid Hasan",
               "Abhik Bhattacharjee",
               "Kazi Samin",
-              "Md Saiful Islam",
+              "Masum Hasan",
+              "Madhusudan Basak",
               "M. Sohel Rahman",
               "Rifat Shahriyar"
             ],
@@ -1153,7 +1154,7 @@
         "verifier_notes": "Corrected author list to eliminate blended metadata; verified canonical dataset repository license as CC-BY-NC-SA-4.0."
       },
       "checksum": null,
-      "citation": "Hasan, T., Bhattacharjee, A., Samin, K., Islam, M. S., Rahman, M. S., & Shahriyar, R. (2020). Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation. In Proceedings of EMNLP 2020 (pp. 2612–2623). https://doi.org/10.18653/v1/2020.emnlp-main.207",
+      "citation": "Hasan, T., Bhattacharjee, A., Samin, K., Hasan, M., Basak, M., Rahman, M. S., & Shahriyar, R. (2020). Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation. In Proceedings of EMNLP 2020 (pp. 2612–2623). https://doi.org/10.18653/v1/2020.emnlp-main.207",
       "notes": "Contains 2.75M cleaned Bengali-English sentence pairs."
     },
     {

@@ -64,7 +64,8 @@ CANONICAL_METADATA_SNAPSHOTS: Dict[str, Dict[str, Any]] = {
             "Tahmid Hasan",
             "Abhik Bhattacharjee",
             "Kazi Samin",
-            "Md Saiful Islam",
+            "Masum Hasan",
+            "Madhusudan Basak",
             "M. Sohel Rahman",
             "Rifat Shahriyar"
         ],
