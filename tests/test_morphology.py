@@ -71,6 +71,16 @@ class TestNominalDeclension(unittest.TestCase):
         self.assertEqual(cells["ACC.PL.INDEF"], "বইগুলো")
         self.assertEqual(cells["GEN.PL.INDEF"], "বইগুলোর")
 
+    def test_classifier_plural_exclusivity(self):
+        """Verifies that nominal declension never generates illegal stacked classifier+plural affixes."""
+        human_cells = self.engine.decline_noun("মানুষ", is_human=True, classifier="টি")
+        inanim_cells = self.engine.decline_noun("বই", is_human=False, classifier="টা")
+
+        for key, form in {**human_cells, **inanim_cells}.items():
+            self.assertNotIn("টাগুলো", form, f"Illegal stacked classifier+plural in {key}: {form}")
+            self.assertNotIn("টিরা", form, f"Illegal stacked classifier+plural in {key}: {form}")
+            self.assertNotIn("টাদের", form, f"Illegal stacked classifier+plural in {key}: {form}")
+
 
 class TestPronominalParadigms(unittest.TestCase):
     def setUp(self):

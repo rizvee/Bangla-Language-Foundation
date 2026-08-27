@@ -7,14 +7,21 @@ The BLF Morphosyntactic & Inflectional Paradigm Engine operationalizes the atomi
 
 ## 2. Nominal Inflection & Suffix Morphotactics
 
-### 2.1 Affix Ordering Rule
-Nominal morphology in BDSB follows a strict, non-permuting affix hierarchy:
-$$\text{[Noun Root]} \rightarrow \text{[Numeral Classifier]} \rightarrow \text{[Plural Marker]} \rightarrow \text{[Case Suffix]} \rightarrow \text{[Focus Clitic]}$$
+### 2.1 Morphotactic Templates & Classifier-Plural Exclusivity
+In standard Bangla (BDSB), singular numeral classifiers (`-ta`, `-ti`, `-khana`, `-jon`) and plural markers (`-ra`/`-era`, `-gulo`/`-gula`, `-der`) are **mutually exclusive** when attaching to a nominal stem. Stacking singular classifiers and plural suffixes on the same root ($*\text{বইটাতোলা}$, $*\text{মানুষটিরা}$) is strictly ungrammatical.
 
-Examples:
-- *বই + টা + র* $\rightarrow$ **বইটার** (`[Root:বই] [CLF:-টা] [Case:GEN:-র]`)
-- *মানুষ + টি + কে* $\rightarrow$ **মানুষটিকে** (`[Root:মানুষ] [CLF:-টি] [Case:ACC:-কে]`)
-- *ছেলে + গুলো + তে* $\rightarrow$ **ছেলেগুলোতে** (`[Root:ছেলে] [PL:-গুলো] [Case:LOC:-তে]`)
+Nominal morphology follows three attested morphotactic templates:
+1. **Singular Definite Nominal**:
+   $$\text{[Noun Root]} \rightarrow \text{[Singular Classifier]} \rightarrow \text{[Case Suffix]} \rightarrow \text{[Focus Clitic]}$$
+   - *বই + টা + র* $\rightarrow$ **বইটার** (`[Root:বই] [CLF:-টা] [Case:GEN:-র]`)
+   - *মানুষ + টি + কে* $\rightarrow$ **মানুষটিকে** (`[Root:মানুষ] [CLF:-টি] [Case:ACC:-কে]`)
+2. **Plural Nominal (Human / Animate / Collective)**:
+   $$\text{[Noun Root]} \rightarrow \text{[Plural Marker]} \rightarrow \text{[Case Suffix]} \rightarrow \text{[Focus Clitic]}$$
+   - *মানুষ + দের + কে* $\rightarrow$ **মানুষদেরকে** (`[Root:মানুষ] [PL:GEN/OBL:-দের] [Case:ACC:-কে]`)
+   - *বই + গুলো + তে* $\rightarrow$ **বইগুলোতে** (`[Root:বই] [PL:-গুলো] [Case:LOC:-তে]`)
+3. **Quantified Phrasal Construction**:
+   $$\text{[Numeral + Classifier]} + \text{[Bare Noun Root]} \rightarrow \text{[Case Suffix]} \rightarrow \text{[Focus Clitic]}$$
+   - *তিনটি + বই + এর* $\rightarrow$ **তিনটি বইয়ের** (`[Num:তিন + CLF:-টি] [Root:বই] [Case:GEN:-এর]`)
 
 ---
 
