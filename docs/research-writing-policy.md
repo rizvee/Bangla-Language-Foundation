@@ -49,11 +49,16 @@ Beyond surface rhetorical filler, BLF strictly prohibits **Epistemic AI Slop**, 
 The following core axioms govern all research and data operations:
 
 ```
-SCHEMA VALID            != SOURCE VERIFIED
-SOURCE URL EXISTS       != CLAIM VERIFIED
-AUTHORITY DOMAIN        != FIELD EVIDENCE
-IDENTIFIER EXISTS       != IDENTIFIER MATCHES RECORD
-MODEL REVIEW            != EXTERNAL VERIFICATION
+SCHEMA VALID                  != SOURCE VERIFIED
+SOURCE URL EXISTS             != CLAIM VERIFIED
+AUTHORITY DOMAIN              != FIELD EVIDENCE
+IDENTIFIER EXISTS             != IDENTIFIER MATCHES RECORD
+MODEL REVIEW                  != EXTERNAL VERIFICATION
+RESOURCE IDENTITY VERIFIED    != ARTIFACT LICENSE VERIFIED
+REPOSITORY LICENSE            != UNDERLYING DATA RIGHTS
+PAPER LICENSE                 != DATASET LICENSE
+CORRECT TITLE                 != CORRECT AUTHORSHIP
+VALID LOCATOR STRING          != RESOLVABLE EVIDENCE LOCATOR
 ```
 
-Verification terminates only when the claimed value is matched against external evidence that actually contains and supports that exact value.
+Verification terminates only when the claimed value is matched against external evidence that actually contains and supports that exact value. Individual unresolved artifact fields must remain `PARTIALLY_VERIFIED` or `PROVISIONAL` rather than inheriting blanket verified status.

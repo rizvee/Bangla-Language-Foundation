@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/source.schema.json",
   "title": "BLFSource",
-  "description": "Schema for sources registered in the BLF research source registry with claim-level evidence binding and semantic verification.",
+  "description": "Schema for sources registered in the BLF research source registry with claim-level evidence binding, artifact-specific licensing, and semantic verification.",
   "type": "object",
   "required": [
     "source_id",
@@ -94,16 +94,42 @@
     },
     "copyright_status": {
       "type": ["string", "null"],
-      "description": "Legal copyright state (e.g. 'Copyrighted', 'Public Domain', 'Statutory Public Notice')."
+      "description": "Legal copyright state (e.g. 'Copyrighted', 'Public Domain', 'Statutory Public Notice', 'Open Access')."
     },
     "license": {
       "type": ["string", "null"],
-      "description": "Explicit license governing the dataset or code (e.g., 'CC-BY-4.0', 'MIT', 'CC0-1.0', 'CC-BY-NC-4.0', null if unspecified)."
+      "description": "Explicit license governing the primary artifact (e.g., 'CC-BY-NC-SA-4.0', 'Apache-2.0', 'MIT', 'CC0-1.0', null if unspecified)."
     },
     "redistribution": {
       "type": ["string", "null"],
-      "enum": ["open_redistribution", "derived_features_only", "restricted_internal", null],
+      "enum": ["open_redistribution", "derived_features_only", "restricted_or_requires_review", "restricted_internal", null],
       "description": "Allowed redistribution scope under BLF policy."
+    },
+    "artifacts": {
+      "type": "array",
+      "description": "Artifact-specific licensing and access breakdown (e.g., Paper vs Code vs Dataset vs Model).",
+      "items": {
+        "type": "object",
+        "required": ["artifact_id", "artifact_type"],
+        "properties": {
+          "artifact_id": {"type": "string"},
+          "artifact_type": {
+            "type": "string",
+            "enum": ["PAPER", "CODE", "DATASET", "MODEL", "CORPUS", "ANNOTATIONS", "DOCUMENTATION", "CHECKPOINT", "ARCHIVE", "MONOGRAPH", "RULEBOOK", "DICTIONARY"]
+          },
+          "canonical_url": {"type": ["string", "null"]},
+          "license": {"type": ["string", "null"]},
+          "copyright_status": {"type": ["string", "null"]},
+          "redistribution": {
+            "type": ["string", "null"],
+            "enum": ["open_redistribution", "derived_features_only", "restricted_or_requires_review", "restricted_internal", null]
+          },
+          "evidence_id": {"type": ["string", "null"]},
+          "locator": {"type": ["string", "null"]},
+          "notes": {"type": ["string", "null"]}
+        },
+        "additionalProperties": false
+      }
     },
     "verification_status": {
       "type": "string",

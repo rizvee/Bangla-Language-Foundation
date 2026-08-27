@@ -1,8 +1,8 @@
 {
   "$schema": "https://bangla-language-foundation.org/schemas/v0_1/source.schema.json",
-  "registry_version": "0.2.0",
+  "registry_version": "0.3.0",
   "last_updated": "2026-08-28",
-  "description": "Hardened research source registry for Bangla Language Foundation with claim-level evidence bindings and semantic verification.",
+  "description": "Hardened research source registry for Bangla Language Foundation with claim-level evidence bindings, artifact-specific licensing, and semantic verification.",
   "sources": [
     {
       "source_id": "BA-GRAM-2011",
@@ -17,7 +17,7 @@
       "version": null,
       "release": null,
       "publisher": "Bangla Academy, Dhaka",
-      "url": "https://banglaacademy.gov.bd/site/page/89531846-5b48-43d9-959c-bc015f8c8577",
+      "url": "https://lccn.loc.gov/2012323386",
       "identifier": "LCCN: 2012323386 / ISBN: 984-07-5026-2",
       "paper_id": null,
       "mirror_of": null,
@@ -26,11 +26,24 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BA-GRAM-PRINT",
+          "artifact_type": "MONOGRAPH",
+          "canonical_url": "https://lccn.loc.gov/2012323386",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BA-GRAM-LOC",
+          "locator": "LoC Catalog Record LCCN 2012323386",
+          "notes": "Two-volume printed reference grammar published by Bangla Academy."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "Institutional catalog, LoC LCCN 2012323386, and publisher front-matter verification",
+        "verification_method": "Library of Congress catalog LCCN 2012323386 and publisher front-matter verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BA-GRAM-LOC",
@@ -96,8 +109,8 @@
       "version": null,
       "release": null,
       "publisher": "Bangla Academy, Dhaka",
-      "url": "https://banglaacademy.gov.bd",
-      "identifier": "BA-DIRECTIVE-2016",
+      "url": "https://banglaacademy.portal.gov.bd",
+      "identifier": "ISBN: 984-07-5531-5",
       "paper_id": null,
       "mirror_of": null,
       "derived_from": null,
@@ -105,24 +118,37 @@
       "copyright_status": "Statutory Public Notice",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BA-SPELL-RULEBOOK",
+          "artifact_type": "RULEBOOK",
+          "canonical_url": "https://banglaacademy.portal.gov.bd",
+          "license": null,
+          "copyright_status": "Statutory Public Notice",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BA-SPELL-PUB",
+          "locator": "Imprint ISBN 984-07-5531-5",
+          "notes": "Official orthography rulebook published by Bangla Academy."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "Official statutory publication and institutional rulebook inspection",
+        "verification_method": "Bangla Academy institutional publication and ISBN 984-07-5531-5 imprint verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BA-SPELL-PUB",
-            "canonical_url": "https://banglaacademy.gov.bd",
-            "publisher_or_host": "Bangla Academy, Government of Bangladesh",
-            "evidence_type": "Official Regulatory Rulebook",
+            "canonical_url": "https://banglaacademy.portal.gov.bd",
+            "publisher_or_host": "Bangla Academy",
+            "evidence_type": "Official Regulatory Rulebook Imprint",
             "resource_title": "Bangla Academy Promito Bangla Bananer Niyom",
             "retrieved_title": "বাংলা একাডেমি প্রমিত বাংলা বানানের নিয়ম",
             "authors_if_applicable": ["Bangla Academy Committee"],
-            "identifier_if_applicable": "Bangla Academy Publication Code 1845",
+            "identifier_if_applicable": "ISBN: 984-07-5531-5",
             "accessed_at": "2026-08-28",
-            "locator": "Official Gazette / Publication Catalogue Code 1845",
-            "supports_fields": ["title", "author_or_org", "year", "publisher"]
+            "locator": "Imprint Page ISBN 984-07-5531-5",
+            "supports_fields": ["title", "author_or_org", "year", "publisher", "identifier"]
           }
         ],
         "claims": [
@@ -131,7 +157,7 @@
             "field": "title",
             "value": "Bangla Academy Promito Bangla Bananer Niyom",
             "evidence_id": "EV-BA-SPELL-PUB",
-            "locator": "Rulebook Title",
+            "locator": "Title Page",
             "status": "VERIFIED",
             "verified_at": "2026-08-28"
           },
@@ -145,12 +171,12 @@
             "verified_at": "2026-08-28"
           }
         ],
-        "verified_fields": ["title", "author_or_org", "year", "publisher"],
+        "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier"],
         "unresolved_fields": [],
-        "verifier_notes": "Official spelling standardization rules adopted across Bangladesh government, judiciary, and national curriculum."
+        "verifier_notes": "Official spelling standardization rules verified against print publication imprint ISBN 984-07-5531-5."
       },
       "checksum": null,
-      "citation": "Bangla Academy. (2016). Bangla Academy Promito Bangla Bananer Niyom (Revised Edition). Dhaka: Bangla Academy.",
+      "citation": "Bangla Academy. (2016). Bangla Academy Promito Bangla Bananer Niyom (Revised Edition). Dhaka: Bangla Academy. ISBN 984-07-5531-5.",
       "notes": "Defines normalization rules for Dari, Hasanta, and vowel diacritic combinations."
     },
     {
@@ -166,7 +192,7 @@
       "version": null,
       "release": null,
       "publisher": "Bangla Academy, Dhaka",
-      "url": "https://banglaacademy.gov.bd",
+      "url": "https://lccn.loc.gov/74930105",
       "identifier": "LCCN: 74930105",
       "paper_id": null,
       "mirror_of": null,
@@ -175,11 +201,24 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BA-REGDICT-PRINT",
+          "artifact_type": "DICTIONARY",
+          "canonical_url": "https://lccn.loc.gov/74930105",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BA-REGDICT-LOC",
+          "locator": "LoC Catalog Record LCCN 74930105",
+          "notes": "Three-volume regional lexicon comprising ~120,000 entries."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "Library of Congress Catalog LCCN 74930105 and dictionary front-matter inspection",
+        "verification_method": "Library of Congress Catalog LCCN 74930105 verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BA-REGDICT-LOC",
@@ -191,8 +230,8 @@
             "authors_if_applicable": ["Muhammada Sahīdullāha"],
             "identifier_if_applicable": "LCCN: 74930105",
             "accessed_at": "2026-08-28",
-            "locator": "LCCN 74930105",
-            "supports_fields": ["title", "author_or_org", "year", "publisher"]
+            "locator": "LCCN 74930105 (3 v. ; 25 cm.)",
+            "supports_fields": ["title", "author_or_org", "year", "publisher", "edition"]
           }
         ],
         "claims": [
@@ -210,7 +249,7 @@
             "field": "year",
             "value": 1965,
             "evidence_id": "EV-BA-REGDICT-LOC",
-            "locator": "Original Publication Date",
+            "locator": "Publication Date Field",
             "status": "VERIFIED",
             "verified_at": "2026-08-28"
           },
@@ -219,12 +258,12 @@
             "field": "notes",
             "value": "~120,000 regional lexical entries",
             "evidence_id": "EV-BA-REGDICT-LOC",
-            "locator": "Introduction & Corpus Survey Description",
+            "locator": "Catalog Description and Editorial Preface",
             "status": "VERIFIED",
             "verified_at": "2026-08-28"
           }
         ],
-        "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier"],
+        "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier", "edition"],
         "unresolved_fields": [],
         "verifier_notes": "Authoritative lexical collection covering 64 historical districts of Bangladesh."
       },
@@ -245,7 +284,7 @@
       "version": null,
       "release": null,
       "publisher": "Bangla Academy, Dhaka",
-      "url": "https://banglaacademy.gov.bd",
+      "url": "https://banglaacademy.portal.gov.bd",
       "identifier": "ISBN: 984-07-5892-1",
       "paper_id": null,
       "mirror_of": null,
@@ -254,23 +293,36 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BA-BED-PRINT",
+          "artifact_type": "DICTIONARY",
+          "canonical_url": "https://banglaacademy.portal.gov.bd",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BA-BED-ISBN",
+          "locator": "Imprint Page ISBN 984-07-5892-1",
+          "notes": "1,248-page bilingual Bengali-English dictionary."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "Publisher catalog and ISBN register verification",
+        "verification_method": "Publisher imprint page and ISBN 984-07-5892-1 register verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BA-BED-ISBN",
-            "canonical_url": "https://banglaacademy.gov.bd",
+            "canonical_url": "https://banglaacademy.portal.gov.bd",
             "publisher_or_host": "Bangla Academy",
-            "evidence_type": "Institutional Dictionary Publication",
+            "evidence_type": "Institutional Dictionary Imprint",
             "resource_title": "Bangla Academy Bengali-English Dictionary (3rd Edition)",
             "retrieved_title": "Bangla Academy Bengali-English Dictionary",
             "authors_if_applicable": ["Mohammad Ali", "Khabir Ahmad"],
             "identifier_if_applicable": "ISBN: 984-07-5892-1",
             "accessed_at": "2026-08-28",
-            "locator": "Imprint page ISBN 984-07-5892-1",
+            "locator": "Imprint Page ISBN 984-07-5892-1",
             "supports_fields": ["title", "author_or_org", "year", "publisher", "edition", "identifier"]
           }
         ],
@@ -324,6 +376,19 @@
       "copyright_status": "Public Domain",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-ODBL-SCAN",
+          "artifact_type": "MONOGRAPH",
+          "canonical_url": "https://archive.org/details/originanddevelop01chatiala",
+          "license": null,
+          "copyright_status": "Public Domain",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-ODBL-LOC",
+          "locator": "LCCN 27011681",
+          "notes": "Two-volume foundational historical linguistic treatise."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -394,6 +459,19 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-AZAD-PRINT",
+          "artifact_type": "MONOGRAPH",
+          "canonical_url": "https://lccn.loc.gov/85901372",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-AZAD-LOC",
+          "locator": "LCCN 85901372",
+          "notes": "320-page generative syntax treatise."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -455,7 +533,7 @@
       "version": null,
       "release": null,
       "publisher": "Routledge",
-      "url": "https://www.routledge.com/Bengali-A-Comprehensive-Grammar/Thompson/p/book/9780415411394",
+      "url": "https://doi.org/10.4324/9780203803882",
       "identifier": "ISBN: 978-0-415-41139-4 / DOI: 10.4324/9780203803882",
       "paper_id": null,
       "mirror_of": null,
@@ -464,6 +542,19 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-THOMPSON-PRINT",
+          "artifact_type": "MONOGRAPH",
+          "canonical_url": "https://doi.org/10.4324/9780203803882",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-THOMPSON-DOI",
+          "locator": "DOI 10.4324/9780203803882",
+          "notes": "672-page descriptive grammar published by Routledge."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -534,6 +625,19 @@
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-SOAS-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://www.elpublishing.org/PID/140",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-SOAS-SYL-PUB",
+          "locator": "Language Documentation and Description, Vol. 12, pp. 156-168",
+          "notes": "Journal article documenting Sylheti phonology and tone."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -604,6 +708,19 @@
       "copyright_status": "Open License",
       "license": "CC-BY-SA-4.0",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-UD-BRU-DATASET",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://github.com/UniversalDependencies/UD_Bengali-BRU",
+          "license": "CC-BY-SA-4.0",
+          "copyright_status": "Open License",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-UD-BRU-REPO",
+          "locator": "LICENSE.txt in repository root",
+          "notes": "CoNLL-U treebank dataset containing 56 sentences."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -692,6 +809,19 @@
       "copyright_status": "Open License",
       "license": "CC-BY-SA-4.0",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-UD-PUD-DATASET",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://github.com/UniversalDependencies/UD_Bengali-PUD",
+          "license": "CC-BY-SA-4.0",
+          "copyright_status": "Open License",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-UD-PUD-REPO",
+          "locator": "LICENSE.txt in repository root",
+          "notes": "1,000 parallel sentences in CoNLL-U format."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -769,13 +899,48 @@
       "derived_from": null,
       "supersedes": null,
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "CC-BY-NC-4.0",
+      "license": "CC-BY-NC-SA-4.0",
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BANGLABERT-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://aclanthology.org/2022.findings-naacl.98/",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access (ACL Anthology)",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BANGLABERT-ACL",
+          "locator": "ACL Anthology 2022.findings-naacl.98",
+          "notes": "Conference paper published under ACL Open Access."
+        },
+        {
+          "artifact_id": "ART-BANGLABERT-CODE",
+          "artifact_type": "CODE",
+          "canonical_url": "https://github.com/csebuetnlp/banglabert",
+          "license": "CC-BY-NC-SA-4.0",
+          "copyright_status": "Copyright (c) CSE BUET NLP",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BANGLABERT-GITHUB",
+          "locator": "LICENSE (CC BY-NC-SA 4.0)",
+          "notes": "Pretraining scripts, model weights, and benchmark evaluation suite."
+        },
+        {
+          "artifact_id": "ART-BANGLA2B-CORPUS",
+          "artifact_type": "CORPUS",
+          "canonical_url": "https://github.com/csebuetnlp/banglabert",
+          "license": "CC-BY-NC-SA-4.0",
+          "copyright_status": "Web crawl derived corpus",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BANGLABERT-GITHUB",
+          "locator": "Section 3.1 & README.md",
+          "notes": "27.5 GB web text crawled from 110 Bangladesh websites."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "ACL Anthology 2022.findings-naacl.98 and DOI 10.18653/v1/2022.findings-naacl.98 semantic verification",
+        "verification_method": "ACL Anthology 2022.findings-naacl.98 and canonical csebuetnlp/banglabert LICENSE audit",
         "primary_evidence": [
           {
             "evidence_id": "EV-BANGLABERT-ACL",
@@ -796,7 +961,7 @@
             ],
             "identifier_if_applicable": "ACL: 2022.findings-naacl.98 / DOI: 10.18653/v1/2022.findings-naacl.98 / arXiv: 2101.00204",
             "accessed_at": "2026-08-28",
-            "locator": "ACL Anthology 2022.findings-naacl.98 & Section 3 (Bangla2B+ Corpus: 27.5 GB, 110 websites)",
+            "locator": "ACL Anthology 2022.findings-naacl.98 & Section 3",
             "supports_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id"]
           },
           {
@@ -806,10 +971,10 @@
             "evidence_type": "Official Model & Dataset Repository",
             "resource_title": "BanglaBERT / Bangla2B+",
             "retrieved_title": "csebuetnlp/banglabert",
-            "authors_if_applicable": ["BUET CSE NLP"],
+            "authors_if_applicable": ["BUET CSE NLP Group"],
             "identifier_if_applicable": "github.com/csebuetnlp/banglabert",
             "accessed_at": "2026-08-28",
-            "locator": "LICENSE (CC-BY-NC-4.0 for dataset)",
+            "locator": "LICENSE (CC BY-NC-SA 4.0)",
             "supports_fields": ["license", "redistribution"]
           }
         ],
@@ -844,7 +1009,7 @@
           {
             "claim_id": "CLM-BB-LIC",
             "field": "license",
-            "value": "CC-BY-NC-4.0",
+            "value": "CC-BY-NC-SA-4.0",
             "evidence_id": "EV-BANGLABERT-GITHUB",
             "locator": "LICENSE file in repository",
             "status": "VERIFIED",
@@ -853,17 +1018,17 @@
         ],
         "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id", "license"],
         "unresolved_fields": [],
-        "verifier_notes": "Corrected ACL Anthology identifier from false 2022.naacl-main.185 (offensive span detection) to canonical 2022.findings-naacl.98."
+        "verifier_notes": "Corrected primary repository and model license to CC-BY-NC-SA-4.0 (ShareAlike verified in csebuetnlp/banglabert LICENSE)."
       },
       "checksum": null,
-      "citation": "Bhattacharjee, A., Hasan, T., Ahmad, W., Mubasshir, K. S., Islam, M. S., Iqbal, A., Rahman, M. S., & Shahriyar, R. (2022). BanglaBERT: Language Model Pretraining and Benchmarks for Low-Resource Language Understanding Evaluation in Bangla. In Findings of the Association for Computational Linguistics: NAACL 2022 (pp. 1318–1327). https://doi.org/10.18653/v1/2022.findings-naacl.98",
+      "citation": "Bhattacharjee, A., Hasan, T., Ahmad, W., Mubasshir, K. S., Islam, M. S., Iqbal, A., Rahman, M. S., & Shahriyar, R. (2022). BanglaBERT: Language Model Pretraining and Benchmarks for Low-Resource Language Understanding Evaluation in Bangla. In Findings of NAACL 2022 (pp. 1318–1327). https://doi.org/10.18653/v1/2022.findings-naacl.98",
       "notes": "Contains Bangla2B+ pretraining corpus (27.5 GB) collected from 110 Bangladesh websites."
     },
     {
       "source_id": "BANGLANMT-2020",
       "canonical_resource_id": "BANGLANMT-PARALLEL-CORPUS",
       "title": "Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation",
-      "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Mubasshir, Md Saiful Islam, Yuan-Fang Li, Yong-Bin Kang, M. Sohel Rahman, and Rifat Shahriyar",
+      "author_or_org": "Tahmid Hasan, Abhik Bhattacharjee, Kazi Samin, Md Saiful Islam, M. Sohel Rahman, and Rifat Shahriyar",
       "source_tier": "TIER_D",
       "language": "bn",
       "region": "Bangladesh",
@@ -879,13 +1044,37 @@
       "derived_from": null,
       "supersedes": null,
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "CC-BY-NC-4.0",
+      "license": "CC-BY-NC-SA-4.0",
       "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BANGLANMT-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://aclanthology.org/2020.emnlp-main.207/",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access (ACL Anthology)",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BANGLANMT-ACL",
+          "locator": "ACL Anthology 2020.emnlp-main.207",
+          "notes": "Conference paper published under ACL Open Access."
+        },
+        {
+          "artifact_id": "ART-BANGLANMT-DATASET",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://github.com/csebuetnlp/banglanmt",
+          "license": "CC-BY-NC-SA-4.0",
+          "copyright_status": "Copyright (c) CSE BUET NLP",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-BANGLANMT-GITHUB",
+          "locator": "LICENSE in repository root",
+          "notes": "2.75M parallel sentence pairs released under CC BY-NC-SA 4.0."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "ACL Anthology 2020.emnlp-main.207 and DOI resolution",
+        "verification_method": "ACL Anthology 2020.emnlp-main.207 and csebuetnlp/banglanmt LICENSE verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BANGLANMT-ACL",
@@ -897,17 +1086,28 @@
             "authors_if_applicable": [
               "Tahmid Hasan",
               "Abhik Bhattacharjee",
-              "Kazi Mubasshir",
+              "Kazi Samin",
               "Md Saiful Islam",
-              "Yuan-Fang Li",
-              "Yong-Bin Kang",
               "M. Sohel Rahman",
               "Rifat Shahriyar"
             ],
             "identifier_if_applicable": "ACL: 2020.emnlp-main.207 / DOI: 10.18653/v1/2020.emnlp-main.207",
             "accessed_at": "2026-08-28",
-            "locator": "ACL Anthology 2020.emnlp-main.207 & Table 1 (2.75M parallel sentence pairs)",
+            "locator": "ACL Anthology 2020.emnlp-main.207 & Table 1",
             "supports_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id"]
+          },
+          {
+            "evidence_id": "EV-BANGLANMT-GITHUB",
+            "canonical_url": "https://github.com/csebuetnlp/banglanmt",
+            "publisher_or_host": "GitHub / BUET CSE NLP",
+            "evidence_type": "Official Dataset Repository",
+            "resource_title": "BanglaNMT",
+            "retrieved_title": "csebuetnlp/banglanmt",
+            "authors_if_applicable": ["BUET CSE NLP Group"],
+            "identifier_if_applicable": "github.com/csebuetnlp/banglanmt",
+            "accessed_at": "2026-08-28",
+            "locator": "LICENSE in repository root",
+            "supports_fields": ["license", "redistribution"]
           }
         ],
         "claims": [
@@ -937,14 +1137,23 @@
             "locator": "Table 1 (Corpus statistics)",
             "status": "VERIFIED",
             "verified_at": "2026-08-28"
+          },
+          {
+            "claim_id": "CLM-BNMT-LIC",
+            "field": "license",
+            "value": "CC-BY-NC-SA-4.0",
+            "evidence_id": "EV-BANGLANMT-GITHUB",
+            "locator": "LICENSE file in repository",
+            "status": "VERIFIED",
+            "verified_at": "2026-08-28"
           }
         ],
-        "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id"],
+        "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id", "license"],
         "unresolved_fields": [],
-        "verifier_notes": "Benchmark parallel corpus for Bengali-English neural machine translation."
+        "verifier_notes": "Corrected author list to eliminate blended metadata; verified canonical dataset repository license as CC-BY-NC-SA-4.0."
       },
       "checksum": null,
-      "citation": "Hasan, T., Bhattacharjee, A., Mubasshir, K., Islam, M. S., Li, Y.-F., Kang, Y.-B., Rahman, M. S., & Shahriyar, R. (2020). Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation. In Proceedings of EMNLP 2020 (pp. 2612–2623). https://doi.org/10.18653/v1/2020.emnlp-main.207",
+      "citation": "Hasan, T., Bhattacharjee, A., Samin, K., Islam, M. S., Rahman, M. S., & Shahriyar, R. (2020). Not Low-Resource Anymore: Aligner Ensembling, Batch Filtering, and New Datasets for Bengali-English Machine Translation. In Proceedings of EMNLP 2020 (pp. 2612–2623). https://doi.org/10.18653/v1/2020.emnlp-main.207",
       "notes": "Contains 2.75M cleaned Bengali-English sentence pairs."
     },
     {
@@ -969,6 +1178,30 @@
       "copyright_status": "Open Data (AI4Bharat)",
       "license": "CC0-1.0",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-INDICCORP-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://aclanthology.org/2020.findings-emnlp.407/",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access (ACL Anthology)",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-INDICCORP-ACL",
+          "locator": "ACL Anthology 2020.findings-emnlp.407",
+          "notes": "Conference paper published under ACL Open Access."
+        },
+        {
+          "artifact_id": "ART-INDICCORP-CORPUS",
+          "artifact_type": "CORPUS",
+          "canonical_url": "https://github.com/AI4Bharat/indic-nlp-corpus",
+          "license": "CC0-1.0",
+          "copyright_status": "Public Domain Dedication",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-INDICCORP-ACL",
+          "locator": "Section 3 & Table 2",
+          "notes": "1.2B token Bengali monolingual crawl split."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -1056,6 +1289,30 @@
       "copyright_status": "Open Access (CC0 1.0)",
       "license": "CC0-1.0",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BENGALIAI-PREPRINT",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://arxiv.org/abs/2206.14053",
+          "license": "CC-BY-4.0",
+          "copyright_status": "arXiv Open Access",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BENGALIAI-ARXIV",
+          "locator": "arXiv:2206.14053",
+          "notes": "Primary preprint paper."
+        },
+        {
+          "artifact_id": "ART-BENGALIAI-AUDIO",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://commonvoice.mozilla.org/bn",
+          "license": "CC0-1.0",
+          "copyright_status": "CC0 Public Domain Dedication",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BENGALIAI-ARXIV",
+          "locator": "Section 2 (Dataset collection & licensing)",
+          "notes": "~500,000 crowdsourced speech recordings across 64 districts."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -1145,6 +1402,30 @@
       "copyright_status": "Open Access (ACL Anthology)",
       "license": "MIT",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BANGLATLIT-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://aclanthology.org/2024.findings-emnlp.859/",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access (ACL Anthology)",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BANGLATLIT-ACL",
+          "locator": "ACL Anthology 2024.findings-emnlp.859",
+          "notes": "Findings of EMNLP 2024 paper (pp. 14704-14717)."
+        },
+        {
+          "artifact_id": "ART-BANGLATLIT-DATASET",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://github.com/farhanishmam/BanglaTLit",
+          "license": "MIT",
+          "copyright_status": "MIT License",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BANGLATLIT-ACL",
+          "locator": "Section 3 & repository LICENSE",
+          "notes": "42.7k human annotated pairs + 245.7k pretraining dataset."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
@@ -1230,13 +1511,48 @@
       "derived_from": null,
       "supersedes": null,
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "MIT",
-      "redistribution": "open_redistribution",
+      "license": "Apache-2.0",
+      "redistribution": "restricted_or_requires_review",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BNSENTMIX-PAPER",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://aclanthology.org/2025.loreslm-1.4/",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access (ACL Anthology)",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BNSENTMIX-ACL",
+          "locator": "ACL Anthology 2025.loreslm-1.4 (pp. 31-41)",
+          "notes": "Workshop publication in LoResLM 2025."
+        },
+        {
+          "artifact_id": "ART-BNSENTMIX-REPO",
+          "artifact_type": "CODE",
+          "canonical_url": "https://github.com/Nishita2000/BnSentMix",
+          "license": "Apache-2.0",
+          "copyright_status": "Copyright (c) 2024 Nishita2000",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BNSENTMIX-GITHUB",
+          "locator": "LICENSE in repository root",
+          "notes": "Repository code and processing scripts under Apache-2.0."
+        },
+        {
+          "artifact_id": "ART-BNSENTMIX-DATASET",
+          "artifact_type": "DATASET",
+          "canonical_url": "https://github.com/Nishita2000/BnSentMix",
+          "license": "Apache-2.0",
+          "copyright_status": "Social Media (YouTube/Facebook/E-Commerce) Crawled Data",
+          "redistribution": "restricted_or_requires_review",
+          "evidence_id": "EV-BNSENTMIX-GITHUB",
+          "locator": "data/ directory in repository",
+          "notes": "20,000 code-mixed social media samples. Underlying text subject to platform terms; BLF models derived features only."
+        }
+      ],
       "verification_status": "VERIFIED",
       "verification": {
         "status": "VERIFIED",
         "verified_at": "2026-08-28",
-        "verification_method": "ACL Anthology 2025.loreslm-1.4 and arXiv:2408.08964 verification",
+        "verification_method": "ACL Anthology 2025.loreslm-1.4 and Nishita2000/BnSentMix repository Apache-2.0 license verification",
         "primary_evidence": [
           {
             "evidence_id": "EV-BNSENTMIX-ACL",
@@ -1255,8 +1571,21 @@
             ],
             "identifier_if_applicable": "ACL: 2025.loreslm-1.4 / arXiv: 2408.08964",
             "accessed_at": "2026-08-28",
-            "locator": "ACL Anthology 2025.loreslm-1.4 & Section 3 (20,000 code-mixed sentences)",
+            "locator": "ACL Anthology 2025.loreslm-1.4 (pp. 31-41) & Section 3",
             "supports_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id"]
+          },
+          {
+            "evidence_id": "EV-BNSENTMIX-GITHUB",
+            "canonical_url": "https://github.com/Nishita2000/BnSentMix",
+            "publisher_or_host": "GitHub / Nishita2000",
+            "evidence_type": "Official Dataset & Code Repository",
+            "resource_title": "BnSentMix Repository",
+            "retrieved_title": "Nishita2000/BnSentMix",
+            "authors_if_applicable": ["Sadia Alam (Nishita2000)"],
+            "identifier_if_applicable": "github.com/Nishita2000/BnSentMix",
+            "accessed_at": "2026-08-28",
+            "locator": "LICENSE (Apache License 2.0)",
+            "supports_fields": ["license", "redistribution"]
           }
         ],
         "claims": [
@@ -1286,15 +1615,24 @@
             "locator": "Section 3",
             "status": "VERIFIED",
             "verified_at": "2026-08-28"
+          },
+          {
+            "claim_id": "CLM-BSM-LIC",
+            "field": "license",
+            "value": "Apache-2.0",
+            "evidence_id": "EV-BNSENTMIX-GITHUB",
+            "locator": "LICENSE file in repository",
+            "status": "VERIFIED",
+            "verified_at": "2026-08-28"
           }
         ],
         "verified_fields": ["title", "author_or_org", "year", "publisher", "identifier", "paper_id", "license"],
         "unresolved_fields": [],
-        "verifier_notes": "Authoritative code-mixed benchmark covering 4 sentiment classes across social media domains."
+        "verifier_notes": "Corrected canonical repository license from MIT to Apache-2.0; documented underlying social media text redistribution caution."
       },
       "checksum": null,
       "citation": "Alam, S., Ishmam, M. F., Alvee, N. H., Siddique, M. S., Hossain, M. A., & Kamal, A. R. M. (2025). BnSentMix: A Diverse Bengali-English Code-Mixed Dataset for Sentiment Analysis. In Proceedings of LoResLM 2025 (pp. 31–41).",
-      "notes": "20,000 annotated code-mixed Bengali-English sentences released under MIT License."
+      "notes": "20,000 annotated code-mixed Bengali-English sentences under Apache-2.0 repository license."
     },
     {
       "source_id": "BPCC-BENGALI-2023",
@@ -1318,6 +1656,19 @@
       "copyright_status": "Open Data (AI4Bharat)",
       "license": "CC-BY-4.0",
       "redistribution": "open_redistribution",
+      "artifacts": [
+        {
+          "artifact_id": "ART-BPCC-PREPRINT",
+          "artifact_type": "PAPER",
+          "canonical_url": "https://arxiv.org/abs/2305.16307",
+          "license": "CC-BY-4.0",
+          "copyright_status": "Open Access",
+          "redistribution": "open_redistribution",
+          "evidence_id": "EV-BPCC-ARXIV",
+          "locator": "Section 3 & Table 1",
+          "notes": "TMLR publication on IndicTrans2."
+        }
+      ],
       "verification_status": "PARTIALLY_VERIFIED",
       "verification": {
         "status": "PARTIALLY_VERIFIED",

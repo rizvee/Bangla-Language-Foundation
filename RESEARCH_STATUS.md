@@ -5,8 +5,8 @@ Last Updated: 2026-08-28
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 0.2 — Claim-Level Evidence Verification & Final Source Freeze (Complete)
-- **Milestone State**: Claim-Level Evidence Frozen Baseline (`research/phase-0-manifest.json`)
+- **Current Phase**: Phase 0.3 — Artifact-Specific License, Authorship & Bibliographic Consistency Audit (Complete)
+- **Milestone State**: Phase 0.3 Hardened & Frozen Baseline (`research/phase-0-manifest.json`)
 - **Primary Branch**: `main`
 
 ---
@@ -15,13 +15,13 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 4 schemas (`v0.1-draft`) | Utterance, Sentence Family, Source, Synthetic Provenance |
-| **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) |
+| **Schemas Authoring** | 4 schemas (`v0.1-draft-0.3`) | Utterance, Sentence Family, Source, Synthetic Provenance |
+| **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
-| **Evidence Matrix Entries** | 17 resources | Machine-readable with claim-level evidence blocks in `evidence-matrix.json` |
+| **Evidence Matrix Entries** | 17 resources | Machine-readable with claim-level evidence and artifact counts |
 | **Test Fixtures** | 2 fixtures | 1 Gold BDSB Canonical, 1 Synthetic Sylheti Variant |
-| **Automated Tests** | 23 unit tests | 100% passing across normalizer, schemas, sources, docs, anti-slop, claim audit |
+| **Automated Tests** | 25 unit tests | 100% passing across normalizer, schemas, sources, docs, anti-slop, authorship, license audit |
 | **Dataset Scale** | 0 production records | In research & development (no dataset released) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
 
@@ -29,8 +29,9 @@ Last Updated: 2026-08-28
 
 ## 3. Active Components & Verification
 
-- **Frozen Evidence Baseline**: Implemented in `research/phase-0-manifest.json` with cryptographic SHA-256 checksums of all core registries and schemas.
-- **Claim-Level Source Auditor**: Implemented in `scripts/audit_sources.py` and `sources/registry/source-audit.jsonl` enforcing semantic identifier matching and claim bindings.
+- **Frozen Evidence Baseline**: Implemented in `research/phase-0-manifest.json` (Phase 0.3) with cryptographic SHA-256 checksums across all core registries and schemas.
+- **Claim-Level & Artifact-Specific Source Auditor**: Implemented in `scripts/audit_sources.py` and `sources/registry/source-audit.jsonl` enforcing semantic identifier matching, author list validation, and artifact license precision.
+- **Artifact-Specific License Modeling**: Implemented in `schemas/v0_1/source.schema.json` supporting separate `artifacts` arrays for Paper, Code, Dataset, and Model components.
 - **Evidence Matrix & Landscape**: Implemented in `research/dataset-landscape/evidence-matrix.json` and `landscape.md`.
 - **Literature & Grammar Survey**: Implemented in `research/literature-review/bangla-academy-map.md` and `linguistic-sources.md`.
 - **Multi-Dimensional Gap Analysis**: Implemented in `research/gap-analysis/phase-0-gap-analysis.md` with explicit epistemic status tags (`[SUPPORTED]`, `[NOT_YET_VERIFIED]`).
@@ -43,6 +44,6 @@ Last Updated: 2026-08-28
 
 ## 4. Known Limitations & Research Gaps
 
-1. **Source Coverage**: Phase 0.2 frozen catalog contains 16 verified primary sources; Phase 1 will expand linguistic knowledge maps for specific verb classes and regional clitics.
+1. **Source Coverage**: Phase 0.3 frozen catalog contains 16 verified primary sources; Phase 1 will expand linguistic knowledge maps for specific verb classes and regional clitics.
 2. **Ontology Depth**: Semantic frames and construction catalogues are drafted in schema format but await formal frame catalog entries in Phase 2.
 3. **Dialect Representations**: Dialectal markers for Sylheti are grounded in SOAS field documentation (Simard et al., 2014) and Shahidullah (1965); empirical spoken audio transcriptions will be ingested in Phase 3/4.

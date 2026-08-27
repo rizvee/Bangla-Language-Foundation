@@ -1,7 +1,7 @@
 {
-  "matrix_version": "0.2.0",
+  "matrix_version": "0.3.0",
   "generated_at": "2026-08-28",
-  "methodology": "Field-level and claim-level evidence verification against institutional library catalogs, persistent DOIs, primary preprints, and official code/data repositories.",
+  "methodology": "Field-level, claim-level, and artifact-specific evidence verification against institutional library catalogs, persistent DOIs, primary preprints, and official code/data repositories.",
   "resources": [
     {
       "source_id": "BA-GRAM-2011",
@@ -16,22 +16,24 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 1
     },
     {
       "source_id": "BA-SPELL-2016",
       "canonical_title": "Bangla Academy Promito Bangla Bananer Niyom (Standard Bengali Spelling Rules)",
-      "modality": "Statutory Standard",
+      "modality": "Statutory Standard / Rulebook",
       "tier": "TIER_A",
       "organization": "Bangla Academy, Dhaka",
       "year": 2016,
-      "size": "Official rulebook directive",
-      "primary_evidence_url": "https://banglaacademy.gov.bd",
+      "size": "Official rulebook (ISBN: 984-07-5531-5)",
+      "primary_evidence_url": "https://banglaacademy.portal.gov.bd",
       "copyright_status": "Statutory Public Notice",
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "BA-REGDICT-1965",
@@ -46,7 +48,8 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 1
     },
     {
       "source_id": "BA-BENG-ENG-2019",
@@ -55,13 +58,14 @@
       "tier": "TIER_A",
       "organization": "Bangla Academy, Dhaka",
       "year": 2019,
-      "size": "1 volume (1,248 pp)",
-      "primary_evidence_url": "https://banglaacademy.gov.bd",
+      "size": "1 volume (1,248 pp, ISBN: 984-07-5892-1)",
+      "primary_evidence_url": "https://banglaacademy.portal.gov.bd",
       "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "ODBL-SKC-1926",
@@ -76,7 +80,8 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "AZAD-SYNTAX-1984",
@@ -91,7 +96,8 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "THOMPSON-GRAM-2012",
@@ -106,7 +112,8 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "SOAS-SYLHETI-2014",
@@ -121,7 +128,8 @@
       "license": null,
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     },
     {
       "source_id": "UD-BN-BRU-2021",
@@ -136,7 +144,8 @@
       "license": "CC-BY-SA-4.0",
       "redistribution": "open_redistribution",
       "verification_status": "VERIFIED",
-      "claims_count": 4
+      "claims_count": 4,
+      "artifacts_count": 1
     },
     {
       "source_id": "UD-BN-PUD-2017",
@@ -151,7 +160,8 @@
       "license": "CC-BY-SA-4.0",
       "redistribution": "open_redistribution",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 1
     },
     {
       "source_id": "BANGLA2B-2022",
@@ -163,10 +173,11 @@
       "size": "27.5 GB crawled from 110 Bangla websites",
       "primary_evidence_url": "https://aclanthology.org/2022.findings-naacl.98/",
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "CC-BY-NC-4.0",
+      "license": "CC-BY-NC-SA-4.0",
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 4
+      "claims_count": 4,
+      "artifacts_count": 3
     },
     {
       "source_id": "BANGLANMT-2020",
@@ -178,10 +189,11 @@
       "size": "2.75M parallel sentence pairs",
       "primary_evidence_url": "https://aclanthology.org/2020.emnlp-main.207/",
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "CC-BY-NC-4.0",
+      "license": "CC-BY-NC-SA-4.0",
       "redistribution": "derived_features_only",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 4,
+      "artifacts_count": 2
     },
     {
       "source_id": "INDICCORP-V2-BN",
@@ -196,7 +208,8 @@
       "license": "CC0-1.0",
       "redistribution": "open_redistribution",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 2
     },
     {
       "source_id": "BENGLAI-SPEECH-2022",
@@ -211,7 +224,8 @@
       "license": "CC0-1.0",
       "redistribution": "open_redistribution",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 2
     },
     {
       "source_id": "BANGLATLIT-2024",
@@ -226,7 +240,8 @@
       "license": "MIT",
       "redistribution": "open_redistribution",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 3,
+      "artifacts_count": 2
     },
     {
       "source_id": "BNSENTMIX-2025",
@@ -238,10 +253,11 @@
       "size": "20,000 code-mixed sentences",
       "primary_evidence_url": "https://aclanthology.org/2025.loreslm-1.4/",
       "copyright_status": "Open Access (ACL Anthology)",
-      "license": "MIT",
-      "redistribution": "open_redistribution",
+      "license": "Apache-2.0",
+      "redistribution": "restricted_or_requires_review",
       "verification_status": "VERIFIED",
-      "claims_count": 3
+      "claims_count": 4,
+      "artifacts_count": 3
     },
     {
       "source_id": "BPCC-BENGALI-2023",
@@ -256,7 +272,8 @@
       "license": "CC-BY-4.0",
       "redistribution": "open_redistribution",
       "verification_status": "PARTIALLY_VERIFIED",
-      "claims_count": 2
+      "claims_count": 2,
+      "artifacts_count": 1
     }
   ]
 }

@@ -1,13 +1,15 @@
 {
   "manifest_schema": "https://bangla-language-foundation.org/schemas/v0_1/manifest.schema.json",
-  "phase": "0.2",
-  "baseline_name": "Phase 0 Frozen Research Evidence Baseline",
-  "purpose": "Authoritative research evidence snapshot with claim-level verification and semantic identifier matching.",
+  "phase": "0.3",
+  "baseline_name": "Phase 0.3 Frozen Research Evidence Baseline",
+  "purpose": "Authoritative research evidence snapshot with claim-level verification, artifact-specific licensing, author-set verification, and semantic identifier matching.",
+  "supersedes_manifest": "phase-0-manifest-v0.2",
   "dataset_release_status": "NONE_IN_RESEARCH_AND_DEVELOPMENT",
-  "registry_version": "0.2.0",
-  "evidence_matrix_version": "0.2.0",
-  "audit_tool_version": "1.0.0",
-  "audit_timestamp": "2026-08-28T03:15:00+06:00",
+  "registry_version": "0.3.0",
+  "evidence_matrix_version": "0.3.0",
+  "schema_version": "v0.1-draft-0.3",
+  "audit_tool_version": "1.1.0",
+  "audit_timestamp": "2026-08-28T03:34:00+06:00",
   "source_counts": {
     "total": 21,
     "verified": 16,
@@ -23,10 +25,10 @@
     "PARTIALLY_VERIFIED": 1
   },
   "artifact_checksums": {
-    "sources/registry/sources.json": "929547e04db54db80711917e98626eb1beab8d19f67bcde9e245ea9334648a8a",
-    "sources/registry/source-audit.jsonl": "d739d5d418f1c2d25fe88bc64f610efd2cc97d99e5794120d3790fa4d67129aa",
-    "research/dataset-landscape/evidence-matrix.json": "9002fc6d3ffe4db5b84c321e3160a246deeb2916e4a59d45ac1c55107b7e35f6",
-    "schemas/v0_1/source.schema.json": "2c47ada523a67ae1844806aad1901ab852c7465f13a9f95505e193920359c610"
+    "sources/registry/sources.json": "c0a9f8630574c7b220e2cdd458f699081d992f331c37f19bb2b15ef4cf696ddb",
+    "sources/registry/source-audit.jsonl": "27c512ab07ba6be227f66c8d2256a612f86a6a08c913d0fcb996a44b5547a269",
+    "research/dataset-landscape/evidence-matrix.json": "669ce476d5b8fb5d5777a40fe1f5f17755e57681f9c08fec799a29fb2c028690",
+    "schemas/v0_1/source.schema.json": "e9eb05dc92e1a327076d19454fbcbeef8ed28096c3eb818c27fab4bc7ec74a45"
   },
-  "baseline_scope_statement": "This manifest certifies that Phase 0 research sources are frozen and verified at the claim level. No public dataset release is made. Phase 1 may proceed on top of this frozen baseline."
+  "baseline_scope_statement": "This manifest certifies that Phase 0 research sources are frozen and verified at the claim and artifact level. No public dataset release is made. Phase 1 may proceed on top of this frozen baseline."
 }
