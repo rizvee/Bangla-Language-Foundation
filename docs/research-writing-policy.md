@@ -42,3 +42,18 @@ Beyond surface rhetorical filler, BLF strictly prohibits **Epistemic AI Slop**, 
 4. **Decorative Precision**: Providing plausible-sounding numbers or dates without a measured or cited source.
 5. **Unsupported Novelty**: Making universal absence claims ("no dataset exists") without an exhaustive, documented search boundary.
 6. **Circular LLM Verification**: Accepting a citation as verified merely because an LLM or subagent claimed it was verified without terminating at external evidence. Verification must always terminate at primary catalog, repository, or DOI evidence.
+
+---
+
+## 6. Permanent Research & Evidence Invariants
+The following core axioms govern all research and data operations:
+
+```
+SCHEMA VALID            != SOURCE VERIFIED
+SOURCE URL EXISTS       != CLAIM VERIFIED
+AUTHORITY DOMAIN        != FIELD EVIDENCE
+IDENTIFIER EXISTS       != IDENTIFIER MATCHES RECORD
+MODEL REVIEW            != EXTERNAL VERIFICATION
+```
+
+Verification terminates only when the claimed value is matched against external evidence that actually contains and supports that exact value.

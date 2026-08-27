@@ -75,7 +75,7 @@ Existing Bangla NLP resources can be classified into eight distinct functional m
 
 | Resource ID | Resource Name | Size / Units | Primary License | Redistribution Rights | Verification Status |
 |---|---|---|---|---|---|
-| `BA-GRAM-2012` | Pramanik Bangla Byakaran | 3 vols (~1800 pp) | All-Rights-Reserved | Derived features only | `VERIFIED` |
+| `BA-GRAM-2011` | Pramita Bangla Bhashar Byakaran | 2 vols | Copyrighted | Derived features only | `VERIFIED` |
 | `BA-SPELL-2016` | Promito Bangla Bananer Niyom | 32 pages | Public-Notice | Derived features only | `VERIFIED` |
 | `BA-REGDICT-1965` | Ancholik Bhashar Abhidhan | 3 vols (120k words) | All-Rights-Reserved | Derived features only | `VERIFIED` |
 | `BA-BENG-ENG-2019` | Bengali-English Dictionary | 1 vol (1,248 pp) | All-Rights-Reserved | Derived features only | `VERIFIED` |

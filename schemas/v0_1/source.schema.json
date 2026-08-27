@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/source.schema.json",
   "title": "BLFSource",
-  "description": "Schema for sources registered in the BLF research source registry with field-level evidence and provenance tracking.",
+  "description": "Schema for sources registered in the BLF research source registry with claim-level evidence binding and semantic verification.",
   "type": "object",
   "required": [
     "source_id",
@@ -11,8 +11,6 @@
     "source_tier",
     "language",
     "year",
-    "license",
-    "redistribution",
     "verification_status",
     "citation"
   ],
@@ -20,7 +18,7 @@
     "source_id": {
       "type": "string",
       "pattern": "^[A-Z0-9_-]+$",
-      "description": "Unique stable source identifier (e.g. BA-GRAM-2012)."
+      "description": "Unique stable source identifier (e.g. BA-GRAM-2011)."
     },
     "canonical_resource_id": {
       "type": "string",
@@ -44,59 +42,67 @@
       "description": "Primary language of source (e.g. 'bn', 'en', 'bn-BD')."
     },
     "region": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Geographic focus (e.g. 'Bangladesh', 'Dhaka', 'West Bengal', 'Sylhet')."
     },
     "year": {
       "type": "integer",
       "minimum": 1000,
       "maximum": 2100,
-      "description": "Publication year."
+      "description": "Original publication or release year."
+    },
+    "edition": {
+      "type": ["string", "null"],
+      "description": "Specific edition or reprint details if distinct from original publication."
     },
     "version": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Dataset or software release version."
     },
     "release": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Specific benchmark or distribution release (e.g. 'UD v2.12')."
     },
     "publisher": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Publisher name or academic institution."
     },
     "url": {
-      "type": "string",
+      "type": ["string", "null"],
       "format": "uri",
-      "description": "Direct persistent URL or repository link."
+      "description": "Direct persistent canonical URL or repository link."
     },
     "identifier": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Standard identifier such as ISBN, DOI, arXiv ID, ACL Anthology ID, or catalog ID."
     },
     "paper_id": {
-      "type": "string",
-      "description": "Canonical paper identifier (e.g. 'arXiv:2206.14053', 'ACL:2024.findings-emnlp.859')."
+      "type": ["string", "null"],
+      "description": "Canonical paper identifier (e.g. 'arXiv:2206.14053', 'ACL:2022.findings-naacl.98')."
     },
     "mirror_of": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Upstream resource ID if this record is a repository/HuggingFace mirror."
     },
     "derived_from": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Upstream source ID if this dataset is derived from another corpus."
     },
     "supersedes": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Previous source_id superseded by this updated record."
     },
+    "copyright_status": {
+      "type": ["string", "null"],
+      "description": "Legal copyright state (e.g. 'Copyrighted', 'Public Domain', 'Statutory Public Notice')."
+    },
     "license": {
-      "type": "string",
-      "description": "Canonical license (e.g., 'CC-BY-4.0', 'Public Domain', 'All-Rights-Reserved', 'MIT', 'CC0-1.0', 'Unknown/Quarantined')."
+      "type": ["string", "null"],
+      "description": "Explicit license governing the dataset or code (e.g., 'CC-BY-4.0', 'MIT', 'CC0-1.0', 'CC-BY-NC-4.0', null if unspecified)."
     },
     "redistribution": {
-      "type": "string",
-      "enum": ["open_redistribution", "derived_features_only", "restricted_internal"],
+      "type": ["string", "null"],
+      "enum": ["open_redistribution", "derived_features_only", "restricted_internal", null],
       "description": "Allowed redistribution scope under BLF policy."
     },
     "verification_status": {
@@ -117,39 +123,45 @@
         },
         "verification_method": {
           "type": "string",
-          "description": "Method of verification (e.g., 'primary_catalog_inspection', 'cross_identifier_api', 'anthology_doi_match')."
+          "description": "Method of verification."
         },
         "primary_evidence": {
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["url", "publisher_or_host", "evidence_type"],
+            "required": ["evidence_id", "canonical_url", "publisher_or_host", "evidence_type"],
             "properties": {
-              "url": {"type": "string"},
+              "evidence_id": {"type": "string"},
+              "canonical_url": {"type": "string"},
               "publisher_or_host": {"type": "string"},
               "evidence_type": {"type": "string"},
+              "resource_title": {"type": "string"},
+              "retrieved_title": {"type": "string"},
+              "authors_if_applicable": {"type": "array", "items": {"type": "string"}},
+              "identifier_if_applicable": {"type": "string"},
               "accessed_at": {"type": "string"},
-              "supports_fields": {
-                "type": "array",
-                "items": {"type": "string"}
-              }
+              "locator": {"type": "string"},
+              "supports_fields": {"type": "array", "items": {"type": "string"}}
             }
           }
         },
-        "secondary_evidence": {
+        "claims": {
           "type": "array",
+          "description": "Claim-level evidence bindings.",
           "items": {
             "type": "object",
-            "required": ["url", "publisher_or_host", "evidence_type"],
+            "required": ["claim_id", "field", "value", "evidence_id", "status"],
             "properties": {
-              "url": {"type": "string"},
-              "publisher_or_host": {"type": "string"},
-              "evidence_type": {"type": "string"},
-              "accessed_at": {"type": "string"},
-              "supports_fields": {
-                "type": "array",
-                "items": {"type": "string"}
-              }
+              "claim_id": {"type": "string"},
+              "field": {"type": "string"},
+              "value": {},
+              "evidence_id": {"type": "string"},
+              "locator": {"type": "string"},
+              "status": {
+                "type": "string",
+                "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "PROVISIONAL", "UNVERIFIED", "DISPUTED"]
+              },
+              "verified_at": {"type": "string"}
             }
           }
         },
@@ -168,7 +180,7 @@
       "additionalProperties": false
     },
     "checksum": {
-      "type": "string",
+      "type": ["string", "null"],
       "pattern": "^[a-f0-9]{64}$",
       "description": "SHA-256 checksum of referenced digital artifact."
     },
@@ -177,7 +189,7 @@
       "description": "Full bibliographic citation in standard academic format."
     },
     "notes": {
-      "type": "string",
+      "type": ["string", "null"],
       "description": "Methodological, extraction, or scope notes."
     }
   },

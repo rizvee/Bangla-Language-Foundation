@@ -1,121 +1,168 @@
 """
-Regression tests for bibliographic verification and source integrity auditing.
+Regression tests for claim-level source integrity and semantic verification.
 """
 
 import json
 import unittest
 from pathlib import Path
 
-from blf.linguistics.tags import VerificationStatus
-from scripts.audit_sources import (
-    audit_known_misidentifications,
-    audit_source_structure,
-    load_sources,
-)
-
 ROOT_DIR = Path(__file__).resolve().parent.parent
 SOURCES_PATH = ROOT_DIR / "sources" / "registry" / "sources.json"
 AUDIT_LOG_PATH = ROOT_DIR / "sources" / "registry" / "source-audit.jsonl"
 
+from scripts.audit_sources import (
+    audit_single_source,
+    compute_token_jaccard,
+    validate_claim_level_evidence,
+    validate_semantic_identifier_match,
+)
+
 
 class TestSourceAudit(unittest.TestCase):
-    def test_known_misidentifications_detected(self):
-        """Tests that historical misidentified citations are detected and rejected."""
-        # 1. 2021.wnut-1.14 misattributed as Banglish transliteration
-        bad_translit = {
-            "source_id": "TEST-BAD-TRANSLIT",
-            "title": "Banglish Transliteration",
-            "author_or_org": "Firoj Alam",
+
+    def setUp(self):
+        self.assertTrue(SOURCES_PATH.is_file(), "sources.json must exist")
+        with open(SOURCES_PATH, "r", encoding="utf-8") as f:
+            self.registry = json.load(f)
+
+    def test_all_registry_sources_pass_integrity_audit(self):
+        """All sources currently in sources.json must pass claim-level and semantic checks."""
+        sources = self.registry.get("sources", [])
+        self.assertGreater(len(sources), 0)
+
+        for src in sources:
+            sid = src.get("source_id", "UNKNOWN")
+            status = src.get("verification_status")
+            errs = audit_single_source(src)
+            self.assertEqual(
+                errs, [],
+                f"Source '{sid}' (status={status}) failed audit: {errs}"
+            )
+
+    def test_verified_source_requires_claim_evidence_block(self):
+        """VERIFIED status must contain explicit claim-level verification bindings."""
+        mock_source = {
+            "source_id": "TEST-SRC-001",
+            "title": "Test Source Title",
+            "author_or_org": "Test Author",
             "source_tier": "TIER_D",
             "language": "bn",
-            "year": 2021,
-            "license": "CC-BY-4.0",
-            "redistribution": "open_redistribution",
+            "year": 2024,
             "verification_status": "VERIFIED",
-            "citation": "Proceedings of WNUT 2021. https://aclanthology.org/2021.wnut-1.14/",
-            "notes": "Banglish transliteration"
+            "citation": "Test Citation (2024)."
         }
-        errs = audit_known_misidentifications(bad_translit)
-        self.assertTrue(len(errs) > 0, "Failed to catch ACL 2021.wnut-1.14 misattribution.")
+        errs = validate_claim_level_evidence(mock_source)
+        self.assertIn("Status is 'VERIFIED' but record lacks a 'verification' block.", errs)
 
-        # 2. 2022.findings-emnlp.319 misattributed as SentiraBangla
-        bad_sentiment = {
-            "source_id": "TEST-BAD-SENTIMENT",
-            "title": "SentiraBangla Code-Mixed Sentiment",
-            "author_or_org": "Md. Arid Hasan",
-            "source_tier": "TIER_D",
-            "language": "bn",
-            "year": 2022,
-            "license": "CC-BY-NC-4.0",
-            "redistribution": "derived_features_only",
-            "verification_status": "VERIFIED",
-            "citation": "Findings of EMNLP 2022. https://aclanthology.org/2022.findings-emnlp.319/",
-            "notes": "Code-mixed sentiment"
-        }
-        errs = audit_known_misidentifications(bad_sentiment)
-        self.assertTrue(len(errs) > 0, "Failed to catch ACL 2022.findings-emnlp.319 misattribution.")
-
-        # 3. 2206.14051 misattributed as Bengali.AI Speech
-        bad_speech = {
-            "source_id": "TEST-BAD-SPEECH",
-            "title": "Bengali.AI Speech Corpus",
-            "author_or_org": "Bengali.AI",
-            "source_tier": "TIER_D",
-            "language": "bn",
-            "year": 2022,
-            "license": "CC0-1.0",
-            "redistribution": "open_redistribution",
-            "verification_status": "VERIFIED",
-            "citation": "arXiv:2206.14051",
-            "notes": "Bengali.AI speech audio dataset"
-        }
-        errs = audit_known_misidentifications(bad_speech)
-        self.assertTrue(len(errs) > 0, "Failed to catch arXiv:2206.14051 misattribution.")
-
-    def test_verified_source_requires_evidence_block(self):
-        """VERIFIED status must contain explicit verification evidence."""
-        source_without_evidence = {
-            "source_id": "TEST-VERIFIED-NO-EVIDENCE",
-            "title": "Test Grammar",
+    def test_generic_homepage_cannot_verify_book_metadata(self):
+        """Generic organization homepage without locator cannot verify book publication fields."""
+        mock_source = {
+            "source_id": "TEST-BA-001",
+            "title": "Test Book Title",
             "author_or_org": "Test Author",
             "source_tier": "TIER_A",
             "language": "bn",
-            "year": 2020,
-            "license": "MIT",
-            "redistribution": "open_redistribution",
+            "year": 2012,
             "verification_status": "VERIFIED",
-            "citation": "Test Author (2020)."
+            "citation": "Test Citation (2012).",
+            "verification": {
+                "status": "VERIFIED",
+                "verified_at": "2026-08-28",
+                "primary_evidence": [
+                    {
+                        "evidence_id": "EV-GENERIC-HP",
+                        "canonical_url": "https://banglaacademy.gov.bd",
+                        "publisher_or_host": "Bangla Academy",
+                        "evidence_type": "Organization Homepage"
+                    }
+                ],
+                "claims": [
+                    {"claim_id": "C1", "field": "title", "value": "Test", "evidence_id": "EV-GENERIC-HP", "status": "VERIFIED"},
+                    {"claim_id": "C2", "field": "year", "value": 2012, "evidence_id": "EV-GENERIC-HP", "status": "VERIFIED"}
+                ]
+            }
         }
-        errs = audit_source_structure(source_without_evidence)
-        self.assertTrue(any("verification" in e for e in errs), "Source without verification block was incorrectly permitted as VERIFIED.")
+        errs = validate_claim_level_evidence(mock_source)
+        self.assertTrue(
+            any("Generic homepage" in e for e in errs),
+            f"Expected generic homepage rejection, got: {errs}"
+        )
+
+    def test_banglabert_identifier_matching(self):
+        """
+        Tests semantic identifier resolution for BanglaBERT:
+        - ACL:2022.naacl-main.185 (Offensive Span Detection) must FAIL.
+        - ACL:2022.findings-naacl.98 (BanglaBERT) must PASS.
+        - arXiv:2101.00204 (BanglaBERT preprint) must PASS.
+        """
+        # 1. False identifier NAACL 2022 main 185
+        bad_banglabert = {
+            "source_id": "BANGLA2B-TEST",
+            "title": "BanglaBERT: Language Model Pretraining and Benchmarks for Low-Resource Language Understanding Evaluation in Bangla",
+            "author_or_org": "Tahmid Hasan et al.",
+            "source_tier": "TIER_D",
+            "language": "bn",
+            "year": 2022,
+            "verification_status": "VERIFIED",
+            "paper_id": "ACL:2022.naacl-main.185",
+            "citation": "BanglaBERT citation."
+        }
+        errs_bad = validate_semantic_identifier_match(bad_banglabert)
+        self.assertTrue(
+            any("Semantic Identifier Mismatch" in e for e in errs_bad),
+            f"Expected mismatch rejection for ACL:2022.naacl-main.185, got: {errs_bad}"
+        )
+
+        # 2. Canonical identifier Findings of NAACL 2022 98
+        good_banglabert = {
+            "source_id": "BANGLA2B-TEST",
+            "title": "BanglaBERT: Language Model Pretraining and Benchmarks for Low-Resource Language Understanding Evaluation in Bangla",
+            "author_or_org": "Abhik Bhattacharjee et al.",
+            "source_tier": "TIER_D",
+            "language": "bn",
+            "year": 2022,
+            "verification_status": "VERIFIED",
+            "paper_id": "ACL:2022.findings-naacl.98",
+            "citation": "BanglaBERT citation."
+        }
+        errs_good = validate_semantic_identifier_match(good_banglabert)
+        self.assertEqual(errs_good, [], f"Expected clean pass for ACL:2022.findings-naacl.98, got: {errs_good}")
+
+    def test_known_misidentifications_detected(self):
+        """Tests that historical misidentified citations are detected and rejected."""
+        # 1. Speech arXiv mismatch
+        bad_speech = {
+            "source_id": "BENGLAI-TEST",
+            "title": "Bengali Common Voice Speech Dataset for Automatic Speech Recognition",
+            "paper_id": "arXiv:2206.14051",
+            "verification_status": "VERIFIED"
+        }
+        errs1 = validate_semantic_identifier_match(bad_speech)
+        self.assertTrue(any("Semantic Identifier Mismatch" in e for e in errs1))
+
+        # 2. Transliteration ACL mismatch
+        bad_translit = {
+            "source_id": "BANGLISH-TEST",
+            "title": "BanglaTLit: A Benchmark Dataset for Back-Transliteration of Romanized Bangla",
+            "paper_id": "ACL:2021.wnut-1.14",
+            "verification_status": "VERIFIED"
+        }
+        errs2 = validate_semantic_identifier_match(bad_translit)
+        self.assertTrue(any("Semantic Identifier Mismatch" in e for e in errs2))
 
     def test_audit_log_exists_and_valid(self):
-        """Verifies that source-audit.jsonl exists and contains valid JSON lines."""
-        self.assertTrue(AUDIT_LOG_PATH.is_file(), "source-audit.jsonl not found.")
+        """Verifies that source-audit.jsonl exists and contains valid JSON lines with audit entries."""
+        self.assertTrue(AUDIT_LOG_PATH.is_file(), "source-audit.jsonl must exist")
         with open(AUDIT_LOG_PATH, "r", encoding="utf-8") as f:
-            lines = f.readlines()
-        self.assertTrue(len(lines) >= 5, "source-audit.jsonl contains insufficient audit trail entries.")
+            lines = [line.strip() for line in f if line.strip()]
+        self.assertGreaterEqual(len(lines), 8)
         for line in lines:
-            record = json.loads(line.strip())
-            self.assertIn("audit_id", record)
-            self.assertIn("source_id", record)
-            self.assertIn("previous_status", record)
-            self.assertIn("new_status", record)
-            self.assertIn("issue_type", record)
-            self.assertIn("correction", record)
-
-    def test_all_registry_sources_pass_integrity_audit(self):
-        """All sources currently in sources.json must pass structural and misidentification checks."""
-        data = load_sources()
-        sources = data.get("sources", [])
-        self.assertTrue(len(sources) > 0)
-        
-        for src in sources:
-            sid = src.get("source_id")
-            struct_errs = audit_source_structure(src)
-            misid_errs = audit_known_misidentifications(src)
-            all_errs = struct_errs + misid_errs
-            self.assertEqual(all_errs, [], f"Source '{sid}' failed integrity audit: {all_errs}")
+            entry = json.loads(line)
+            self.assertIn("audit_id", entry)
+            self.assertIn("source_id", entry)
+            self.assertIn("issue_type", entry)
+            self.assertIn("incorrect_claim", entry)
+            self.assertIn("correction", entry)
 
 
 if __name__ == "__main__":

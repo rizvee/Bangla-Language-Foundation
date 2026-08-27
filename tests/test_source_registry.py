@@ -36,10 +36,19 @@ class TestSourceRegistry(unittest.TestCase):
             valid, errors = validate_dict_against_schema(src, self.source_schema)
             self.assertTrue(valid, f"Source '{sid}' failed schema validation: {errors}")
 
-    def test_mandatory_citation_and_license(self):
+    def test_mandatory_citation_and_legal_status(self):
         for src in self.registry.get("sources", []):
-            self.assertTrue(bool(src.get("citation")), f"Source {src.get('source_id')} missing citation")
-            self.assertTrue(bool(src.get("license")), f"Source {src.get('source_id')} missing license")
+            sid = src.get("source_id")
+            self.assertTrue(bool(src.get("citation")), f"Source {sid} missing citation")
+            if src.get("verification_status") != "QUARANTINED":
+                self.assertTrue(
+                    bool(src.get("copyright_status") or src.get("license")),
+                    f"Source {sid} must have either explicit copyright_status or license"
+                )
+                self.assertTrue(
+                    bool(src.get("redistribution")),
+                    f"Source {sid} must have explicit redistribution policy"
+                )
 
 
 if __name__ == "__main__":

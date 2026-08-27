@@ -10,7 +10,7 @@
 
 ## 2. Source Registry Fields & Standards
 Every entry in `sources/registry/sources.json` must provide:
-- `source_id`: Unique stable identifier (e.g., `BA-GRAM-2012`).
+- `source_id`: Unique stable identifier (e.g., `BA-GRAM-2011`).
 - `title`: Full official publication title.
 - `author` / `organization`: Primary creators.
 - `source_tier`: `TIER_A` through `TIER_E`.

@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 0.2 Claim-Level Evidence Verification & Final Source Freeze
+- **Frozen Evidence Baseline**: Created `research/phase-0-manifest.json` sealing the Phase 0 research foundation with cryptographic SHA-256 checksums across all core registries, schemas, and matrices.
+- **Claim-Level Evidence Architecture**: Upgraded `schemas/v0_1/source.schema.json` and `sources/registry/sources.json` to bind individual field assertions (`title`, `year`, `edition`, `license`, `size`) to specific primary evidence objects and locators.
+- **Semantic Identifier Matching**: Extended `scripts/audit_sources.py` with deterministic semantic title token similarity and author matching to reject false identifier attributions (e.g. offensive-span detection cited as BanglaBERT).
+- **BanglaBERT Publication Correction**: Resolved canonical BanglaBERT identifiers to ACL: `2022.findings-naacl.98` (DOI: `10.18653/v1/2022.findings-naacl.98`, arXiv: `2101.00204`), correcting false reference `2022.naacl-main.185`.
+- **Bangla Academy Grammar Correction**: Resolved canonical reference to *Pramita Bangla Bhashar Byakaran* (`BA-GRAM-2011`, 2011, 2 vols, LCCN 2012323386) edited by Rafiqul Islam and Pabitra Sarkar, correcting conflated 2012 3-volume record.
+- **Explicit Legal Status Separation**: Decoupled `copyright_status`, `license`, and `redistribution_permission` across all sources to prevent unwarranted assumption of open licenses on printed monographs.
+- **Expanded Regression Tests**: Added tests in `tests/test_source_audit.py` proving semantic rejection of false ACL/arXiv identifiers and refusal of generic homepages without locators.
+
 ### Added - Phase 0.1 Source Integrity Recovery & Evidence Hardening
 - **Source Integrity Auditor**: Implemented `scripts/audit_sources.py` providing deterministic cross-identifier verification (ACL Anthology IDs, arXiv IDs, UD repository canonical names, and field-level evidence requirements).
 - **Source Audit Ledger**: Established `sources/registry/source-audit.jsonl` tracking corrections and quarantine rationale for historical candidate misattributions.
