@@ -2,15 +2,20 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/sentence_family.schema.json",
   "title": "BLFSentenceFamily",
-  "description": "A conceptual sentence family grouping realizations sharing an identical semantic proposition.",
+  "description": "Schema for structured sentence families grouping constrained realizations of a semantic proposition.",
   "type": "object",
   "required": [
     "sentence_family_id",
     "proposition_description",
     "semantic_frame_id",
-    "canonical_utterance_id",
-    "realization_utterance_ids",
-    "quality_tier"
+    "primary_construction_id",
+    "primary_predicate",
+    "communicative_intent",
+    "thematic_roles",
+    "canonical_utterance",
+    "variants",
+    "quality_tier",
+    "human_review_status"
   ],
   "properties": {
     "sentence_family_id": {
@@ -20,21 +25,70 @@
     },
     "proposition_description": {
       "type": "string",
-      "description": "English description of core underlying semantic proposition."
+      "description": "English description of the core underlying semantic proposition."
     },
     "semantic_frame_id": {
       "type": "string",
-      "description": "ID of underlying semantic frame (e.g., FRAME-COMMERCE-BUY)."
+      "pattern": "^FRAME-[A-Z0-9_-]+$",
+      "description": "ID of underlying semantic frame."
     },
-    "canonical_utterance_id": {
+    "primary_construction_id": {
       "type": "string",
-      "description": "ID of the canonical Bangladesh Standard Bangla (BDSB) realization."
+      "pattern": "^CONST-[A-Z0-9_-]+$",
+      "description": "Primary syntactic construction ID."
     },
-    "realization_utterance_ids": {
+    "primary_predicate": {
+      "type": "string",
+      "description": "Primary verb root or lexical predicate."
+    },
+    "communicative_intent": {
+      "type": "string",
+      "description": "Core dialogue act or communicative intent."
+    },
+    "thematic_roles": {
+      "type": "object",
+      "description": "Mapping of semantic roles to argument values."
+    },
+    "canonical_utterance": {
+      "type": "string",
+      "description": "The canonical BDSB surface realization."
+    },
+    "variants": {
       "type": "array",
-      "items": { "type": "string" },
       "minItems": 1,
-      "description": "List of all realization utterance IDs belonging to this family."
+      "items": {
+        "type": "object",
+        "required": ["variant_type", "text", "construction_id", "register", "polarity", "provenance_type"],
+        "properties": {
+          "variant_type": {
+            "type": "string",
+            "enum": [
+              "CANONICAL_DECLARATIVE",
+              "POLAR_QUESTION",
+              "WH_QUESTION",
+              "NEGATIVE_ASSERTION",
+              "HONORIFIC_APNI",
+              "FAMILIAR_TUMI",
+              "INTIMATE_TUI",
+              "PRO_DROP_SUBJECT",
+              "TOPICALIZED_OSV",
+              "COMPLEX_PREDICATE_VECTOR",
+              "EMPHATIC_FOCUS_CLITIC",
+              "MINIMAL_PAIR_NEGATIVE"
+            ]
+          },
+          "text": {"type": "string"},
+          "construction_id": {"type": "string", "pattern": "^CONST-[A-Z0-9_-]+$"},
+          "register": {"type": "string"},
+          "polarity": {"type": "string", "enum": ["AFFIRMATIVE", "NEGATIVE"]},
+          "provenance_type": {
+            "type": "string",
+            "enum": ["RULE_GENERATED", "SOURCE_EXAMPLE", "HUMAN_CREATED", "PUBLIC_DOMAIN_EXAMPLE"]
+          },
+          "notes": {"type": ["string", "null"]}
+        }
+      },
+      "description": "Constrained realization variants."
     },
     "domain": {
       "type": "string",
@@ -43,6 +97,10 @@
     "quality_tier": {
       "type": "string",
       "enum": ["GOLD", "SILVER", "SYNTHETIC"]
+    },
+    "human_review_status": {
+      "type": "string",
+      "enum": ["PENDING_REVIEW", "FLAGGED", "REJECTED", "HUMAN_APPROVED"]
     }
   },
   "additionalProperties": false

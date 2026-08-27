@@ -73,6 +73,7 @@ def main():
         (root_dir / "ontology" / "complex_predicates" / "complex_predicates.json", "complex_predicates", schemas_dir / "complex_predicate.schema.json"),
         (root_dir / "ontology" / "pragmatics" / "dialogue_acts.json", "dialogue_acts", schemas_dir / "dialogue_act.schema.json"),
         (root_dir / "ontology" / "frames" / "core_frames.json", "frames", schemas_dir / "semantic_frame.schema.json"),
+        (root_dir / "data" / "validation" / "sentence_families_diagnostic.json", "sentence_families", schemas_dir / "sentence_family.schema.json"),
     ]
 
     print("\nValidating ontology instances against JSON schemas...")

@@ -1,0 +1,362 @@
+{
+  "version": "1.0.0",
+  "total_families": 10,
+  "sentence_families": [
+    {
+      "sentence_family_id": "SF-00001-BOOK-READ",
+      "proposition_description": "A person reads a book.",
+      "semantic_frame_id": "FRAME-PERCEPTION-VISUAL",
+      "primary_construction_id": "CONST-DECL-TRANSITIVE-SOV",
+      "primary_predicate": "পড়া",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "সে",
+        "PATIENT": "বইটা"
+      },
+      "canonical_utterance": "সে বইটা পড়ে।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "সে বইটা পড়ে।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "POLAR_QUESTION",
+          "text": "সে কি বইটা পড়ে ?",
+          "construction_id": "CONST-INTERROGATIVE-POLAR",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "NEGATIVE_ASSERTION",
+          "text": "সে বইটা পড়ে না।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "NEGATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "HONORIFIC_APNI",
+          "text": "তিনি বইটা পড়েন।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "TOPICALIZED_OSV",
+          "text": "বইটা সে পড়ে।",
+          "construction_id": "CONST-INFO-TOPICALIZATION-OSV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "PRO_DROP_SUBJECT",
+          "text": "বইটা পড়ে।",
+          "construction_id": "CONST-INFO-PRODROP-SUBJECT",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "education",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00002-FOOD-EAT",
+      "proposition_description": "An agent eats rice/food.",
+      "semantic_frame_id": "FRAME-INGESTION-FOOD",
+      "primary_construction_id": "CONST-DECL-TRANSITIVE-SOV",
+      "primary_predicate": "খাওয়া",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "আমি",
+        "PATIENT": "ভাত"
+      },
+      "canonical_utterance": "আমি ভাত খাই।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আমি ভাত খাই।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "POLAR_QUESTION",
+          "text": "তুমি কি ভাত খাবে ?",
+          "construction_id": "CONST-INTERROGATIVE-POLAR",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "COMPLEX_PREDICATE_VECTOR",
+          "text": "আমি ভাত খেয়ে ফেললাম।",
+          "construction_id": "CONST-CPRED-VECTOR-TELIC",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "daily_life",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00003-COMMERCE-BUY",
+      "proposition_description": "A customer buys a book.",
+      "semantic_frame_id": "FRAME-COMMERCE-BUY",
+      "primary_construction_id": "CONST-DECL-TRANSITIVE-SOV",
+      "primary_predicate": "কেনা",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "তিনি",
+        "THEME": "বইটা"
+      },
+      "canonical_utterance": "তিনি বইটা কিনলেন।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "তিনি বইটা কিনলেন।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "COMPLEX_PREDICATE_VECTOR",
+          "text": "তিনি বইটা কিনে নিলেন।",
+          "construction_id": "CONST-CPRED-VECTOR-SELF-BENEF",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "commerce",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00004-GIVING-TRANSFER",
+      "proposition_description": "A person gives a pen to a student.",
+      "semantic_frame_id": "FRAME-GIVING-TRANSFER",
+      "primary_construction_id": "CONST-DECL-DITRANSITIVE",
+      "primary_predicate": "দেওয়া",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "শিক্ষক",
+        "RECIPIENT": "ছাত্র",
+        "THEME": "কলমটা"
+      },
+      "canonical_utterance": "শিক্ষক ছাত্রকে কলমটা দিলেন।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "শিক্ষক ছাত্রকে কলমটা দিলেন।",
+          "construction_id": "CONST-DECL-DITRANSITIVE",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "education",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00005-MOTION-TRANSLOCATION",
+      "proposition_description": "A person goes to Dhaka.",
+      "semantic_frame_id": "FRAME-MOTION-TRANSLOCATION",
+      "primary_construction_id": "CONST-DECL-INTRANSITIVE-SV",
+      "primary_predicate": "যাওয়া",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "আমরা",
+        "GOAL": "ঢাকা"
+      },
+      "canonical_utterance": "আমরা ঢাকায় যাব।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আমরা ঢাকায় যাব।",
+          "construction_id": "CONST-DECL-INTRANSITIVE-SV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "POLAR_QUESTION",
+          "text": "আমরা কি ঢাকায় যাব ?",
+          "construction_id": "CONST-INTERROGATIVE-POLAR",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "daily_life",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00006-ACTIVITY-WORK",
+      "proposition_description": "A person does work.",
+      "semantic_frame_id": "FRAME-ACTIVITY-WORK",
+      "primary_construction_id": "CONST-LVC-TRANSITIVE-KORA",
+      "primary_predicate": "কাজ করা",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "আপনি",
+        "THEME": "কাজ"
+      },
+      "canonical_utterance": "আপনি কাজ করছেন।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আপনি কাজ করছেন।",
+          "construction_id": "CONST-LVC-TRANSITIVE-KORA",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "HONORIFIC_APNI",
+          "text": "আপনি কাজ করুন।",
+          "construction_id": "CONST-IMPERATIVE-HONORIFIC",
+          "register": "FORMAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "workplace",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00007-CREATION-WRITING",
+      "proposition_description": "An author writes a letter.",
+      "semantic_frame_id": "FRAME-CREATION-WRITING",
+      "primary_construction_id": "CONST-DECL-TRANSITIVE-SOV",
+      "primary_predicate": "লেখা",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "AGENT": "আমি",
+        "PATIENT": "চিঠি"
+      },
+      "canonical_utterance": "আমি চিঠি লিখছি।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আমি চিঠি লিখছি।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "communication",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00008-COGNITION-KNOWING",
+      "proposition_description": "A person knows the news.",
+      "semantic_frame_id": "FRAME-COGNITION-KNOWING",
+      "primary_construction_id": "CONST-DECL-TRANSITIVE-SOV",
+      "primary_predicate": "জানা",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "EXPERIENCER": "আমি",
+        "CONTENT": "খবরটা"
+      },
+      "canonical_utterance": "আমি খবরটা জানি।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আমি খবরটা জানি।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "EMPHATIC_FOCUS_CLITIC",
+          "text": "আমিই খবরটা জানি।",
+          "construction_id": "CONST-DECL-TRANSITIVE-SOV",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "information",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00009-SENSATION-HUNGER",
+      "proposition_description": "A person feels hunger.",
+      "semantic_frame_id": "FRAME-SENSATION-HUNGER",
+      "primary_construction_id": "CONST-EXPERIENCER-DATSUBJ",
+      "primary_predicate": "ক্ষিদে পাওয়া",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "EXPERIENCER": "আমার"
+      },
+      "canonical_utterance": "আমার ক্ষিদে পেয়েছে।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "আমার ক্ষিদে পেয়েছে।",
+          "construction_id": "CONST-EXPERIENCER-DATSUBJ",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "daily_life",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    },
+    {
+      "sentence_family_id": "SF-00010-EXISTENTIAL-POSSESSION",
+      "proposition_description": "There is a book in the room.",
+      "semantic_frame_id": "FRAME-POSSESSION-EXISTENTIAL",
+      "primary_construction_id": "CONST-EXISTENTIAL-POSSESSIVE",
+      "primary_predicate": "থাকা",
+      "communicative_intent": "STATEMENT",
+      "thematic_roles": {
+        "LOCATION": "ঘরে",
+        "THEME": "বই"
+      },
+      "canonical_utterance": "ঘরে বই আছে।",
+      "variants": [
+        {
+          "variant_type": "CANONICAL_DECLARATIVE",
+          "text": "ঘরে বই আছে।",
+          "construction_id": "CONST-EXISTENTIAL-POSSESSIVE",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "AFFIRMATIVE",
+          "provenance_type": "RULE_GENERATED"
+        },
+        {
+          "variant_type": "MINIMAL_PAIR_NEGATIVE",
+          "text": "ঘরে বই নেই।",
+          "construction_id": "CONST-EXISTENTIAL-POSSESSIVE",
+          "register": "COLLOQUIAL_STANDARD",
+          "polarity": "NEGATIVE",
+          "provenance_type": "RULE_GENERATED"
+        }
+      ],
+      "domain": "daily_life",
+      "quality_tier": "SYNTHETIC",
+      "human_review_status": "PENDING_REVIEW"
+    }
+  ]
+}
