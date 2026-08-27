@@ -1,0 +1,82 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/linguistic_evidence.schema.json",
+  "title": "BLFLinguisticEvidence",
+  "description": "Schema for source evidence items supporting atomic linguistic claims in BLF.",
+  "type": "object",
+  "required": [
+    "evidence_id",
+    "source_id",
+    "evidence_type",
+    "locator",
+    "excerpt_or_paraphrase",
+    "copyright_handling",
+    "verification_status"
+  ],
+  "properties": {
+    "evidence_id": {
+      "type": "string",
+      "pattern": "^EV-[A-Z0-9_-]+$",
+      "description": "Unique evidence identifier (e.g. EV-BA-GRAM-SOV-01)."
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_-]+$",
+      "description": "Source ID in sources/registry/sources.json."
+    },
+    "artifact_id": {
+      "type": ["string", "null"],
+      "description": "Optional specific artifact ID within the source record."
+    },
+    "evidence_type": {
+      "type": "string",
+      "enum": [
+        "DIRECT_DESCRIPTIVE_PASSAGE",
+        "GRAMMATICAL_RULE_FORMULATION",
+        "PARADIGM_TABLE",
+        "AUTHENTIC_TEXT_ATTESTATION",
+        "CORPUS_FREQUENCY_STATISTIC",
+        "LEXICAL_ENTRY_GLOSS",
+        "EXPLICIT_CONTRASTIVE_ANALYSIS"
+      ],
+      "description": "Classification of evidence type."
+    },
+    "locator": {
+      "type": "string",
+      "description": "Verifiable book section, chapter, or page locator (e.g. 'Vol. 1, Chapter 4, Section 4.2, p. 128')."
+    },
+    "page_or_section": {
+      "type": "string",
+      "description": "Normalized page range or section title."
+    },
+    "excerpt_or_paraphrase": {
+      "type": "string",
+      "description": "Concise summary, precise linguistic paraphrase, or short fair-use quotation."
+    },
+    "copyright_handling": {
+      "type": "string",
+      "enum": [
+        "FAIR_USE_SHORT_QUOTATION",
+        "SCHOLARLY_PARAPHRASE",
+        "PUBLIC_DOMAIN_EXTRACT",
+        "OPEN_ACCESS_EXTRACT"
+      ],
+      "description": "Legal status and handling of the excerpt."
+    },
+    "content_hash": {
+      "type": ["string", "null"],
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Optional SHA-256 hash of the referenced digital excerpt."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "PROVISIONAL", "QUARANTINED", "REJECTED"],
+      "description": "Epistemic verification state of this evidence."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Methodological context or extraction notes."
+    }
+  },
+  "additionalProperties": false
+}

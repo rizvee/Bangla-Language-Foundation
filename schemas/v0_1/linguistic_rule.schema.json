@@ -1,0 +1,128 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/linguistic_rule.schema.json",
+  "title": "BLFLinguisticRule",
+  "description": "Schema for declarative machine-readable linguistic rules in BLF.",
+  "type": "object",
+  "required": [
+    "rule_id",
+    "supporting_claim_ids",
+    "rule_type",
+    "structural_pattern",
+    "language_variety",
+    "productivity",
+    "confidence",
+    "status"
+  ],
+  "properties": {
+    "rule_id": {
+      "type": "string",
+      "pattern": "^RUL-[A-Z0-9_-]+$",
+      "description": "Unique rule identifier (e.g. RUL-SYN-SOV-DEFAULT)."
+    },
+    "supporting_claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "Supporting atomic claim IDs."
+    },
+    "rule_type": {
+      "type": "string",
+      "enum": [
+        "SYNTACTIC_ORDERING",
+        "CASE_MARKING_SELECTION",
+        "VERBAL_INFLECTION",
+        "CLASSIFIER_ATTACHMENT",
+        "POSTPOSITIONAL_COMPLEMENTATION",
+        "NEGATOR_PLACEMENT",
+        "HONORIFIC_AGREEMENT",
+        "CLITIC_ATTACHMENT",
+        "TOPICALIZATION_PERMUTATION",
+        "PHONOLOGICAL_ASSIMILATION",
+        "ORTHOGRAPHIC_TRANSDUCTION"
+      ],
+      "description": "Functional classification of the rule."
+    },
+    "input_conditions": {
+      "type": "object",
+      "description": "Preconditions (POS, features, animacy, definiteness, transitivity) triggering the rule."
+    },
+    "structural_pattern": {
+      "type": "string",
+      "description": "Formal or declarative syntactic/morphological template (e.g. '[Subject:NP] [Object:NP] [Verb:VP]')."
+    },
+    "morphological_features": {
+      "type": "object",
+      "description": "Morphological feature bundle associated with rule execution."
+    },
+    "constraints": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Negative or binding constraints preventing overgeneration."
+    },
+    "output_relation": {
+      "type": ["string", "null"],
+      "description": "Resulting dependency relation or structural category."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Declared variety scope."
+    },
+    "register": {
+      "type": ["string", "null"],
+      "description": "Register constraints."
+    },
+    "productivity": {
+      "type": "string",
+      "enum": [
+        "FULLY_PRODUCTIVE",
+        "HIGHLY_PRODUCTIVE",
+        "RESTRICTED",
+        "LEXICALLY_CONDITIONED",
+        "IDIOSYNCRATIC",
+        "HISTORICAL",
+        "UNKNOWN"
+      ],
+      "description": "Productivity and generative scope of the rule."
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["exception_type", "description"],
+        "properties": {
+          "exception_type": {"type": "string"},
+          "description": {"type": "string"},
+          "examples": {"type": "array", "items": {"type": "string"}}
+        }
+      },
+      "description": "Documented exceptions or lexical exemptions."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "Confidence level."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED", "SUPERSEDED"],
+      "description": "Operational rule lifecycle state."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Implementation or generation notes."
+    }
+  },
+  "additionalProperties": false
+}

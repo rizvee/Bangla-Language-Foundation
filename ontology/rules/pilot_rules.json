@@ -1,0 +1,423 @@
+{
+  "version": "1.0.0",
+  "total_rules": 20,
+  "rules": [
+    {
+      "rule_id": "RUL-SYN-SOV-DEFAULT",
+      "supporting_claim_ids": ["CLM-SYN-SOV-01"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "clause_type": "matrix_declarative",
+        "voice": "active",
+        "pragmatic_focus": "neutral"
+      },
+      "structural_pattern": "[Subject:NP] ([IndirectObject:NP]) ([DirectObject:NP]) [Verb:VP]",
+      "morphological_features": {},
+      "constraints": ["Verb must remain final in unmarked declarative clauses."],
+      "output_relation": "root_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [
+        {
+          "exception_type": "PRAGMATIC_SCRAMBLING",
+          "description": "Object fronting under contrastive focus.",
+          "examples": ["Boi-ta ami porechi."]
+        }
+      ],
+      "notes": "Canonical clausal template for BDSB generation."
+    },
+    {
+      "rule_id": "RUL-SYN-SCRAMBLE-TOPICAL",
+      "supporting_claim_ids": ["CLM-SYN-SCRAMBLE-02"],
+      "rule_type": "TOPICALIZATION_PERMUTATION",
+      "input_conditions": {
+        "clause_type": "matrix_declarative",
+        "focus_target": "DirectObject"
+      },
+      "structural_pattern": "[DirectObject:NP] [Subject:NP] [Verb:VP]",
+      "morphological_features": {},
+      "constraints": ["Thematic role assignment remains governed by case markers, not position."],
+      "output_relation": "topicalized_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Object topicalization permutation."
+    },
+    {
+      "rule_id": "RUL-SYN-PRODROP-MATRIX",
+      "supporting_claim_ids": ["CLM-SYN-PRODROP-03"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "discourse_context": "salient_subject_referent",
+        "pragmatic_focus": "non_contrastive"
+      },
+      "structural_pattern": "[Ø:Subject] ([Object:NP]) [Verb:VP[+PersonAgreement]]",
+      "morphological_features": {"Subject": "null_pro"},
+      "constraints": ["Overt pronoun must not be omitted if bearing contrastive focus clitic -i."],
+      "output_relation": "pro_drop_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Generates natural pro-drop sentence variants."
+    },
+    {
+      "rule_id": "RUL-SYN-DATSUBJ-EXPERIENCER",
+      "supporting_claim_ids": ["CLM-SYN-DATSUBJ-04"],
+      "rule_type": "CASE_MARKING_SELECTION",
+      "input_conditions": {
+        "predicate_type": "experiencer_or_obligative",
+        "thematic_role": "experiencer"
+      },
+      "structural_pattern": "[Experiencer:NP[Case=Gen|Dat]] ([Theme:NP[Case=Nom]]) [Predicate:VP[Person=3,Polite=Neutral]]",
+      "morphological_features": {"Experiencer": "Case=Gen/Dat", "Verb": "Person=3"},
+      "constraints": ["Verb never agrees in person with the genitive/dative experiencer."],
+      "output_relation": "experiencer_subject_construction",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Non-nominative subject realization rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-DOM-ACCUSATIVE",
+      "supporting_claim_ids": ["CLM-MSYN-DOM-05"],
+      "rule_type": "CASE_MARKING_SELECTION",
+      "input_conditions": {
+        "thematic_role": "patient_direct_object",
+        "semantic_features": {"animate": true, "definite": true}
+      },
+      "structural_pattern": "[DirectObject:NP] + '-ke'",
+      "morphological_features": {"Case": "Acc"},
+      "constraints": ["Inanimate direct objects in unmarked contexts take zero suffix."],
+      "output_relation": "differential_object_marked",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [
+        {
+          "exception_type": "NON_SPECIFIC_GENERIC_HUMAN",
+          "description": "Generic human profession nouns in non-specific contexts retain zero marking.",
+          "examples": ["Daktar dako (Call a doctor)."]
+        }
+      ],
+      "notes": "DOM selection rule in BDSB."
+    },
+    {
+      "rule_id": "RUL-MSYN-HON-AGREEMENT",
+      "supporting_claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "rule_type": "HONORIFIC_AGREEMENT",
+      "input_conditions": {
+        "subject_person": ["2", "3"],
+        "honorific_tier": ["HONORIFIC", "FAMILIAR", "INTIMATE"]
+      },
+      "structural_pattern": "[Subject:Pronoun[Person=P, Polite=T]] ... [Verb:VP[Person=P, Polite=T]]",
+      "morphological_features": {"Agreement": "Person_Polite_Match"},
+      "constraints": ["Mismatched pronoun-verb honorific combinations are strictly ungrammatical."],
+      "output_relation": "honorific_agreement_bound",
+      "language_variety": "BDSB_STANDARD",
+      "register": "cross_register",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Honorific morphosyntactic consistency rule."
+    },
+    {
+      "rule_id": "RUL-MORPH-PRES-INFLECTION",
+      "supporting_claim_ids": ["CLM-MORPH-PRES-07"],
+      "rule_type": "VERBAL_INFLECTION",
+      "input_conditions": {
+        "tense": "present",
+        "aspect": "simple"
+      },
+      "structural_pattern": "VerbStem + Suffix[Person=1:-i, Person=2_Ord:-o, Person=2_Hon:-en, Person=2_Int:-is, Person=3_Ord:-e, Person=3_Hon:-en]",
+      "morphological_features": {"Tense": "Pres", "Aspect": "Simple"},
+      "constraints": ["Stem-vowel mutations apply to monosyllabic open stems."],
+      "output_relation": "finite_present_verb",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Simple present verbal inflection rule."
+    },
+    {
+      "rule_id": "RUL-MORPH-CONT-ASPECT",
+      "supporting_claim_ids": ["CLM-MORPH-CONT-08"],
+      "rule_type": "VERBAL_INFLECTION",
+      "input_conditions": {
+        "aspect": "continuous",
+        "tense": "present"
+      },
+      "structural_pattern": "VerbStem + '-ch-' + Suffix[Person=1:-i, Person=2_Ord:-o, Person=2_Hon:-en, Person=2_Int:-is, Person=3_Ord:-e, Person=3_Hon:-en]",
+      "morphological_features": {"Aspect": "Continuous", "Tense": "Pres"},
+      "constraints": ["Verb must be dynamic/actional."],
+      "output_relation": "finite_present_continuous_verb",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Present continuous inflection rule in Cholit BDSB."
+    },
+    {
+      "rule_id": "RUL-MORPH-FUT-INFLECTION",
+      "supporting_claim_ids": ["CLM-MORPH-FUT-10"],
+      "rule_type": "VERBAL_INFLECTION",
+      "input_conditions": {
+        "tense": "future",
+        "aspect": "simple"
+      },
+      "structural_pattern": "VerbStem + '-b-' + Suffix[Person=1:-o, Person=2_Ord:-e, Person=2_Hon:-en, Person=2_Int:-i, Person=3_Ord:-e, Person=3_Hon:-en]",
+      "morphological_features": {"Tense": "Fut", "Aspect": "Simple"},
+      "constraints": [],
+      "output_relation": "finite_future_verb",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Simple future inflection rule."
+    },
+    {
+      "rule_id": "RUL-SYN-NEG-POSTVERBAL",
+      "supporting_claim_ids": ["CLM-SYN-NEG-POSTVERB-11"],
+      "rule_type": "NEGATOR_PLACEMENT",
+      "input_conditions": {
+        "clause_type": "matrix_finite_declarative",
+        "polarity": "negative"
+      },
+      "structural_pattern": "[Clause] [Verb:VP[+Finite]] 'na'",
+      "morphological_features": {"Polarity": "Neg"},
+      "constraints": ["'na' must immediately follow the finite verb in unmarked order."],
+      "output_relation": "negative_finite_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [
+        {
+          "exception_type": "SUBORDINATE_PREVERBAL",
+          "description": "Pre-verbal 'na' occurs in conditional protases with 'jodi'.",
+          "examples": ["Jodi na jao, ami jabo na."]
+        }
+      ],
+      "notes": "Clause-final sentential negator rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-NEG-PERFECTIVE",
+      "supporting_claim_ids": ["CLM-MSYN-NEG-NI-12"],
+      "rule_type": "NEGATOR_PLACEMENT",
+      "input_conditions": {
+        "polarity": "negative",
+        "aspect": "perfective_or_past_completion"
+      },
+      "structural_pattern": "Verb[Tense=Present, Aspect=Simple] + 'ni'",
+      "morphological_features": {"Polarity": "Neg", "Aspect": "PastPerfective"},
+      "constraints": ["Combines exclusively with simple present verbal stem forms, never with past -l- verbs."],
+      "output_relation": "negative_perfective_verb",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Past/perfective 'ni' negation rule."
+    },
+    {
+      "rule_id": "RUL-SEM-COPULA-NEGATION",
+      "supporting_claim_ids": ["CLM-SEM-COPULA-NEG-13"],
+      "rule_type": "NEGATOR_PLACEMENT",
+      "input_conditions": {
+        "polarity": "negative",
+        "predicate_type": ["existential_locative_possessive", "identificational_equational"]
+      },
+      "structural_pattern": "IF Predicate=Existential/Possessive THEN 'nei' ELSE IF Predicate=Identificational THEN 'noy' / 'non'",
+      "morphological_features": {"Polarity": "Neg"},
+      "constraints": ["'nei' never takes honorific variation; 'noy' alternates with honorific 'non'."],
+      "output_relation": "negative_copular_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Copular negator selection rule."
+    },
+    {
+      "rule_id": "RUL-SEM-VECTOR-TELIC",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-PHELA-14"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "aspectual_trigger": "telic_completion_suddenness",
+        "pole_verb_transitivity": "transitive_or_unergative"
+      },
+      "structural_pattern": "PoleVerb[Form=ConjunctiveParticiple_in_-e] + 'phela'[Form=InflectedFinite]",
+      "morphological_features": {"Aspect": "TelicCompletive"},
+      "constraints": ["Vector verb 'phela' inflects for tense/person while pole verb remains in non-finite -e."],
+      "output_relation": "telic_compound_predicate",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Aspectual compound predicate rule with 'phela'."
+    },
+    {
+      "rule_id": "RUL-SEM-VECTOR-BENEF",
+      "supporting_claim_ids": ["CLM-SEM-VECTOR-NEOA-15", "CLM-SEM-VECTOR-DEWA-16"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "benefactive_orientation": ["self_oriented", "other_oriented"]
+      },
+      "structural_pattern": "IF SelfBenefactive THEN PoleVerb[-e] + 'neoa'[Inflected] ELSE PoleVerb[-e] + 'dewa'[Inflected]",
+      "morphological_features": {"Voice": "Benefactive"},
+      "constraints": ["Both pole verb and auxiliary agree in clausal argument projection."],
+      "output_relation": "benefactive_compound_predicate",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Benefactive vector verb selection rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-CLF-DEFINITE",
+      "supporting_claim_ids": ["CLM-MSYN-CLF-DEF-17"],
+      "rule_type": "CLASSIFIER_ATTACHMENT",
+      "input_conditions": {
+        "definiteness": "definite",
+        "quantification": "singular_individuated"
+      },
+      "structural_pattern": "NounRoot + Classifier['-ta' | '-ti']",
+      "morphological_features": {"Definite": "true"},
+      "constraints": ["'-ti' conveys higher formality or diminutive delicacy compared to neutral '-ta'."],
+      "output_relation": "definite_noun_phrase",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Enclitic definite determiner rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-CLF-NUMERAL",
+      "supporting_claim_ids": ["CLM-MSYN-CLF-NUM-18", "CLM-MSYN-CLF-HUMAN-19"],
+      "rule_type": "CLASSIFIER_ATTACHMENT",
+      "input_conditions": {
+        "quantifier": "numeral > 1",
+        "noun_animacy": ["human", "non_human"]
+      },
+      "structural_pattern": "Numeral + Classifier[Human:'-jon', NonHuman:'-ti'|'-ta'] + Noun[DirectCase]",
+      "morphological_features": {"Quantified": "true"},
+      "constraints": ["Classifier attaches to numeral, not to the following head noun."],
+      "output_relation": "quantified_numeral_phrase",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Numeral phrase classifier placement rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-POSTPOS-GENITIVE",
+      "supporting_claim_ids": ["CLM-MSYN-POSTPOS-GEN-20"],
+      "rule_type": "POSTPOSITIONAL_COMPLEMENTATION",
+      "input_conditions": {
+        "postposition_head": ["jonno", "shathe", "kache", "por", "shong-e", "moto"]
+      },
+      "structural_pattern": "[Complement:NP[Case=Genitive]] + [Postposition:Head]",
+      "morphological_features": {"CaseGovernance": "Genitive"},
+      "constraints": ["Complement NP must bear -r/-er genitive suffix."],
+      "output_relation": "postpositional_phrase",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Genitive postpositional complementation rule."
+    },
+    {
+      "rule_id": "RUL-SYN-POLAR-INTERROGATIVE",
+      "supporting_claim_ids": ["CLM-SYN-POLAR-KI-22"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "clause_mood": "polar_interrogative",
+        "answer_expectation": "yes_or_no"
+      },
+      "structural_pattern": "[Subject:NP] ([Object:NP]) 'ki' [Verb:VP] ?",
+      "morphological_features": {"Mood": "Interrogative_Polar"},
+      "constraints": ["'ki' must not be confused with argument Wh-noun 'ki' ('what')."],
+      "output_relation": "polar_question_clause",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Polar interrogative particle placement rule."
+    },
+    {
+      "rule_id": "RUL-MSYN-PLURAL-ANIMACY",
+      "supporting_claim_ids": ["CLM-MSYN-PLURAL-ANIM-23"],
+      "rule_type": "CASE_MARKING_SELECTION",
+      "input_conditions": {
+        "number": "plural",
+        "noun_animacy": ["human", "inanimate"]
+      },
+      "structural_pattern": "IF Human THEN Noun + '-ra'/'-era' ELSE Noun + '-gulo'/'-gula'",
+      "morphological_features": {"Number": "Plural"},
+      "constraints": ["Redundant double pluralization (e.g. *'shokol chheler-ra') is strictly barred."],
+      "output_relation": "plural_inflected_noun",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "FULLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Nominal pluralization animacy rule."
+    },
+    {
+      "rule_id": "RUL-SYN-CORRELATIVE-RELATIVE",
+      "supporting_claim_ids": ["CLM-SYN-CORREL-26"],
+      "rule_type": "SYNTACTIC_ORDERING",
+      "input_conditions": {
+        "clause_type": "complex_relative",
+        "strategy": "correlative"
+      },
+      "structural_pattern": "[Subordinate: [J-Word:NP/AdvP] ... [Verb:VP]] , [Matrix: [T-Word:NP/AdvP] ... [Verb:VP]]",
+      "morphological_features": {"Correlative": "J_T_Pairing"},
+      "constraints": ["Relative pronoun in protasis must match correlative demonstrative in apodosis."],
+      "output_relation": "correlative_relative_construction",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "productivity": "HIGHLY_PRODUCTIVE",
+      "confidence": "HIGH",
+      "status": "ACTIVE",
+      "exceptions": [],
+      "notes": "Correlative relative clause construction rule."
+    }
+  ]
+}

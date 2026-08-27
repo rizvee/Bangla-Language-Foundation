@@ -5,8 +5,8 @@ Last Updated: 2026-08-28
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 0.3 — Artifact-Specific License, Authorship & Bibliographic Consistency Audit (Complete)
-- **Milestone State**: Phase 0.3 Hardened & Frozen Baseline (`research/phase-0-manifest.json`)
+- **Current Phase**: Phase 1A — Evidence-to-Linguistic-Knowledge System (Complete)
+- **Milestone State**: Phase 1A Operational Linguistic Knowledge Layer & Frozen Phase 0 Baseline
 - **Primary Branch**: `main`
 
 ---
@@ -15,14 +15,19 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 4 schemas (`v0.1-draft-0.3`) | Utterance, Sentence Family, Source, Synthetic Provenance |
+| **Schemas Authoring** | 8 schemas (`v0.1-draft-1.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example |
 | **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
-| **Evidence Matrix Entries** | 17 resources | Machine-readable with claim-level evidence and artifact counts |
+| **Linguistic Evidence Items** | 21 items | 100% verified against primary sources (`ontology/evidence/pilot_evidence.json`) |
+| **Atomic Linguistic Claims** | 36 claims | 100% evidence-grounded across 5 levels (`ontology/claims/pilot_claims.json`) |
+| **Declarative Linguistic Rules** | 20 rules | 100% claim-supported (`ontology/rules/pilot_rules.json`) |
+| **Provenance-Backed Examples** | 22 examples | Source-cited and verified (`ontology/examples/pilot_examples.json`) |
+| **Terminology Mappings** | 14 mappings | Aligned across 5 frameworks (`terminology-crosswalk.json`) |
+| **Framework Conflict Relations** | 3 relations | Resolved with canonical BLF modeling (`conflicts.json`) |
 | **Test Fixtures** | 2 fixtures | 1 Gold BDSB Canonical, 1 Synthetic Sylheti Variant |
-| **Automated Tests** | 25 unit tests | 100% passing across normalizer, schemas, sources, docs, anti-slop, authorship, license audit |
-| **Dataset Scale** | 0 production records | In research & development (no dataset released) |
+| **Automated Tests** | 34 unit tests | 100% passing across normalizer, schemas, sources, knowledge layer, docs, anti-slop, authorship |
+| **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
 
 ---

@@ -9,6 +9,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 1A Evidence-to-Linguistic-Knowledge System
+- **Linguistic Knowledge Schemas**: Implemented 4 strict JSON Draft-07 schemas (`schemas/v0_1/`):
+  - `linguistic_evidence.schema.json`: Fine-grained locator references, excerpt/paraphrase captures, and copyright handling classes (`DIRECT_EXCERPT_SHORT`, `SCHOLARLY_PARAPHRASE`, `RULE_CITATION`, `PUBLIC_DOMAIN_REPRODUCTION`).
+  - `linguistic_claim.schema.json`: Atomic propositions across 12 linguistic levels, 4 epistemic classes (`SOURCE_ASSERTED`, `BLF_NORMALIZED`, `BLF_INFERRED`, `BLF_HYPOTHESIS`), language variety scope, and review states.
+  - `linguistic_rule.schema.json`: Declarative machine-readable rule definitions (`rule_id`, `supporting_claim_ids`, `rule_type`, `structural_pattern`, `morphological_features`, `constraints`, `productivity`, `exceptions`).
+  - `linguistic_example.schema.json`: Provenance-tracked utterances and negative counterexamples (`SOURCE_EXAMPLE`, `PUBLIC_DOMAIN_EXAMPLE`, `HUMAN_CREATED`, `RULE_GENERATED`) with grammaticality ratings.
+- **Ontology Domain Package**: Authored typed Python domain models and enums in `src/blf/ontology/` (`models.py`, `__init__.py`).
+- **Linguistic Terminology Crosswalk**: Established comprehensive mapping across Traditional Bangla Grammar, Bangla Academy (*Pramita Bangla Bhashar Byakaran*), Descriptive Linguistics, Universal Dependencies (UD), and BLF Canonical Ontology in `research/linguistic-knowledge/terminology-crosswalk.json` and `.md`.
+- **Pilot Knowledge Extraction (Tier A & B Sources)**: Extracted and formalized:
+  - 21 verified evidence items (`ontology/evidence/pilot_evidence.json`).
+  - 36 atomic linguistic claims (`ontology/claims/pilot_claims.json`).
+  - 20 declarative linguistic rules (`ontology/rules/pilot_rules.json`).
+  - 22 provenance-backed examples and negative counterexamples (`ontology/examples/pilot_examples.json`).
+  - 3 documented framework conflict relations and canonical resolutions (`ontology/conflicts/conflicts.json` and `research/linguistic-knowledge/conflicts.md`).
+- **Integrity Validator & Regression Suite**: Implemented `scripts/validate_knowledge.py` and `tests/test_linguistic_knowledge.py` verifying referential integrity (sources->evidence->claims->rules->examples), anti-slop constraints, and prohibition of automated `HUMAN_APPROVED` states (total 34 unit tests passing, 100% compliant).
+- **Linguistic Knowledge Documentation**: Authored `research/linguistic-knowledge/methodology.md`, `pilot-claims.md`, `conflicts.md`, and `extraction-status.md`.
+
 ### Added - Phase 0.3 Artifact-Specific License, Authorship & Bibliographic Consistency Audit
 - **Artifact-Specific License Schema**: Upgraded `schemas/v0_1/source.schema.json` to model individual resource artifacts (`PAPER`, `CODE`, `DATASET`, `MODEL`, `CORPUS`, `RULEBOOK`, `DICTIONARY`) with distinct licenses, copyright states, locators, and redistribution rights.
 - **BanglaBERT License & Artifact Hardening**: Aligned `BANGLA2B-2022` primary repository and model license to `CC-BY-NC-SA-4.0` (matching canonical `csebuetnlp/banglabert` LICENSE) and added separate paper (`CC-BY-4.0` open access) and web crawl corpus artifacts.

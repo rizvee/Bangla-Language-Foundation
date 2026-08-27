@@ -60,6 +60,38 @@ def main():
                     print(f"  [ERROR] {f_path.name}: {e}")
                     has_errors = True
 
+    # Validate ontology instances against linguistic schemas
+    ontology_mappings = [
+        (root_dir / "ontology" / "evidence" / "pilot_evidence.json", "evidence_items", schemas_dir / "linguistic_evidence.schema.json"),
+        (root_dir / "ontology" / "claims" / "pilot_claims.json", "claims", schemas_dir / "linguistic_claim.schema.json"),
+        (root_dir / "ontology" / "rules" / "pilot_rules.json", "rules", schemas_dir / "linguistic_rule.schema.json"),
+        (root_dir / "ontology" / "examples" / "pilot_examples.json", "examples", schemas_dir / "linguistic_example.schema.json"),
+    ]
+
+    print("\nValidating ontology instances against JSON schemas...")
+    for data_path, key_name, schema_path in ontology_mappings:
+        if data_path.is_file() and schema_path.is_file():
+            try:
+                schema = load_schema(schema_path)
+                with open(data_path, "r", encoding="utf-8") as f:
+                    container = json.load(f)
+                items = container.get(key_name, [])
+                item_errors = []
+                for item in items:
+                    valid, errors = validate_dict_against_schema(item, schema)
+                    if not valid:
+                        item_errors.append(f"Item {item.get(list(item.keys())[0], 'N/A')}: {errors}")
+                if item_errors:
+                    print(f"  [FAIL] {data_path.name} ({len(item_errors)} errors):")
+                    for ie in item_errors:
+                        print(f"    - {ie}")
+                    has_errors = True
+                else:
+                    print(f"  [OK] {data_path.name}: All {len(items)} items valid against {schema_path.name}")
+            except Exception as e:
+                print(f"  [ERROR] {data_path.name}: {e}")
+                has_errors = True
+
     print("\n" + "=" * 50)
     if has_errors:
         print("Schema validation FAILED.")

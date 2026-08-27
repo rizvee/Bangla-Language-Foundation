@@ -1,0 +1,468 @@
+{
+  "version": "1.0.0",
+  "total_examples": 22,
+  "examples": [
+    {
+      "example_id": "EX-SYN-SOV-01",
+      "rule_ids": ["RUL-SYN-SOV-DEFAULT"],
+      "claim_ids": ["CLM-SYN-SOV-01"],
+      "evidence_id": "EV-BA-SOV-01",
+      "text": "ছেলেটি বই পড়ছে।",
+      "normalized_text": "ছেলেটি বই পড়ছে।",
+      "gloss_en": "chhele-ti boi por-ch-e (The boy is reading a book)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 2, p. 413",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Canonical SOV declarative structure."
+    },
+    {
+      "example_id": "EX-SYN-SOV-COUNTER-02",
+      "rule_ids": ["RUL-SYN-SOV-DEFAULT"],
+      "claim_ids": ["CLM-SYN-SOV-01"],
+      "evidence_id": "EV-BA-SOV-01",
+      "text": "*পড়ছে ছেলেটি বই।",
+      "normalized_text": "*পড়ছে ছেলেটি বই।",
+      "gloss_en": "*por-ch-e chhele-ti boi (*Reading boy the book)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "UNGRAMMATICAL",
+      "naturalness_status": "DEVIANT",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 2, p. 414",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Unmarked VSO order is ungrammatical in standard declarative context."
+    },
+    {
+      "example_id": "EX-SYN-SCRAMBLE-03",
+      "rule_ids": ["RUL-SYN-SCRAMBLE-TOPICAL"],
+      "claim_ids": ["CLM-SYN-SCRAMBLE-02"],
+      "evidence_id": "EV-AZAD-SCRAMBLE-01",
+      "text": "বইটি আমি পড়েছি।",
+      "normalized_text": "বইটি আমি পড়েছি।",
+      "gloss_en": "boi-ti ami pore-ch-i (The book, I have read)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "AZAD-SYNTAX-1984, p. 89",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Topicalized OSV construction."
+    },
+    {
+      "example_id": "EX-SYN-PRODROP-04",
+      "rule_ids": ["RUL-SYN-PRODROP-MATRIX"],
+      "claim_ids": ["CLM-SYN-PRODROP-03"],
+      "evidence_id": "EV-BA-PRODROP-01",
+      "text": "আজ বাজারে যাব।",
+      "normalized_text": "আজ বাজারে যাব।",
+      "gloss_en": "aj bazar-e ja-b-o (Today [I] will go to the market)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 2, p. 419",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Pro-drop 1st person future utterance."
+    },
+    {
+      "example_id": "EX-SYN-DATSUBJ-05",
+      "rule_ids": ["RUL-SYN-DATSUBJ-EXPERIENCER"],
+      "claim_ids": ["CLM-SYN-DATSUBJ-04"],
+      "evidence_id": "EV-AZAD-DATSUBJ-01",
+      "text": "আমার খুব খিদে পেয়েছে।",
+      "normalized_text": "আমার খুব খিদে পেয়েছে।",
+      "gloss_en": "amar khub khide peye-ch-e (To-me very hunger has-felt / I am very hungry)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "AZAD-SYNTAX-1984, p. 143",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Genitive experiencer subject with 3rd person default verb."
+    },
+    {
+      "example_id": "EX-MSYN-DOM-ANIM-06",
+      "rule_ids": ["RUL-MSYN-DOM-ACCUSATIVE"],
+      "claim_ids": ["CLM-MSYN-DOM-05"],
+      "evidence_id": "EV-THOMPSON-DOM-01",
+      "text": "আমি শিক্ষককে দেখেছি।",
+      "normalized_text": "আমি শিক্ষককে দেখেছি।",
+      "gloss_en": "ami shikkhok-ke dekhe-ch-i (I saw the teacher)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 63",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Animate definite direct object taking -ke."
+    },
+    {
+      "example_id": "EX-MSYN-DOM-INANIM-07",
+      "rule_ids": ["RUL-MSYN-DOM-ACCUSATIVE"],
+      "claim_ids": ["CLM-MSYN-DOM-05"],
+      "evidence_id": "EV-THOMPSON-DOM-01",
+      "text": "আমি চিঠি লিখেছি।",
+      "normalized_text": "আমি চিঠি লিখেছি।",
+      "gloss_en": "ami chithi likhe-ch-i (I wrote a letter)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 64",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Inanimate direct object with zero case marking."
+    },
+    {
+      "example_id": "EX-MSYN-DOM-BAD-08",
+      "rule_ids": ["RUL-MSYN-DOM-ACCUSATIVE"],
+      "claim_ids": ["CLM-MSYN-DOM-05"],
+      "evidence_id": "EV-THOMPSON-DOM-01",
+      "text": "*আমি চিঠিকে লিখেছি।",
+      "normalized_text": "*আমি চিঠিকে লিখেছি।",
+      "gloss_en": "*ami chithi-ke likhe-ch-i (*I wrote the-letter [with inappropriate -ke])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "UNGRAMMATICAL",
+      "naturalness_status": "UNNATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 65",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Overgeneralization of -ke to inanimate inanimate non-personified nouns."
+    },
+    {
+      "example_id": "EX-MSYN-HON-AGREE-09",
+      "rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "evidence_id": "EV-BA-HONORIFIC-01",
+      "text": "আপনি কেমন আছেন?",
+      "normalized_text": "আপনি কেমন আছেন?",
+      "gloss_en": "apni kemon ach-en? (How are you? [Honorific])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 184",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Honorific pronoun Apni with honorific verbal suffix -en."
+    },
+    {
+      "example_id": "EX-MSYN-HON-BAD-10",
+      "rule_ids": ["RUL-MSYN-HON-AGREEMENT"],
+      "claim_ids": ["CLM-MSYN-PRON-HON-06"],
+      "evidence_id": "EV-BA-HONORIFIC-01",
+      "text": "*আপনি কেমন আছিস?",
+      "normalized_text": "*আপনি কেমন আছিস?",
+      "gloss_en": "*apni kemon ach-is? (*You[Hon] how are[Intimate]?)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "cross_register",
+      "grammaticality": "UNGRAMMATICAL",
+      "naturalness_status": "DEVIANT",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 185",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Honorific clash: Honorific pronoun with intimate verb suffix."
+    },
+    {
+      "example_id": "EX-SYN-NEG-POSTVERB-11",
+      "rule_ids": ["RUL-SYN-NEG-POSTVERBAL"],
+      "claim_ids": ["CLM-SYN-NEG-POSTVERB-11"],
+      "evidence_id": "EV-AZAD-NEG-01",
+      "text": "সে ভাত খায় না।",
+      "normalized_text": "সে ভাত খায় না।",
+      "gloss_en": "se bhat kha-y na (He/she does not eat rice)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "AZAD-SYNTAX-1984, p. 166",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Clause-final post-verbal negator placement."
+    },
+    {
+      "example_id": "EX-MSYN-NEG-NI-12",
+      "rule_ids": ["RUL-MSYN-NEG-PERFECTIVE"],
+      "claim_ids": ["CLM-MSYN-NEG-NI-12"],
+      "evidence_id": "EV-THOMPSON-NEG-NI-01",
+      "text": "আমি ঢাকা যাইনি।",
+      "normalized_text": "আমি ঢাকা যাইনি।",
+      "gloss_en": "ami dhaka ja-i-ni (I did not go to Dhaka / I have not gone to Dhaka)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 177",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Perfective past negator 'ni' with simple present verb."
+    },
+    {
+      "example_id": "EX-SEM-COPULA-NEI-13",
+      "rule_ids": ["RUL-SEM-COPULA-NEGATION"],
+      "claim_ids": ["CLM-SEM-COPULA-NEG-13"],
+      "evidence_id": "EV-BA-NEG-COPULA-01",
+      "text": "ঘরে কেউ নেই।",
+      "normalized_text": "ঘরে কেউ নেই।",
+      "gloss_en": "ghor-e keu nei (There is no one in the room)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 2, p. 439",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Existential negative copula 'nei'."
+    },
+    {
+      "example_id": "EX-SEM-COPULA-NOY-14",
+      "rule_ids": ["RUL-SEM-COPULA-NEGATION"],
+      "claim_ids": ["CLM-SEM-COPULA-NEG-13"],
+      "evidence_id": "EV-BA-NEG-COPULA-01",
+      "text": "ইনি আমাদের শিক্ষক নন।",
+      "normalized_text": "ইনি আমাদের শিক্ষক নন।",
+      "gloss_en": "ini amader shikkhok non (He/she is not our teacher [Honorific])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 2, p. 440",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Identificational negative copula 'non' (honorific form of 'noy')."
+    },
+    {
+      "example_id": "EX-SEM-VECTOR-PHELA-15",
+      "rule_ids": ["RUL-SEM-VECTOR-TELIC"],
+      "claim_ids": ["CLM-SEM-VECTOR-PHELA-14"],
+      "evidence_id": "EV-THOMPSON-CP-01",
+      "text": "সে সব খাবার খেয়ে ফেলেছে।",
+      "normalized_text": "সে সব খাবার খেয়ে ফেলেছে।",
+      "gloss_en": "se shob khabar kheye phel-e-ch-e (He/she ate up all the food [completive])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 212",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Telic completion vector verb construction."
+    },
+    {
+      "example_id": "EX-MSYN-CLF-DEF-16",
+      "rule_ids": ["RUL-MSYN-CLF-DEFINITE"],
+      "claim_ids": ["CLM-MSYN-CLF-DEF-17"],
+      "evidence_id": "EV-BA-CLASSIFIER-01",
+      "text": "কলমটা টেবিলে রাখো।",
+      "normalized_text": "কলমটা টেবিলে রাখো।",
+      "gloss_en": "kolom-ta tebil-e rakh-o (Put the pen on the table)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 147",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Direct noun enclitic classifier -ta as definite determiner."
+    },
+    {
+      "example_id": "EX-MSYN-CLF-NUM-17",
+      "rule_ids": ["RUL-MSYN-CLF-NUMERAL"],
+      "claim_ids": ["CLM-MSYN-CLF-NUM-18", "CLM-MSYN-CLF-HUMAN-19"],
+      "evidence_id": "EV-BA-CLASSIFIER-01",
+      "text": "তিনজন অতিথি এসেছেন।",
+      "normalized_text": "তিনজন অতিথি এসেছেন।",
+      "gloss_en": "tin-jon otithi eshe-ch-en (Three guests have arrived)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 150",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Numeral classifier -jon with human noun."
+    },
+    {
+      "example_id": "EX-MSYN-POSTPOS-GEN-18",
+      "rule_ids": ["RUL-MSYN-POSTPOS-GENITIVE"],
+      "claim_ids": ["CLM-MSYN-POSTPOS-GEN-20"],
+      "evidence_id": "EV-THOMPSON-POSTPOS-01",
+      "text": "তোমার জন্য অপেক্ষা করছি।",
+      "normalized_text": "তোমার জন্য অপেক্ষা করছি।",
+      "gloss_en": "tomar jonno opeksha kor-ch-i (I am waiting for you)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "THOMPSON-GRAM-2012, p. 112",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Genitive complement 'tomar' governing postposition 'jonno'."
+    },
+    {
+      "example_id": "EX-SYN-POLAR-19",
+      "rule_ids": ["RUL-SYN-POLAR-INTERROGATIVE"],
+      "claim_ids": ["CLM-SYN-POLAR-KI-22"],
+      "evidence_id": "EV-AZAD-INTERROGATIVE-01",
+      "text": "তুমি কি যাবে?",
+      "normalized_text": "তুমি কি যাবে?",
+      "gloss_en": "tumi ki ja-b-e? (Will you go?)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "colloquial_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "AZAD-SYNTAX-1984, p. 190",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Polar interrogative particle 'ki' in pre-verbal position."
+    },
+    {
+      "example_id": "EX-MSYN-PLURAL-20",
+      "rule_ids": ["RUL-MSYN-PLURAL-ANIMACY"],
+      "claim_ids": ["CLM-MSYN-PLURAL-ANIM-23"],
+      "evidence_id": "EV-BA-PLURAL-01",
+      "text": "ছাত্ররা মাঠে খেলছে।",
+      "normalized_text": "ছাত্ররা মাঠে খেলছে।",
+      "gloss_en": "chatro-ra math-e khel-ch-e (The students are playing on the field)",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 160",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Animate human nominative plural suffix -ra."
+    },
+    {
+      "example_id": "EX-SYN-CORREL-21",
+      "rule_ids": ["RUL-SYN-CORRELATIVE-RELATIVE"],
+      "claim_ids": ["CLM-SYN-CORREL-26"],
+      "evidence_id": "EV-AZAD-RELATIVE-01",
+      "text": "যিনি পরিশ্রম করেন, তিনি সফল হন।",
+      "normalized_text": "যিনি পরিশ্রম করেন, তিনি সফল হন।",
+      "gloss_en": "jini porishrom kor-en, tini shofol ho-n (Whoever works hard, that person succeeds [Honorific])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "GRAMMATICAL",
+      "naturalness_status": "HIGHLY_NATURAL",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "AZAD-SYNTAX-1984, p. 212",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Honorific correlative pairing 'jini ... tini'."
+    },
+    {
+      "example_id": "EX-MSYN-PLURAL-BAD-22",
+      "rule_ids": ["RUL-MSYN-PLURAL-ANIMACY"],
+      "claim_ids": ["CLM-MSYN-PLURAL-ANIM-23"],
+      "evidence_id": "EV-BA-PLURAL-01",
+      "text": "*সকল ছাত্ররা উপস্থিত ছিল।",
+      "normalized_text": "*সকল ছাত্ররা উপস্থিত ছিল।",
+      "gloss_en": "*shokol chatro-ra uposthit chhil-o (*All the students-plural were present [Double plural marking error])",
+      "language_variety": "BDSB_STANDARD",
+      "register": "formal_standard",
+      "grammaticality": "UNGRAMMATICAL",
+      "naturalness_status": "DEVIANT",
+      "provenance": {
+        "provenance_class": "SOURCE_EXAMPLE",
+        "source_locator": "BA-GRAM-2011, Vol. 1, p. 162",
+        "creator_or_generator": null,
+        "timestamp": null
+      },
+      "review_status": "SOURCE_VERIFIED",
+      "notes": "Redundant double pluralization (shokol + -ra) is strictly ungrammatical in standard BDSB."
+    }
+  ]
+}

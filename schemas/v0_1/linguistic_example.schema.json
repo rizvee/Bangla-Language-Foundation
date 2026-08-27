@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/linguistic_example.schema.json",
+  "title": "BLFLinguisticExample",
+  "description": "Schema for linguistic examples and negative counterexamples in BLF.",
+  "type": "object",
+  "required": [
+    "example_id",
+    "text",
+    "normalized_text",
+    "language_variety",
+    "grammaticality",
+    "naturalness_status",
+    "provenance",
+    "review_status"
+  ],
+  "properties": {
+    "example_id": {
+      "type": "string",
+      "pattern": "^EX-[A-Z0-9_-]+$",
+      "description": "Unique example identifier (e.g. EX-SYN-SOV-01)."
+    },
+    "rule_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^RUL-[A-Z0-9_-]+$"},
+      "description": "Linguistic rules instantiated or violated by this example."
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CLM-[A-Z0-9_-]+$"},
+      "description": "Atomic claims illustrated by this example."
+    },
+    "evidence_id": {
+      "type": ["string", "null"],
+      "pattern": "^EV-[A-Z0-9_-]+$",
+      "description": "Evidence ID if directly cited from a primary linguistic source."
+    },
+    "text": {
+      "type": "string",
+      "description": "Raw utterance text."
+    },
+    "normalized_text": {
+      "type": "string",
+      "description": "Unicode NFC-normalized Bangla text."
+    },
+    "gloss_en": {
+      "type": ["string", "null"],
+      "description": "Word-by-word morphemic gloss or English translation."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Variety scope."
+    },
+    "register": {
+      "type": ["string", "null"],
+      "description": "Register label."
+    },
+    "grammaticality": {
+      "type": "string",
+      "enum": [
+        "GRAMMATICAL",
+        "UNGRAMMATICAL",
+        "MARKED",
+        "ARCHAIC",
+        "UNNATURAL",
+        "REGISTER_MISMATCH",
+        "DIALECT_SPECIFIC",
+        "SEMANTICALLY_INVALID"
+      ],
+      "description": "Grammaticality judgment."
+    },
+    "naturalness_status": {
+      "type": "string",
+      "enum": ["HIGHLY_NATURAL", "ACCEPTABLE", "STILTED", "UNNATURAL", "DEVIANT"],
+      "description": "Native speaker naturalness assessment."
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["provenance_class"],
+      "properties": {
+        "provenance_class": {
+          "type": "string",
+          "enum": [
+            "SOURCE_EXAMPLE",
+            "PUBLIC_DOMAIN_EXAMPLE",
+            "HUMAN_CREATED",
+            "RULE_GENERATED",
+            "MODEL_GENERATED"
+          ]
+        },
+        "source_locator": {"type": ["string", "null"]},
+        "creator_or_generator": {"type": ["string", "null"]},
+        "timestamp": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "review_status": {
+      "type": "string",
+      "enum": [
+        "AUTO_EXTRACTED",
+        "SOURCE_VERIFIED",
+        "LINGUIST_REVIEW_REQUIRED",
+        "HUMAN_APPROVED",
+        "REJECTED",
+        "SUPERSEDED"
+      ],
+      "description": "Review workflow status."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Analytical notes on syntactic/morphological structure."
+    }
+  },
+  "additionalProperties": false
+}

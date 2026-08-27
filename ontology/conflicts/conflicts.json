@@ -1,0 +1,36 @@
+{
+  "version": "1.0.0",
+  "total_conflict_relations": 3,
+  "relations": [
+    {
+      "relation_id": "REL-CASE-SYSTEM-01",
+      "source_entity_id": "BA-GRAM-2011",
+      "target_entity_id": "THOMPSON-GRAM-2012",
+      "relation_type": "REFINES",
+      "description": "Bangla Academy utilizes the traditional 7-karaka/case Sanskrit model (Karta, Karma, Karana, Sampradana, Apadana, Adhikarana, Sambandha). Modern descriptive linguistics (Thompson 2012, Chatterji 1926) reduces morphological case inflection to 4 structural cases (Nominative -Ø, Accusative/Dative -ke, Genitive -r/-er, Locative -e/-te/-y), classifying Karana ('dara') and Apadana ('theke') as analytic postpositional phrases.",
+      "recorded_by": "bangla-linguist",
+      "confidence": "HIGH",
+      "blf_canonical_resolution": "BLF models 4 core morphological inflection cases on nominal heads and treats oblique relations via postpositional phrase sub-categorization."
+    },
+    {
+      "relation_id": "REL-COMPLEX-PRED-02",
+      "source_entity_id": "AZAD-SYNTAX-1984",
+      "target_entity_id": "THOMPSON-GRAM-2012",
+      "relation_type": "SUPPORTS",
+      "description": "Azad (1984) formalizes compound verbs as transformational non-finite embedding, whereas Thompson (2012) describes them as aspectual vector verb complex predicates. Both models agree that the pole verb in -e carries primary lexical semantics while the vector verb bears inflection and aspectual modification.",
+      "recorded_by": "bangla-linguist",
+      "confidence": "HIGH",
+      "blf_canonical_resolution": "BLF represents compound verbs as complex predicates (compound:svc in UD) with designated pole and vector slots in construction patterns."
+    },
+    {
+      "relation_id": "REL-NEG-NI-03",
+      "source_entity_id": "BA-GRAM-2011",
+      "target_entity_id": "THOMPSON-GRAM-2012",
+      "relation_type": "REFINES",
+      "description": "Bangla Academy describes 'ni' as a past-negative particle attached to simple present verbs. Thompson formalizes 'ni' as an aspectual clitic triggering past perfective interpretation without past verbal morphology.",
+      "recorded_by": "bangla-linguist",
+      "confidence": "HIGH",
+      "blf_canonical_resolution": "BLF enforces rule RUL-MSYN-NEG-PERFECTIVE combining present finite verbs with particle 'ni'."
+    }
+  ]
+}

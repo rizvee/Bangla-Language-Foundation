@@ -1,0 +1,144 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/linguistic_claim.schema.json",
+  "title": "BLFLinguisticClaim",
+  "description": "Schema for atomic linguistic claims in BLF knowledge base.",
+  "type": "object",
+  "required": [
+    "claim_id",
+    "evidence_ids",
+    "linguistic_level",
+    "claim_type",
+    "source_assertion",
+    "normalized_claim",
+    "epistemic_class",
+    "language_variety",
+    "confidence",
+    "verification_status",
+    "human_review_status"
+  ],
+  "properties": {
+    "claim_id": {
+      "type": "string",
+      "pattern": "^CLM-[A-Z0-9_-]+$",
+      "description": "Unique atomic claim identifier (e.g. CLM-SYN-SOV-CANONICAL)."
+    },
+    "evidence_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^EV-[A-Z0-9_-]+$"},
+      "minItems": 1,
+      "description": "List of evidence IDs grounding this claim in verified sources."
+    },
+    "linguistic_level": {
+      "type": "string",
+      "enum": [
+        "ORTHOGRAPHY",
+        "PHONOLOGY",
+        "MORPHOLOGY",
+        "MORPHOSYNTAX",
+        "SYNTAX",
+        "SEMANTICS",
+        "PRAGMATICS",
+        "DISCOURSE",
+        "LEXICON",
+        "TRANSLITERATION",
+        "CODE_SWITCHING",
+        "DIALECT"
+      ],
+      "description": "Structural linguistic domain of the proposition."
+    },
+    "claim_type": {
+      "type": "string",
+      "enum": [
+        "CONSTITUENT_ORDER",
+        "CASE_ASSIGNMENT",
+        "INFLECTIONAL_PARADIGM",
+        "AGREEMENT_RULE",
+        "CLASSIFIER_SELECTION",
+        "POSTPOSITIONAL_GOVERNANCE",
+        "ASPECTUAL_COMPLEX_PREDICATE",
+        "NEGATION_SCOPE",
+        "HONORIFIC_DISTRIBUTION",
+        "TOPICALIZATION_SCRAMBLING",
+        "CLITIC_ATTACHMENT",
+        "PHONOLOGICAL_ASSIMILATION",
+        "ORTHOGRAPHIC_NORMALIZATION",
+        "DIALECTAL_ISOGLOSS"
+      ],
+      "description": "Specific functional category of the claim."
+    },
+    "source_assertion": {
+      "type": "string",
+      "description": "Faithful representation of the claim as formulated in the original source."
+    },
+    "normalized_claim": {
+      "type": "string",
+      "description": "Standardized formulation using canonical BLF linguistic terminology."
+    },
+    "epistemic_class": {
+      "type": "string",
+      "enum": ["SOURCE_ASSERTED", "BLF_NORMALIZED", "BLF_INFERRED", "BLF_HYPOTHESIS"],
+      "description": "Epistemic standing of the proposition."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BDSB_FORMAL",
+        "BDSB_COLLOQUIAL",
+        "BANGLADESH_CONVERSATIONAL",
+        "WEST_BENGAL_STANDARD",
+        "REGIONAL",
+        "HISTORICAL",
+        "CROSS_VARIETY",
+        "UNKNOWN"
+      ],
+      "description": "Variety or dialect scope where this claim holds."
+    },
+    "register": {
+      "type": ["string", "null"],
+      "description": "Register constraints (e.g. 'formal_standard', 'colloquial_standard', 'intimate_conversational', 'archaic_sadhu')."
+    },
+    "scope": {
+      "type": ["string", "null"],
+      "description": "Linguistic or contextual scope of validity."
+    },
+    "conditions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Syntactic, morphological, or pragmatic conditions under which the claim applies."
+    },
+    "exceptions": {
+      "type": "array",
+      "items": {"type": "string"},
+      "description": "Known exceptions, marked constructions, or lexical exemptions."
+    },
+    "confidence": {
+      "type": "string",
+      "enum": ["HIGH", "MEDIUM", "LOW"],
+      "description": "Evidence confidence level based on source authority and consensus."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": ["VERIFIED", "PARTIALLY_VERIFIED", "PROVISIONAL", "QUARANTINED", "REJECTED"],
+      "description": "Verification status of the claim."
+    },
+    "human_review_status": {
+      "type": "string",
+      "enum": [
+        "AUTO_EXTRACTED",
+        "SOURCE_VERIFIED",
+        "LINGUIST_REVIEW_REQUIRED",
+        "HUMAN_APPROVED",
+        "REJECTED",
+        "SUPERSEDED"
+      ],
+      "description": "Linguist review workflow state. Automated pipelines cannot set HUMAN_APPROVED."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Detailed linguistic notes or cross-references."
+    }
+  },
+  "additionalProperties": false
+}
