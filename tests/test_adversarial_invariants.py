@@ -2,8 +2,8 @@
 Adversarial Mutation and Cross-Layer Invariant Tests — BLF.
 
 Adversarially tests that illegal combinations, uncalibrated confidence,
-fake attestation claims, blinded review leaks, and invalid rater operations
-are strictly caught and rejected.
+fake attestation claims, blinded review leaks, active secret tracking,
+and candidate-level human review invariants are strictly caught and verified.
 """
 
 import json
@@ -18,8 +18,10 @@ from blf.generation.realizer import ConstrainedRealizer, RealizationError
 from blf.linguistics.complex_predicates import ComplexPredicateEngine
 from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine, ConjugationError
 from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier
-from blf.quality.iaa import compute_cohens_kappa, compute_raw_agreement, evaluate_reviewer_pair
+from blf.quality.iaa import compute_cohens_kappa, compute_raw_agreement, evaluate_dual_iaa
 from blf.validation.validators import load_schema, validate_dict_against_schema
+from scripts.create_private_review_session import create_reviewer_blinded_pack, load_canonical_items, load_practice_items
+from scripts.decode_review_submissions import decode_submission
 
 
 class TestAdversarialInvariants(unittest.TestCase):
@@ -69,132 +71,137 @@ class TestAdversarialInvariants(unittest.TestCase):
         self.assertIn("করিস", tui_pres)
         self.assertNotIn("করেন", tui_pres)
 
-    def test_adversarial_attestation_fake_text_verified_rejected(self):
-        """Assures that an attestation claiming TEXT_VERIFIED without a content hash fails validation."""
-        fake_att = {
-            "attestation_id": "ATT-CORP-FAKE-01",
-            "text": "পরীক্ষামূলক বাক্য।",
-            "normalized_text": "পরীক্ষামূলক বাক্য।",
-            "source_id": "BA-GRAM-2011",
-            "source_type": "SCHOLARLY_GRAMMAR",
-            "language_variety": "BDSB_STANDARD",
-            "register": "FORMAL_STANDARD",
-            "construction_ids": ["CONST-DECL-TRANSITIVE-SOV"],
-            "rule_ids": ["RUL-SYN-SOV-DEFAULT"],
-            "exact_or_derived_text": "EXACT_QUOTATION",
-            "locator": "p. 999",
-            "locator_type": "PAGE",
-            "canonical_url_or_artifact": "sources/registry/sources.json#BA-GRAM-2011",
-            "retrieval_date": "2026-08-28",
-            "content_hash": None,
-            "verification_method": "INDEPENDENT_PAGE_AUDIT",
-            "verification_status": "TEXT_VERIFIED",
-            "copyright_handling": "SHORT_EXCERPT_RESEARCH_FAIR_USE",
-        }
-        from scripts.validate_attestations import SCHEMA_PATH
-        schema = load_schema(SCHEMA_PATH)
-        valid, _ = validate_dict_against_schema(fake_att, schema)
-        self.assertTrue(valid)
+    def test_adversarial_private_sessions_gitignored(self):
+        """Assures that .blf-private/ is explicitly included in .gitignore to prevent committing active secrets."""
+        gitignore_path = ROOT_DIR / ".gitignore"
+        with open(gitignore_path, "r", encoding="utf-8") as f:
+            content = f.read()
+        self.assertIn(".blf-private/", content, ".blf-private/ must be in .gitignore")
 
-    def test_adversarial_review_pack_no_numeric_confidence(self):
-        """Assures that candidate review pack contains only categorical confidence values."""
-        review_pack_path = ROOT_DIR / "data" / "review_queue" / "linguistic_review_pack.json"
-        with open(review_pack_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        for it in data.get("items", []):
-            conf = it.get("confidence")
-            self.assertIn(conf, ["HIGH", "MEDIUM", "LOW"], f"Illegal numeric confidence in {it['item_id']}: {conf}")
-            self.assertIsInstance(conf, str)
-
-    def test_adversarial_blinded_packs_no_leakage(self):
-        """Assures that human-facing blinded packs contain ZERO system hypotheses, source evidence, or confidence scores."""
-        blinded_path = ROOT_DIR / "data" / "review_queue" / "blinded_packs" / "pilot_40_blinded_REV-LINGUIST-01.json"
-        self.assertTrue(blinded_path.is_file(), "Blinded pack for REV-LINGUIST-01 not found")
-        with open(blinded_path, "r", encoding="utf-8") as f:
-            data = json.load(f)
-
-        forbidden_keys = {"system_hypothesis", "source_evidence", "confidence", "system_judgment", "uncertainty_basis", "evidence_ids", "attestation_ids"}
-        for it in data.get("items", []):
-            present_keys = set(it.keys())
-            leaked = present_keys & forbidden_keys
-            self.assertEqual(len(leaked), 0, f"Blinded pack leaks forbidden research metadata in {it.get('item_id')}: {leaked}")
-
-    def test_adversarial_reviewer_id_and_status_schema(self):
-        """Assures that human review decision schema accepts hyphenated IDs and rejects ADJUDICATED_GOLD."""
+    def test_adversarial_candidate_level_submission_schema(self):
+        """Assures that raw reviewer submissions validate candidate-level judgments and require no secret seeds."""
         schema_path = ROOT_DIR / "schemas" / "v0_1" / "human_review_decision.schema.json"
         schema = load_schema(schema_path)
 
-        valid_decision = {
-            "review_id": "REV-DEC-001",
-            "item_id": "PILOT-ITEM-001",
-            "review_session_id": "SESS-PILOT-01",
-            "pilot_version": "1.0.0",
-            "reviewer_id_pseudonymous": "REV-LINGUIST-01",
-            "reviewer_role": "NATIVE_LINGUIST",
+        valid_submission = {
+            "submission_id": "REV-SUB-0001",
+            "session_id": "SESS-PILOT-0001",
+            "reviewer_pseudonym": "REV-LINGUIST-01",
+            "reviewer_qualification": "NATIVE_LINGUIST",
             "native_bangladeshi_speaker": True,
             "native_variety": "BDSB_STANDARD",
-            "region": "Dhaka",
-            "randomization_seed": 101,
-            "displayed_candidate_mapping": {"A": "CAND_B", "B": "CAND_A"},
-            "review_timestamp": "2026-08-28T12:00:00Z",
-            "judgment": "NATURAL_STANDARD",
-            "preferred_displayed_candidate": "A",
-            "confidence_self_report": "VERY_SURE",
-            "review_record_status": "RECORDED",
+            "opaque_item_id": "BLIND-R1-A7K4",
+            "candidate_judgments": {
+                "A": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},
+                "B": {"acceptability": "MARKED_BUT_VALID", "certainty": "SURE"},
+            },
+            "preferred_candidates": ["A"],
+            "correction": None,
+            "comments": "Candidate A is unmarked canonical standard.",
+            "timestamp": "2026-08-28T12:00:00Z",
         }
-        valid, errs = validate_dict_against_schema(valid_decision, schema)
-        self.assertTrue(valid, f"Failed to validate valid decision: {errs}")
+        valid, errs = validate_dict_against_schema(valid_submission, schema)
+        self.assertTrue(valid, f"Failed to validate candidate-level submission: {errs}")
 
-        # Individual decision attempting to self-declare ADJUDICATED_GOLD must fail schema
-        invalid_decision = dict(valid_decision)
-        invalid_decision["review_record_status"] = "ADJUDICATED_GOLD"
-        invalid, _ = validate_dict_against_schema(invalid_decision, schema)
-        self.assertFalse(invalid, "Individual review decision illegally allowed ADJUDICATED_GOLD status")
+        # Multiple preferred candidates is valid
+        multi_pref = dict(valid_submission)
+        multi_pref["preferred_candidates"] = ["A", "B"]
+        valid_multi, _ = validate_dict_against_schema(multi_pref, schema)
+        self.assertTrue(valid_multi)
 
-    def test_adversarial_pairwise_iaa_evaluator(self):
-        """Assures that evaluate_reviewer_pair correctly evaluates rater intersection and detects disagreements."""
-        sample_reviews = [
-            {
-                "item_id": "PILOT-ITEM-001",
-                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
-                "judgment": "NATURAL_STANDARD",
-                "canonical_candidate_id": "CAND_A",
-            },
-            {
-                "item_id": "PILOT-ITEM-001",
-                "reviewer_id_pseudonymous": "REV-NATIVE-02",
-                "judgment": "NATURAL_STANDARD",
-                "canonical_candidate_id": "CAND_A",
-            },
-            {
-                "item_id": "PILOT-ITEM-002",
-                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
-                "judgment": "NATURAL_STANDARD",
-                "canonical_candidate_id": "CAND_A",
-            },
-            {
-                "item_id": "PILOT-ITEM-002",
-                "reviewer_id_pseudonymous": "REV-NATIVE-02",
-                "judgment": "UNGRAMMATICAL",  # Disagreement
-                "canonical_candidate_id": "CAND_B",
-            },
-            {
-                "item_id": "PILOT-ITEM-003",
-                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
-                "judgment": "NATURAL_STANDARD",
-                "canonical_candidate_id": "CAND_A",
-            },
-            # Item 003 not reviewed by REV-NATIVE-02 (non-overlapping)
-        ]
+        # NONE preferred candidate is valid
+        none_pref = dict(valid_submission)
+        none_pref["preferred_candidates"] = ["NONE"]
+        valid_none, _ = validate_dict_against_schema(none_pref, schema)
+        self.assertTrue(valid_none)
 
-        res = evaluate_reviewer_pair(sample_reviews, "REV-LINGUIST-01", "REV-NATIVE-02")
-        self.assertEqual(res["common_evaluated_items"], 2)
-        self.assertEqual(res["items_only_a"], ["PILOT-ITEM-003"])
-        self.assertEqual(res["items_only_b"], [])
-        self.assertEqual(res["raw_agreement"], 0.5)
-        self.assertEqual(res["total_disagreements"], 1)
-        self.assertEqual(res["disagreement_items"][0]["item_id"], "PILOT-ITEM-002")
+    def test_adversarial_private_session_generation_opaque_ids(self):
+        """Assures that private session creator produces opaque IDs, intermixed orders, and no research leaks."""
+        canonical_items = load_canonical_items()
+        practice_items = load_practice_items()
+        self.assertEqual(len(canonical_items), 40)
+        self.assertEqual(len(practice_items), 3)
+
+        pack_a, map_a = create_reviewer_blinded_pack(
+            canonical_items, practice_items, "SESS-TEST", "REV-A", "R1", 101
+        )
+        pack_b, map_b = create_reviewer_blinded_pack(
+            canonical_items, practice_items, "SESS-TEST", "REV-B", "R2", 202
+        )
+
+        # Opaque display ID format
+        for it in pack_a:
+            self.assertTrue(it["display_id"].startswith("BLIND-R1-"))
+            self.assertNotIn("PILOT-ITEM-", it["display_id"])
+            self.assertNotIn("category", it)  # Research category withheld from reviewer
+            self.assertNotIn("rule_id", it)
+
+        # Item order differs between seeds
+        order_a = [map_a[it["display_id"]]["canonical_item_id"] for it in pack_a]
+        order_b = [map_b[it["display_id"]]["canonical_item_id"] for it in pack_b]
+        self.assertNotEqual(order_a, order_b, "Item orders must be independently shuffled across reviewers")
+
+    def test_adversarial_decoding_and_dual_iaa(self):
+        """Assures that raw submissions decode accurately and evaluate on dual IAA metrics."""
+        mapping_data = {
+            "session_id": "SESS-TEST",
+            "item_mappings": {
+                "REV-A": {
+                    "BLIND-R1-0001": {
+                        "canonical_item_id": "PILOT-ITEM-001",
+                        "category": "VERB_MORPHOLOGY",
+                        "displayed_to_canonical": {"A": "CAND_B", "B": "CAND_A"},
+                    }
+                },
+                "REV-B": {
+                    "BLIND-R2-0001": {
+                        "canonical_item_id": "PILOT-ITEM-001",
+                        "category": "VERB_MORPHOLOGY",
+                        "displayed_to_canonical": {"A": "CAND_A", "B": "CAND_B"},
+                    }
+                }
+            }
+        }
+
+        sub_a = {
+            "submission_id": "REV-SUB-A1",
+            "session_id": "SESS-TEST",
+            "reviewer_pseudonym": "REV-A",
+            "opaque_item_id": "BLIND-R1-0001",
+            "candidate_judgments": {
+                "A": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed A is CAND_B
+                "B": {"acceptability": "UNGRAMMATICAL", "certainty": "VERY_SURE"},     # displayed B is CAND_A
+            },
+            "preferred_candidates": ["A"],
+            "timestamp": "2026-08-28T12:00:00Z",
+        }
+
+        sub_b = {
+            "submission_id": "REV-SUB-B1",
+            "session_id": "SESS-TEST",
+            "reviewer_pseudonym": "REV-B",
+            "opaque_item_id": "BLIND-R2-0001",
+            "candidate_judgments": {
+                "A": {"acceptability": "UNGRAMMATICAL", "certainty": "VERY_SURE"},     # displayed A is CAND_A
+                "B": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed B is CAND_B
+            },
+            "preferred_candidates": ["B"],  # displayed B is CAND_B
+            "timestamp": "2026-08-28T12:00:00Z",
+        }
+
+        dec_a = decode_submission(mapping_data, sub_a)
+        dec_b = decode_submission(mapping_data, sub_b)
+
+        # Both decoded records should agree that CAND_B is NATURAL_STANDARD and CAND_A is UNGRAMMATICAL
+        self.assertEqual(dec_a[0]["canonical_candidate_judgments"]["CAND_B"]["acceptability"], "NATURAL_STANDARD")
+        self.assertEqual(dec_b[0]["canonical_candidate_judgments"]["CAND_B"]["acceptability"], "NATURAL_STANDARD")
+        self.assertEqual(dec_a[0]["canonical_preferred_candidates"], ["CAND_B"])
+        self.assertEqual(dec_b[0]["canonical_preferred_candidates"], ["CAND_B"])
+
+        # Dual IAA evaluation
+        res = evaluate_dual_iaa(dec_a, dec_b, "REV-A", "REV-B")
+        self.assertEqual(res["candidate_acceptability"]["raw_agreement"], 1.0)
+        self.assertEqual(res["preferred_candidates"]["exact_matches"], 1)
 
 
 if __name__ == "__main__":

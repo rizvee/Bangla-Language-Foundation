@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A.2c Private Blind Sessions, Candidate-Level Judgments & Human Pilot Freeze
+- **Private Session Architecture & Secret Gitignore**: Added `.blf-private/` and `.local-review/` to `.gitignore`; created `scripts/create_private_review_session.py` to generate uncompromised private sessions with randomized item and candidate orders, practice items, and opaque display IDs (`BLIND-R1-*`).
+- **Public Pack Deprecation**: Marked Phase 2A.2b public demo packs and `pilot_40_randomization_mapping.json` as `DEPRECATED_FOR_REAL_REVIEW` / `DEMO_METHODOLOGY_ONLY` due to public git history mapping exposure.
+- **Candidate-Level Acceptability & Raw Submission Schema**: Refactored `schemas/v0_1/human_review_decision.schema.json` to capture independent candidate-level ratings (`acceptability`, `certainty`) and separate `preferred_candidates` (supporting multiple choices and `NONE`) without requiring secret seeds or canonical IDs.
+- **Decoded Review Record Schema**: Created `schemas/v0_1/decoded_review_record.schema.json` and decoder `scripts/decode_review_submissions.py` to translate raw blinded submissions back to canonical items for analysis.
+- **Dual-Target IAA Engine**: Upgraded `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` to calculate Target A (Candidate-Level Acceptability Agreement) and Target B (Preferred-Candidate Set Agreement).
+- **Practice Items & Ethical Governance**: Authored `data/review_queue/practice_items.json` (3 calibration examples), `docs/reviewer-consent-and-ethics.md` (privacy minimization and consent statement), and `docs/pilot-decision-protocol.md` (pre-registered decision rules).
+
 ### Added - Phase 2A.2b Blinded Review Protocol & IAA Methodology Hardening
 - **Blinded Human Review Generator & Seeded Randomizer**: Implemented `scripts/generate_blinded_pilot.py` producing reviewer-specific evaluation packages (`data/review_queue/blinded_packs/pilot_40_blinded_*.json` and `.md`) with seeded deterministic candidate permutations and secret mapping table in `data/review_queue/pilot_40_randomization_mapping.json`, strictly withholding internal hypotheses, expected answers, and source hints.
 - **Stage 2 Adjudication Schema**: Created `schemas/v0_1/review_adjudication.schema.json` formalizing authoritative post-review disagreement reconciliation.

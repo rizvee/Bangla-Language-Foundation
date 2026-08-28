@@ -87,6 +87,8 @@ secrets/
 *.pem
 *.key
 credentials.json
+.blf-private/
+.local-review/
 
 # ------------------------------------------------------------------------------
 # 6. Test & Coverage Outputs
@@ -96,3 +98,4 @@ credentials.json
 htmlcov/
 .tox/
 .nox/
+

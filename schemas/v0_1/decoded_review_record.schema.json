@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/decoded_review_record.schema.json",
+  "title": "BLFDecodedReviewRecord",
+  "description": "Schema for internal decoded review records mapping raw reviewer submissions back to canonical pilot items and candidates.",
+  "type": "object",
+  "required": [
+    "decoded_record_id",
+    "submission_id",
+    "session_id",
+    "reviewer_pseudonym",
+    "opaque_item_id",
+    "canonical_item_id",
+    "category",
+    "displayed_to_canonical_mapping",
+    "canonical_candidate_judgments",
+    "canonical_preferred_candidates",
+    "decoded_timestamp"
+  ],
+  "properties": {
+    "decoded_record_id": {
+      "type": "string",
+      "pattern": "^DEC-REC-[A-Z0-9_-]+$",
+      "description": "Unique identifier for this internal decoded review record."
+    },
+    "submission_id": {
+      "type": "string",
+      "pattern": "^REV-SUB-[A-Z0-9_-]+$",
+      "description": "Source raw submission record ID."
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^SESS-[A-Z0-9_-]+$",
+      "description": "Blinded review session identifier."
+    },
+    "reviewer_pseudonym": {
+      "type": "string",
+      "pattern": "^REV-[A-Z0-9_-]+$",
+      "description": "Reviewer pseudonym."
+    },
+    "opaque_item_id": {
+      "type": "string",
+      "pattern": "^BLIND-[A-Z0-9_-]+$",
+      "description": "Opaque reviewer display ID."
+    },
+    "canonical_item_id": {
+      "type": "string",
+      "pattern": "^(PILOT-ITEM-|REV-ITEM-)[A-Z0-9_-]+$",
+      "description": "Canonical pilot item ID."
+    },
+    "category": {
+      "type": "string",
+      "description": "Internal research linguistic category (e.g. VERB_MORPHOLOGY, DOM_AND_CASE)."
+    },
+    "displayed_to_canonical_mapping": {
+      "type": "object",
+      "description": "Lookup table from displayed candidate labels ('A', 'B', 'C') to canonical candidate IDs ('CAND_A', 'CAND_B', etc.).",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "canonical_candidate_judgments": {
+      "type": "object",
+      "description": "Candidate-level judgments mapped to canonical candidate IDs.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["acceptability", "certainty"],
+        "properties": {
+          "acceptability": {
+            "type": "string",
+            "enum": [
+              "NATURAL_STANDARD",
+              "NATURAL_COLLOQUIAL",
+              "MARKED_BUT_VALID",
+              "UNNATURAL",
+              "UNGRAMMATICAL",
+              "MEANING_DIFFERS",
+              "NEEDS_CONTEXT",
+              "UNSURE"
+            ]
+          },
+          "certainty": {
+            "type": "string",
+            "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "canonical_preferred_candidates": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Preferred candidate list mapped to canonical candidate IDs (or ['NONE'])."
+    },
+    "correction": {
+      "type": ["string", "null"],
+      "description": "Reviewer correction if provided."
+    },
+    "comments": {
+      "type": ["string", "null"],
+      "description": "Reviewer comments if provided."
+    },
+    "decoded_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z?$",
+      "description": "ISO UTC timestamp when the record was decoded."
+    }
+  },
+  "additionalProperties": false
+}

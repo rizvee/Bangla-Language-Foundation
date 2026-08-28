@@ -1,5 +1,8 @@
 {
-  "title": "BLF Blinded Human Review Pilot (REV-NATIVE-02)",
+  "title": "BLF Blinded Human Review Pilot (REV-NATIVE-02) [DEMO/METHODOLOGY]",
+  "status": "DEPRECATED_FOR_REAL_REVIEW",
+  "artifact_type": "DEMO_METHODOLOGY_PROVENANCE",
+  "security_notice": "This public pack has a published mapping and must NOT be used for active human review. Generate real private sessions using scripts/create_private_review_session.py",
   "reviewer_id": "REV-NATIVE-02",
   "total_items": 40,
   "evaluation_stage": "STAGE_1_BLINDED_NATIVE_JUDGMENT",

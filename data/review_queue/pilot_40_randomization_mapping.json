@@ -1,5 +1,8 @@
 {
   "version": "1.0.0",
+  "status": "DEPRECATED_FOR_REAL_REVIEW",
+  "artifact_type": "DEMO_METHODOLOGY_PROVENANCE",
+  "security_notice": "This public mapping is for methodology/demo testing only. Real active human reviews MUST be generated privately using scripts/create_private_review_session.py in .blf-private/",
   "pilot_id": "BLF-PILOT-40",
   "total_items": 40,
   "reviewers": {

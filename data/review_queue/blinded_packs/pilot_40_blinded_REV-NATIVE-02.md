@@ -1,8 +1,11 @@
-# BLF Controlled Human Review Pilot (Blinded Package — REV-NATIVE-02)
+# BLF Controlled Human Review Pilot (Blinded Package — REV-NATIVE-02) [DEMO/METHODOLOGY]
+
+> [!WARNING]
+> **DEPRECATED FOR REAL EVALUATION**: This public package and its mapping have been published in git history and serve strictly as a demo / methodology artifact. For actual human evaluations, generate fresh uncompromised private sessions using `python scripts/create_private_review_session.py`.
 
 **Reviewer ID**: `REV-NATIVE-02`
 **Total Items**: 40
-**Evaluation Stage**: Stage 1 (Blinded Independent Native Judgment)
+**Evaluation Stage**: Stage 1 (Blinded Independent Native Judgment — Demo)
 
 > [!IMPORTANT]
 > **Instructions for Evaluator**:

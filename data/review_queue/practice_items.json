@@ -1,0 +1,33 @@
+{
+  "title": "BLF Human Review Practice Items",
+  "version": "1.0.0",
+  "purpose": "Training and calibration examples for native evaluators prior to analytical pilot evaluation.",
+  "usage_rule": "Practice items are excluded from Inter-Annotator Agreement (IAA) calculation and Gold dataset promotion.",
+  "items": [
+    {
+      "practice_id": "PRACTICE-001",
+      "context": "Casual everyday dining setting at home.",
+      "intended_meaning": "I am having lunch / eating rice.",
+      "candidate_a": "আমি ভাত খাচ্ছি।",
+      "candidate_b": "আমি খাচ্ছি ভাত।",
+      "guidance_for_reviewer": "Candidate A is standard neutral SOV (NATURAL_STANDARD). Candidate B has colloquial postverbal focus (NATURAL_COLLOQUIAL or MARKED_BUT_VALID). Both can be acceptable, with A preferred in neutral context."
+    },
+    {
+      "practice_id": "PRACTICE-002",
+      "context": "Polite request to a respected teacher or senior colleague.",
+      "intended_meaning": "Please read this document.",
+      "candidate_a": "আপনি এই কাগজটা পড়ো।",
+      "candidate_b": "আপনি এই কাগজটা পড়ুন।",
+      "candidate_c": "তুমি এই কাগজটা পড়ুন।",
+      "guidance_for_reviewer": "Candidate B has correct 2nd person honorific verbal agreement (NATURAL_STANDARD). Candidates A and C have honorific clashes (UNGRAMMATICAL). Preferred: [B]."
+    },
+    {
+      "practice_id": "PRACTICE-003",
+      "context": "Response in a discussion where the speaker was unaware of a recent announcement.",
+      "intended_meaning": "I actually did not know that.",
+      "candidate_a": "আমি তো বিষয়টা জানতাম না।",
+      "candidate_b": "আমি বিষয়টা জানতাম না তো।",
+      "guidance_for_reviewer": "Illustrates particle placement ('তো'). Both forms are idiomatic. If acceptability depends on discourse presupposition, select NEEDS_CONTEXT or MARKED_BUT_VALID."
+    }
+  ]
+}
