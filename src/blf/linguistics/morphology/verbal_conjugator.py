@@ -198,10 +198,12 @@ class VerbalConjugatorEngine:
                 mapping = {"1": "হইনি", "2_ORD": "হওনি", "2_HON": "হননি", "2_INT": "হসনি", "3_ORD": "হয়নি", "3_HON": "হননি"}
                 return mapping.get(person, "হয়নি")
             elif norm_root in ["দে", "দেওয়া", "দেয়া"]:
-                mapping = {"1": "দেইনি", "2_ORD": "দাওনি", "2_HON": "দেননি", "2_INT": "দিসনি", "3_ORD": "দেয়নি", "3_HON": "দেননি"}
+                # Canonical standard: দিইনি, Colloquial accepted: দেইনি
+                mapping = {"1": "দিইনি", "2_ORD": "দাওনি", "2_HON": "দেননি", "2_INT": "দিসনি", "3_ORD": "দেয়নি", "3_HON": "দেননি"}
                 return mapping.get(person, "দেয়নি")
             elif norm_root in ["নে", "নেওয়া", "নেয়া"]:
-                mapping = {"1": "নেইনি", "2_ORD": "নাওনি", "2_HON": "নেননি", "2_INT": "নিসনি", "3_ORD": "নেয়নি", "3_HON": "নেননি"}
+                # Canonical standard: নিইনি, Colloquial accepted: নেইনি
+                mapping = {"1": "নিইনি", "2_ORD": "নাওনি", "2_HON": "নেননি", "2_INT": "নিসনি", "3_ORD": "নেয়নি", "3_HON": "নেননি"}
                 return mapping.get(person, "নেয়নি")
             elif norm_root in ["লিখ", "লেখা"]:
                 mapping = {"1": "লিখিনি", "2_ORD": "লেখোনি", "2_HON": "লেখেননি", "2_INT": "লিখিসনি", "3_ORD": "লেখেনি", "3_HON": "লেখেননি"}
@@ -222,11 +224,16 @@ class VerbalConjugatorEngine:
                 mapping = {"1": "বুঝিনি", "2_ORD": "বোঝোনি", "2_HON": "বোঝেননি", "2_INT": "বুঝিসনি", "3_ORD": "বোঝেনি", "3_HON": "বোঝেননি"}
                 return mapping.get(person, "বোঝেনি")
             elif norm_root in ["শেখ", "শেখা", "শিখ"]:
-                mapping = {"1": "শিখিনি", "2_ORD": "শেখেনি", "2_HON": "শেখেননি", "2_INT": "শিখিসনি", "3_ORD": "শেখেনি", "3_HON": "শেখেননি"}
+                mapping = {"1": "শিখিনি", "2_ORD": "শেখনি", "2_HON": "শেখেননি", "2_INT": "শিখিসনি", "3_ORD": "শেখেনি", "3_HON": "শেখেননি"}
                 return mapping.get(person, "শেখেনি")
+            elif norm_root in ["পা", "পাওয়া", "পায়া"]:
+                mapping = {"1": "পায়নি", "2_ORD": "পাওনি", "2_HON": "পাননি", "2_INT": "পাসনি", "3_ORD": "পায়নি", "3_HON": "পাননি"}
+                return mapping.get(person, "পায়নি")
             else:
-                # Default regular root + e/i + ni
-                return norm_root + "েনি"
+                raise ConjugationError(
+                    f"Unsupported verb root for perfective -ni negation: '{root}'. "
+                    f"BLF requires explicit paradigm modeling to prevent uncalibrated synthetic forms."
+                )
 
         pos_form = table.get(tense_person_key, norm_root)
         return f"{pos_form} না"
@@ -291,7 +298,7 @@ class VerbalConjugatorEngine:
             "FUT_SIMP.3_ORD": "হবে",
             "FUT_SIMP.3_HON": "হবেন",
             # Imperative
-            "IMP.2_HON": "হন",
+            "IMP.2_HON": "হোন",
             "IMP.2_ORD": "হও",
             "IMP.2_INT": "হ",
             # Non-finite

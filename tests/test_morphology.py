@@ -198,7 +198,9 @@ class TestVerbalConjugator(unittest.TestCase):
         self.assertEqual(ho_cells["PAST_PERF.1"], "হয়েছিলাম")
         self.assertEqual(ho_cells["FUT_SIMP.1"], "হব")
         self.assertEqual(ho_cells["FUT_SIMP.2_HON"], "হবেন")
-        self.assertEqual(ho_cells["IMP.2_HON"], "হন")
+        # Explicit distinction between Indicative 'হন' and Imperative 'হোন'
+        self.assertEqual(ho_cells["IMP.2_HON"], "হোন")
+        self.assertNotEqual(ho_cells["IMP.2_HON"], ho_cells["PRES_SIMP.2_HON"])
         self.assertEqual(ho_cells["NF_CONJUNCTIVE"], "হয়ে")
         self.assertEqual(ho_cells["NF_CONDITIONAL"], "হলে")
         self.assertEqual(ho_cells["NF_INFINITIVE"], "হতে")
@@ -215,11 +217,20 @@ class TestVerbalConjugator(unittest.TestCase):
         self.assertEqual(self.engine.conjugate_negative("হ", "PRES_PERF.3_ORD"), "হয়নি")
         self.assertEqual(self.engine.conjugate_negative("বল", "PRES_PERF.3_ORD"), "বলেনি")
         self.assertEqual(self.engine.conjugate_negative("দেখ", "PRES_PERF.3_ORD"), "দেখেনি")
+        # Calibrated 1st person standard forms
+        self.assertEqual(self.engine.conjugate_negative("দে", "PRES_PERF.1"), "দিইনি")
+        self.assertEqual(self.engine.conjugate_negative("নে", "PRES_PERF.1"), "নিইনি")
+        self.assertEqual(self.engine.conjugate_negative("শেখ", "PRES_PERF.1"), "শিখিনি")
 
         # Other tenses -> finite verb + na
         self.assertEqual(self.engine.conjugate_negative("কর", "PRES_SIMP.1"), "করি না")
         self.assertEqual(self.engine.conjugate_negative("কর", "FUT_SIMP.1"), "করব না")
         self.assertEqual(self.engine.conjugate_negative("যা", "FUT_SIMP.2_ORD"), "যাবে না")
+
+        # Rejection of unmodeled verb roots to prevent arbitrary hallucination
+        from blf.linguistics.morphology.verbal_conjugator import ConjugationError
+        with self.assertRaises(ConjugationError):
+            self.engine.conjugate_negative("অজানা_ধাতু", "PRES_PERF.1")
 
 
 if __name__ == "__main__":

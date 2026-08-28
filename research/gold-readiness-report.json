@@ -1,60 +1,88 @@
 {
   "project": "Bangla Language Foundation (BLF)",
-  "report_version": "1.0.0",
-  "phase": "2A.1 — Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate",
   "evaluation_date": "2026-08-28",
-  "gold_readiness_verdict": "CONDITIONAL_READY_FOR_HUMAN_CURATION",
-  "summary": "Phase 2A.1 has successfully resolved core linguistic bugs (howa conjugation, phela vector restrictions with cognitive achievements, -ni negation morphology, feature-sensitive DOM, and particle disambiguation). Automated test suites pass with exact assertions. The repository is architecturally and linguistically sound for human-curated Gold seed generation, but NO automated mass generation may occur without expert human review of the diagnostic queue.",
-  "dimensions": {
-    "source_grounding": {
+  "evaluated_phase": "Phase 2A.2 — Attestation Integrity, Normative Calibration & Controlled Human-Review Pilot",
+  "evaluator_role": "Research Orchestrator & Data Quality Reviewer",
+  "overall_verdict": "READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT",
+  "verdict_rationale": "Implementation invariants pass across all 15 schemas and 79 unit tests. The 40-item stratified human review pilot and IAA tooling are fully established. Production Gold dataset generation remains paused pending authentic native linguist review of the pilot queue.",
+  "categorical_evaluation_matrix": {
+    "morphosyntactic_foundations": {
       "status": "PASS",
-      "score": 1.0,
-      "notes": "12 registered primary sources with claim-level evidence and frozen bibliographies."
+      "criteria": "Authoritative verbal and nominal declension paradigms covering standard Cholit BDSB forms and agreement invariants.",
+      "evidence": "14 inflectional paradigms in ontology/paradigms/; dedicated _conjugate_ho() with indicative 'হন' vs imperative 'হোন'; -ni perfective negation calibrated with standard দিইনি / নিইনি.",
+      "known_conflicts": "Register variation in colloquial Dhaka speech (দেইনি / নেইনি / হোস).",
+      "human_review_required": true,
+      "blocking_issue": null
     },
-    "morphotactics_and_inflections": {
+    "construction_grammar_coverage": {
       "status": "PASS",
-      "score": 0.98,
-      "notes": "Dedicated paradigms for howa, regular closed roots, vowel-mutating roots, and irregular verbs. Verified lexicon of 25+ conjunctive participles."
+      "criteria": "Formalized clause patterns covering canonical SOV, OSV topicalization, pro-drop, polar interrogatives, and complex predicates.",
+      "evidence": "22 construction definitions in ontology/constructions/constructions.json and 8 complex predicates in ontology/complex_predicates/.",
+      "known_conflicts": "Theoretical debates on whether correlative clauses should be modeled as adjunction or parataxis.",
+      "human_review_required": true,
+      "blocking_issue": null
     },
-    "complex_predicates": {
+    "differential_object_marking": {
+      "status": "PARTIAL",
+      "criteria": "Feature-sensitive case assignment distinguishing animacy, specificity, definiteness, and discourse prominence.",
+      "evidence": "DOMEngine in src/blf/linguistics/dom.py correctly assigning bare Ø for non-specific human search and overt -ke for specific human.",
+      "known_conflicts": "Source divergence on inanimate objects: normative grammars prefer bare Ø, while corpus usage and descriptive syntax attest overt -ke on demonstratives and topicalized inanimates (এটাকে, চিঠিটাকে).",
+      "human_review_required": true,
+      "blocking_issue": null
+    },
+    "conversational_pragmatics_and_deixis": {
       "status": "PASS",
-      "score": 0.95,
-      "notes": "Feature-based vector verb selection allows cognitive achievements with phela while rejecting pure statives; 8 polysemous vector specifications formalized."
+      "criteria": "Social deixis honorificity mapping, polyfunctional particles, and structured valency-based interrogative disambiguation.",
+      "evidence": "PragmaticsEngine in src/blf/linguistics/pragmatics.py; 7 multi-sense particles in ontology/pragmatics/pragmatic_particles.json; verb valency lexicon.",
+      "known_conflicts": "Digital nonstandard spelling habits conflating 'কি' and 'কী'.",
+      "human_review_required": true,
+      "blocking_issue": null
     },
-    "dom_and_case_marking": {
+    "semantic_frames_grounding": {
       "status": "PASS",
-      "score": 0.96,
-      "notes": "Feature-sensitive DOM engine evaluates animacy, definiteness, specificity, and classifiers to assign overt -ke vs bare -Ø."
+      "criteria": "Semantic frame taxonomy covering core communicative domains, frame elements, and selectional restrictions.",
+      "evidence": "24 frames in ontology/frames/core_frames.json calibrated to status SOURCE_GROUNDED.",
+      "known_conflicts": "FrameNet frame hierarchy alignment with Berkeley FrameNet vs Bangla-specific lexical frames.",
+      "human_review_required": true,
+      "blocking_issue": null
     },
-    "negation_and_polarity": {
+    "empirical_attestation_layer": {
+      "status": "PARTIAL",
+      "criteria": "Empirical grounding with verifiable locators, clear distinction between record validity and external verification.",
+      "evidence": "12 attestations in ontology/attestations/ audited and honestly classified as PROVISIONAL pending physical page scans or corpus split indexing.",
+      "known_conflicts": "Physical print copies of Azad (1984) and Thompson (2012) require manual physical verification.",
+      "human_review_required": true,
+      "blocking_issue": null
+    },
+    "human_review_infrastructure": {
       "status": "PASS",
-      "score": 1.0,
-      "notes": "Morphologically accurate perfective negation (-ni) and general post-verbal sentential negator (na)."
+      "criteria": "Versioned human review schema, stratified review queue, and inter-annotator agreement evaluation tooling.",
+      "evidence": "schemas/v0_1/human_review_decision.schema.json, data/review_queue/human_review_pilot_40.json/.md, src/blf/quality/iaa.py, scripts/compute_iaa.py.",
+      "known_conflicts": null,
+      "human_review_required": false,
+      "blocking_issue": null
     },
-    "pragmatic_particles_and_disambiguation": {
+    "data_quality_and_invariants": {
       "status": "PASS",
-      "score": 0.95,
-      "notes": "Context-sensitive and valency-based ki disambiguation; polyfunctional senses modeled for i, o, to, na, je, ba, ki."
+      "criteria": "Enforcement of tri-tier isolation (GOLD/SILVER/SYNTHETIC), provenance graph completeness, and zero broken links.",
+      "evidence": "validate_provenance_graph.py passes with 0 broken links; validate_all.py passes 10/10 suites.",
+      "known_conflicts": null,
+      "human_review_required": false,
+      "blocking_issue": null
     },
-    "corpus_attestation_coverage": {
+    "anti_ai_slop_and_documentation": {
       "status": "PASS",
-      "score": 0.92,
-      "notes": "12 empirical corpus attestations linking grammar literature, research corpora, and contemporary texts to rules and frames under research fair-use handling."
-    },
-    "diagnostic_review_queue": {
-      "status": "READY_PENDING_REVIEW",
-      "score": 1.0,
-      "notes": "156 curated diagnostic review items prepared across 11 linguistic categories in data/review_queue/ marked PENDING_HUMAN_REVIEW."
-    },
-    "verification_test_suite": {
-      "status": "PASS",
-      "score": 1.0,
-      "notes": "75 unit and regression tests passing with exact output assertions and adversarial rejection tests."
+      "criteria": "Compliance with research writing policy; zero rhetoric padding; removal of ungrounded certainty claims.",
+      "evidence": "check_anti_slop.py passes across all documentation and research files.",
+      "known_conflicts": null,
+      "human_review_required": false,
+      "blocking_issue": null
     }
   },
-  "prerequisites_for_phase_3_scaling": [
-    "Expert human linguist sign-off on high-uncertainty items in data/review_queue/linguistic_review_pack.json.",
-    "No automated process may assign HUMAN_APPROVED.",
-    "Phase 3 dataset collection must strictly operate under Gold curation protocols with dual-annotator inter-rater agreement."
+  "gold_seed_entry_conditions": [
+    "Native linguists complete independent review of the 40-item pilot queue (data/review_queue/human_review_pilot_40.json).",
+    "Inter-annotator agreement is computed and items with disagreement are adjudicated via scripts/compute_iaa.py.",
+    "Physical page audits for bibliographic citations in ontology/attestations/ are conducted to elevate PROVISIONAL attestations to TEXT_VERIFIED.",
+    "Source conflict on inanimate DOM is reviewed by annotators to establish guidelines for Gold sentences."
   ]
 }

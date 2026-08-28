@@ -1,5 +1,5 @@
 """
-Unit tests for BLF Pragmatics, Social Deixis, and Dialogue Acts.
+Unit tests for BLF Pragmatics, Social Deixis, and Structured Interrogative Analyzer.
 """
 
 import json
@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR / "src"))
 
-from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier, Register, POLYFUNCTIONAL_PARTICLES
+from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier, PRAGMATIC_PARTICLE_REGISTRY
 from blf.validation.validators import load_schema, validate_dict_against_schema
 
 DA_PATH = ROOT_DIR / "ontology" / "pragmatics" / "dialogue_acts.json"
@@ -31,13 +31,13 @@ class TestPragmatics(unittest.TestCase):
             self.assertTrue(valid, f"Dialogue act {aid} failed schema: {errors}")
 
     def test_social_deixis_register_transform(self):
-        # 1. Honorific tier (Apni bolun / bolen)
+        # 1. Honorific tier (Apni bolen)
         res_hon = self.engine.transform_addressee_register("বল", "PRES_SIMP", HonorificTier.HONORIFIC)
         self.assertEqual(res_hon, "আপনি বলেন")
 
-        # 2. Familiar tier (Tumi bolo)
-        res_fam = self.engine.transform_addressee_register("বল", "PRES_SIMP", HonorificTier.FAMILIAR)
-        self.assertEqual(res_fam, "তুমি বলো")
+        # 2. Ordinary tier (Tumi bolo)
+        res_ord = self.engine.transform_addressee_register("বল", "PRES_SIMP", HonorificTier.ORDINARY)
+        self.assertEqual(res_ord, "তুমি বলো")
 
         # 3. Intimate tier (Tui bolish)
         res_int = self.engine.transform_addressee_register("বল", "PRES_SIMP", HonorificTier.INTIMATE)
@@ -54,6 +54,7 @@ class TestPragmatics(unittest.TestCase):
         res_polar = self.engine.disambiguate_ki("তুমি কি যাবে?")
         funcs = [d["syntactic_function"] for d in res_polar["disambiguations"]]
         self.assertIn("POLAR_INTERROGATIVE_PARTICLE", funcs)
+        self.assertEqual(res_polar["disambiguations"][0]["confidence"], "HIGH")
 
         # 2. Content Wh-pronoun 'কী'
         res_wh = self.engine.disambiguate_ki("তুমি কী খাবে?")
@@ -65,12 +66,24 @@ class TestPragmatics(unittest.TestCase):
         funcs_gen = [d["syntactic_function"] for d in res_gen["disambiguations"]]
         self.assertIn("INTERROGATIVE_PRONOUN_SUBSTANTIVE", funcs_gen)
 
-        # 4. Raw non-standard digital spelling of Wh-pronoun 'কি' in argument position
+        # 4. Transitive verb without overt object -> Wh-pronoun 'কী'
         res_raw = self.engine.disambiguate_ki("তুমি কি চাও?")
         dis = res_raw["disambiguations"][0]
         self.assertEqual(dis["syntactic_function"], "INTERROGATIVE_PRONOUN_SUBSTANTIVE")
-        self.assertEqual(dis["orthography_standard"], "NONSTANDARD_DIGITAL_SPELLING")
-        self.assertEqual(dis["intended_standard_form"], "কী")
+        self.assertEqual(dis["normalized_standard_form"], "কী")
+
+        # 5. Transitive verb with overt object -> Polar particle 'কি'
+        res_obj = self.engine.disambiguate_ki("তুমি কি ভাত খাবে?")
+        dis_obj = res_obj["disambiguations"][0]
+        self.assertEqual(dis_obj["syntactic_function"], "POLAR_INTERROGATIVE_PARTICLE")
+        self.assertEqual(dis_obj["normalized_standard_form"], "কি")
+
+        # 6. Unknown verb root valency -> AMBIGUOUS fallback (never guessed)
+        res_unknown = self.engine.disambiguate_ki("তুমি কি অজানাক্রিয়া?")
+        dis_unk = res_unknown["disambiguations"][0]
+        self.assertEqual(dis_unk["syntactic_function"], "AMBIGUOUS")
+        self.assertEqual(dis_unk["confidence"], "LOW")
+        self.assertTrue(dis_unk["review_required"])
 
     def test_focus_clitic_attachment(self):
         # Restrictive clitic -i
@@ -82,15 +95,14 @@ class TestPragmatics(unittest.TestCase):
         self.assertEqual(res_o, "তুমিও")
 
     def test_polyfunctional_particle_definitions(self):
-        self.assertIn("না", POLYFUNCTIONAL_PARTICLES)
-        self.assertIn("তো", POLYFUNCTIONAL_PARTICLES)
-        self.assertIn("যে", POLYFUNCTIONAL_PARTICLES)
-        self.assertIn("বা", POLYFUNCTIONAL_PARTICLES)
-        
-        na_senses = [s.sense_id for s in POLYFUNCTIONAL_PARTICLES["না"].senses]
-        self.assertIn("SENSE-NA-NEGATOR", na_senses)
-        self.assertIn("SENSE-NA-TAG-QUESTION", na_senses)
-        self.assertIn("SENSE-NA-DIRECTIVE-SOFTENER", na_senses)
+        self.assertIn("না", PRAGMATIC_PARTICLE_REGISTRY)
+        self.assertIn("তো", PRAGMATIC_PARTICLE_REGISTRY)
+        self.assertIn("যে", PRAGMATIC_PARTICLE_REGISTRY)
+        self.assertIn("বা", PRAGMATIC_PARTICLE_REGISTRY)
+
+        na_senses = [s.sense_id for s in PRAGMATIC_PARTICLE_REGISTRY["না"].senses]
+        self.assertIn("SENSE-NA-NEGATION", na_senses)
+        self.assertIn("SENSE-NA-CONFIRMATION-TAG", na_senses)
 
 
 if __name__ == "__main__":

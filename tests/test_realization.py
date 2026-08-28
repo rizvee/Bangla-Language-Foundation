@@ -128,6 +128,25 @@ class TestRealization(unittest.TestCase):
         )
         self.assertEqual(res_pq_final, "তুমি ঢাকা যাবে কি ?")
 
+    def test_inanimate_demonstrative_and_contrast_dom(self):
+        from blf.linguistics.dom import DOMEngine, ObjectFeatures, AnimacyTier, DefinitenessTier, SpecificityTier, FocusProminence
+        dom = DOMEngine()
+
+        # Demonstrative inanimate under contrastive focus -> licenses overt -ke as accepted variant
+        feat_dem = ObjectFeatures(
+            lemma="এটা",
+            animacy=AnimacyTier.INANIMATE,
+            definiteness=DefinitenessTier.DEFINITE,
+            specificity=SpecificityTier.SPECIFIC,
+            is_demonstrative=True,
+            prominence=FocusProminence.CONTRASTIVE,
+        )
+        dec = dom.evaluate_dom(feat_dem)
+        self.assertEqual(dec.status, "ATTESTED_CONTEXT_DEPENDENT")
+        self.assertEqual(dec.accepted_variant, "এটাকে")
+        self.assertIsNotNone(dec.source_conflict)
+        self.assertEqual(dec.confidence, "MEDIUM")
+
     def test_cognitive_achievement_vector_sentence(self):
         res_cog = self.realizer.realize_vector_predicate_sentence(
             "সে", "সত্যটা", "জান", "ফেলা", "COGNITIVE_ACHIEVEMENT", "PAST_SIMP.3_ORD"

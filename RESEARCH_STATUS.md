@@ -5,10 +5,10 @@ Last Updated: 2026-08-28
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 2A.1 — Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate (Complete)
-- **Milestone State**: Phase 1A-1D, 2A, and 2A.1 Fully Operational Multi-Layer Linguistic OS
+- **Current Phase**: Phase 2A.2 — Attestation Integrity, Normative Calibration & Controlled Human-Review Pilot (Complete)
+- **Milestone State**: Phase 1A-1D, 2A, 2A.1, and 2A.2 Operational
 - **Primary Branch**: `main`
-- **Gold-Readiness Verdict**: `CONDITIONAL_READY_FOR_HUMAN_CURATION`
+- **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`
 
 ---
 
@@ -16,7 +16,7 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 14 schemas (`v0.1-draft-2.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm, Linguistic Construction, Complex Predicate, Dialogue Act, Semantic Frame, Corpus Attestation |
+| **Schemas Authoring** | 15 schemas (`v0.1-draft-2.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm, Linguistic Construction, Complex Predicate, Dialogue Act, Semantic Frame, Corpus Attestation, Human Review Decision |
 | **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
@@ -30,10 +30,11 @@ Last Updated: 2026-08-28
 | **Pragmatic Dialogue Acts** | 17 dialogue acts | Speech acts, honorificity constraints, clitics (`ontology/pragmatics/`) |
 | **Pragmatic Particles** | 7 particles | Multi-sense focus clitics (`-i`, `-o`), discourse markers (`to`, `na`, `je`, `ba`, `ki`) |
 | **Semantic Frames** | 24 core frames | Source-grounded communicative frames across everyday domains (`ontology/frames/`) |
-| **Corpus Attestations** | 12 attestations | Empirical citations linking grammar literature and corpora under fair use (`ontology/attestations/`) |
-| **Diagnostic Review Queue** | 156 items | Curated linguistic phenomena queue in `data/review_queue/` marked `PENDING_HUMAN_REVIEW` |
+| **Corpus Attestations** | 12 attestations | Audited & classified as `PROVISIONAL` with quarantined unindexed splits (`ontology/attestations/`) |
+| **Diagnostic Candidate Pack** | 156 items | Epistemically labeled in `data/review_queue/linguistic_review_pack.json` marked `PENDING_HUMAN_REVIEW` |
+| **Human Review Pilot** | 40 items | Stratified 6-category high-priority pilot in `data/review_queue/human_review_pilot_40.json` |
 | **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
-| **Automated Tests** | 75 unit tests | 100% passing across 15 test suites |
+| **Automated Tests** | 79 unit tests | 100% passing across 15 test suites |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
@@ -44,15 +45,17 @@ Last Updated: 2026-08-28
 
 - **Frozen Evidence Baseline**: Implemented in `research/phase-0-manifest.json` (Phase 0.3) with cryptographic SHA-256 checksums across all core registries and schemas.
 - **Claim-Level & Artifact-Specific Source Auditor**: Implemented in `scripts/audit_sources.py` and `sources/registry/source-audit.jsonl` enforcing semantic identifier matching, author list validation, and artifact license precision.
-- **Differential Object Marking (DOM) Engine**: Implemented in `src/blf/linguistics/dom.py` with multi-dimensional `ObjectFeatures` (Animacy, Definiteness, Specificity, Referentiality).
-- **Polarity-Aware Conjugation**: Implemented in `src/blf/linguistics/morphology/verbal_conjugator.py` enforcing standard perfective negation with `-নি` and general postverbal `না`.
-- **Corpus Attestation Layer**: Implemented in `schemas/v0_1/corpus_attestation.schema.json`, `src/blf/ontology/attestation.py`, `ontology/attestations/corpus_attestations.json`, and validated by `scripts/validate_attestations.py`.
-- **Diagnostic Human Review Pack**: Implemented in `scripts/generate_review_pack.py` producing `data/review_queue/linguistic_review_pack.json` and `.md`.
-- **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json`.
+- **Multi-Factor DOM Engine**: Implemented in `src/blf/linguistics/dom.py` with multi-dimensional `ObjectFeatures` and source-conflict awareness for specific inanimates (`এটাকে`, `বইটাকে`).
+- **Structured Interrogative Valency Analyzer**: Implemented in `src/blf/linguistics/pragmatics.py` disambiguating *কি* vs *কী* using verb valency and argument structure with explicit `AMBIGUOUS` fallback.
+- **Calibrated Verbal Conjugation**: Implemented in `src/blf/linguistics/morphology/verbal_conjugator.py` distinguishing indicative *হন* from imperative *হোন* and calibrating negative morphology (*দিইনি*, *নিইনি*, *শিখিনি*).
+- **Corpus Attestation Layer**: Implemented in `schemas/v0_1/corpus_attestation.schema.json`, `src/blf/ontology/attestation.py`, `ontology/attestations/corpus_attestations.json`, and validated by `scripts/validate_attestations.py` and `scripts/audit_attestations.py`.
+- **Human Review Framework & IAA Tooling**: Implemented in `schemas/v0_1/human_review_decision.schema.json`, `src/blf/quality/iaa.py`, and `scripts/compute_iaa.py`.
+- **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`).
 
 ---
 
 ## 4. Known Limitations & Research Gaps
 
-1. **Human Expert Sign-Off**: The 156 diagnostic review items in `data/review_queue/` remain in status `PENDING_HUMAN_REVIEW` pending native linguist validation before Phase 3 Gold seed scaling.
-2. **Dialect Representations**: Dialectal markers for Sylheti and Chittagonian are grounded in scholarly field literature; empirical spoken audio transcriptions will be integrated during Gold corpus expansion.
+1. **Human Evaluation Execution**: The 40-item stratified pilot queue in `data/review_queue/human_review_pilot_40.json` awaits evaluation by native linguists prior to Phase 3 Gold seed scaling.
+2. **Physical Page Audits**: Bibliographic citations for printed grammar books (Azad 1984, Thompson 2012, BA 2011) remain provisional until verified against physical scans.
+3. **Dialect Representations**: Dialectal markers for Sylheti and Chittagonian are grounded in scholarly field literature; empirical spoken audio transcriptions will be integrated during Gold corpus expansion.

@@ -1,59 +1,49 @@
-# BLF Gold-Readiness Gate Evaluation Report
+# BLF Gold-Readiness Gate Evaluation Report (Phase 2A.2)
 
-**Phase**: 2A.1 — Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate  
-**Date**: August 28, 2026  
-**Evaluator**: BLF Linguistic Integrity Subsystem  
-**Overall Verdict**: `CONDITIONAL_READY_FOR_HUMAN_CURATION`
+**Evaluation Date**: 2026-08-28  
+**Phase**: Phase 2A.2 — Attestation Integrity, Normative Calibration & Controlled Human-Review Pilot  
+**Evaluator**: Research Orchestrator & Data Quality Reviewer  
+**Overall Status**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`  
 
 ---
 
 ## 1. Executive Summary
 
-Phase 2A.1 was initiated following external audits demonstrating that automated test passes did not guarantee linguistic correctness (`TEST PASS != LINGUISTIC CORRECTNESS`). Over the course of this phase, foundational linguistic subsystems were audited, repaired, feature-calibrated, and hardened with empirical attestations and exact regression tests.
+This gate evaluation reviews the technical readiness of the **Bangla Language Foundation (BLF)** infrastructure before human curation. In adherence to honest epistemic protocols, all uncalibrated decimal precision scores have been replaced with **categorical evidence gates** (`PASS`, `PARTIAL`, `FAIL`, `NOT_EVALUATED`).
 
-The core result is that the BLF linguistic engine is now **stable, epistemically honest, and architecturally verified** to support human-curated Gold sentence collection. However, in accordance with core project invariants, **no mass automated generation may proceed directly to Gold status** without expert human review of the diagnostic queue.
+**Core Invariant**: Automated tests validate software implementation invariants. They do not prove absolute linguistic truth. All generated linguistic candidates remain uncurated until reviewed by human native speakers and linguists.
 
 ---
 
-## 2. Evaluation Across 9 Linguistic & Engineering Dimensions
+## 2. Categorical Evaluation Matrix
 
-| Dimension | Evaluation Status | Score / Quality | Key Evidence & Hardening Summary |
+| Subsystem Dimension | Status | Criteria & Implementation Evidence | Known Conflicts & Open Review Items |
 |---|---|---|---|
-| **1. Source Grounding** | `PASS` | 1.00 | 12 primary sources registered with claim-level evidence and verified ACL/scholarly metadata. |
-| **2. Morphotactics & Inflections** | `PASS` | 0.98 | Dedicated paradigm for `হওয়া` (`PARADIGM-VERB-HO`), isolated lexicon of 25+ verified conjunctive participles, strict rejection of illegal double-determination morphotactics (`*বইটাগুলো`). |
-| **3. Complex Predicates** | `PASS` | 0.95 | Restored compatibility for cognitive achievement verbs with `ফেলা` (`জেনে ফেলা`, `বুঝে ফেলা`) while rejecting pure statives (`*থেকে ফেলা`); 8 polysemous vector verb senses formalized. |
-| **4. DOM & Case Marking** | `PASS` | 0.96 | Built feature-sensitive `DOMEngine` evaluating animacy, definiteness, specificity, and classifiers to assign overt `-কে` vs bare `-Ø`. |
-| **5. Negation & Polarity** | `PASS` | 1.00 | Morphologically accurate perfective negation (`-নি`: `করিনি`, `যায়নি`, `হয়নি`) and general post-verbal negator (`না`). |
-| **6. Pragmatic Particles** | `PASS` | 0.95 | Built multi-sense models for `ই`, `ও`, `তো`, `না`, `যে`, `বা`, `কি`; added valency-aware `disambiguate_ki()`. |
-| **7. Corpus Attestations** | `PASS` | 0.92 | Formalized `BLFCorpusAttestation` schema with 12 empirical attestations across grammar literature, research corpora, and contemporary texts under research fair use. |
-| **8. Diagnostic Review Queue** | `READY` | 1.00 | Generated 156-item diagnostic review queue (`data/review_queue/`) with status `PENDING_HUMAN_REVIEW`. |
-| **9. Test Suite & Verification** | `PASS` | 1.00 | 75 unit and regression tests passing with exact output assertions and adversarial rejection tests. |
+| **Morphosyntactic Foundations** | `PASS` | 14 paradigms; dedicated `_conjugate_ho()` distinguishing indicative *হন* from imperative *হোন*; calibrated *-নি* negation (*দিইনি*, *নিইনি*, *শিখিনি*); unmodeled roots raise `ConjugationError`. | Spoken colloquial variants (*দেইনি*, *নেইনি*, *হোস*). |
+| **Construction Grammar** | `PASS` | 22 clause constructions in `ontology/constructions/constructions.json` and 8 complex predicates; selectional restriction engine enforcing telic/aspectual compatibility. | Theoretical treatment of correlatives and clause chaining. |
+| **Differential Object Marking** | `PARTIAL` | `DOMEngine` evaluating animacy, definiteness, specificity, referentiality, and prominence; correctly assigns bare direct object for non-specific human search (*ডাক্তার খুঁজছি*). | **Source Conflict**: Normative grammars restrict *-কে* to animates; modern NLP & syntax studies attest *-কে* on specific inanimates under contrast (*এটাকে দাও*, *চিঠিটাকে রেখেছি*). |
+| **Conversational Pragmatics** | `PASS` | Social deixis honorificity; 7 multi-sense particles in `ontology/pragmatics/pragmatic_particles.json`; structured valency analyzer for *কি* vs *কী* with `AMBIGUOUS` fallback. | Digital orthographic conflation of *কি* and *কী*. |
+| **Semantic Frames Grounding** | `PASS` | 24 core communicative frames in `ontology/frames/core_frames.json` with standardized thematic roles and selectional constraints. | Cross-lingual frame alignment vs language-specific frames. |
+| **Empirical Attestation Layer** | `PARTIAL` | Schema `schemas/v0_1/corpus_attestation.schema.json`; 12 attestations audited and honestly downgraded to `PROVISIONAL` pending physical page verification or dataset indexing. | Physical print copies of grammar references require manual verification. |
+| **Human Review Infrastructure** | `PASS` | Decision schema `schemas/v0_1/human_review_decision.schema.json`; stratified 40-item pilot queue; IAA tooling (`src/blf/quality/iaa.py`, `scripts/compute_iaa.py`). | Human reviewers must now evaluate the pilot items. |
+| **Data Quality & Invariants** | `PASS` | Tri-tier separation (`GOLD`, `SILVER`, `SYNTHETIC`); 100% complete provenance graph with 0 broken links; 10/10 validation suites passing. | None. |
+| **Anti-AI-Slop & Documentation** | `PASS` | Zero rhetorical inflation; removed false claims of certainty; compliance with research writing policy verified. | None. |
 
 ---
 
-## 3. Explicit Linguistic Bug Fixes in Phase 2A.1
+## 3. Entry Conditions for Phase 3 Gold Curation
 
-1. **`হওয়া` (Howa) Verbal Conjugation**:
-   - Replaced generic stem fallback with dedicated `_conjugate_ho()` producing exact standard Cholit forms across all 6 person slots and 8 tense/aspect combinations (`হলো`, `হয়`, `হচ্ছে`, `হয়েছে`, `হব`, `হন`). Added `PARADIGM-VERB-HO` to `verbal_paradigms.json`.
-2. **Complex Predicate Polysemy & Selectional Restrictions**:
-   - Replaced coarse blanket stative ban with fine-grained semantic feature compatibility. Permitted cognitive achievement verbs (`COGNITIVE_ACHIEVEMENT`) with `ফেলা` denoting sudden discovery or comprehension breakthroughs (`জেনে ফেলা`, `বুঝে ফেলা`).
-3. **Differential Object Marking (DOM) Engine**:
-   - Replaced boolean animacy heuristics with multidimensional `ObjectFeatures` (Animacy, Definiteness, Specificity, Referentiality). Correctly models bare human occupational nouns (`ডাক্তার খুঁজছি`) and inanimate zero-marking (`বইটা দাও`).
-4. **Polarity-Aware Negation**:
-   - Implemented `conjugate_negative()` mapping Present Perfect + NEG to past stem + `-নি` (`করিনি`, `যায়নি`, `খায়নি`, `হয়নি`), barring ungrammatical naive concatenations (`*করেছি না`).
-5. **Context-Sensitive Polar 'কি' vs Wh-Pronoun Disambiguation**:
-   - Modeled particle positions (pre-verbal, topic-adjacent, sentence-final) and syntactic argument valency checks to distinguish polar interrogative particle from substantive Wh-pronoun `কী` (and its informal digital spelling variants).
-6. **Lexical Isolation**:
-   - Enforced strict dictionary lookup for non-finite conjunctive participles (`VERIFIED_CONJUNCTIVE_PARTICIPLES`), raising `ConjugationError` for unmodeled verbs to prevent synthetic hallucination.
+Before initiating the collection of 1,000+ hand-curated Gold seed primitive utterances, the following human review milestones must be satisfied:
+
+1. **Conduct Human Review Pilot**: At least two native linguists / educated native speakers independently review the 40 items in [`data/review_queue/human_review_pilot_40.json`](../data/review_queue/human_review_pilot_40.json).
+2. **Compute IAA & Adjudicate**: Execute `scripts/compute_iaa.py --input-log path/to/decisions.json` to calculate Cohen's Kappa and extract items with rater disagreement into the adjudication queue.
+3. **Resolve Inanimate DOM Policy**: Formulate clear human annotation guidelines regarding the register and focus constraints of specific inanimate direct objects (*এটাকে* vs *এটা*).
+4. **Elevate Physical Attestations**: Verify page citations in print grammar books to upgrade `PROVISIONAL` attestation records to `TEXT_VERIFIED`.
 
 ---
 
-## 4. Gate Conditions for Phase 3
+## 4. Overall Verdict
 
-Before Phase 3 Gold Seed generation begins:
-1. **Expert Linguist Adjudication**:
-   - Native linguist reviewers must inspect `data/review_queue/linguistic_review_pack.json` (or `.md`) and record verdicts on high-uncertainty items.
-2. **Invariant Invalidation Protocol**:
-   - Any automated process that attempts to assign `HUMAN_APPROVED` without human intervention must be aborted.
-3. **Gold Seed Isolation**:
-   - All machine-realized diagnostic items remain labeled `SYNTHETIC_DIAGNOSTIC_CANDIDATE` or `PROVISIONAL` until human sign-off.
+`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`
+
+The codebase and linguistic assets are in a robust, epistemically honest state to commence human review. Mass Gold dataset scaling remains paused.

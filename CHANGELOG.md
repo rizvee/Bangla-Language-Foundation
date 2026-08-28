@@ -9,6 +9,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A.2 Attestation Integrity, Normative Calibration & Controlled Human-Review Pilot
+- **Attestation Integrity & Granular Verification Enums**: Updated `schemas/v0_1/corpus_attestation.schema.json` and `src/blf/ontology/attestation.py` adding explicit verification statuses (`DISCOVERED`, `PROVISIONAL`, `LOCATOR_VERIFIED`, `TEXT_VERIFIED`, `FEATURE_VERIFIED`, `HUMAN_REVIEWED`, `REJECTED`) and verification methods; downgraded 12 existing attestations to `PROVISIONAL` and quarantined unindexed corpus split locators.
+- **Attestation Validators & Offline Auditor**: Upgraded `scripts/validate_attestations.py` to validate `rule_ids` against canonical registry; created `scripts/audit_attestations.py` with deterministic `--offline` and `--online` auditing.
+- **`হওয়া` Honorific Imperative Calibration**: Corrected 2nd person honorific imperative to `হোন` (*দয়া করে শান্ত হোন*, *সুস্থ হোন*) in `verbal_conjugator.py` and `verbal_paradigms.json`, maintaining distinction from indicative `হন` (*আপনি শিক্ষক হন*).
+- **Negative Morphology Calibration**: Calibrated `-নি` perfective negation in `verbal_conjugator.py` to support canonical standard (*দিইনি*, *নিইনি*, *শিখিনি*) and reject silent fabrication for unmodeled roots.
+- **Multi-Factor DOM Engine & Inanimate Specificity**: Updated `src/blf/linguistics/dom.py` removing universal ban on inanimate *-কে*; modeled source conflict and licensed accepted overt *-কে* under contrastive focus and topicalization (*এটাকে দাও*, *চিঠিটাকে রেখেছি*).
+- **Structured Interrogative Valency Analyzer**: Rebuilt `disambiguate_ki()` in `src/blf/linguistics/pragmatics.py` using verb valency lexicon and argument accounting, returning explicit `AMBIGUOUS` fallback on unknown contexts.
+- **Human Review Framework & IAA Tooling**: Created `schemas/v0_1/human_review_decision.schema.json`, `src/blf/quality/iaa.py`, and `scripts/compute_iaa.py` supporting Cohen's Kappa, raw agreement, disagreement extraction, and adjudication.
+- **Stratified Human Review Pilot (40 Items)**: Generated `data/review_queue/human_review_pilot_40.json` and `.md` covering 6 critical categories for native linguist evaluation.
+- **Epistemically Relabeled Candidate Pack (156 Items)**: Refactored `data/review_queue/linguistic_review_pack.json` and `.md` removing ungrounded decimal confidence in favor of categorical `HIGH`/`MEDIUM`/`LOW` and descriptive acceptability tags.
+- **Categorical Gold-Readiness Gate**: Rewrote `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`).
+
 ### Added - Phase 2A.1 Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate
 - **`হওয়া` (Howa) Inflection Paradigm**: Implemented dedicated `_conjugate_ho()` in `src/blf/linguistics/morphology/verbal_conjugator.py` covering all 6 person slots across 8 tense-aspect combinations, imperative, and participles (`হলো`, `হয়`, `হচ্ছে`, `হয়েছে`, `হব`, `হন`); added `PARADIGM-VERB-HO` to `ontology/paradigms/verbal_paradigms.json`.
 - **Differential Object Marking (DOM) Engine**: Implemented `DOMEngine` in `src/blf/linguistics/dom.py` with multi-dimensional `ObjectFeatures` (Animacy, Definiteness, Specificity, Referentiality) assigning overt `-কে` vs bare `-Ø`.

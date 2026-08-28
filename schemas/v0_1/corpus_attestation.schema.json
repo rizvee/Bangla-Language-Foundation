@@ -2,7 +2,7 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/corpus_attestation.schema.json",
   "title": "BLFCorpusAttestation",
-  "description": "Schema for empirical corpus attestations supporting grammatical rules and constructions in BLF.",
+  "description": "Schema for empirical corpus and literature attestations in BLF, separating record validity from genuine external verification.",
   "type": "object",
   "required": [
     "attestation_id",
@@ -14,8 +14,14 @@
     "register",
     "construction_ids",
     "rule_ids",
-    "copyright_handling",
-    "attestation_status"
+    "exact_or_derived_text",
+    "locator",
+    "locator_type",
+    "canonical_url_or_artifact",
+    "retrieval_date",
+    "verification_method",
+    "verification_status",
+    "copyright_handling"
   ],
   "properties": {
     "attestation_id": {
@@ -26,7 +32,7 @@
     "text": {
       "type": "string",
       "minLength": 1,
-      "description": "Attested textual excerpt."
+      "description": "Attested textual excerpt or representative linguistic example."
     },
     "normalized_text": {
       "type": "string",
@@ -38,6 +44,10 @@
       "pattern": "^[A-Z0-9_-]+$",
       "description": "Registered source ID from sources.json."
     },
+    "artifact_id": {
+      "type": ["string", "null"],
+      "description": "Specific artifact ID within source (e.g. ART-PAPER-01, ART-DATA-01)."
+    },
     "source_type": {
       "type": "string",
       "enum": [
@@ -48,11 +58,75 @@
         "SPOKEN_SPEECH_TRANSCRIPT",
         "LITERARY_PUBLIC_DOMAIN"
       ],
-      "description": "Provenance category of the attested text."
+      "description": "Provenance category of the source."
     },
-    "source_locator": {
+    "exact_or_derived_text": {
       "type": "string",
-      "description": "Page, paragraph, document identifier, or dataset partition."
+      "enum": [
+        "EXACT_QUOTATION",
+        "SCHOLARLY_EXAMPLE_DERIVED",
+        "CORPUS_TOKEN_STREAM",
+        "SYNTHESIZED_MINIMAL_PAIR"
+      ],
+      "description": "Whether the text is an exact verbatim extract or a derived illustrative example."
+    },
+    "locator": {
+      "type": "string",
+      "description": "Page number, section, paragraph, dataset record ID, or quarantine label."
+    },
+    "locator_type": {
+      "type": "string",
+      "enum": [
+        "PAGE",
+        "PARAGRAPH",
+        "SECTION",
+        "CORPUS_RECORD",
+        "LINE",
+        "DOCUMENT",
+        "UNINDEXED_SPLIT_QUARANTINED"
+      ],
+      "description": "Structural type of the locator reference."
+    },
+    "canonical_url_or_artifact": {
+      "type": "string",
+      "description": "Accessible URL, DOI, or local verified artifact path."
+    },
+    "retrieval_date": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "ISO date of evidence retrieval or audit."
+    },
+    "content_hash": {
+      "type": ["string", "null"],
+      "description": "SHA-256 hash of the exact excerpt or text stream when available."
+    },
+    "metadata_hash": {
+      "type": ["string", "null"],
+      "description": "SHA-256 hash of source metadata record."
+    },
+    "verification_method": {
+      "type": "string",
+      "enum": [
+        "INDEPENDENT_PAGE_AUDIT",
+        "DIRECT_CORPUS_TOKEN_MATCH",
+        "METADATA_ONLY_BIBLIOGRAPHIC_LOCATOR",
+        "UNINDEXED_QUARANTINE",
+        "HUMAN_EXPERT_VERIFIED"
+      ],
+      "description": "Audit methodology applied to this attestation record."
+    },
+    "verification_status": {
+      "type": "string",
+      "enum": [
+        "DISCOVERED",
+        "PROVISIONAL",
+        "LOCATOR_VERIFIED",
+        "TEXT_VERIFIED",
+        "FEATURE_VERIFIED",
+        "HUMAN_REVIEWED",
+        "REJECTED"
+      ],
+      "description": "Fine-grained epistemic verification status."
     },
     "language_variety": {
       "type": "string",
@@ -102,23 +176,13 @@
       ],
       "description": "Legal copyright handling designation."
     },
-    "attestation_status": {
-      "type": "string",
-      "enum": [
-        "VERIFIED_EMPIRICAL",
-        "CROSS_VALIDATED",
-        "PROVISIONAL_SAMPLE",
-        "ARCHIVAL_NOTE"
-      ],
-      "description": "Empirical attestation status."
-    },
     "gloss": {
       "type": "string",
       "description": "Morpheme or word-level English gloss."
     },
     "notes": {
       "type": ["string", "null"],
-      "description": "Linguistic or contextual notes."
+      "description": "Linguistic or contextual audit notes."
     }
   },
   "additionalProperties": false

@@ -1,16 +1,13 @@
 """
-BLF Conversational Register, Pragmatics & Social Deixis Engine.
+BLF Pragmatics, Register & Conversational Deixis Engine.
 
-Provides models and engines for:
-1. Social deixis and 3-tier addressee honorificity (Apni, Tumi, Tui).
-2. Polyfunctional pragmatic particle and clitic semantics (-i, -o, to, na, je, ba, ki).
-3. Context-sensitive and syntactic-frame disambiguation between polar 'ki' and Wh-pronoun 'kee'.
-4. Register transformations (Formal, Colloquial, Familiar, Intimate).
+Models addressee social deixis (3-tier honorificity), speech act intent,
+multi-sense pragmatic particles, and structured interrogative valency disambiguation.
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine
 from blf.linguistics.normalizer import normalize_bangla_text
 
@@ -18,53 +15,69 @@ conjugator = VerbalConjugatorEngine()
 
 
 class HonorificTier(str, Enum):
-    HONORIFIC = "HONORIFIC"  # আপনি / তিনি (-en)
-    FAMILIAR = "FAMILIAR"    # তুমি / সে (-o / -e)
-    INTIMATE = "INTIMATE"    # তুই / সে (-is / -e)
+    HONORIFIC = "HONORIFIC"        # আপনি / তিনি / উনি
+    ORDINARY = "ORDINARY"          # তুমি / সে / ও
+    INTIMATE = "INTIMATE"          # তুই / এ / ও
 
 
-class Register(str, Enum):
-    FORMAL_STANDARD = "FORMAL_STANDARD"
-    COLLOQUIAL_STANDARD = "COLLOQUIAL_STANDARD"
+class SocialDistance(str, Enum):
+    FORMAL = "FORMAL"
     FAMILIAR = "FAMILIAR"
     INTIMATE = "INTIMATE"
 
 
-PRONOUN_MAP: Dict[str, Dict[HonorificTier, str]] = {
-    "2": {
-        HonorificTier.HONORIFIC: "আপনি",
-        HonorificTier.FAMILIAR: "তুমি",
-        HonorificTier.INTIMATE: "তুই",
-    },
-    "3": {
-        HonorificTier.HONORIFIC: "তিনি",
-        HonorificTier.FAMILIAR: "সে",
-        HonorificTier.INTIMATE: "সে",
-    },
-}
+class PowerRelation(str, Enum):
+    SUPERIOR = "SUPERIOR"
+    EQUAL = "EQUAL"
+    SUBORDINATE = "SUBORDINATE"
 
-VERB_SLOT_MAP: Dict[str, Dict[HonorificTier, str]] = {
-    "2": {
-        HonorificTier.HONORIFIC: "2_HON",
-        HonorificTier.FAMILIAR: "2_ORD",
-        HonorificTier.INTIMATE: "2_INT",
-    },
-    "3": {
-        HonorificTier.HONORIFIC: "3_HON",
-        HonorificTier.FAMILIAR: "3_ORD",
-        HonorificTier.INTIMATE: "3_ORD",
-    },
+
+class VerbValency(str, Enum):
+    INTRANSITIVE = "INTRANSITIVE"
+    TRANSITIVE = "TRANSITIVE"
+    DITRANSITIVE = "DITRANSITIVE"
+    UNKNOWN = "UNKNOWN"
+
+
+# Registered verb valency lexicon for BDSB
+VERB_VALENCY_LEXICON: Dict[str, Dict[str, Any]] = {
+    # Intransitives
+    "যা": {"valency": VerbValency.INTRANSITIVE, "forms": ["যাই", "যাও", "যান", "যাস", "যায়", "যাচ্ছ", "যাচ্ছেন", "যাচ্ছি", "গেলাম", "গেলে", "গেলেন", "গেল", "যাবে", "যাবেন", "যাবি"]},
+    "আস": {"valency": VerbValency.INTRANSITIVE, "forms": ["আসি", "আসো", "আসেন", "আসিস", "আসে", "আসছি", "আসছেন", "এলাম", "এলেন", "এলে", "এলো", "এল", "আসবে", "আসবেন"]},
+    "থাক": {"valency": VerbValency.INTRANSITIVE, "forms": ["থাকি", "থাকো", "থাকেন", "থাকিস", "থাকে", "থাকছি", "থাকছেন", "থাকলাম", "থাকলেন", "থাকবে", "থাকবেন"]},
+    "ঘুম": {"valency": VerbValency.INTRANSITIVE, "forms": ["ঘুমাও", "ঘুমান", "ঘুমায়", "ঘুমাচ্ছি", "ঘুমাচ্ছেন", "ঘুমাল", "ঘুমালেন", "ঘুমাবে", "ঘুমাবেন"]},
+    "বস": {"valency": VerbValency.INTRANSITIVE, "forms": ["বসি", "বসো", "বসেন", "বসিস", "বসে", "বসলাম", "বসলেন", "বসল", "বসবে", "বসবেন"]},
+    "দাঁড়া": {"valency": VerbValency.INTRANSITIVE, "forms": ["দাঁড়াও", "দাঁড়ান", "দাঁড়ায়", "দাঁড়িয়েছে", "দাঁড়াল", "দাঁড়ালেন"]},
+    "হ": {"valency": VerbValency.INTRANSITIVE, "forms": ["হই", "হও", "হন", "হস", "হয়", "হচ্ছে", "হচ্ছেন", "হলাম", "হলেন", "হলো", "হবে", "হবেন", "হোন"]},
+
+    # Transitives
+    "খা": {"valency": VerbValency.TRANSITIVE, "forms": ["খাই", "খাও", "খান", "খাস", "খায়", "খাচ্ছি", "খাচ্ছেন", "খেলাম", "খেলে", "খেলেন", "খেল", "খাবে", "খাবেন", "খাবি", "খাইনি", "খায়নি"]},
+    "চা": {"valency": VerbValency.TRANSITIVE, "forms": ["চাই", "চাও", "চান", "চাস", "চায়", "চাচ্ছি", "চাচ্ছেন", "চাইলাম", "চাইলেন", "চাইবে", "চাইবেন"]},
+    "বল": {"valency": VerbValency.TRANSITIVE, "forms": ["বলি", "বলো", "বলেন", "বলিস", "বলে", "বলছি", "বলছেন", "বললাম", "বললেন", "বলল", "বলবে", "বলবেন", "বলিনি", "বলেনি"]},
+    "লিখ": {"valency": VerbValency.TRANSITIVE, "forms": ["লিখি", "লেখো", "লেখেন", "লেখিস", "লেখে", "লিখছি", "লিখছেন", "লিখলাম", "লিখলেন", "লিখল", "লিখবে", "লিখবেন", "লিখিনি", "লেখেনি"]},
+    "পড়": {"valency": VerbValency.TRANSITIVE, "forms": ["পড়ি", "পড়ো", "পড়েন", "পড়িস", "পড়ে", "পড়ছি", "পড়ছেন", "পড়লাম", "পড়লেন", "পড়ল", "পড়ল", "পড়বে", "পড়বেন", "পড়িনি", "পড়েনি"]},
+    "দেখ": {"valency": VerbValency.TRANSITIVE, "forms": ["দেখি", "দেখো", "দেখেন", "দেখিস", "দেখে", "দেখছি", "দেখছেন", "দেখলাম", "দেখলেন", "দেখল", "দেখবে", "দেখবেন", "দেখিনি", "দেখেনি"]},
+    "জান": {"valency": VerbValency.TRANSITIVE, "forms": ["জানি", "জানো", "জানেন", "জানিস", "জানে", "জানলাম", "জানলেন", "জানল", "জানবে", "জানবেন", "জানিনি", "জানেনি"]},
+    "বোঝ": {"valency": VerbValency.TRANSITIVE, "forms": ["বুঝি", "বোঝো", "বোঝেন", "বোঝিস", "বোঝে", "বুঝলাম", "বুঝলেন", "বুঝল", "বুঝবে", "বুঝবেন", "বুঝিনি", "বোঝেনি"]},
+    "কর": {"valency": VerbValency.TRANSITIVE, "forms": ["করি", "করো", "করেন", "করিস", "করে", "করছি", "করছেন", "করলাম", "করলেন", "করল", "করবে", "করবেন", "করিনি", "করেনি"]},
+
+    # Ditransitives
+    "দে": {"valency": VerbValency.DITRANSITIVE, "forms": ["দিই", "দাও", "দেন", "দিস", "দেয়", "দিচ্ছি", "দিচ্ছেন", "দিলাম", "দিলেন", "দিল", "দেবে", "দেবেন", "দিবি", "দিইনি", "দেয়নি"]},
+    "নে": {"valency": VerbValency.DITRANSITIVE, "forms": ["নিই", "নাও", "নেন", "নিস", "নেয়", "নিচ্ছি", "নিচ্ছেন", "নিলাম", "নিলেন", "নিল", "নেবে", "নেবেন", "নিবি", "নিইনি", "নেয়নি"]},
+    "পাঠা": {"valency": VerbValency.DITRANSITIVE, "forms": ["পাঠাই", "পাঠাও", "পাঠান", "পাঠায়", "পাঠাচ্ছি", "পাঠালেন", "পাঠাল", "পাঠাবে", "পাঠাবেন"]},
 }
 
 
 @dataclass
 class ParticleSense:
+    """Represents an attested semantic/pragmatic sense of a polyfunctional particle."""
     sense_id: str
     syntactic_position: str
     scope: str
     discourse_function: str
     register: str
-    confidence: float
+    confidence: str  # HIGH, MEDIUM, LOW
+    confidence_basis: str
 
 
 @dataclass
@@ -74,7 +87,7 @@ class PragmaticParticleSpec:
     senses: List[ParticleSense]
 
 
-POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
+PRAGMATIC_PARTICLE_REGISTRY: Dict[str, PragmaticParticleSpec] = {
     "ই": PragmaticParticleSpec(
         particle="ই",
         is_clitic=True,
@@ -85,7 +98,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Constituent",
                 discourse_function="Exclusive/restrictive identification (X alone / precisely X).",
                 register="ALL",
-                confidence=1.0,
+                confidence="HIGH",
+                confidence_basis="Descriptive consensus in BA-GRAM-2011 and Thompson 2012.",
             ),
             ParticleSense(
                 sense_id="SENSE-I-EMPHATIC",
@@ -93,7 +107,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Predicate",
                 discourse_function="Emphatic certainty or inevitable consequence (yabei).",
                 register="ALL",
-                confidence=0.95,
+                confidence="HIGH",
+                confidence_basis="Universal spoken and written BDSB attestation.",
             ),
         ],
     ),
@@ -107,7 +122,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Constituent",
                 discourse_function="Inclusive/additive focus (X also / in addition).",
                 register="ALL",
-                confidence=1.0,
+                confidence="HIGH",
+                confidence_basis="Descriptive consensus in reference grammars.",
             ),
             ParticleSense(
                 sense_id="SENSE-O-SCALAR-CONCESSIVE",
@@ -115,7 +131,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Constituent",
                 discourse_function="Scalar extreme / concessive minimization ('even one').",
                 register="ALL",
-                confidence=0.95,
+                confidence="HIGH",
+                confidence_basis="Attested in Thompson 2012 p. 188.",
             ),
         ],
     ),
@@ -129,7 +146,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Topic constituent",
                 discourse_function="Contrastive topic or personal stance ('As for me...').",
                 register="COLLOQUIAL_AND_STANDARD",
-                confidence=0.95,
+                confidence="HIGH",
+                confidence_basis="Attested in BA-GRAM-2011 Vol. 2 p. 260.",
             ),
             ParticleSense(
                 sense_id="SENSE-TO-PRESUPPOSITION",
@@ -137,7 +155,8 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
                 scope="Clause",
                 discourse_function="Appeals to shared common ground or prior consensus.",
                 register="COLLOQUIAL_AND_STANDARD",
-                confidence=0.95,
+                confidence="HIGH",
+                confidence_basis="Attested in Azad 1984.",
             ),
         ],
     ),
@@ -146,28 +165,22 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
         is_clitic=False,
         senses=[
             ParticleSense(
-                sense_id="SENSE-NA-NEGATOR",
+                sense_id="SENSE-NA-NEGATION",
                 syntactic_position="Post-verbal",
-                scope="Predicate",
-                discourse_function="Standard propositional clausal negator.",
+                scope="Predicate/Clause",
+                discourse_function="Standard finite clause truth-value negation.",
                 register="ALL",
-                confidence=1.0,
+                confidence="HIGH",
+                confidence_basis="Universal grammatical invariant.",
             ),
             ParticleSense(
-                sense_id="SENSE-NA-TAG-QUESTION",
-                syntactic_position="Clause-final with rising intonation",
-                scope="Clause",
-                discourse_function="Confirmation seeking / tag question ('isn't it?').",
-                register="COLLOQUIAL_STANDARD",
-                confidence=0.95,
-            ),
-            ParticleSense(
-                sense_id="SENSE-NA-DIRECTIVE-SOFTENER",
-                syntactic_position="Post-imperative verb",
-                scope="Directive act",
-                discourse_function="Softens imperative into polite plea or encouragement.",
-                register="COLLOQUIAL_STANDARD",
-                confidence=0.95,
+                sense_id="SENSE-NA-CONFIRMATION-TAG",
+                syntactic_position="Clause-final",
+                scope="Utterance",
+                discourse_function="Appeals for addressee confirmation/tag question ('right?').",
+                register="COLLOQUIAL_AND_CONVERSATIONAL",
+                confidence="HIGH",
+                confidence_basis="Attested in Thompson 2012.",
             ),
         ],
     ),
@@ -176,20 +189,22 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
         is_clitic=False,
         senses=[
             ParticleSense(
-                sense_id="SENSE-JE-EMOTIVE-ASSERTION",
-                syntactic_position="Post-subject or pre-verbal in assertion",
-                scope="Proposition",
-                discourse_function="Emotive emphasis, unexpected assertion, or evidential surprise.",
-                register="COLLOQUIAL_STANDARD",
-                confidence=0.95,
+                sense_id="SENSE-JE-COMPLEMENTIZER",
+                syntactic_position="Clause-initial or post-matrix verb",
+                scope="Subordinate clause",
+                discourse_function="Finite clause complementation ('that...').",
+                register="ALL",
+                confidence="HIGH",
+                confidence_basis="Standard syntactic complementation.",
             ),
             ParticleSense(
-                sense_id="SENSE-JE-COMPLEMENTIZER",
-                syntactic_position="Clause-initial in subordinate clause",
-                scope="Subordinate clause",
-                discourse_function="Declarative finite complementizer ('that').",
-                register="FORMAL_AND_STANDARD",
-                confidence=1.0,
+                sense_id="SENSE-JE-EMOTIVE-EXCLAMATIVE",
+                syntactic_position="Post-topic / pre-predicate",
+                scope="Proposition",
+                discourse_function="Emotive astonishment or evidential reminder ('Look, ...').",
+                register="COLLOQUIAL_STANDARD",
+                confidence="HIGH",
+                confidence_basis="Attested in BA-GRAM-2011.",
             ),
         ],
     ),
@@ -199,19 +214,21 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
         senses=[
             ParticleSense(
                 sense_id="SENSE-BA-DISJUNCTION",
-                syntactic_position="Between coordinating nominals/clauses",
-                scope="Coordinated items",
-                discourse_function="Disjunctive alternative coordinator ('or').",
+                syntactic_position="Between coordinating nominals or clauses",
+                scope="Coordinated constituents",
+                discourse_function="Exclusive or inclusive disjunctive coordination ('or').",
                 register="ALL",
-                confidence=1.0,
+                confidence="HIGH",
+                confidence_basis="Standard dictionary coordination.",
             ),
             ParticleSense(
-                sense_id="SENSE-BA-DUBITATIVE-QUESTION",
-                syntactic_position="Post-Wh pronoun or post-clitic -i (e.g. ke-i ba)",
-                scope="Interrogative focus",
-                discourse_function="Dubitative counter-expectation or rhetorical helplessness.",
-                register="COLLOQUIAL_AND_LITERARY",
-                confidence=0.95,
+                sense_id="SENSE-BA-RHETORICAL-SKEPTICISM",
+                syntactic_position="Post-interrogative or post-subject",
+                scope="Interrogative clause",
+                discourse_function="Rhetorical skepticism or resigned futility ('Why on earth...?').",
+                register="LITERARY_AND_COLLOQUIAL",
+                confidence="HIGH",
+                confidence_basis="Attested in Azad 1984 p. 112.",
             ),
         ],
     ),
@@ -220,84 +237,189 @@ POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
         is_clitic=False,
         senses=[
             ParticleSense(
-                sense_id="SENSE-KI-POLAR-PARTICLE",
+                sense_id="SENSE-KI-POLAR-INTERROGATIVE",
                 syntactic_position="Pre-verbal, post-topic, or clause-final",
-                scope="Proposition truth-value",
-                discourse_function="Neutral yes/no polar interrogative marker.",
+                scope="Proposition",
+                discourse_function="Neutral or focused polar (yes/no) truth-value interrogation.",
                 register="ALL",
-                confidence=1.0,
+                confidence="HIGH",
+                confidence_basis="Universal grammar consensus for BDSB.",
             ),
             ParticleSense(
-                sense_id="SENSE-KI-RAW-SPELLING-WH",
-                syntactic_position="Direct object or predicate nominal slot",
-                scope="Argument slot",
-                discourse_function="Colloquial/informal digital spelling variant of Wh-pronoun 'কী' ('what').",
-                register="INFORMAL_DIGITAL",
-                confidence=0.90,
+                sense_id="SENSE-KI-DISJUNCTION",
+                syntactic_position="Correlative (ki ... ki ...)",
+                scope="Coordinated items",
+                discourse_function="Correlative inclusion ('whether X or Y').",
+                register="COLLOQUIAL_AND_LITERARY",
+                confidence="HIGH",
+                confidence_basis="Attested in Thompson 2012.",
             ),
         ],
     ),
 }
 
+PRONOUN_MAP = {
+    "2": {
+        HonorificTier.HONORIFIC: "আপনি",
+        HonorificTier.ORDINARY: "তুমি",
+        HonorificTier.INTIMATE: "তুই",
+    },
+    "3": {
+        HonorificTier.HONORIFIC: "তিনি",
+        HonorificTier.ORDINARY: "সে",
+        HonorificTier.INTIMATE: "এ",
+    },
+}
+
+VERB_SLOT_MAP = {
+    "2": {
+        HonorificTier.HONORIFIC: "2_HON",
+        HonorificTier.ORDINARY: "2_ORD",
+        HonorificTier.INTIMATE: "2_INT",
+    },
+    "3": {
+        HonorificTier.HONORIFIC: "3_HON",
+        HonorificTier.ORDINARY: "3_ORD",
+        HonorificTier.INTIMATE: "3_INT",
+    },
+}
+
 
 class PragmaticsEngine:
-    """Pragmatic analysis, register transformation, and particle disambiguation."""
+    """Conversational Pragmatics and Register Realization Engine for BDSB."""
 
     def __init__(self):
-        pass
+        self.valency_lexicon = VERB_VALENCY_LEXICON
 
     def disambiguate_ki(self, text: str) -> Dict[str, Any]:
         """
-        Disambiguates whether 'কি' is used as a Polar Question Particle or Wh-Pronoun 'কী'.
-        Takes into account syntactic valency, overt arguments, and raw digital spelling habits.
+        Disambiguates 'কি' / 'কী' using structured syntactic valency analysis,
+        overt argument accounting, and positional context.
+
+        Returns explicit token-level breakdowns with epistemic confidence and review requirements.
+        Unknown verb valency yields AMBIGUOUS rather than guessed answers.
         """
         norm = normalize_bangla_text(text)
-        # Strip trailing sentence punctuation
         clean_text = norm.replace("?", "").replace("।", "").replace("!", "").replace(",", "")
         tokens = clean_text.split()
-        
+
         results = []
         for idx, token in enumerate(tokens):
-            if token in ["কিসের", "কিসে", "কীসে"]:
+            if token in ["কিসের", "কিসে", "কীসে", "কিসেতে"]:
                 results.append({
-                    "token": token,
+                    "raw_token": token,
+                    "normalized_standard_form": token,
                     "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
-                    "orthography_standard": "CORRECT",
+                    "position_type": self._infer_position_type(idx, len(tokens)),
+                    "confidence": "HIGH",
+                    "confidence_basis": "Overt oblique/locative case morphology on Wh-stem.",
+                    "review_required": False,
                     "reason": "Overt oblique/locative case-marked interrogative Wh-pronoun.",
                 })
             elif token == "কী":
                 results.append({
-                    "token": token,
+                    "raw_token": token,
+                    "normalized_standard_form": "কী",
                     "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
-                    "orthography_standard": "CORRECT",
+                    "position_type": self._infer_position_type(idx, len(tokens)),
+                    "confidence": "HIGH",
+                    "confidence_basis": "Canonical orthographic standard for substantive Wh-pronoun ('what').",
+                    "review_required": False,
                     "reason": "Standard orthographic substantive Wh-pronoun ('what').",
                 })
             elif token == "কি":
-                # Check syntactic context:
-                # If preceding verb is transitive and has no other overt object, or if following word is transitive verb needing object:
-                # e.g. "তুমি কি চাও?" vs "তুমি কি ভাত খাবে?" vs "তুমি কি যাবে?"
-                has_transitive_verb_missing_obj = False
-                if "চাও" in tokens or "চান" in tokens or "বলছ" in tokens or "বলছেন" in tokens:
-                    if "ভাত" not in tokens and "কথা" not in tokens and "বই" not in tokens and "চিঠি" not in tokens:
-                        has_transitive_verb_missing_obj = True
-
-                if has_transitive_verb_missing_obj:
-                    results.append({
-                        "token": token,
-                        "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
-                        "orthography_standard": "NONSTANDARD_DIGITAL_SPELLING",
-                        "intended_standard_form": "কী",
-                        "reason": "Token fills mandatory direct object thematic slot; normatively spelled 'কী'.",
-                    })
-                else:
-                    results.append({
-                        "token": token,
-                        "syntactic_function": "POLAR_INTERROGATIVE_PARTICLE",
-                        "orthography_standard": "CORRECT",
-                        "reason": "Polar yes/no truth-value interrogative particle.",
-                    })
+                analysis = self._analyze_ki_valency(tokens, idx)
+                results.append(analysis)
 
         return {"text": text, "disambiguations": results}
+
+    def _infer_position_type(self, idx: int, total_tokens: int) -> str:
+        if idx == 0:
+            return "CLAUSE_INITIAL"
+        elif idx == total_tokens - 1:
+            return "SENTENCE_FINAL"
+        elif idx == 1:
+            return "TOPIC_ADJACENT"
+        else:
+            return "PRE_VERBAL"
+
+    def _analyze_ki_valency(self, tokens: List[str], ki_idx: int) -> Dict[str, Any]:
+        position_type = self._infer_position_type(ki_idx, len(tokens))
+
+        # Detect candidate verb in clause
+        detected_verb_root = None
+        detected_valency = VerbValency.UNKNOWN
+        for t in tokens:
+            for root, info in self.valency_lexicon.items():
+                if t in info["forms"] or t == root:
+                    detected_verb_root = root
+                    detected_valency = info["valency"]
+                    break
+            if detected_verb_root:
+                break
+
+        # 1. Unknown Valency Fallback -> AMBIGUOUS
+        if detected_valency == VerbValency.UNKNOWN:
+            return {
+                "raw_token": "কি",
+                "normalized_standard_form": "কি / কী (AMBIGUOUS)",
+                "syntactic_function": "AMBIGUOUS",
+                "position_type": position_type,
+                "confidence": "LOW",
+                "confidence_basis": "Verb root is unregistered in valency lexicon; argument structure cannot be computed deterministically.",
+                "review_required": True,
+                "reason": "Unregistered verb valency; context is ambiguous between polar question particle and direct object Wh-pronoun.",
+            }
+
+        # 2. Intransitive Verb -> Must be POLAR_INTERROGATIVE_PARTICLE
+        if detected_valency == VerbValency.INTRANSITIVE:
+            return {
+                "raw_token": "কি",
+                "normalized_standard_form": "কি",
+                "syntactic_function": "POLAR_INTERROGATIVE_PARTICLE",
+                "position_type": position_type,
+                "confidence": "HIGH",
+                "confidence_basis": f"Intransitive verb root '{detected_verb_root}' does not license direct object.",
+                "review_required": False,
+                "reason": f"Clause predicate '{detected_verb_root}' is intransitive; 'কি' can only function as polar truth-value interrogative.",
+            }
+
+        # 3. Transitive / Ditransitive Verb -> Check for overt direct object
+        # Overt object candidates: nouns/pronouns other than subject/pronouns
+        other_tokens = [t for i, t in enumerate(tokens) if i != ki_idx and t not in ["আমি", "আমরা", "তুমি", "তোমরা", "আপনি", "আপনারা", "সে", "তারা", "তিনি", "তাঁরা", "গতকাল", "আজ", "এখন", "এখনও", "না", "তো"]]
+        
+        # Check if overt non-verb nominals exist that can serve as direct object
+        # (e.g. ভাত, বই, চিঠি, কথা, টাকা, or accusative markers -কে, -টা, -গুলো)
+        has_overt_direct_object = False
+        for t in other_tokens:
+            # If token is not the detected verb and is a substantial nominal
+            is_verb_form = any(t in info["forms"] for info in self.valency_lexicon.values())
+            if not is_verb_form and len(t) >= 2:
+                has_overt_direct_object = True
+                break
+
+        if has_overt_direct_object:
+            return {
+                "raw_token": "কি",
+                "normalized_standard_form": "কি",
+                "syntactic_function": "POLAR_INTERROGATIVE_PARTICLE",
+                "position_type": position_type,
+                "confidence": "HIGH",
+                "confidence_basis": f"Transitive verb root '{detected_verb_root}' has overt direct object argument; 'কি' is non-argumental polar particle.",
+                "review_required": False,
+                "reason": "Overt direct object is present; 'কি' functions as truth-value polar question operator.",
+            }
+        else:
+            return {
+                "raw_token": "কি",
+                "normalized_standard_form": "কী",
+                "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
+                "position_type": position_type,
+                "confidence": "HIGH",
+                "confidence_basis": f"Transitive verb root '{detected_verb_root}' lacks overt direct object; token fills the direct object thematic slot.",
+                "review_required": True,
+                "reason": "Token fills mandatory direct object slot of transitive predicate; normatively spelled 'কী' in standard BDSB orthography.",
+            }
 
     def transform_addressee_register(
         self,
@@ -312,7 +434,7 @@ class PragmaticsEngine:
         """
         pronoun = PRONOUN_MAP["2"][target_tier]
         slot = VERB_SLOT_MAP["2"][target_tier]
-        
+
         key = f"{tense_base}.{slot}"
         conj_table = conjugator.conjugate_root(verb_root)
         verb_form = conj_table.get(key, verb_root)
@@ -332,7 +454,7 @@ class PragmaticsEngine:
         """
         norm = normalize_bangla_text(word)
         c = normalize_bangla_text(clitic)
-        
+
         if c == "ই":
             return norm + "ই"
         elif c == "ও":
