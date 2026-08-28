@@ -1,0 +1,99 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/review_adjudication.schema.json",
+  "title": "BLFReviewAdjudication",
+  "description": "Schema for recording authoritative Stage 2 evidence-aware reconciliation of multi-rater human review disagreements.",
+  "type": "object",
+  "required": [
+    "adjudication_id",
+    "item_id",
+    "adjudicator_id",
+    "review_ids_considered",
+    "final_gold_form",
+    "final_judgment",
+    "evidence_ids_used",
+    "rule_correction_needed",
+    "adjudication_timestamp",
+    "adjudication_notes",
+    "adjudication_status"
+  ],
+  "properties": {
+    "adjudication_id": {
+      "type": "string",
+      "pattern": "^ADJ-[A-Z0-9_-]+$",
+      "description": "Unique identifier for this adjudication record."
+    },
+    "item_id": {
+      "type": "string",
+      "pattern": "^(REV-ITEM-|PILOT-ITEM-)[A-Z0-9_-]+$",
+      "description": "Reviewed candidate item ID."
+    },
+    "adjudicator_id": {
+      "type": "string",
+      "pattern": "^ADJ-[A-Z0-9_-]+$",
+      "description": "Identifier of the expert adjudicator or committee."
+    },
+    "review_ids_considered": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^REV-DEC-[A-Z0-9_-]+$"
+      },
+      "minItems": 1,
+      "description": "List of individual human review decision IDs reviewed during adjudication."
+    },
+    "final_gold_form": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Authoritative standard Gold surface form established through adjudication."
+    },
+    "final_judgment": {
+      "type": "string",
+      "enum": [
+        "NATURAL_STANDARD",
+        "NATURAL_COLLOQUIAL",
+        "MARKED_BUT_VALID",
+        "UNNATURAL",
+        "UNGRAMMATICAL",
+        "MEANING_DIFFERS",
+        "NEEDS_CONTEXT",
+        "UNSURE"
+      ],
+      "description": "Final reconciled linguistic acceptability classification."
+    },
+    "evidence_ids_used": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Registered linguistic evidence or grammar citation IDs consulted during adjudication."
+    },
+    "rule_correction_needed": {
+      "type": "boolean",
+      "description": "Whether the adjudication outcome requires modifying an underlying declarative linguistic rule."
+    },
+    "affected_rule_id": {
+      "type": ["string", "null"],
+      "description": "Rule ID requiring update if rule_correction_needed is true."
+    },
+    "adjudication_timestamp": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z?$",
+      "description": "ISO UTC timestamp of adjudication."
+    },
+    "adjudication_notes": {
+      "type": "string",
+      "description": "Detailed linguistic rationale for the adjudication decision."
+    },
+    "adjudication_status": {
+      "type": "string",
+      "enum": [
+        "ADJUDICATED_GOLD",
+        "REJECTED_NON_CANONICAL",
+        "NEEDS_FURTHER_FIELDWORK"
+      ],
+      "description": "Status of the adjudicated outcome for Gold dataset promotion."
+    }
+  },
+  "additionalProperties": false
+}

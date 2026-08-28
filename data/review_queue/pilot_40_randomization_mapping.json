@@ -1,0 +1,979 @@
+{
+  "version": "1.0.0",
+  "pilot_id": "BLF-PILOT-40",
+  "total_items": 40,
+  "reviewers": {
+    "REV-LINGUIST-01": {
+      "seed": 101,
+      "role": "NATIVE_LINGUIST",
+      "item_mappings": {
+        "PILOT-ITEM-001": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-002": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-003": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-004": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-005": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-006": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-007": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-008": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-009": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-010": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-011": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-012": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-013": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-014": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-015": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-016": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-017": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-018": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-019": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-020": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-021": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-022": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-023": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-024": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-025": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-026": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-027": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-028": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-029": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-030": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-031": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-032": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-033": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-034": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-035": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-036": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-037": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-038": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-039": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-040": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        }
+      }
+    },
+    "REV-NATIVE-02": {
+      "seed": 202,
+      "role": "NATIVE_EDUCATED_SPEAKER",
+      "item_mappings": {
+        "PILOT-ITEM-001": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-002": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-003": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-004": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-005": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-006": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-007": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-008": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-009": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-010": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-011": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-012": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-013": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-014": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-015": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-016": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-017": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-018": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-019": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-020": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-021": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-022": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-023": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-024": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-025": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-026": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-027": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-028": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-029": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-030": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-031": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-032": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_A",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_A": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-033": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_C",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_C": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-034": {
+          "displayed_to_canonical": {
+            "A": "CAND_B",
+            "B": "CAND_A",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_B": "A",
+            "CAND_A": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-035": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        },
+        "PILOT-ITEM-036": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-037": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_C",
+            "C": "CAND_B"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_C": "B",
+            "CAND_B": "C"
+          }
+        },
+        "PILOT-ITEM-038": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-039": {
+          "displayed_to_canonical": {
+            "A": "CAND_C",
+            "B": "CAND_B",
+            "C": "CAND_A"
+          },
+          "canonical_to_displayed": {
+            "CAND_C": "A",
+            "CAND_B": "B",
+            "CAND_A": "C"
+          }
+        },
+        "PILOT-ITEM-040": {
+          "displayed_to_canonical": {
+            "A": "CAND_A",
+            "B": "CAND_B",
+            "C": "CAND_C"
+          },
+          "canonical_to_displayed": {
+            "CAND_A": "A",
+            "CAND_B": "B",
+            "CAND_C": "C"
+          }
+        }
+      }
+    }
+  }
+}

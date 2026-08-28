@@ -9,6 +9,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A.2b Blinded Review Protocol & IAA Methodology Hardening
+- **Blinded Human Review Generator & Seeded Randomizer**: Implemented `scripts/generate_blinded_pilot.py` producing reviewer-specific evaluation packages (`data/review_queue/blinded_packs/pilot_40_blinded_*.json` and `.md`) with seeded deterministic candidate permutations and secret mapping table in `data/review_queue/pilot_40_randomization_mapping.json`, strictly withholding internal hypotheses, expected answers, and source hints.
+- **Stage 2 Adjudication Schema**: Created `schemas/v0_1/review_adjudication.schema.json` formalizing authoritative post-review disagreement reconciliation.
+- **Human Review Decision Schema Fix**: Updated `schemas/v0_1/human_review_decision.schema.json` supporting hyphenated reviewer IDs (e.g. `REV-LINGUIST-01`), separate native speaker eligibility flags, and individual record status `RECORDED` (preventing individual decisions from self-declaring `ADJUDICATED_GOLD`).
+- **Pairwise IAA & Multi-Rater Analyzer**: Upgraded `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` enforcing explicit pairwise Cohen's Kappa (`--reviewer-a`, `--reviewer-b`), category breakdown analytics, confusion matrices, and exporting flagged disagreement items (`--output-disagreements`).
+- **Two-Stage Protocol Documentation**: Authored `docs/human-review-methodology.md` detailing Stage 1 blinded judgment, reviewer eligibility criteria, candidate randomization, IAA statistical bounds, and Stage 2 evidence-aware adjudication.
+
 ### Added - Phase 2A.2 Attestation Integrity, Normative Calibration & Controlled Human-Review Pilot
 - **Attestation Integrity & Granular Verification Enums**: Updated `schemas/v0_1/corpus_attestation.schema.json` and `src/blf/ontology/attestation.py` adding explicit verification statuses (`DISCOVERED`, `PROVISIONAL`, `LOCATOR_VERIFIED`, `TEXT_VERIFIED`, `FEATURE_VERIFIED`, `HUMAN_REVIEWED`, `REJECTED`) and verification methods; downgraded 12 existing attestations to `PROVISIONAL` and quarantined unindexed corpus split locators.
 - **Attestation Validators & Offline Auditor**: Upgraded `scripts/validate_attestations.py` to validate `rule_ids` against canonical registry; created `scripts/audit_attestations.py` with deterministic `--offline` and `--online` auditing.

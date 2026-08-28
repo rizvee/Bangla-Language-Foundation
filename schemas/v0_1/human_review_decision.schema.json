@@ -2,19 +2,25 @@
   "$schema": "http://json-schema.org/draft-07/schema#",
   "$id": "https://bangla-language-foundation.org/schemas/v0_1/human_review_decision.schema.json",
   "title": "BLFHumanReviewDecision",
-  "description": "Schema for recording native-speaker and linguist judgments on candidate linguistic review items.",
+  "description": "Schema for recording individual blinded native-speaker judgments on candidate linguistic items (Stage 1 Blinded Review).",
   "type": "object",
   "required": [
     "review_id",
     "item_id",
+    "review_session_id",
+    "pilot_version",
     "reviewer_id_pseudonymous",
     "reviewer_role",
+    "native_bangladeshi_speaker",
     "native_variety",
     "region",
+    "randomization_seed",
+    "displayed_candidate_mapping",
     "review_timestamp",
     "judgment",
+    "preferred_displayed_candidate",
     "confidence_self_report",
-    "adjudication_status"
+    "review_record_status"
   ],
   "properties": {
     "review_id": {
@@ -27,10 +33,19 @@
       "pattern": "^(REV-ITEM-|PILOT-ITEM-)[A-Z0-9_-]+$",
       "description": "ID of the reviewed candidate item."
     },
+    "review_session_id": {
+      "type": "string",
+      "pattern": "^SESS-[A-Z0-9_-]+$",
+      "description": "Batch or review session identifier."
+    },
+    "pilot_version": {
+      "type": "string",
+      "description": "Version string of the pilot dataset reviewed (e.g. 1.0.0)."
+    },
     "reviewer_id_pseudonymous": {
       "type": "string",
-      "pattern": "^REV-[A-Z0-9]+$",
-      "description": "Pseudonymous identifier for the human evaluator (e.g. REV-LINGUIST-01)."
+      "pattern": "^REV-[A-Z0-9_-]+$",
+      "description": "Pseudonymous identifier for the human evaluator (e.g. REV-LINGUIST-01, REV-NATIVE-02)."
     },
     "reviewer_role": {
       "type": "string",
@@ -41,6 +56,10 @@
         "DIALECT_SPECIALIST"
       ],
       "description": "Expertise profile of the reviewer."
+    },
+    "native_bangladeshi_speaker": {
+      "type": "boolean",
+      "description": "Whether the reviewer is a native speaker of Bangladeshi Bangla (required for Gold acceptability rating)."
     },
     "native_variety": {
       "type": "string",
@@ -61,6 +80,17 @@
       "type": "string",
       "description": "Geographic division or district of origin in Bangladesh."
     },
+    "randomization_seed": {
+      "type": "integer",
+      "description": "Randomization seed used to generate the reviewer's candidate permutation."
+    },
+    "displayed_candidate_mapping": {
+      "type": "object",
+      "description": "Mapping from displayed labels ('A', 'B', 'C') to canonical candidate IDs.",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
     "review_timestamp": {
       "type": "string",
       "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z?$",
@@ -78,15 +108,20 @@
         "NEEDS_CONTEXT",
         "UNSURE"
       ],
-      "description": "Categorical acceptability judgment by human expert."
+      "description": "Categorical acceptability judgment by human rater."
     },
-    "preferred_form": {
+    "preferred_displayed_candidate": {
+      "type": "string",
+      "enum": ["A", "B", "C", "NONE"],
+      "description": "The displayed candidate label preferred by the reviewer."
+    },
+    "canonical_candidate_id": {
       "type": ["string", "null"],
-      "description": "The candidate option preferred by the reviewer (e.g. 'A', 'B', or 'NONE')."
+      "description": "Resolved canonical candidate identifier derived from displayed_candidate_mapping."
     },
     "correction": {
       "type": ["string", "null"],
-      "description": "Suggested natural/grammatical correction in standard orthography if candidate is flawed."
+      "description": "Suggested natural/grammatical correction in standard orthography if all candidates are flawed."
     },
     "comments": {
       "type": ["string", "null"],
@@ -97,16 +132,15 @@
       "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"],
       "description": "Reviewer's self-reported certainty level."
     },
-    "adjudication_status": {
+    "review_record_status": {
       "type": "string",
       "enum": [
-        "SINGLE_REVIEW",
-        "AGREEMENT_CONFIRMED",
-        "DISAGREEMENT_FLAGGED",
-        "ADJUDICATED_GOLD",
-        "REJECTED_NON_CANONICAL"
+        "RECORDED",
+        "PENDING_IAA",
+        "FLAGGED_FOR_ADJUDICATION",
+        "SUPERSEDED"
       ],
-      "description": "Pipeline reconciliation status across independent reviews."
+      "description": "Pipeline status of the individual review record (individual decisions cannot self-declare ADJUDICATED_GOLD)."
     }
   },
   "additionalProperties": false

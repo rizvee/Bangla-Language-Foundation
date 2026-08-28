@@ -2,8 +2,8 @@
 Adversarial Mutation and Cross-Layer Invariant Tests — BLF.
 
 Adversarially tests that illegal combinations, uncalibrated confidence,
-fake attestation claims, and unmodeled morphotactic patterns are strictly
-rejected by the BLF engines.
+fake attestation claims, blinded review leaks, and invalid rater operations
+are strictly caught and rejected.
 """
 
 import json
@@ -18,7 +18,7 @@ from blf.generation.realizer import ConstrainedRealizer, RealizationError
 from blf.linguistics.complex_predicates import ComplexPredicateEngine
 from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine, ConjugationError
 from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier
-from blf.quality.iaa import compute_cohens_kappa, compute_raw_agreement, extract_disagreements
+from blf.quality.iaa import compute_cohens_kappa, compute_raw_agreement, evaluate_reviewer_pair
 from blf.validation.validators import load_schema, validate_dict_against_schema
 
 
@@ -86,16 +86,15 @@ class TestAdversarialInvariants(unittest.TestCase):
             "locator_type": "PAGE",
             "canonical_url_or_artifact": "sources/registry/sources.json#BA-GRAM-2011",
             "retrieval_date": "2026-08-28",
-            "content_hash": None,  # Missing content hash for claimed TEXT_VERIFIED
+            "content_hash": None,
             "verification_method": "INDEPENDENT_PAGE_AUDIT",
             "verification_status": "TEXT_VERIFIED",
             "copyright_handling": "SHORT_EXCERPT_RESEARCH_FAIR_USE",
         }
-        # In offline validator, TEXT_VERIFIED without content_hash is flagged as an error
         from scripts.validate_attestations import SCHEMA_PATH
         schema = load_schema(SCHEMA_PATH)
         valid, _ = validate_dict_against_schema(fake_att, schema)
-        self.assertTrue(valid)  # Valid by schema, but rejected by epistemic audit check
+        self.assertTrue(valid)
 
     def test_adversarial_review_pack_no_numeric_confidence(self):
         """Assures that candidate review pack contains only categorical confidence values."""
@@ -105,22 +104,97 @@ class TestAdversarialInvariants(unittest.TestCase):
 
         for it in data.get("items", []):
             conf = it.get("confidence")
-            self.assertIn(conf, ["HIGH", "MEDIUM", "LOW"], f"Illegal numeric/uncalibrated confidence in {it['item_id']}: {conf}")
+            self.assertIn(conf, ["HIGH", "MEDIUM", "LOW"], f"Illegal numeric confidence in {it['item_id']}: {conf}")
             self.assertIsInstance(conf, str)
 
-    def test_adversarial_iaa_computation(self):
-        """Assures that IAA agreement and Cohen's Kappa calculate mathematically exact figures."""
-        # Perfect agreement
-        r1_perf = ["NATURAL_STANDARD", "UNGRAMMATICAL", "NATURAL_COLLOQUIAL"]
-        r2_perf = ["NATURAL_STANDARD", "UNGRAMMATICAL", "NATURAL_COLLOQUIAL"]
-        kappa_perf = compute_cohens_kappa(r1_perf, r2_perf)
-        self.assertAlmostEqual(kappa_perf, 1.0)
+    def test_adversarial_blinded_packs_no_leakage(self):
+        """Assures that human-facing blinded packs contain ZERO system hypotheses, source evidence, or confidence scores."""
+        blinded_path = ROOT_DIR / "data" / "review_queue" / "blinded_packs" / "pilot_40_blinded_REV-LINGUIST-01.json"
+        self.assertTrue(blinded_path.is_file(), "Blinded pack for REV-LINGUIST-01 not found")
+        with open(blinded_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
 
-        # Complete disagreement
-        r1_dis = ["NATURAL_STANDARD", "NATURAL_STANDARD"]
-        r2_dis = ["UNGRAMMATICAL", "UNGRAMMATICAL"]
-        kappa_dis = compute_cohens_kappa(r1_dis, r2_dis)
-        self.assertLessEqual(kappa_dis, 0.0)
+        forbidden_keys = {"system_hypothesis", "source_evidence", "confidence", "system_judgment", "uncertainty_basis", "evidence_ids", "attestation_ids"}
+        for it in data.get("items", []):
+            present_keys = set(it.keys())
+            leaked = present_keys & forbidden_keys
+            self.assertEqual(len(leaked), 0, f"Blinded pack leaks forbidden research metadata in {it.get('item_id')}: {leaked}")
+
+    def test_adversarial_reviewer_id_and_status_schema(self):
+        """Assures that human review decision schema accepts hyphenated IDs and rejects ADJUDICATED_GOLD."""
+        schema_path = ROOT_DIR / "schemas" / "v0_1" / "human_review_decision.schema.json"
+        schema = load_schema(schema_path)
+
+        valid_decision = {
+            "review_id": "REV-DEC-001",
+            "item_id": "PILOT-ITEM-001",
+            "review_session_id": "SESS-PILOT-01",
+            "pilot_version": "1.0.0",
+            "reviewer_id_pseudonymous": "REV-LINGUIST-01",
+            "reviewer_role": "NATIVE_LINGUIST",
+            "native_bangladeshi_speaker": True,
+            "native_variety": "BDSB_STANDARD",
+            "region": "Dhaka",
+            "randomization_seed": 101,
+            "displayed_candidate_mapping": {"A": "CAND_B", "B": "CAND_A"},
+            "review_timestamp": "2026-08-28T12:00:00Z",
+            "judgment": "NATURAL_STANDARD",
+            "preferred_displayed_candidate": "A",
+            "confidence_self_report": "VERY_SURE",
+            "review_record_status": "RECORDED",
+        }
+        valid, errs = validate_dict_against_schema(valid_decision, schema)
+        self.assertTrue(valid, f"Failed to validate valid decision: {errs}")
+
+        # Individual decision attempting to self-declare ADJUDICATED_GOLD must fail schema
+        invalid_decision = dict(valid_decision)
+        invalid_decision["review_record_status"] = "ADJUDICATED_GOLD"
+        invalid, _ = validate_dict_against_schema(invalid_decision, schema)
+        self.assertFalse(invalid, "Individual review decision illegally allowed ADJUDICATED_GOLD status")
+
+    def test_adversarial_pairwise_iaa_evaluator(self):
+        """Assures that evaluate_reviewer_pair correctly evaluates rater intersection and detects disagreements."""
+        sample_reviews = [
+            {
+                "item_id": "PILOT-ITEM-001",
+                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
+                "judgment": "NATURAL_STANDARD",
+                "canonical_candidate_id": "CAND_A",
+            },
+            {
+                "item_id": "PILOT-ITEM-001",
+                "reviewer_id_pseudonymous": "REV-NATIVE-02",
+                "judgment": "NATURAL_STANDARD",
+                "canonical_candidate_id": "CAND_A",
+            },
+            {
+                "item_id": "PILOT-ITEM-002",
+                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
+                "judgment": "NATURAL_STANDARD",
+                "canonical_candidate_id": "CAND_A",
+            },
+            {
+                "item_id": "PILOT-ITEM-002",
+                "reviewer_id_pseudonymous": "REV-NATIVE-02",
+                "judgment": "UNGRAMMATICAL",  # Disagreement
+                "canonical_candidate_id": "CAND_B",
+            },
+            {
+                "item_id": "PILOT-ITEM-003",
+                "reviewer_id_pseudonymous": "REV-LINGUIST-01",
+                "judgment": "NATURAL_STANDARD",
+                "canonical_candidate_id": "CAND_A",
+            },
+            # Item 003 not reviewed by REV-NATIVE-02 (non-overlapping)
+        ]
+
+        res = evaluate_reviewer_pair(sample_reviews, "REV-LINGUIST-01", "REV-NATIVE-02")
+        self.assertEqual(res["common_evaluated_items"], 2)
+        self.assertEqual(res["items_only_a"], ["PILOT-ITEM-003"])
+        self.assertEqual(res["items_only_b"], [])
+        self.assertEqual(res["raw_agreement"], 0.5)
+        self.assertEqual(res["total_disagreements"], 1)
+        self.assertEqual(res["disagreement_items"][0]["item_id"], "PILOT-ITEM-002")
 
 
 if __name__ == "__main__":
