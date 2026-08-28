@@ -134,8 +134,17 @@
     },
     "status": {
       "type": "string",
-      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED"],
-      "description": "Frame lifecycle status."
+      "enum": [
+        "BLF_DESIGNED",
+        "SOURCE_GROUNDED",
+        "EMPIRICALLY_ATTESTED",
+        "HUMAN_REVIEWED",
+        "STABLE",
+        "ACTIVE",
+        "PROVISIONAL",
+        "DEPRECATED"
+      ],
+      "description": "Epistemically calibrated ontological lifecycle status."
     },
     "notes": {
       "type": ["string", "null"],

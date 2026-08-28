@@ -78,5 +78,62 @@ class TestRealization(unittest.TestCase):
             )
 
 
+    def test_feature_sensitive_dom_realization(self):
+        from blf.linguistics.dom import ObjectFeatures, AnimacyTier, DefinitenessTier, SpecificityTier
+
+        # 1. Non-specific human -> Bare direct object (Ami daktar khujchi)
+        feat_doc = ObjectFeatures(
+            lemma="ডাক্তার",
+            animacy=AnimacyTier.HUMAN,
+            definiteness=DefinitenessTier.BARE_GENERIC,
+            specificity=SpecificityTier.NON_SPECIFIC,
+        )
+        res_doc = self.realizer.realize_transitive(
+            "আমরা", "ডাক্তার", "খুঁজ", tense_key="PRES_CONT", person_slot="1", object_features=feat_doc
+        )
+        self.assertEqual(res_doc, "আমরা ডাক্তার খুঁজছি।")
+
+        # 2. Specific human with classifier -> -ke (Chhatro-ti-ke daklam)
+        feat_student = ObjectFeatures(
+            lemma="ছাত্র",
+            animacy=AnimacyTier.HUMAN,
+            definiteness=DefinitenessTier.DEFINITE,
+            specificity=SpecificityTier.SPECIFIC,
+            has_classifier=True,
+            classifier="টি",
+        )
+        res_student = self.realizer.realize_transitive(
+            "শিক্ষক", "ছাত্র", "ডাক", tense_key="PAST_SIMP", person_slot="3_HON", object_features=feat_student
+        )
+        self.assertEqual(res_student, "শিক্ষক ছাত্রটিকে ডাকলেন।")
+
+    def test_polarity_and_question_realization(self):
+        # 1. Present Perfect + NEG -> -ni
+        res_neg = self.realizer.realize_transitive(
+            "আমি", "কাজটা", "কর", tense_key="PRES_PERF", person_slot="1", polarity="NEGATIVE"
+        )
+        self.assertEqual(res_neg, "আমি কাজটা করিনি।")
+
+        # 2. Polar Question Topic-Adjacent Placement
+        res_pq_topic = self.realizer.realize_transitive(
+            "তুমি", "ঢাকা", "যা", tense_key="FUT_SIMP", person_slot="2_ORD",
+            is_polar_question=True, polar_question_position="topic_adjacent"
+        )
+        self.assertEqual(res_pq_topic, "তুমি কি ঢাকা যাবে ?")
+
+        # 3. Polar Question Sentence-Final Placement
+        res_pq_final = self.realizer.realize_transitive(
+            "তুমি", "ঢাকা", "যা", tense_key="FUT_SIMP", person_slot="2_ORD",
+            is_polar_question=True, polar_question_position="sentence_final"
+        )
+        self.assertEqual(res_pq_final, "তুমি ঢাকা যাবে কি ?")
+
+    def test_cognitive_achievement_vector_sentence(self):
+        res_cog = self.realizer.realize_vector_predicate_sentence(
+            "সে", "সত্যটা", "জান", "ফেলা", "COGNITIVE_ACHIEVEMENT", "PAST_SIMP.3_ORD"
+        )
+        self.assertEqual(res_cog, "সে সত্যটা জেনে ফেলল।")
+
+
 if __name__ == "__main__":
     unittest.main()

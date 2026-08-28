@@ -1,88 +1,165 @@
 {
-  "version": "1.0.0",
+  "version": "1.1.0",
   "total_particles": 7,
   "particles": [
     {
       "particle": "ই",
       "name": "Restrictive Focus Clitic",
-      "type": "FOCUS_CLITIC_RESTRICTIVE",
-      "scope": "Constituent",
       "is_clitic": true,
-      "semantic_function": "Exclusive/restrictive focus (X alone / precisely X).",
-      "examples": [
-        {"sentence": "আমিই যাবো", "gloss": "I-EMPH go-FUT.1 ('I alone will go')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-I-EXCLUSIVE",
+          "name": "Exclusive / Restrictive Identification",
+          "scope": "Constituent (NP, PP, Adv)",
+          "semantic_function": "Exclusive/restrictive focus ('X alone', 'precisely X').",
+          "examples": [{"sentence": "আমিই যাবো।", "gloss": "I-EMPH go-FUT.1 ('I alone will go.')"}]
+        },
+        {
+          "sense_id": "SENSE-I-EMPHATIC",
+          "name": "Emphatic Certainty",
+          "scope": "Predicate / Verb",
+          "semantic_function": "Emphatic certainty or inevitable consequence.",
+          "examples": [{"sentence": "সে আসবেই।", "gloss": "he come-FUT.3-EMPH ('He will certainly come.')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "ও",
       "name": "Additive Focus Clitic",
-      "type": "FOCUS_CLITIC_ADDITIVE",
-      "scope": "Constituent",
       "is_clitic": true,
-      "semantic_function": "Inclusive/additive focus (X also / even X).",
-      "examples": [
-        {"sentence": "তুমিও যাবে", "gloss": "you-also go-FUT.2_ORD ('You too will go')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-O-ADDITIVE",
+          "name": "Inclusive Additive Focus",
+          "scope": "Constituent (NP, PP, Adv)",
+          "semantic_function": "Inclusive/additive focus ('X also', 'in addition to X').",
+          "examples": [{"sentence": "তুমিও যাবে।", "gloss": "you-also go-FUT.2 ('You too will go.')"}]
+        },
+        {
+          "sense_id": "SENSE-O-SCALAR",
+          "name": "Scalar Concessive",
+          "scope": "Numeral / Minimal Quantity",
+          "semantic_function": "Scalar extreme or concessive minimization ('even one').",
+          "examples": [{"sentence": "একটিও নেই।", "gloss": "one-CLF-even not-exist ('There is not even one.')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "তো",
-      "name": "Contrastive Topic / Confirmation Particle",
-      "type": "DISCOURSE_PARTICLE_CONTRASTIVE",
-      "scope": "Clause / Topical Constituent",
+      "name": "Contrastive Topic / Presupposition Particle",
       "is_clitic": false,
-      "semantic_function": "Contrastive topicalization, shared presupposition, or conversational confirmation.",
-      "examples": [
-        {"sentence": "আমি তো জানি", "gloss": "I TO know-PRES.1 ('As for me, I know / Surely I know')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-TO-CONTRAST",
+          "name": "Contrastive Topicalization",
+          "scope": "Topic NP / Clause",
+          "semantic_function": "Contrastive topicalization or personal stance ('As for X...').",
+          "examples": [{"sentence": "আমি তো জানি।", "gloss": "I TO know-PRES.1 ('As for me, I know.')"}]
+        },
+        {
+          "sense_id": "SENSE-TO-PRESUPPOSITION",
+          "name": "Shared Knowledge Appeal",
+          "scope": "Clause",
+          "semantic_function": "Appeals to shared common ground or prior agreement.",
+          "examples": [{"sentence": "তুমি তো আসবে বলেছিলে।", "gloss": "you TO come-FUT said ('You did say you would come.')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "না",
-      "name": "Tag Question / Directive Softener",
-      "type": "TAG_QUESTION_SOFTENING",
-      "scope": "Clause-Final",
+      "name": "Clausal Negator / Tag Question / Softener",
       "is_clitic": false,
-      "semantic_function": "Sentence-final tag confirmation or softening of directive force.",
-      "examples": [
-        {"sentence": "যাবে না?", "gloss": "go-FUT.2_ORD not? ('You will go, right?')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-NA-NEGATOR",
+          "name": "Propositional Clausal Negation",
+          "scope": "Predicate",
+          "semantic_function": "Standard propositional negation.",
+          "examples": [{"sentence": "আমি যাব না।", "gloss": "I go-FUT.1 not ('I will not go.')"}]
+        },
+        {
+          "sense_id": "SENSE-NA-TAG",
+          "name": "Confirmation Seeking Tag Question",
+          "scope": "Clause-Final",
+          "semantic_function": "Sentence-final tag confirmation ('..., isn't it?').",
+          "examples": [{"sentence": "যাবে, না?", "gloss": "go-FUT.2, not? ('You'll go, right?') dialogue-tag"}]
+        },
+        {
+          "sense_id": "SENSE-NA-SOFTENER",
+          "name": "Directive Softener",
+          "scope": "Imperative Verb",
+          "semantic_function": "Polite plea or softening of directive force.",
+          "examples": [{"sentence": "একটু বসুন না।", "gloss": "a-bit sit-IMP.HON NA ('Please sit down for a moment.')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "যে",
-      "name": "Emotive Assertion Particle",
-      "type": "EMOTIVE_ASSERTION_PARTICLE",
-      "scope": "Clause-Final",
+      "name": "Emotive Assertion / Complementizer",
       "is_clitic": false,
-      "semantic_function": "Emotive emphasis, unexpected assertion, or evidential reminder.",
-      "examples": [
-        {"sentence": "বৃষ্টি পড়ছে যে!", "gloss": "rain fall-PRES_CONT.3 JE! ('Look, it is raining!')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-JE-EMOTIVE",
+          "name": "Emotive Unexpected Assertion",
+          "scope": "Clause / Predicate",
+          "semantic_function": "Emotive emphasis, unexpected assertion, or evidential reminder.",
+          "examples": [{"sentence": "সে যে আসবে না!", "gloss": "he JE come-FUT.3 not! ('(Turns out) he won't come!')"}]
+        },
+        {
+          "sense_id": "SENSE-JE-COMPLEMENTIZER",
+          "name": "Declarative Complementizer",
+          "scope": "Subordinate Clause",
+          "semantic_function": "Declarative finite complementizer ('that').",
+          "examples": [{"sentence": "আমি জানি যে সে আসবে।", "gloss": "I know that he come-FUT.3 ('I know that he will come.')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "বা",
-      "name": "Dubitative / Alternative Particle",
-      "type": "DUBITATIVE_ALTERNATIVE_PARTICLE",
-      "scope": "Constituent / Clause",
+      "name": "Disjunctive Coordinator / Dubitative Question",
       "is_clitic": false,
-      "semantic_function": "Dubitative counter-expectation or alternative suggestion.",
-      "examples": [
-        {"sentence": "সে বা কী করবে?", "gloss": "he BA what do-FUT.3? ('What else could he do?')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-BA-DISJUNCTION",
+          "name": "Alternative Disjunction",
+          "scope": "Nominal / Clause",
+          "semantic_function": "Disjunctive coordinator ('or').",
+          "examples": [{"sentence": "আজ বা কাল।", "gloss": "today or tomorrow"}]
+        },
+        {
+          "sense_id": "SENSE-BA-DUBITATIVE",
+          "name": "Rhetorical Dubitative",
+          "scope": "Interrogative Constituent",
+          "semantic_function": "Rhetorical doubt or helplessness ('Who even knows?').",
+          "examples": [{"sentence": "কে-ই বা জানে!", "gloss": "who-EMPH BA know-PRES.3 ('Who on earth knows!')"}]
+        }
       ],
       "status": "ACTIVE"
     },
     {
       "particle": "কি",
-      "name": "Polar Interrogative Particle",
-      "type": "POLAR_INTERROGATIVE_PARTICLE",
-      "scope": "Pre-Verbal / Clausal",
+      "name": "Polar Question Particle / Digital Pronoun Variant",
       "is_clitic": false,
-      "semantic_function": "Binary truth-value question marker.",
-      "examples": [
-        {"sentence": "তুমি কি যাবে?", "gloss": "you KI go-FUT.2_ORD? ('Will you go?')"}
+      "senses": [
+        {
+          "sense_id": "SENSE-KI-POLAR",
+          "name": "Neutral Polar Interrogative Marker",
+          "scope": "Proposition Truth-Value",
+          "semantic_function": "Yes/no polar question particle.",
+          "examples": [{"sentence": "তুমি কি যাবে?", "gloss": "you KI go-FUT.2? ('Will you go?')"}, {"sentence": "সে কি ভাত খেয়েছে?", "gloss": "he KI rice eat-PERF.3? ('Did he eat rice?')"} ]
+        },
+        {
+          "sense_id": "SENSE-KI-RAW-WH",
+          "name": "Informal Digital Wh-Pronoun Spelling",
+          "scope": "Direct Object / Nominal Slot",
+          "semantic_function": "Non-standard digital spelling of substantive Wh-pronoun 'কী' ('what').",
+          "examples": [{"sentence": "তুমি কি বলছ?", "gloss": "you what saying ('What are you saying?') [Raw digital text for 'কী']"}]
+        }
       ],
       "status": "ACTIVE"
     }

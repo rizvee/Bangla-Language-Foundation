@@ -34,15 +34,22 @@ class TestComplexPredicates(unittest.TestCase):
         res_fel = self.engine.realize_compound_verb("খা", "ফেলা", "PAST_SIMP.3_ORD")
         self.assertEqual(res_fel, "খেয়ে ফেলল")
 
-        # 2. Self-benefactive with neoa: kine nilam
+        # 2. Cognitive achievement with phela: jene phello / bujhe phellam
+        res_jene = self.engine.realize_compound_verb("জান", "ফেলা", "PAST_SIMP.3_ORD")
+        self.assertEqual(res_jene, "জেনে ফেলল")
+
+        res_bujhe = self.engine.realize_compound_verb("বোঝ", "ফেলা", "PAST_SIMP.1")
+        self.assertEqual(res_bujhe, "বুঝে ফেললাম")
+
+        # 3. Self-benefactive with neoa: kine nilam
         res_ne = self.engine.realize_compound_verb("কিনা", "নেওয়া", "PAST_SIMP.1")
         self.assertEqual(res_ne, "কিনে নিলাম")
 
-        # 3. Other-benefactive with dewa: likhe dilo
+        # 4. Other-benefactive with dewa: likhe dilo
         res_de = self.engine.realize_compound_verb("লিখ", "দেওয়া", "PAST_SIMP.3_ORD")
         self.assertEqual(res_de, "লিখে দিল")
 
-        # 4. Inceptive with utha: heshe uthlo
+        # 5. Inceptive with utha: heshe uthlo
         res_uth = self.engine.realize_compound_verb("হাস", "উঠা", "PAST_SIMP.3_ORD")
         self.assertEqual(res_uth, "হেসে উঠল")
 
@@ -51,21 +58,25 @@ class TestComplexPredicates(unittest.TestCase):
         res_kor = self.engine.realize_light_verb_construction("কাজ", "করা", "PAST_SIMP.1")
         self.assertEqual(res_kor, "কাজ করলাম")
 
-        # 2. Inchoative LVC with howa: shuru holo
+        # 2. Inchoative LVC with howa: shuru holo (exact form verification)
         res_ho = self.engine.realize_light_verb_construction("শুরু", "হওয়া", "PAST_SIMP.3_ORD")
-        self.assertIn("শুরু", res_ho)
+        self.assertEqual(res_ho, "শুরু হলো")
 
         # 3. Experiencer LVC with paowa: khide pelo / khide paowa
         res_pao = self.engine.realize_light_verb_construction("ক্ষিদে", "পাওয়া", "PRES_SIMP.3_ORD")
-        self.assertIn("ক্ষিদে", res_pao)
+        self.assertEqual(res_pao, "ক্ষিদে পায়")
 
     def test_selectional_restriction_validation(self):
         # Valid: dynamic transitive with phela
-        valid, _ = self.engine.validate_vector_combination("খা", "ফেলা", "TRANSITIVE_DYNAMIC")
-        self.assertTrue(valid)
+        valid_dyn, _ = self.engine.validate_vector_combination("খা", "ফেলা", "TRANSITIVE_DYNAMIC")
+        self.assertTrue(valid_dyn)
 
-        # Invalid: stative verb with phela (e.g. *jene phela)
-        invalid, err = self.engine.validate_vector_combination("জান", "ফেলা", "STATIVE_COGNITION")
+        # Valid: cognitive achievement with phela (jene phela, bujhe phela)
+        valid_cog, _ = self.engine.validate_vector_combination("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
+        self.assertTrue(valid_cog)
+
+        # Invalid: pure stative posture with phela (*theke phela)
+        invalid, err = self.engine.validate_vector_combination("থাক", "ফেলা", "STATIVE_POSTURE")
         self.assertFalse(invalid)
         self.assertIn("Selectional restriction violation", err)
 

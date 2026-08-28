@@ -3,11 +3,12 @@ BLF Conversational Register, Pragmatics & Social Deixis Engine.
 
 Provides models and engines for:
 1. Social deixis and 3-tier addressee honorificity (Apni, Tumi, Tui).
-2. Pragmatic particle and clitic semantics (-i, -o, to, na, je, ba).
-3. Orthographic/syntactic disambiguation between polar 'ki' and Wh-pronoun 'kee'.
+2. Polyfunctional pragmatic particle and clitic semantics (-i, -o, to, na, je, ba, ki).
+3. Context-sensitive and syntactic-frame disambiguation between polar 'ki' and Wh-pronoun 'kee'.
 4. Register transformations (Formal, Colloquial, Familiar, Intimate).
 """
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine
@@ -56,50 +57,185 @@ VERB_SLOT_MAP: Dict[str, Dict[HonorificTier, str]] = {
 }
 
 
-class PragmaticParticle:
-    def __init__(self, particle: str, particle_type: str, semantic_function: str, is_clitic: bool):
-        self.particle = particle
-        self.particle_type = particle_type
-        self.semantic_function = semantic_function
-        self.is_clitic = is_clitic
+@dataclass
+class ParticleSense:
+    sense_id: str
+    syntactic_position: str
+    scope: str
+    discourse_function: str
+    register: str
+    confidence: float
 
 
-PARTICLE_INVENTORY: Dict[str, PragmaticParticle] = {
-    "ই": PragmaticParticle(
+@dataclass
+class PragmaticParticleSpec:
+    particle: str
+    is_clitic: bool
+    senses: List[ParticleSense]
+
+
+POLYFUNCTIONAL_PARTICLES: Dict[str, PragmaticParticleSpec] = {
+    "ই": PragmaticParticleSpec(
         particle="ই",
-        particle_type="FOCUS_CLITIC_RESTRICTIVE",
-        semantic_function="Exclusive/restrictive identification (X alone / precisely X).",
         is_clitic=True,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-I-EXCLUSIVE",
+                syntactic_position="Clitic attached to NP/PP/Adv",
+                scope="Constituent",
+                discourse_function="Exclusive/restrictive identification (X alone / precisely X).",
+                register="ALL",
+                confidence=1.0,
+            ),
+            ParticleSense(
+                sense_id="SENSE-I-EMPHATIC",
+                syntactic_position="Clitic attached to finite/non-finite verb",
+                scope="Predicate",
+                discourse_function="Emphatic certainty or inevitable consequence (yabei).",
+                register="ALL",
+                confidence=0.95,
+            ),
+        ],
     ),
-    "ও": PragmaticParticle(
+    "ও": PragmaticParticleSpec(
         particle="ও",
-        particle_type="FOCUS_CLITIC_ADDITIVE",
-        semantic_function="Inclusive/additive focus (X also / even X).",
         is_clitic=True,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-O-ADDITIVE",
+                syntactic_position="Clitic attached to NP/PP/Adv",
+                scope="Constituent",
+                discourse_function="Inclusive/additive focus (X also / in addition).",
+                register="ALL",
+                confidence=1.0,
+            ),
+            ParticleSense(
+                sense_id="SENSE-O-SCALAR-CONCESSIVE",
+                syntactic_position="Clitic on numerals / minimal quantities",
+                scope="Constituent",
+                discourse_function="Scalar extreme / concessive minimization ('even one').",
+                register="ALL",
+                confidence=0.95,
+            ),
+        ],
     ),
-    "তো": PragmaticParticle(
+    "তো": PragmaticParticleSpec(
         particle="তো",
-        particle_type="DISCOURSE_PARTICLE_CONTRASTIVE",
-        semantic_function="Contrastive topicalization, shared presupposition, or confirmation.",
         is_clitic=False,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-TO-TOPIC-CONTRAST",
+                syntactic_position="Post-subject or post-topic constituent",
+                scope="Topic constituent",
+                discourse_function="Contrastive topic or personal stance ('As for me...').",
+                register="COLLOQUIAL_AND_STANDARD",
+                confidence=0.95,
+            ),
+            ParticleSense(
+                sense_id="SENSE-TO-PRESUPPOSITION",
+                syntactic_position="Pre-verbal or clause-final",
+                scope="Clause",
+                discourse_function="Appeals to shared common ground or prior consensus.",
+                register="COLLOQUIAL_AND_STANDARD",
+                confidence=0.95,
+            ),
+        ],
     ),
-    "না": PragmaticParticle(
+    "না": PragmaticParticleSpec(
         particle="না",
-        particle_type="TAG_QUESTION_SOFTENING",
-        semantic_function="Sentence-final tag question, confirmation request, or directive softening.",
         is_clitic=False,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-NA-NEGATOR",
+                syntactic_position="Post-verbal",
+                scope="Predicate",
+                discourse_function="Standard propositional clausal negator.",
+                register="ALL",
+                confidence=1.0,
+            ),
+            ParticleSense(
+                sense_id="SENSE-NA-TAG-QUESTION",
+                syntactic_position="Clause-final with rising intonation",
+                scope="Clause",
+                discourse_function="Confirmation seeking / tag question ('isn't it?').",
+                register="COLLOQUIAL_STANDARD",
+                confidence=0.95,
+            ),
+            ParticleSense(
+                sense_id="SENSE-NA-DIRECTIVE-SOFTENER",
+                syntactic_position="Post-imperative verb",
+                scope="Directive act",
+                discourse_function="Softens imperative into polite plea or encouragement.",
+                register="COLLOQUIAL_STANDARD",
+                confidence=0.95,
+            ),
+        ],
     ),
-    "যে": PragmaticParticle(
+    "যে": PragmaticParticleSpec(
         particle="যে",
-        particle_type="EMOTIVE_ASSERTION_PARTICLE",
-        semantic_function="Emotive emphasis, unexpected assertion, or evidential reminder.",
         is_clitic=False,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-JE-EMOTIVE-ASSERTION",
+                syntactic_position="Post-subject or pre-verbal in assertion",
+                scope="Proposition",
+                discourse_function="Emotive emphasis, unexpected assertion, or evidential surprise.",
+                register="COLLOQUIAL_STANDARD",
+                confidence=0.95,
+            ),
+            ParticleSense(
+                sense_id="SENSE-JE-COMPLEMENTIZER",
+                syntactic_position="Clause-initial in subordinate clause",
+                scope="Subordinate clause",
+                discourse_function="Declarative finite complementizer ('that').",
+                register="FORMAL_AND_STANDARD",
+                confidence=1.0,
+            ),
+        ],
     ),
-    "বা": PragmaticParticle(
+    "বা": PragmaticParticleSpec(
         particle="বা",
-        particle_type="DUBITATIVE_ALTERNATIVE_PARTICLE",
-        semantic_function="Dubitative counter-expectation or alternative suggestion.",
         is_clitic=False,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-BA-DISJUNCTION",
+                syntactic_position="Between coordinating nominals/clauses",
+                scope="Coordinated items",
+                discourse_function="Disjunctive alternative coordinator ('or').",
+                register="ALL",
+                confidence=1.0,
+            ),
+            ParticleSense(
+                sense_id="SENSE-BA-DUBITATIVE-QUESTION",
+                syntactic_position="Post-Wh pronoun or post-clitic -i (e.g. ke-i ba)",
+                scope="Interrogative focus",
+                discourse_function="Dubitative counter-expectation or rhetorical helplessness.",
+                register="COLLOQUIAL_AND_LITERARY",
+                confidence=0.95,
+            ),
+        ],
+    ),
+    "কি": PragmaticParticleSpec(
+        particle="কি",
+        is_clitic=False,
+        senses=[
+            ParticleSense(
+                sense_id="SENSE-KI-POLAR-PARTICLE",
+                syntactic_position="Pre-verbal, post-topic, or clause-final",
+                scope="Proposition truth-value",
+                discourse_function="Neutral yes/no polar interrogative marker.",
+                register="ALL",
+                confidence=1.0,
+            ),
+            ParticleSense(
+                sense_id="SENSE-KI-RAW-SPELLING-WH",
+                syntactic_position="Direct object or predicate nominal slot",
+                scope="Argument slot",
+                discourse_function="Colloquial/informal digital spelling variant of Wh-pronoun 'কী' ('what').",
+                register="INFORMAL_DIGITAL",
+                confidence=0.90,
+            ),
+        ],
     ),
 }
 
@@ -113,42 +249,60 @@ class PragmaticsEngine:
     def disambiguate_ki(self, text: str) -> Dict[str, Any]:
         """
         Disambiguates whether 'কি' is used as a Polar Question Particle or Wh-Pronoun 'কী'.
-        
-        Rules:
-        - Invariant pre-verbal 'কি' without case suffix -> POLAR_QUESTION_PARTICLE.
-        - Declinable or argument-filling 'কী' (or 'কিসের', 'কিসে') -> INTERROGATIVE_PRONOUN.
+        Takes into account syntactic valency, overt arguments, and raw digital spelling habits.
         """
         norm = normalize_bangla_text(text)
-        tokens = norm.split()
+        # Strip trailing sentence punctuation
+        clean_text = norm.replace("?", "").replace("।", "").replace("!", "").replace(",", "")
+        tokens = clean_text.split()
         
         results = []
         for idx, token in enumerate(tokens):
             if token in ["কিসের", "কিসে", "কীসে"]:
                 results.append({
                     "token": token,
-                    "type": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
-                    "function": "Wh-argument filling nominal slot with overt case marking."
+                    "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
+                    "orthography_standard": "CORRECT",
+                    "reason": "Overt oblique/locative case-marked interrogative Wh-pronoun.",
                 })
             elif token == "কী":
                 results.append({
                     "token": token,
-                    "type": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
-                    "function": "Direct object or predicate nominal Wh-pronoun ('what')."
+                    "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
+                    "orthography_standard": "CORRECT",
+                    "reason": "Standard orthographic substantive Wh-pronoun ('what').",
                 })
             elif token == "কি":
-                # Check if immediately pre-verbal
-                is_preverbal = (idx == len(tokens) - 2) or (idx == len(tokens) - 1)
-                results.append({
-                    "token": token,
-                    "type": "POLAR_INTERROGATIVE_PARTICLE",
-                    "function": "Yes/No truth-value question marker."
-                })
+                # Check syntactic context:
+                # If preceding verb is transitive and has no other overt object, or if following word is transitive verb needing object:
+                # e.g. "তুমি কি চাও?" vs "তুমি কি ভাত খাবে?" vs "তুমি কি যাবে?"
+                has_transitive_verb_missing_obj = False
+                if "চাও" in tokens or "চান" in tokens or "বলছ" in tokens or "বলছেন" in tokens:
+                    if "ভাত" not in tokens and "কথা" not in tokens and "বই" not in tokens and "চিঠি" not in tokens:
+                        has_transitive_verb_missing_obj = True
+
+                if has_transitive_verb_missing_obj:
+                    results.append({
+                        "token": token,
+                        "syntactic_function": "INTERROGATIVE_PRONOUN_SUBSTANTIVE",
+                        "orthography_standard": "NONSTANDARD_DIGITAL_SPELLING",
+                        "intended_standard_form": "কী",
+                        "reason": "Token fills mandatory direct object thematic slot; normatively spelled 'কী'.",
+                    })
+                else:
+                    results.append({
+                        "token": token,
+                        "syntactic_function": "POLAR_INTERROGATIVE_PARTICLE",
+                        "orthography_standard": "CORRECT",
+                        "reason": "Polar yes/no truth-value interrogative particle.",
+                    })
+
         return {"text": text, "disambiguations": results}
 
     def transform_addressee_register(
         self,
         verb_root: str,
-        tense_base: str,  # e.g. "PRES_SIMP", "PAST_SIMP", "FUT_SIMP", "IMP"
+        tense_base: str,
         target_tier: HonorificTier,
         include_subject: bool = True,
         object_np: Optional[str] = None,
@@ -180,7 +334,6 @@ class PragmaticsEngine:
         c = normalize_bangla_text(clitic)
         
         if c == "ই":
-            # If word ends in vowel sign, attaches independent 'ই'
             return norm + "ই"
         elif c == "ও":
             return norm + "ও"

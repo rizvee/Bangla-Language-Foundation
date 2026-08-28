@@ -78,7 +78,16 @@
     },
     "status": {
       "type": "string",
-      "enum": ["ACTIVE", "PROVISIONAL", "DEPRECATED"],
+      "enum": [
+        "BLF_DESIGNED",
+        "SOURCE_GROUNDED",
+        "EMPIRICALLY_ATTESTED",
+        "HUMAN_REVIEWED",
+        "STABLE",
+        "ACTIVE",
+        "PROVISIONAL",
+        "DEPRECATED"
+      ],
       "description": "Dialogue act lifecycle status."
     },
     "notes": {

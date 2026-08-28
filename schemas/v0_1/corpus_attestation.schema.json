@@ -1,0 +1,125 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/corpus_attestation.schema.json",
+  "title": "BLFCorpusAttestation",
+  "description": "Schema for empirical corpus attestations supporting grammatical rules and constructions in BLF.",
+  "type": "object",
+  "required": [
+    "attestation_id",
+    "text",
+    "normalized_text",
+    "source_id",
+    "source_type",
+    "language_variety",
+    "register",
+    "construction_ids",
+    "rule_ids",
+    "copyright_handling",
+    "attestation_status"
+  ],
+  "properties": {
+    "attestation_id": {
+      "type": "string",
+      "pattern": "^ATT-[A-Z0-9_-]+$",
+      "description": "Unique attestation identifier (e.g. ATT-CORP-PHELA-01)."
+    },
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Attested textual excerpt."
+    },
+    "normalized_text": {
+      "type": "string",
+      "minLength": 1,
+      "description": "NFC normalized and cleaned Bangla text."
+    },
+    "source_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_-]+$",
+      "description": "Registered source ID from sources.json."
+    },
+    "source_type": {
+      "type": "string",
+      "enum": [
+        "SCHOLARLY_GRAMMAR",
+        "CONTEMPORARY_NEWS_PUBLIC",
+        "GOVERNMENT_PUBLIC_PORTAL",
+        "OPEN_ACCESS_RESEARCH_CORPUS",
+        "SPOKEN_SPEECH_TRANSCRIPT",
+        "LITERARY_PUBLIC_DOMAIN"
+      ],
+      "description": "Provenance category of the attested text."
+    },
+    "source_locator": {
+      "type": "string",
+      "description": "Page, paragraph, document identifier, or dataset partition."
+    },
+    "language_variety": {
+      "type": "string",
+      "enum": [
+        "BDSB_STANDARD",
+        "BANGLADESH_CONVERSATIONAL",
+        "SYLHETI_COLLOQUIAL",
+        "CHATGAYA_COLLOQUIAL",
+        "NOAKHAILLA_COLLOQUIAL",
+        "CROSS_VARIETY"
+      ],
+      "description": "Geographic / sociolinguistic variety."
+    },
+    "register": {
+      "type": "string",
+      "enum": [
+        "FORMAL_STANDARD",
+        "COLLOQUIAL_STANDARD",
+        "INFORMAL_CONVERSATIONAL",
+        "LITERARY_SADHU",
+        "OFFICIAL_GOVERNMENT"
+      ],
+      "description": "Stylistic register."
+    },
+    "construction_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^CONST-[A-Z0-9_-]+$"},
+      "description": "Linked construction IDs instantiated by this attestation."
+    },
+    "rule_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^RUL-[A-Z0-9_-]+$"},
+      "description": "Linked linguistic rule IDs exemplified by this attestation."
+    },
+    "frame_ids": {
+      "type": "array",
+      "items": {"type": "string", "pattern": "^FRAME-[A-Z0-9_-]+$"},
+      "description": "Linked semantic frame IDs evoked by this attestation."
+    },
+    "copyright_handling": {
+      "type": "string",
+      "enum": [
+        "SHORT_EXCERPT_RESEARCH_FAIR_USE",
+        "OPEN_LICENSE_REPRODUCTION",
+        "PUBLIC_DOMAIN_EXCERPT",
+        "HASH_AND_LOCATOR_ONLY"
+      ],
+      "description": "Legal copyright handling designation."
+    },
+    "attestation_status": {
+      "type": "string",
+      "enum": [
+        "VERIFIED_EMPIRICAL",
+        "CROSS_VALIDATED",
+        "PROVISIONAL_SAMPLE",
+        "ARCHIVAL_NOTE"
+      ],
+      "description": "Empirical attestation status."
+    },
+    "gloss": {
+      "type": "string",
+      "description": "Morpheme or word-level English gloss."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Linguistic or contextual notes."
+    }
+  },
+  "additionalProperties": false
+}

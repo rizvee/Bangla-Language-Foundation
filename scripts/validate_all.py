@@ -36,6 +36,7 @@ VALIDATION_SCRIPTS = [
     ("Semantic Frames", ROOT_DIR / "scripts" / "validate_frames.py"),
     ("Sentence Families & Realization", ROOT_DIR / "scripts" / "validate_sentence_families.py"),
     ("Provenance Graph Integrity", ROOT_DIR / "scripts" / "validate_provenance_graph.py"),
+    ("Corpus Attestations", ROOT_DIR / "scripts" / "validate_attestations.py"),
     ("Anti-AI-Slop Scanner", ROOT_DIR / "scripts" / "check_anti_slop.py"),
 ]
 

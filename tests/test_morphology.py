@@ -178,6 +178,49 @@ class TestVerbalConjugator(unittest.TestCase):
         self.assertEqual(kha_cells["FUT_SIMP.1"], "খাব")
         self.assertEqual(kha_cells["NF_CONJUNCTIVE"], "খেয়ে")
 
+    def test_irregular_root_ho(self):
+        """Regression test verifying exact forms of irregular verb root 'হ' (howa)."""
+        ho_cells = self.engine.conjugate_root("হ")
+        self.assertEqual(ho_cells["PRES_SIMP.1"], "হই")
+        self.assertEqual(ho_cells["PRES_SIMP.2_ORD"], "হও")
+        self.assertEqual(ho_cells["PRES_SIMP.2_HON"], "হন")
+        self.assertEqual(ho_cells["PRES_SIMP.2_INT"], "হস")
+        self.assertEqual(ho_cells["PRES_SIMP.3_ORD"], "হয়")
+        self.assertEqual(ho_cells["PRES_SIMP.3_HON"], "হন")
+        self.assertEqual(ho_cells["PRES_CONT.1"], "হচ্ছি")
+        self.assertEqual(ho_cells["PRES_CONT.3_ORD"], "হচ্ছে")
+        self.assertEqual(ho_cells["PRES_PERF.1"], "হয়েছি")
+        self.assertEqual(ho_cells["PRES_PERF.3_ORD"], "হয়েছে")
+        self.assertEqual(ho_cells["PAST_SIMP.1"], "হলাম")
+        self.assertEqual(ho_cells["PAST_SIMP.3_ORD"], "হলো")
+        self.assertEqual(ho_cells["PAST_CONT.1"], "হচ্ছিলাম")
+        self.assertEqual(ho_cells["PAST_HAB.1"], "হতাম")
+        self.assertEqual(ho_cells["PAST_PERF.1"], "হয়েছিলাম")
+        self.assertEqual(ho_cells["FUT_SIMP.1"], "হব")
+        self.assertEqual(ho_cells["FUT_SIMP.2_HON"], "হবেন")
+        self.assertEqual(ho_cells["IMP.2_HON"], "হন")
+        self.assertEqual(ho_cells["NF_CONJUNCTIVE"], "হয়ে")
+        self.assertEqual(ho_cells["NF_CONDITIONAL"], "হলে")
+        self.assertEqual(ho_cells["NF_INFINITIVE"], "হতে")
+
+    def test_negative_conjugation_polarity(self):
+        """Verifies perfective negation with past stem + -ni vs general postverbal na."""
+        # Present Perfect -> past stem + -ni
+        self.assertEqual(self.engine.conjugate_negative("কর", "PRES_PERF.1"), "করিনি")
+        self.assertEqual(self.engine.conjugate_negative("কর", "PRES_PERF.3_ORD"), "করেনি")
+        self.assertEqual(self.engine.conjugate_negative("যা", "PRES_PERF.1"), "যাইনি")
+        self.assertEqual(self.engine.conjugate_negative("যা", "PRES_PERF.3_ORD"), "যায়নি")
+        self.assertEqual(self.engine.conjugate_negative("খা", "PRES_PERF.1"), "খাইনি")
+        self.assertEqual(self.engine.conjugate_negative("খা", "PRES_PERF.3_ORD"), "খায়নি")
+        self.assertEqual(self.engine.conjugate_negative("হ", "PRES_PERF.3_ORD"), "হয়নি")
+        self.assertEqual(self.engine.conjugate_negative("বল", "PRES_PERF.3_ORD"), "বলেনি")
+        self.assertEqual(self.engine.conjugate_negative("দেখ", "PRES_PERF.3_ORD"), "দেখেনি")
+
+        # Other tenses -> finite verb + na
+        self.assertEqual(self.engine.conjugate_negative("কর", "PRES_SIMP.1"), "করি না")
+        self.assertEqual(self.engine.conjugate_negative("কর", "FUT_SIMP.1"), "করব না")
+        self.assertEqual(self.engine.conjugate_negative("যা", "FUT_SIMP.2_ORD"), "যাবে না")
+
 
 if __name__ == "__main__":
     unittest.main()

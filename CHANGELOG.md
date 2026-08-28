@@ -9,7 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added - Phase 2A Semantic Frame Core & Constrained Realization Prototype
+### Added - Phase 2A.1 Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate
+- **`হওয়া` (Howa) Inflection Paradigm**: Implemented dedicated `_conjugate_ho()` in `src/blf/linguistics/morphology/verbal_conjugator.py` covering all 6 person slots across 8 tense-aspect combinations, imperative, and participles (`হলো`, `হয়`, `হচ্ছে`, `হয়েছে`, `হব`, `হন`); added `PARADIGM-VERB-HO` to `ontology/paradigms/verbal_paradigms.json`.
+- **Differential Object Marking (DOM) Engine**: Implemented `DOMEngine` in `src/blf/linguistics/dom.py` with multi-dimensional `ObjectFeatures` (Animacy, Definiteness, Specificity, Referentiality) assigning overt `-কে` vs bare `-Ø`.
+- **Complex Predicate Polysemy & Selectional Repair**: Updated `src/blf/linguistics/complex_predicates.py` and `ontology/complex_predicates/complex_predicates.json` to permit cognitive achievement verbs (`জেনে ফেলা`, `বুঝে ফেলা`, `শিখে ফেলা`) while barring pure statives (`*থেকে ফেলা`). Formalized 8 polysemous vector verb specifications.
+- **Polarity Morphology & -নি Negation**: Implemented `conjugate_negative()` in `verbal_conjugator.py` mapping Present Perfect + NEG to past stem + `-নি` (`করিনি`, `যায়নি`, `খায়নি`, `হয়নি`) and general postverbal `না`.
+- **Corpus Attestation Subsystem**: Created `schemas/v0_1/corpus_attestation.schema.json`, `src/blf/ontology/attestation.py`, `ontology/attestations/corpus_attestations.json` (12 verified empirical attestations across literature and corpora), and `scripts/validate_attestations.py`.
+- **Epistemic Frame & Dialogue Act Status Recalibration**: Expanded `schemas/v0_1/semantic_frame.schema.json` and `schemas/v0_1/dialogue_act.schema.json` status enums to `["BLF_DESIGNED", "SOURCE_GROUNDED", "EMPIRICALLY_ATTESTED", "HUMAN_REVIEWED", "STABLE"]` and updated `ontology/frames/core_frames.json` and `ontology/pragmatics/dialogue_acts.json`.
+- **Diagnostic Human-Review Pack (156 Items)**: Implemented `scripts/generate_review_pack.py` producing `data/review_queue/linguistic_review_pack.json` and `.md` across 11 linguistic categories marked `PENDING_HUMAN_REVIEW`.
+- **Test Suite Quality Hardening & Rule Coverage**: Hardened test suite with exact linguistic assertions and adversarial rejection tests (75 tests passing across 15 test suites). Created `research/linguistic-knowledge/rule-test-coverage.md` (100% rule coverage).
+- **Gold-Readiness Evaluation Report**: Authored `research/gold-readiness-report.md` and `research/gold-readiness-report.json` issuing `CONDITIONAL_READY_FOR_HUMAN_CURATION` verdict.
 - **Semantic Frame Schema**: Created `schemas/v0_1/semantic_frame.schema.json` formalizing 24 core everyday communicative frames, standardized thematic role sets, selectional restrictions, and predicate linkages.
 - **Core Semantic Frames Catalog**: Authored `ontology/frames/core_frames.json` covering Motion, Ingestion, Commerce, Transfer, Cognition, Perception, Emotion, Work, and Stative domains.
 - **Sentence Family Realization Engine**: Implemented `ConstrainedRealizer` in `src/blf/generation/realizer.py` enforcing DOM, agreement, and morphotactic invariants.

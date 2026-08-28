@@ -18,7 +18,7 @@
       "frame_relations": [
         {"relation_type": "SUBFRAME_OF", "target_frame_id": "FRAME-MOTION-DIRECTIONAL"}
       ],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Core motion frame."
     },
     {
@@ -32,7 +32,7 @@
       "compatible_constructions": ["CONST-DECL-INTRANSITIVE-SV"],
       "compatible_predicates": ["পৌঁছানো", "নামা", "ওঠা", "ফিরে আসা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Telic arrival."
     },
     {
@@ -48,7 +48,7 @@
       "frame_relations": [
         {"relation_type": "OPPOSES", "target_frame_id": "FRAME-RECEIVING-ACQUISITION"}
       ],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Ditransitive transfer."
     },
     {
@@ -62,7 +62,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-CPRED-VECTOR-SELF-BENEF"],
       "compatible_predicates": ["নেওয়া", "পাওয়া", "গ্রহণ করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Acquisition frame."
     },
     {
@@ -76,7 +76,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-CPRED-VECTOR-SELF-BENEF"],
       "compatible_predicates": ["কেনা", "ক্রয় করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Commercial purchase."
     },
     {
@@ -90,7 +90,7 @@
       "compatible_constructions": ["CONST-EXISTENTIAL-POSSESSIVE"],
       "compatible_predicates": ["থাকা", "আছে", "নেই"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Possessive / existential axis."
     },
     {
@@ -104,7 +104,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-CPRED-VECTOR-TELIC"],
       "compatible_predicates": ["খাওয়া", "আহার করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Food consumption."
     },
     {
@@ -118,7 +118,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV"],
       "compatible_predicates": ["পান করা", "খাওয়া"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "In BDSB, 'khawa' is standardly used for drinking as well as eating."
     },
     {
@@ -132,7 +132,7 @@
       "compatible_constructions": ["CONST-DECL-INTRANSITIVE-SV", "CONST-CPRED-VECTOR-TELIC"],
       "compatible_predicates": ["ঘুমানো", "বিশ্রাম নেওয়া"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Physiological rest."
     },
     {
@@ -146,7 +146,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV"],
       "compatible_predicates": ["দেখা", "তাকানো"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Visual perception."
     },
     {
@@ -160,7 +160,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV"],
       "compatible_predicates": ["শোনা", "মনোযোগ দেওয়া"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Auditory perception."
     },
     {
@@ -174,7 +174,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-EXPERIENCER-DATSUBJ"],
       "compatible_predicates": ["জানা", "বোঝা", "মনে রাখা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Knowledge state."
     },
     {
@@ -188,7 +188,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-CPRED-VECTOR-SELF-BENEF"],
       "compatible_predicates": ["ভাবা", "চিন্তা করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Mental reflection."
     },
     {
@@ -202,7 +202,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-DECL-DITRANSITIVE"],
       "compatible_predicates": ["বলা", "জানানো", "কথা বলা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Verbal communication."
     },
     {
@@ -216,7 +216,7 @@
       "compatible_constructions": ["CONST-IMPERATIVE-HONORIFIC", "CONST-IMPERATIVE-FAMILIAR"],
       "compatible_predicates": ["অনুরোধ করা", "বলা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Directive communication."
     },
     {
@@ -230,7 +230,7 @@
       "compatible_constructions": ["CONST-INTERROGATIVE-POLAR", "CONST-INTERROGATIVE-WH-INSITU"],
       "compatible_predicates": ["জিজ্ঞাসা করা", "প্রশ্ন করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Interrogative communication."
     },
     {
@@ -244,7 +244,7 @@
       "compatible_constructions": ["CONST-EXPERIENCER-DATSUBJ", "CONST-CPRED-VECTOR-TELIC"],
       "compatible_predicates": ["ভয় পাওয়া", "ভয় লাগা", "চমকে উঠা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Experiencer dative-subject predicate."
     },
     {
@@ -258,7 +258,7 @@
       "compatible_constructions": ["CONST-DECL-INTRANSITIVE-SV", "CONST-EXPERIENCER-DATSUBJ"],
       "compatible_predicates": ["খুশি হওয়া", "আনন্দ পাওয়া"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Positive emotional state."
     },
     {
@@ -272,7 +272,7 @@
       "compatible_constructions": ["CONST-EXPERIENCER-DATSUBJ"],
       "compatible_predicates": ["ক্ষিদে পাওয়া", "ক্ষিদে লাগা", "পিপাসা পাওয়া"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Physiological dative subject sensation."
     },
     {
@@ -286,7 +286,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-LVC-TRANSITIVE-KORA"],
       "compatible_predicates": ["কাজ করা", "পরিশ্রম করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Intentional action."
     },
     {
@@ -300,7 +300,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-CPRED-VECTOR-TELIC"],
       "compatible_predicates": ["লেখা", "রচনা করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Textual creation."
     },
     {
@@ -314,7 +314,7 @@
       "compatible_constructions": ["CONST-DECL-TRANSITIVE-SOV", "CONST-LVC-TRANSITIVE-KORA", "CONST-CPRED-VECTOR-OTHER-BENEF"],
       "compatible_predicates": ["সাহায্য করা", "সহযোগিতা করা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Pro-social benefactive action."
     },
     {
@@ -328,7 +328,7 @@
       "compatible_constructions": ["CONST-COPULAR-EQUATIVE"],
       "compatible_predicates": ["হওয়া", "নয়", "নন"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Copular identification."
     },
     {
@@ -342,7 +342,7 @@
       "compatible_constructions": ["CONST-EXISTENTIAL-POSSESSIVE"],
       "compatible_predicates": ["থাকা", "অবস্থিত হওয়া", "বসা"],
       "frame_relations": [],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Static spatial position."
     }
   ]

@@ -15,17 +15,18 @@
         "lemma": "ফেলা",
         "inflection_bearing": true
       },
-      "aspectual_or_semantic_contribution": "Encodes telic completion, irreversible finality, or rapid discharge of the pole event.",
+      "aspectual_or_semantic_contribution": "Encodes telic completion, irreversible finality, rapid discharge of the pole event, or cognitive boundary transition (e.g. jene phela, bujhe phela).",
       "selection_restrictions": {
-        "pole_transitivity": ["TRANSITIVE", "UNERGATIVE_DYNAMIC"],
-        "stative_allowed": false
+        "allowed_pole_types": ["TRANSITIVE_DYNAMIC", "UNERGATIVE_DYNAMIC", "COGNITIVE_ACHIEVEMENT", "INGESTION", "PERCEPTION", "COMMUNICATION_RELEASE"],
+        "cognitive_achievement_allowed": true,
+        "pure_stative_posture_allowed": false
       },
       "valency_effect": "NO_VALENCY_CHANGE",
       "language_variety": "BDSB_STANDARD",
       "productivity": "HIGHLY_PRODUCTIVE",
       "example_ids": ["EX-SEM-VECTOR-PHELA-15"],
       "status": "ACTIVE",
-      "notes": "Very common in colloquial and literary BDSB."
+      "notes": "Very common in colloquial and literary BDSB; productively derives bounded achievement readings on cognition verbs (jene phela, bujhe phela)."
     },
     {
       "predicate_id": "CPRED-VECTOR-NEOA-SELF-BENEF",

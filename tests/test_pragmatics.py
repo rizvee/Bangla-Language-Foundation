@@ -10,7 +10,7 @@ from pathlib import Path
 ROOT_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT_DIR / "src"))
 
-from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier, Register
+from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier, Register, POLYFUNCTIONAL_PARTICLES
 from blf.validation.validators import load_schema, validate_dict_against_schema
 
 DA_PATH = ROOT_DIR / "ontology" / "pragmatics" / "dialogue_acts.json"
@@ -50,20 +50,27 @@ class TestPragmatics(unittest.TestCase):
         self.assertEqual(res_fut_hon, "আপনি কাজটা করবেন")
 
     def test_ki_disambiguation(self):
-        # Polar particle 'কি'
-        res_polar = self.engine.disambiguate_ki("তুমি কি খাবে?")
-        types = [d["type"] for d in res_polar["disambiguations"]]
-        self.assertIn("POLAR_INTERROGATIVE_PARTICLE", types)
+        # 1. Polar particle 'কি' with intransitive verb
+        res_polar = self.engine.disambiguate_ki("তুমি কি যাবে?")
+        funcs = [d["syntactic_function"] for d in res_polar["disambiguations"]]
+        self.assertIn("POLAR_INTERROGATIVE_PARTICLE", funcs)
 
-        # Content Wh-pronoun 'কী'
+        # 2. Content Wh-pronoun 'কী'
         res_wh = self.engine.disambiguate_ki("তুমি কী খাবে?")
-        types_wh = [d["type"] for d in res_wh["disambiguations"]]
-        self.assertIn("INTERROGATIVE_PRONOUN_SUBSTANTIVE", types_wh)
+        funcs_wh = [d["syntactic_function"] for d in res_wh["disambiguations"]]
+        self.assertIn("INTERROGATIVE_PRONOUN_SUBSTANTIVE", funcs_wh)
 
-        # Declinable substantive Wh-pronoun 'কিসের'
+        # 3. Declinable substantive Wh-pronoun 'কিসের'
         res_gen = self.engine.disambiguate_ki("কিসের জন্য?")
-        types_gen = [d["type"] for d in res_gen["disambiguations"]]
-        self.assertIn("INTERROGATIVE_PRONOUN_SUBSTANTIVE", types_gen)
+        funcs_gen = [d["syntactic_function"] for d in res_gen["disambiguations"]]
+        self.assertIn("INTERROGATIVE_PRONOUN_SUBSTANTIVE", funcs_gen)
+
+        # 4. Raw non-standard digital spelling of Wh-pronoun 'কি' in argument position
+        res_raw = self.engine.disambiguate_ki("তুমি কি চাও?")
+        dis = res_raw["disambiguations"][0]
+        self.assertEqual(dis["syntactic_function"], "INTERROGATIVE_PRONOUN_SUBSTANTIVE")
+        self.assertEqual(dis["orthography_standard"], "NONSTANDARD_DIGITAL_SPELLING")
+        self.assertEqual(dis["intended_standard_form"], "কী")
 
     def test_focus_clitic_attachment(self):
         # Restrictive clitic -i
@@ -71,8 +78,19 @@ class TestPragmatics(unittest.TestCase):
         self.assertEqual(res_i, "আমিই")
 
         # Additive clitic -o
-        res_o = self.engine.attach_focus_clitic("তুমিও", "ও")
-        self.assertIn("ও", res_o)
+        res_o = self.engine.attach_focus_clitic("তুমি", "ও")
+        self.assertEqual(res_o, "তুমিও")
+
+    def test_polyfunctional_particle_definitions(self):
+        self.assertIn("না", POLYFUNCTIONAL_PARTICLES)
+        self.assertIn("তো", POLYFUNCTIONAL_PARTICLES)
+        self.assertIn("যে", POLYFUNCTIONAL_PARTICLES)
+        self.assertIn("বা", POLYFUNCTIONAL_PARTICLES)
+        
+        na_senses = [s.sense_id for s in POLYFUNCTIONAL_PARTICLES["না"].senses]
+        self.assertIn("SENSE-NA-NEGATOR", na_senses)
+        self.assertIn("SENSE-NA-TAG-QUESTION", na_senses)
+        self.assertIn("SENSE-NA-DIRECTIVE-SOFTENER", na_senses)
 
 
 if __name__ == "__main__":

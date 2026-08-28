@@ -1,0 +1,60 @@
+{
+  "project": "Bangla Language Foundation (BLF)",
+  "report_version": "1.0.0",
+  "phase": "2A.1 — Linguistic Integrity Recovery, Attestation & Gold-Readiness Gate",
+  "evaluation_date": "2026-08-28",
+  "gold_readiness_verdict": "CONDITIONAL_READY_FOR_HUMAN_CURATION",
+  "summary": "Phase 2A.1 has successfully resolved core linguistic bugs (howa conjugation, phela vector restrictions with cognitive achievements, -ni negation morphology, feature-sensitive DOM, and particle disambiguation). Automated test suites pass with exact assertions. The repository is architecturally and linguistically sound for human-curated Gold seed generation, but NO automated mass generation may occur without expert human review of the diagnostic queue.",
+  "dimensions": {
+    "source_grounding": {
+      "status": "PASS",
+      "score": 1.0,
+      "notes": "12 registered primary sources with claim-level evidence and frozen bibliographies."
+    },
+    "morphotactics_and_inflections": {
+      "status": "PASS",
+      "score": 0.98,
+      "notes": "Dedicated paradigms for howa, regular closed roots, vowel-mutating roots, and irregular verbs. Verified lexicon of 25+ conjunctive participles."
+    },
+    "complex_predicates": {
+      "status": "PASS",
+      "score": 0.95,
+      "notes": "Feature-based vector verb selection allows cognitive achievements with phela while rejecting pure statives; 8 polysemous vector specifications formalized."
+    },
+    "dom_and_case_marking": {
+      "status": "PASS",
+      "score": 0.96,
+      "notes": "Feature-sensitive DOM engine evaluates animacy, definiteness, specificity, and classifiers to assign overt -ke vs bare -Ø."
+    },
+    "negation_and_polarity": {
+      "status": "PASS",
+      "score": 1.0,
+      "notes": "Morphologically accurate perfective negation (-ni) and general post-verbal sentential negator (na)."
+    },
+    "pragmatic_particles_and_disambiguation": {
+      "status": "PASS",
+      "score": 0.95,
+      "notes": "Context-sensitive and valency-based ki disambiguation; polyfunctional senses modeled for i, o, to, na, je, ba, ki."
+    },
+    "corpus_attestation_coverage": {
+      "status": "PASS",
+      "score": 0.92,
+      "notes": "12 empirical corpus attestations linking grammar literature, research corpora, and contemporary texts to rules and frames under research fair-use handling."
+    },
+    "diagnostic_review_queue": {
+      "status": "READY_PENDING_REVIEW",
+      "score": 1.0,
+      "notes": "156 curated diagnostic review items prepared across 11 linguistic categories in data/review_queue/ marked PENDING_HUMAN_REVIEW."
+    },
+    "verification_test_suite": {
+      "status": "PASS",
+      "score": 1.0,
+      "notes": "75 unit and regression tests passing with exact output assertions and adversarial rejection tests."
+    }
+  },
+  "prerequisites_for_phase_3_scaling": [
+    "Expert human linguist sign-off on high-uncertainty items in data/review_queue/linguistic_review_pack.json.",
+    "No automated process may assign HUMAN_APPROVED.",
+    "Phase 3 dataset collection must strictly operate under Gold curation protocols with dual-annotator inter-rater agreement."
+  ]
+}

@@ -11,7 +11,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Falling final intonation", "Declarative word order"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Core assertive speech act conveying factual information."
     },
     {
@@ -23,7 +23,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Wh-words (কী, কে, কোথায়, কখন, কেন, কীভাবে)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Requests identity of unknown argument or circumstantial adjunct."
     },
     {
@@ -35,7 +35,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Pre-verbal 'কি'", "Rising final intonation contour"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Requests binary truth-value affirmation or negation."
     },
     {
@@ -47,7 +47,7 @@
       "register_applicability": ["FORMAL_STANDARD", "COLLOQUIAL_STANDARD"],
       "honorificity_constraints": {"required_tier": "HONORIFIC"},
       "surface_markers": ["Imperative suffix -un (করুন, বলুন)", "Optional politeness particles (একটু, দয়া করে)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Respectful directive addressed to 'আপনি'."
     },
     {
@@ -59,7 +59,7 @@
       "register_applicability": ["COLLOQUIAL_STANDARD", "FAMILIAR"],
       "honorificity_constraints": {"required_tier": "FAMILIAR"},
       "surface_markers": ["Imperative suffix -o (করো, বলো)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Equal-status or informal directive addressed to 'তুমি'."
     },
     {
@@ -71,7 +71,7 @@
       "register_applicability": ["INTIMATE"],
       "honorificity_constraints": {"required_tier": "INTIMATE"},
       "surface_markers": ["Bare root / suffix -i (কর, বল, করিস)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Direct command addressed to 'তুই'."
     },
     {
@@ -83,7 +83,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Post-verbal 'না' after imperative verb (করবেন না, করো না, করিস না)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Prohibitive directive across all honorific tiers."
     },
     {
@@ -95,7 +95,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Modal/future forms (নেবেন কি, খাবেন)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Proposing assistance or food/hospitality."
     },
     {
@@ -107,7 +107,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["1st person plural hortative/future (চলো যাই, আমরা করতে পারি)"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Suggesting mutual action."
     },
     {
@@ -119,7 +119,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["Infinitive + 'পারি কি' / 'যাব কি'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Seeking consent or approval."
     },
     {
@@ -131,7 +131,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'ধন্যবাদ', 'অনেক ধন্যবাদ', 'থ্যাংকস'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Formulaic and spontaneous gratitude."
     },
     {
@@ -143,7 +143,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'দুঃখিত', 'ক্ষমা করবেন', 'সরি'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Remedial conversational action."
     },
     {
@@ -155,7 +155,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'আসসালামু আলাইকুম', 'নমস্কার', 'হ্যালো', 'কেমন আছেন'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Initial conversational contact."
     },
     {
@@ -167,7 +167,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'আল্লাহ হাফেজ', 'আবার দেখা হবে', 'আসি তাহলে', 'বাই'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Closing conversational contact."
     },
     {
@@ -179,7 +179,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'হ্যাঁ', 'ঠিক আছে', 'অবশ্যই', 'জি'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Affirming prior turn proposal."
     },
     {
@@ -191,7 +191,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'না', 'তা নয়', 'ভুল'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Rejecting prior proposition."
     },
     {
@@ -203,7 +203,7 @@
       "register_applicability": ["CROSS_REGISTER"],
       "honorificity_constraints": {"addressee_tier": "ANY"},
       "surface_markers": ["'মানে?', 'বুঝলাম না', 'কী বললেন?'"],
-      "status": "ACTIVE",
+      "status": "SOURCE_GROUNDED",
       "notes": "Initiating conversational repair."
     }
   ]

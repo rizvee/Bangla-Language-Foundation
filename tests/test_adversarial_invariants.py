@@ -14,6 +14,7 @@ sys.path.insert(0, str(ROOT_DIR / "src"))
 
 from blf.generation.realizer import ConstrainedRealizer, RealizationError
 from blf.linguistics.complex_predicates import ComplexPredicateEngine
+from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine, ConjugationError
 from blf.linguistics.pragmatics import PragmaticsEngine, HonorificTier
 
 
@@ -22,6 +23,7 @@ class TestAdversarialInvariants(unittest.TestCase):
         self.realizer = ConstrainedRealizer()
         self.cpred_engine = ComplexPredicateEngine()
         self.prag_engine = PragmaticsEngine()
+        self.verbal_engine = VerbalConjugatorEngine()
 
     def test_adversarial_classifier_plural_stacking_rejected(self):
         """Assures that illegal double-determination morphotactics are strictly caught."""
@@ -37,11 +39,20 @@ class TestAdversarialInvariants(unittest.TestCase):
 
     def test_adversarial_stative_telic_vector_rejected(self):
         """Assures that stative non-dynamic verbs cannot combine with telic vector 'phela'."""
-        statives = [("জান", "STATIVE_COGNITION"), ("থাক", "STATIVE_POSTURE"), ("হ", "STATIVE_BEING")]
+        statives = [("থাক", "STATIVE_POSTURE"), ("হ", "STATIVE_BEING")]
         for verb, sem_type in statives:
             valid, err = self.cpred_engine.validate_vector_combination(verb, "ফেলা", sem_type)
             self.assertFalse(valid, f"Stative verb '{verb}' incorrectly permitted with 'phela'")
             self.assertIn("Selectional restriction violation", err)
+
+        # Conversely, cognitive achievements MUST be permitted
+        valid_cog, _ = self.cpred_engine.validate_vector_combination("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
+        self.assertTrue(valid_cog, "Cognitive achievement with 'phela' incorrectly rejected")
+
+    def test_adversarial_unmodeled_participle_rejected(self):
+        """Assures that arbitrary unmodeled verbs raise ConjugationError rather than emitting corrupted fallbacks."""
+        with self.assertRaises(ConjugationError):
+            self.verbal_engine.get_conjunctive_participle("অজানা_ক্রিয়াপদ_XYZ")
 
     def test_adversarial_honorific_clash_prevented(self):
         """Assures that honorific tier transformations strictly preserve agreement."""
