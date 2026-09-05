@@ -1868,83 +1868,92 @@
     },
     {
       "source_id": "NCTB-TG-BANGLA",
-      "canonical_resource_id": "NCTB-PRIMARY-TEACHER-GUIDE",
-      "title": "Amar Bangla Boi: Shikkhok Shongskoron (Primary Bangla Teacher Edition)",
+      "canonical_resource_id": "DPE-NCTB-TG-CLASS4-ENGLISH",
+      "title": "Teacher's Guide: English for Today (Class 4)",
       "author_or_org": "National Curriculum and Textbook Board (NCTB) & Directorate of Primary Education (DPE)",
-      "source_tier": "TIER_B",
+      "source_tier": "TIER_C",
       "language": "bn",
       "region": "Bangladesh",
-      "year": 2021,
-      "edition": "Revised Teacher Edition",
+      "year": 2018,
+      "edition": "Teacher Edition (Class 4 English)",
       "version": null,
       "release": null,
-      "publisher": "National Curriculum and Textbook Board, Dhaka",
-      "url": "https://dpe.gov.bd",
-      "identifier": "DPE-NCTB-TG-P1",
+      "publisher": "Directorate of Primary Education (DPE), Ministry of Primary and Mass Education",
+      "url": "https://dpe.portal.gov.bd/sites/default/files/files/dpe.portal.gov.bd/page/925359f0_2493_43bf_9890_afa439266cd6/TG%20-%20Class%204%20English.pdf",
+      "identifier": null,
       "paper_id": null,
       "mirror_of": null,
       "derived_from": null,
       "supersedes": null,
-      "copyright_status": "Statutory Public Notice",
+      "copyright_status": "Copyrighted",
       "license": null,
       "redistribution": "derived_features_only",
       "artifacts": [
         {
-          "artifact_id": "ART-NCTB-TG-PRINT",
+          "artifact_id": "ART-NCTB-TG-CLASS4-PDF",
           "artifact_type": "RULEBOOK",
-          "canonical_url": "https://dpe.gov.bd",
+          "canonical_url": "https://dpe.portal.gov.bd/sites/default/files/files/dpe.portal.gov.bd/page/925359f0_2493_43bf_9890_afa439266cd6/TG%20-%20Class%204%20English.pdf",
           "license": null,
-          "copyright_status": "Statutory Public Notice",
+          "copyright_status": "Copyrighted",
           "redistribution": "derived_features_only",
-          "evidence_id": "EV-NCTB-TG-PRINT",
-          "locator": "Amar Bangla Boi Teacher Edition Grade 1",
-          "notes": "Official primary teacher guide evidencing occurrence of nominal form 'ছবিটাগুলো'."
+          "evidence_id": "EV-NCTB-TG-CHOBITAGULO",
+          "locator": "Instruction referencing Activity A / textbook Page 27: 'Activity A-এর ছবিটাগুলো দেখতে বলুন'",
+          "notes": "Official DPE/NCTB primary teacher guide PDF artifact evidencing occurrence of nominal form 'ছবিটাগুলো'."
         }
       ],
       "verification_status": "PROVISIONAL",
       "verification": {
         "status": "PROVISIONAL",
         "verified_at": "2026-09-05",
-        "verification_method": "Institutional agency publication identification; exact distribution pending comprehensive empirical audit",
+        "verification_method": "Official DPE PDF artifact verification; narrow occurrence established; broader productivity remains unresolved",
         "primary_evidence": [
           {
-            "evidence_id": "EV-NCTB-TG-PRINT",
-            "canonical_url": "https://dpe.gov.bd",
-            "publisher_or_host": "Directorate of Primary Education, Bangladesh",
-            "evidence_type": "Institutional Educational Resource",
-            "resource_title": "Amar Bangla Boi: Shikkhok Shongskoron",
-            "retrieved_title": "Amar Bangla Boi: Shikkhok Shongskoron",
+            "evidence_id": "EV-NCTB-TG-CHOBITAGULO",
+            "canonical_url": "https://dpe.portal.gov.bd/sites/default/files/files/dpe.portal.gov.bd/page/925359f0_2493_43bf_9890_afa439266cd6/TG%20-%20Class%204%20English.pdf",
+            "publisher_or_host": "Directorate of Primary Education (DPE), Bangladesh",
+            "evidence_type": "Institutional Teacher Guide PDF Artifact",
+            "resource_title": "Teacher's Guide: English for Today (Class 4)",
+            "retrieved_title": "TG - Class 4 English.pdf",
             "authors_if_applicable": ["NCTB", "DPE"],
-            "identifier_if_applicable": "DPE-NCTB-TG-P1",
             "accessed_at": "2026-09-05",
-            "locator": "Teacher Edition Grade 1",
-            "supports_fields": ["title", "author_or_org", "year", "publisher"]
+            "locator": "Instruction referencing Activity A / textbook Page 27",
+            "supports_fields": ["title", "author_or_org", "publisher", "url"]
           }
         ],
-        "claims": [],
-        "verified_fields": ["title", "author_or_org", "year", "publisher"],
-        "unresolved_fields": ["broader_bdsb_distribution"],
-        "verifier_notes": "Source identity verified as official educational publication; establishes narrow textual occurrence of 'ছবিটাগুলো', but does not certify universal standard or productive status across general BDSB."
+        "claims": [
+          {
+            "claim_id": "CLM-NCTB-CHOBITAGULO-OCCURRENCE",
+            "field": "linguistic_attestation",
+            "value": "The form ছবিটাগুলো occurs in this identified official Bangladesh Teachers' Edition artifact.",
+            "evidence_id": "EV-NCTB-TG-CHOBITAGULO",
+            "locator": "Instruction referencing Activity A / textbook Page 27",
+            "status": "PROVISIONAL",
+            "verified_at": "2026-09-05"
+          }
+        ],
+        "verified_fields": ["title", "author_or_org", "publisher", "url"],
+        "unresolved_fields": ["year", "broader_bdsb_distribution", "broader_bdsb_productivity"],
+        "verifier_notes": "Source identity verified as official Bangladesh primary educational teacher guide (Class 4 English PDF artifact); provides explicit evidence that the form 'ছবিটাগুলো' occurs in an official teacher guide instruction ('Activity A-এর ছবিটাগুলো দেখতে বলুন'), but does not certify universal standard or productive status across general BDSB."
       },
       "checksum": null,
-      "citation": "National Curriculum and Textbook Board, & Directorate of Primary Education. (2021). Amar Bangla Boi: Shikkhok Shongskoron. Dhaka: NCTB.",
-      "notes": "Registered under Phase 2A.2f epistemic hardening as PROVISIONAL evidence for educational usage."
+      "citation": "National Curriculum and Textbook Board, & Directorate of Primary Education. Teacher's Guide: English for Today (Class 4). Dhaka: Directorate of Primary Education. https://dpe.portal.gov.bd/sites/default/files/files/dpe.portal.gov.bd/page/925359f0_2493_43bf_9890_afa439266cd6/TG%20-%20Class%204%20English.pdf",
+      "notes": "Registered as PROVISIONAL evidence establishing narrow occurrence of 'ছবিটাগুলো' in an official educational artifact."
     },
     {
       "source_id": "ACCESSIBLE-DICT-A2I",
-      "canonical_resource_id": "ACCESSIBLE-DICTIONARY-A2I",
+      "canonical_resource_id": "ACCESSIBLE-DICTIONARY-YPSA-A2I",
       "title": "Accessible Dictionary (Integrated Online Lexical Platform)",
-      "author_or_org": "a2i (Aspire to Innovate) Programme, ICT Division, Bangladesh",
-      "source_tier": "TIER_B",
+      "author_or_org": "YPSA ICT and Resource Center on Disability (IRCD), with support from Access to Information (a2i) Programme",
+      "source_tier": "TIER_D",
       "language": "bn",
       "region": "Bangladesh",
       "year": 2018,
       "edition": "Digital Platform Edition",
       "version": null,
       "release": null,
-      "publisher": "a2i, ICT Division, Government of the People's Republic of Bangladesh",
+      "publisher": "YPSA & a2i Programme, ICT Division / Prime Minister's Office, Bangladesh (based on Bangla Academy dictionaries)",
       "url": "https://accessibledictionary.gov.bd",
-      "identifier": "a2i-AccessibleDictionary",
+      "identifier": null,
       "paper_id": null,
       "mirror_of": null,
       "derived_from": null,
@@ -1960,8 +1969,8 @@
           "license": null,
           "copyright_status": "Copyrighted",
           "redistribution": "derived_features_only",
-          "evidence_id": "EV-ACCESSIBLE-DICT-WEB",
-          "locator": "Entry for particle 'যে'",
+          "evidence_id": "EV-ACCESSIBLE-DICT-JE3",
+          "locator": "Headword 'যে ৩' (documenting 9 stylistic/discourse functions)",
           "notes": "Digital dictionary platform documenting multiple polyfunctional senses and discourse usages of 'যে'."
         }
       ],
@@ -1969,30 +1978,39 @@
       "verification": {
         "status": "PROVISIONAL",
         "verified_at": "2026-09-05",
-        "verification_method": "Institutional platform identification; exact BLF sense taxonomy calibration pending human pilot",
+        "verification_method": "YPSA project documentation and live dictionary platform verification; database derived from Bangla Academy dictionaries; BLF 4-sense model remains provisional",
         "primary_evidence": [
           {
-            "evidence_id": "EV-ACCESSIBLE-DICT-WEB",
+            "evidence_id": "EV-ACCESSIBLE-DICT-JE3",
             "canonical_url": "https://accessibledictionary.gov.bd",
-            "publisher_or_host": "a2i Programme, ICT Division, Bangladesh",
+            "publisher_or_host": "YPSA / a2i Programme, ICT Division, Bangladesh",
             "evidence_type": "Institutional Lexical Platform",
             "resource_title": "Accessible Dictionary",
             "retrieved_title": "Accessible Dictionary",
-            "authors_if_applicable": ["a2i Programme"],
-            "identifier_if_applicable": "a2i-AccessibleDictionary",
+            "authors_if_applicable": ["YPSA IRCD", "a2i Programme"],
             "accessed_at": "2026-09-05",
-            "locator": "Headword 'যে'",
-            "supports_fields": ["title", "author_or_org", "year", "publisher", "url"]
+            "locator": "Headword 'যে ৩'",
+            "supports_fields": ["title", "author_or_org", "publisher", "url"]
           }
         ],
-        "claims": [],
-        "verified_fields": ["title", "author_or_org", "year", "publisher", "url"],
-        "unresolved_fields": ["blf_exact_four_sense_taxonomy"],
-        "verifier_notes": "Source identity verified as official governmental dictionary platform; supports polyfunctionality of 'যে' across discourse roles, but BLF's 4-sense model remains an evidence-supported hypothesis pending human calibration."
+        "claims": [
+          {
+            "claim_id": "CLM-ACCESSIBLE-DICT-JE-POLYFUNCTIONAL",
+            "field": "pragmatic_polyfunctionality",
+            "value": "PARTICLE_JE_IS_POLYFUNCTIONAL",
+            "evidence_id": "EV-ACCESSIBLE-DICT-JE3",
+            "locator": "Headword 'যে ৩'",
+            "status": "PROVISIONAL",
+            "verified_at": "2026-09-05"
+          }
+        ],
+        "verified_fields": ["title", "author_or_org", "publisher", "url"],
+        "unresolved_fields": ["year", "blf_exact_four_sense_taxonomy"],
+        "verifier_notes": "YPSA ICT and Resource Center on Disability (IRCD) implemented the platform with a2i support (project period 2017-02-01 to 2018-02-28); database created from Bangla Academy dictionaries; headword 'যে ৩' documents 9 stylistic/discourse functions supporting particle polyfunctionality (PARTICLE_JE_IS_POLYFUNCTIONAL), but release year is not independently verified as publication date and BLF's engineered 4-sense taxonomy remains an unverified hypothesis."
       },
       "checksum": null,
-      "citation": "a2i Programme. (2018). Accessible Dictionary. Dhaka: ICT Division, Government of the People's Republic of Bangladesh. https://accessibledictionary.gov.bd",
-      "notes": "Registered under Phase 2A.2f epistemic hardening as PROVISIONAL evidence for particle polyfunctionality."
+      "citation": "YPSA ICT and Resource Center on Disability (IRCD), & a2i Programme. Accessible Dictionary (Integrated Online Lexical Platform, based on Bangla Academy dictionaries). Dhaka: YPSA / a2i Programme. https://accessibledictionary.gov.bd",
+      "notes": "Registered as PROVISIONAL evidence establishing headword 'যে ৩' polyfunctionality."
     }
   ]
 }

@@ -221,23 +221,90 @@ class TestAdversarialInvariants(unittest.TestCase):
 
     def test_adversarial_source_claim_binding_integrity(self):
         """
-        Invariant 5: New external source identity != linguistic claim verification.
-        Validates that PROVISIONAL sources have institutional identity without overclaiming claim verification.
+        Invariant 5: External source identity and claim-level evidence bindings.
+        Validates exact artifact metadata, PDF locators, YPSA attribution, and unverified publication year handling.
         """
         sources_path = ROOT_DIR / "sources" / "registry" / "sources.json"
         with open(sources_path, "r", encoding="utf-8") as f:
             data = json.load(f)
         sources_by_id = {s["source_id"]: s for s in data["sources"]}
 
-        # NCTB source has PROVISIONAL status
+        # 1. NCTB artifact identity and exact URL
         nctb = sources_by_id["NCTB-TG-BANGLA"]
         self.assertEqual(nctb["verification_status"], "PROVISIONAL")
-        self.assertIn("broader_bdsb_distribution", nctb["verification"]["unresolved_fields"])
+        self.assertEqual(
+            nctb["url"],
+            "https://dpe.portal.gov.bd/sites/default/files/files/dpe.portal.gov.bd/page/925359f0_2493_43bf_9890_afa439266cd6/TG%20-%20Class%204%20English.pdf",
+        )
+        self.assertEqual(nctb["title"], "Teacher's Guide: English for Today (Class 4)")
+        self.assertIn("Class 4 English", nctb["edition"])
+        self.assertEqual(nctb["source_tier"], "TIER_C")
+        self.assertIsNone(nctb["identifier"])
 
-        # Accessible Dictionary source has PROVISIONAL status
+        # 2. Exact 'ছবিটাগুলো' occurrence bound to narrow claim
+        nctb_claims = {c["claim_id"]: c for c in nctb["verification"]["claims"]}
+        self.assertIn("CLM-NCTB-CHOBITAGULO-OCCURRENCE", nctb_claims)
+        self.assertIn("ছবিটাগুলো", nctb_claims["CLM-NCTB-CHOBITAGULO-OCCURRENCE"]["value"])
+        self.assertIn("broader_bdsb_distribution", nctb["verification"]["unresolved_fields"])
+        self.assertIn("broader_bdsb_productivity", nctb["verification"]["unresolved_fields"])
+
+        # 3. Accessible Dictionary creator attribution includes YPSA
         a2i = sources_by_id["ACCESSIBLE-DICT-A2I"]
         self.assertEqual(a2i["verification_status"], "PROVISIONAL")
+        self.assertIn("YPSA", a2i["author_or_org"])
+        self.assertIn("YPSA", a2i["publisher"])
+        self.assertEqual(a2i["source_tier"], "TIER_D")
+        self.assertIsNone(a2i["identifier"])
+
+        # 4. Publication year is not silently treated as verified
+        self.assertNotIn("year", nctb["verification"]["verified_fields"])
+        self.assertIn("year", nctb["verification"]["unresolved_fields"])
+        self.assertNotIn("year", a2i["verification"]["verified_fields"])
+        self.assertIn("year", a2i["verification"]["unresolved_fields"])
+
+        # 5. 'যে ৩' exact headword evidence bound to polyfunctionality claim
+        a2i_claims = {c["claim_id"]: c for c in a2i["verification"]["claims"]}
+        self.assertIn("CLM-ACCESSIBLE-DICT-JE-POLYFUNCTIONAL", a2i_claims)
+        self.assertEqual(a2i_claims["CLM-ACCESSIBLE-DICT-JE-POLYFUNCTIONAL"]["value"], "PARTICLE_JE_IS_POLYFUNCTIONAL")
+        a2i_ev_locators = [e["locator"] for e in a2i["verification"]["primary_evidence"]]
+        self.assertTrue(any("যে ৩" in loc for loc in a2i_ev_locators))
         self.assertIn("blf_exact_four_sense_taxonomy", a2i["verification"]["unresolved_fields"])
+
+    def test_adversarial_vector_provenance_and_evidence_bindings(self):
+        """
+        Assures that vector combinations enforce strict evidence bindings:
+        - Every VERIFIED_VECTOR_COMBINATION has at least one traceable evidence and claim ID.
+        - Unbound combinations cannot claim VERIFIED_COMBINATION.
+        - Dead vectors not in VECTOR_INVENTORY return UNKNOWN.
+        """
+        from blf.linguistics.complex_predicates import (
+            VectorCompatibilityStatus,
+            VERIFIED_VECTOR_REGISTRY,
+            VERIFIED_VECTOR_COMBINATIONS,
+            VECTOR_INVENTORY,
+        )
+
+        # 1. Every entry in VERIFIED_VECTOR_REGISTRY has traceable evidence/claim bindings
+        self.assertGreater(len(VERIFIED_VECTOR_REGISTRY), 0)
+        for (pole, vec), ev in VERIFIED_VECTOR_REGISTRY.items():
+            self.assertIn(vec, VECTOR_INVENTORY, f"Vector '{vec}' in registry not present in VECTOR_INVENTORY")
+            self.assertGreater(len(ev.evidence_ids), 0, f"Pair ({pole}, {vec}) missing evidence_ids")
+            self.assertGreater(len(ev.claim_ids), 0, f"Pair ({pole}, {vec}) missing claim_ids")
+            self.assertGreater(len(ev.source_ids), 0, f"Pair ({pole}, {vec}) missing source_ids")
+            self.assertEqual(ev.status, "VERIFIED_COMBINATION")
+
+        # 2. Unbound vector pair (e.g. লিখ + ফেলা) is TYPE_LICENSED, NOT VERIFIED_COMBINATION
+        likh_assess = self.cpred_engine.assess_vector_compatibility("লিখ", "ফেলা", "TRANSITIVE_DYNAMIC")
+        self.assertEqual(likh_assess["status"], VectorCompatibilityStatus.ALLOWED)
+        self.assertEqual(likh_assess["evidence_state"], "TYPE_LICENSED")
+        self.assertFalse(likh_assess["auto_generation_safe"])
+        self.assertEqual(likh_assess["evidence_ids"], [])
+
+        # 3. Dead vector (যাওয়া) not in VECTOR_INVENTORY returns UNKNOWN
+        thak_jawa = self.cpred_engine.assess_vector_compatibility("থাক", "যাওয়া", "DURATIVE_ACTION")
+        self.assertEqual(thak_jawa["status"], VectorCompatibilityStatus.UNKNOWN)
+        self.assertFalse(thak_jawa["auto_generation_safe"])
+        self.assertEqual(thak_jawa["evidence_state"], "UNKNOWN")
 
     def test_adversarial_pilot_40_item_count_freeze(self):
         """

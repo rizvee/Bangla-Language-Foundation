@@ -5,6 +5,7 @@ Provides deterministic validation, selectional restriction enforcement, and
 morphosyntactic realization for Bangla complex predicates.
 """
 
+from dataclasses import dataclass
 from enum import Enum
 from typing import Any, Dict, List, Optional, Set, Tuple
 from blf.linguistics.morphology.verbal_conjugator import (
@@ -190,52 +191,274 @@ VECTOR_INVENTORY: Dict[str, VectorVerbSpec] = {
 }
 
 
-# Established attested pole + vector combinations with positive evidence
-VERIFIED_VECTOR_COMBINATIONS: Set[Tuple[str, str]] = {
-    ("খা", "ফেলা"),
-    ("খাওয়া", "ফেলা"),
-    ("জান", "ফেলা"),
-    ("জানা", "ফেলা"),
-    ("বোঝ", "ফেলা"),
-    ("বোঝা", "ফেলা"),
-    ("পড়", "ফেলা"),
-    ("পড়া", "ফেলা"),
-    ("পড়", "ফেলা"),
-    ("পড়া", "ফেলা"),
-    ("লিখ", "ফেলা"),
-    ("লেখা", "ফেলা"),
-    ("বল", "ফেলা"),
-    ("বলা", "ফেলা"),
-    ("কর", "ফেলা"),
-    ("করা", "ফেলা"),
-    ("দেখ", "ফেলা"),
-    ("দেখা", "ফেলা"),
-    ("নে", "নেওয়া"),
-    ("নেওয়া", "নেওয়া"),
-    ("কিন", "নেওয়া"),
-    ("কিনা", "নেওয়া"),
-    ("কেনা", "নেওয়া"),
-    ("দে", "দেওয়া"),
-    ("দেওয়া", "দেওয়া"),
-    ("লিখ", "দেওয়া"),
-    ("লেখা", "দেওয়া"),
-    ("পাঠা", "দেওয়া"),
-    ("পাঠানো", "দেওয়া"),
-    ("হাস", "উঠা"),
-    ("হাসা", "উঠা"),
-    ("কাঁদ", "উঠা"),
-    ("কাঁদা", "উঠা"),
-    ("বোল", "উঠা"),
-    ("বলা", "উঠা"),
-    ("বস", "পড়া"),
-    ("বসা", "পড়া"),
-    ("ঘুমা", "পড়া"),
-    ("ঘুমানো", "পড়া"),
-    ("থাক", "যাওয়া"),
-    ("থাকা", "যাওয়া"),
-    ("চল", "যাওয়া"),
-    ("চলা", "যাওয়া"),
+@dataclass(frozen=True)
+class VectorCombinationEvidence:
+    """Explicit provenance and claim-binding record for an attested vector combination."""
+    pole_lemma: str
+    vector_lemma: str
+    status: str
+    evidence_ids: List[str]
+    claim_ids: List[str]
+    source_ids: List[str]
+    review_state: str
+    auto_generation_safe: bool = True
+
+
+# Traceable evidence-bearing registry for verified pole + vector combinations
+VERIFIED_VECTOR_REGISTRY: Dict[Tuple[str, str], VectorCombinationEvidence] = {
+    # 1. 'phela' telic completive with ingestion pole 'kha' (cites kheye phela in CLM-SEM-VECTOR-PHELA-14, EX-SEM-VECTOR-PHELA-15)
+    ("খা", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="খা",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("খাওয়া", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="খাওয়া",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 2. 'phela' telic completive with perception/reading pole 'por' (cites pore phela in CLM-SEM-VECTOR-PHELA-14)
+    ("পড়", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="পড়",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("পড়া", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="পড়া",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("পড়", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="পড়",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("পড়া", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="পড়া",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 3. 'phela' cognitive boundary transition with 'jan' and 'bojh' (CPRED-VECTOR-PHELA-TELIC, CLM-SEM-VECTOR-PHELA-14)
+    ("জান", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="জান",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("জানা", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="জানা",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("বোঝ", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="বোঝ",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("বোঝা", "ফেলা"): VectorCombinationEvidence(
+        pole_lemma="বোঝা",
+        vector_lemma="ফেলা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-PHELA-14"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 4. 'neoa' self-benefactive with acquisition pole 'kin' (cites kine neoa in CLM-SEM-VECTOR-NEOA-15)
+    ("কিন", "নেওয়া"): VectorCombinationEvidence(
+        pole_lemma="কিন",
+        vector_lemma="নেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-NEOA-15"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("কিনা", "নেওয়া"): VectorCombinationEvidence(
+        pole_lemma="কিনা",
+        vector_lemma="নেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-NEOA-15"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("কেনা", "নেওয়া"): VectorCombinationEvidence(
+        pole_lemma="কেনা",
+        vector_lemma="নেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-NEOA-15"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 5. 'neoa' self-benefactive with inspection pole 'dekh' (cites dekhe neoa in CLM-SEM-VECTOR-NEOA-15)
+    ("দেখ", "নেওয়া"): VectorCombinationEvidence(
+        pole_lemma="দেখ",
+        vector_lemma="নেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-NEOA-15"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("দেখা", "নেওয়া"): VectorCombinationEvidence(
+        pole_lemma="দেখা",
+        vector_lemma="নেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-NEOA-15"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 6. 'dewa' other-benefactive with communicative pole 'likh' (cites likhe dewa in CLM-SEM-VECTOR-DEWA-16)
+    ("লিখ", "দেওয়া"): VectorCombinationEvidence(
+        pole_lemma="লিখ",
+        vector_lemma="দেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-DEWA-16"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("লেখা", "দেওয়া"): VectorCombinationEvidence(
+        pole_lemma="লেখা",
+        vector_lemma="দেওয়া",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-DEWA-16"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 7. 'utha' sudden inceptive with emotional expression pole 'hash' (cites heshe utha in CLM-SEM-VECTOR-UTHA-32)
+    ("হাস", "উঠা"): VectorCombinationEvidence(
+        pole_lemma="হাস",
+        vector_lemma="উঠা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-UTHA-32"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("হাসা", "উঠা"): VectorCombinationEvidence(
+        pole_lemma="হাসা",
+        vector_lemma="উঠা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-UTHA-32"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 8. 'bosha' inadvertent rash action with speech pole 'bol' (cites bole bosha in CLM-SEM-VECTOR-BOSHA-33)
+    ("বল", "বসা"): VectorCombinationEvidence(
+        pole_lemma="বল",
+        vector_lemma="বসা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-BOSHA-33"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("বলা", "বসা"): VectorCombinationEvidence(
+        pole_lemma="বলা",
+        vector_lemma="বসা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-BOSHA-33"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("বোল", "বসা"): VectorCombinationEvidence(
+        pole_lemma="বোল",
+        vector_lemma="বসা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-BOSHA-33"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    # 9. 'bosha' inadvertent rash action with agentive pole 'kor' (cites kore bosha in CLM-SEM-VECTOR-BOSHA-33)
+    ("কর", "বসা"): VectorCombinationEvidence(
+        pole_lemma="কর",
+        vector_lemma="বসা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-BOSHA-33"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
+    ("করা", "বসা"): VectorCombinationEvidence(
+        pole_lemma="করা",
+        vector_lemma="বসা",
+        status="VERIFIED_COMBINATION",
+        evidence_ids=["EV-THOMPSON-CP-01"],
+        claim_ids=["CLM-SEM-VECTOR-BOSHA-33"],
+        source_ids=["THOMPSON-GRAM-2012"],
+        review_state="SOURCE_VERIFIED",
+        auto_generation_safe=True,
+    ),
 }
+
+# Compatibility set view for fast membership lookup
+VERIFIED_VECTOR_COMBINATIONS: Set[Tuple[str, str]] = set(VERIFIED_VECTOR_REGISTRY.keys())
 
 
 class ComplexPredicateEngine:
@@ -257,7 +480,7 @@ class ComplexPredicateEngine:
         """
         Evaluates graded compatibility between a pole verb and an aspectual vector verb.
         Distinguishes auto-generation safety from linguistic impossibility.
-        Separates TYPE_LICENSED from VERIFIED_COMBINATION.
+        Separates TYPE_LICENSED from VERIFIED_COMBINATION using explicit evidence bindings.
         """
         v_norm = normalize_bangla_text(vector_verb)
         p_norm = normalize_bangla_text(pole_verb)
@@ -270,6 +493,10 @@ class ComplexPredicateEngine:
                 "status": VectorCompatibilityStatus.UNKNOWN,
                 "auto_generation_safe": False,
                 "evidence_state": "UNKNOWN",
+                "evidence_ids": [],
+                "claim_ids": [],
+                "source_ids": [],
+                "review_state": "UNKNOWN_VECTOR",
                 "reason": f"Unknown vector verb: '{vector_verb}'",
                 "coercion_factors": [],
             }
@@ -277,18 +504,23 @@ class ComplexPredicateEngine:
         spec = VECTOR_INVENTORY[v_norm]
 
         is_known_lemma = p_norm in VERIFIED_CONJUNCTIVE_PARTICIPLES or any(p_norm.startswith(s) for s in VERIFIED_CONJUNCTIVE_PARTICIPLES)
-        is_verified_combo = (p_norm, v_norm) in VERIFIED_VECTOR_COMBINATIONS
+        is_verified_combo = (p_norm, v_norm) in VERIFIED_VECTOR_REGISTRY
 
         if pole_semantic_type in spec.allowed_pole_types:
             if is_verified_combo:
+                combo_ev = VERIFIED_VECTOR_REGISTRY[(p_norm, v_norm)]
                 return {
                     "pole_verb": p_norm,
                     "vector_verb": v_norm,
                     "pole_semantic_type": pole_semantic_type,
                     "status": VectorCompatibilityStatus.ALLOWED,
-                    "auto_generation_safe": True,
-                    "evidence_state": "VERIFIED_COMBINATION",
-                    "reason": f"Combination of pole '{p_norm}' with vector '{v_norm}' is attested and verified in BDSB.",
+                    "auto_generation_safe": combo_ev.auto_generation_safe,
+                    "evidence_state": combo_ev.status,
+                    "evidence_ids": combo_ev.evidence_ids,
+                    "claim_ids": combo_ev.claim_ids,
+                    "source_ids": combo_ev.source_ids,
+                    "review_state": combo_ev.review_state,
+                    "reason": f"Combination of pole '{p_norm}' with vector '{v_norm}' is attested and verified in BDSB with canonical evidence.",
                     "coercion_factors": [],
                 }
             elif is_known_lemma:
@@ -299,7 +531,11 @@ class ComplexPredicateEngine:
                     "status": VectorCompatibilityStatus.ALLOWED,
                     "auto_generation_safe": False,
                     "evidence_state": "TYPE_LICENSED",
-                    "reason": f"Pole type '{pole_semantic_type}' is licensed by vector '{v_norm}', but specific lexeme combination '{p_norm}+{v_norm}' is not individually verified.",
+                    "evidence_ids": [],
+                    "claim_ids": [],
+                    "source_ids": [],
+                    "review_state": "UNATTESTED_TYPE_LICENSED",
+                    "reason": f"Pole type '{pole_semantic_type}' is licensed by vector '{v_norm}', but specific lexeme combination '{p_norm}+{v_norm}' lacks pair-level evidence binding.",
                     "coercion_factors": [],
                 }
             else:
@@ -309,7 +545,11 @@ class ComplexPredicateEngine:
                     "pole_semantic_type": pole_semantic_type,
                     "status": VectorCompatibilityStatus.UNKNOWN,
                     "auto_generation_safe": False,
-                    "evidence_state": "TYPE_LICENSED",
+                    "evidence_state": "UNKNOWN",
+                    "evidence_ids": [],
+                    "claim_ids": [],
+                    "source_ids": [],
+                    "review_state": "UNMODELED_LEMMA",
                     "reason": f"Semantic type '{pole_semantic_type}' matches vector requirements, but pole verb '{p_norm}' is unmodeled/unregistered; fails closed without lexeme verification.",
                     "coercion_factors": [],
                 }
@@ -322,6 +562,10 @@ class ComplexPredicateEngine:
                 "status": VectorCompatibilityStatus.CONTEXT_DEPENDENT,
                 "auto_generation_safe": False,
                 "evidence_state": "NEEDS_HUMAN_REVIEW",
+                "evidence_ids": [],
+                "claim_ids": [],
+                "source_ids": [],
+                "review_state": "NEEDS_HUMAN_REVIEW",
                 "reason": (
                     f"Context-dependent vector combination: pole '{p_norm}' ({pole_semantic_type}) with vector '{v_norm}' "
                     f"requires contextual licensing/coercion (telic coercion, unexpectedness, or evaluative stance); "
@@ -343,6 +587,10 @@ class ComplexPredicateEngine:
             "status": VectorCompatibilityStatus.UNSUPPORTED,
             "auto_generation_safe": False,
             "evidence_state": "UNSUPPORTED",
+            "evidence_ids": [],
+            "claim_ids": [],
+            "source_ids": [],
+            "review_state": "UNSUPPORTED_TYPE",
             "reason": (
                 f"Selectional restriction violation: Vector '{v_norm}' requires pole types "
                 f"{spec.allowed_pole_types}, got '{pole_semantic_type}'."
