@@ -107,6 +107,30 @@ class TestDistributionAuditor(unittest.TestCase):
         self.assertFalse(report.passed_quotas)
         self.assertGreater(len(report.violations), 0)
 
+    def test_quota_separation_and_diversity_metrics(self) -> None:
+        records = [
+            {"register": "formal_standard", "variety": "bdsb_standard", "frame_id": "F1", "construction_id": "C1", "polarity": "AFFIRMATIVE"},
+            {"register": "colloquial_standard", "variety": "dhaka_colloquial", "frame_id": "F2", "construction_id": "C2", "polarity": "NEGATIVE"},
+            {"register": "intimate_conversational", "variety": "sylheti", "frame_id": "F3", "construction_id": "C3", "polarity": "AFFIRMATIVE"},
+            {"register": "social_chat_shorthand", "variety": "bdsb_standard", "frame_id": "F4", "construction_id": "C4", "polarity": "AFFIRMATIVE"},
+            {"register": "formal_standard", "variety": "chittagonian", "frame_id": "F5", "construction_id": "C5", "polarity": "NEGATIVE"},
+        ]
+        spec = QuotaSpecification()
+        self.assertEqual(spec.quota_type, "SOFTWARE_TEST_QUOTA")
+        self.assertEqual(spec.target_status, "PENDING_RESEARCH_DESIGN")
+
+        auditor = DistributionAuditor(spec)
+        report = auditor.audit(records)
+
+        # Check descriptive metrics
+        self.assertEqual(report.quota_type, "SOFTWARE_TEST_QUOTA")
+        self.assertEqual(report.target_status, "PENDING_RESEARCH_DESIGN")
+        self.assertIn("register", report.shannon_entropy)
+        self.assertGreater(report.shannon_entropy["register"], 0.0)
+        self.assertIn("register", report.simpson_diversity)
+        self.assertGreater(report.simpson_diversity["register"], 0.0)
+        self.assertLess(report.simpson_diversity["register"], 1.0)
+
 
 if __name__ == "__main__":
     unittest.main()

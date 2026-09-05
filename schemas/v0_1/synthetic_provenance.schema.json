@@ -22,16 +22,73 @@
       "type": "string",
       "description": "Generator engine identifier, model name and version."
     },
+    "generator_version": {
+      "type": "string",
+      "description": "Semantic version of the generation engine."
+    },
     "generation_timestamp": {
       "type": "string",
       "format": "date-time",
       "description": "ISO 8601 UTC timestamp when record was generated."
+    },
+    "code_sha": {
+      "type": ["string", "null"],
+      "description": "Git commit SHA or code version hash."
+    },
+    "config_hash": {
+      "type": ["string", "null"],
+      "description": "Hash of configuration parameters used for generation."
+    },
+    "seed": {
+      "type": ["integer", "null"],
+      "description": "Random seed if applicable."
+    },
+    "rule_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Grammar rule identifiers from ontology."
+    },
+    "claim_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Theoretical claim identifiers from ontology."
+    },
+    "lexeme_ids": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Lexeme identifiers from ontology."
+    },
+    "evidence_dependencies": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Evidence IDs supporting the generation rules."
+    },
+    "sentence_family_id": {
+      "type": ["string", "null"],
+      "description": "Sentence family identifier for minimal pair tracking."
+    },
+    "production_eligible": {
+      "type": "boolean",
+      "description": "Whether this record is eligible for production datasets (false for fixtures)."
+    },
+    "execution_tag": {
+      "type": "string",
+      "description": "Runtime safety tag, e.g. SYNTHETIC_SOFTWARE_TEST_ONLY."
+    },
+    "human_review_status": {
+      "type": "string",
+      "description": "Status of human review (e.g. UNREVIEWED, DEFERRED_PRE_HUMAN)."
+    },
+    "validation_results": {
+      "type": "object",
+      "description": "Detailed validation outcomes."
     },
     "prompt_or_rule_provenance": {
       "type": "object",
       "required": ["template_id", "prompt_hash"],
       "properties": {
         "template_id": { "type": "string" },
+        "generation_template_id": { "type": "string" },
         "prompt_hash": { "type": "string" },
         "parameters": { "type": "object" }
       },

@@ -6,7 +6,11 @@ import json
 from pathlib import Path
 import unittest
 
-from blf.generation.pipeline import ConstrainedGenerationPipeline, SelectionalRestrictionError
+from blf.generation.pipeline import (
+    ConstrainedGenerationPipeline,
+    GenerationConstraintError,
+    SelectionalRestrictionError,
+)
 from blf.validation.validators import validate_dict_against_schema
 
 
@@ -36,10 +40,14 @@ class TestConstrainedGeneration(unittest.TestCase):
         self.assertEqual(record["execution_tag"], "SYNTHETIC_SOFTWARE_TEST_ONLY")
         self.assertEqual(record["quality_tier"], "SYNTHETIC")
         self.assertEqual(record["provenance_class"], "RULE_GENERATED")
+        self.assertFalse(record["production_eligible"])
 
         # Validate provenance block against official JSON schema
         valid, errors = validate_dict_against_schema(record["provenance"], self.provenance_schema)
         self.assertTrue(valid, f"Provenance validation errors: {errors}")
+        self.assertEqual(record["provenance"]["generator_version"], "1.0.0")
+        self.assertEqual(record["provenance"]["execution_tag"], "SYNTHETIC_SOFTWARE_TEST_ONLY")
+        self.assertFalse(record["provenance"]["production_eligible"])
 
     def test_inanimate_agent_blocked_for_ingestion(self) -> None:
         with self.assertRaises(SelectionalRestrictionError):
@@ -70,6 +78,74 @@ class TestConstrainedGeneration(unittest.TestCase):
                 patient_lemma="ভাত",  # Non-liquid
                 verb_root="খা",
             )
+
+    def test_unknown_frame_fails_closed(self) -> None:
+        with self.assertRaises(GenerationConstraintError) as ctx:
+            self.pipeline.generate_synthetic_record(
+                frame_id="FRAME-FICTIONAL-NONEXISTENT",
+                construction_id="CONST-DECL-TRANSITIVE-SOV",
+                agent_lemma="সে",
+                patient_lemma="ভাত",
+                verb_root="খা",
+            )
+        self.assertIn("Unknown frame_id", str(ctx.exception))
+
+    def test_unknown_construction_fails_closed(self) -> None:
+        with self.assertRaises(GenerationConstraintError) as ctx:
+            self.pipeline.generate_synthetic_record(
+                frame_id="FRAME-INGESTION-FOOD",
+                construction_id="CONST-FICTIONAL-NONEXISTENT",
+                agent_lemma="সে",
+                patient_lemma="ভাত",
+                verb_root="খা",
+            )
+        self.assertIn("Unknown construction_id", str(ctx.exception))
+
+    def test_unknown_agent_lemma_fails_closed(self) -> None:
+        with self.assertRaises(GenerationConstraintError) as ctx:
+            self.pipeline.generate_synthetic_record(
+                frame_id="FRAME-INGESTION-FOOD",
+                construction_id="CONST-DECL-TRANSITIVE-SOV",
+                agent_lemma="এলিয়েন",  # Unknown in lexicon
+                patient_lemma="ভাত",
+                verb_root="খা",
+            )
+        self.assertIn("Unknown agent lemma", str(ctx.exception))
+
+    def test_unknown_patient_lemma_fails_closed(self) -> None:
+        with self.assertRaises(GenerationConstraintError) as ctx:
+            self.pipeline.generate_synthetic_record(
+                frame_id="FRAME-INGESTION-FOOD",
+                construction_id="CONST-DECL-TRANSITIVE-SOV",
+                agent_lemma="সে",
+                patient_lemma="অজানা_বস্তু",  # Unknown in lexicon
+                verb_root="খা",
+            )
+        self.assertIn("Unknown patient lemma", str(ctx.exception))
+
+    def test_incompatible_verb_root_fails_closed(self) -> None:
+        with self.assertRaises(GenerationConstraintError) as ctx:
+            self.pipeline.generate_synthetic_record(
+                frame_id="FRAME-INGESTION-FOOD",
+                construction_id="CONST-DECL-TRANSITIVE-SOV",
+                agent_lemma="সে",
+                patient_lemma="ভাত",
+                verb_root="ঘুমা",  # Sleeping root incompatible with Food Ingestion frame
+            )
+        self.assertIn("not compatible with frame", str(ctx.exception))
+
+    def test_quarantined_exploratory_mode_bypasses_fail_closed(self) -> None:
+        # In quarantined exploratory mode, unknown frames or incompatible roots can be evaluated
+        exploratory_pipeline = ConstrainedGenerationPipeline(quarantined_exploratory_mode=True)
+        # Should not raise GenerationConstraintError for known lexicon even if frame is exploratory
+        record = exploratory_pipeline.generate_synthetic_record(
+            frame_id="FRAME-INGESTION-FOOD",
+            construction_id="CONST-DECL-TRANSITIVE-SOV",
+            agent_lemma="সে",
+            patient_lemma="ভাত",
+            verb_root="খা",
+        )
+        self.assertEqual(record["text"], "সে ভাত খায়।")
 
     def test_zero_production_data_invariant(self) -> None:
         # Ensures that test generation operates in-memory and does not write to production data/corpus
