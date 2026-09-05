@@ -75,12 +75,14 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 - [ ] Compute official candidate-level Cohen's Kappa, Fleiss' Kappa, and preferred set agreements.
 - [ ] Adjudicate disagreements under pre-registered protocol and promote initial Gold seed records with full GoldPromotionEvidence packages.
 
-### Phase 4: Ingestion, Reversible Normalization & Dedup Engine `[Infrastructure Implemented / Production Ingestion Not Started]`
+### Phase 4: Ingestion, Reversible Normalization & Dedup Engine `[Infrastructure Implemented / Open-Data Micro-Ingestion Tested / Production Ingestion Not Started]`
 - [x] Implement reversible Unicode NFC and punctuation normalization tracking step-level offsets (`src/blf/pipeline/normalization.py`).
 - [x] Enforce ZWJ/ZWNJ ligature preservation policy for legitimate Bengali consonant conjuncts.
 - [x] Build conservative text cleaner preserving Bengali diacritics and signs while removing corrupted control codes (`src/blf/pipeline/cleaning.py`).
 - [x] Implement 4-tier deduplication engine across exact, normalized, morphosyntactic, and semantic near-duplicates (`src/blf/pipeline/deduplication.py`).
 - [x] Author pipeline provenance manifest tracking (`src/blf/pipeline/manifest.py`).
+- [x] Implement CoNLL-U ingestion adapter (`src/blf/ingestion/conllu.py`) supporting document/sentence/token hierarchical models and round-trip serialization.
+- [x] Execute Phase 4A open-licensed micro-ingestion stress test on `UD_Bengali-BRU` (`research/stress-tests/phase4a-ud-micro-ingestion.md`).
 - [ ] Bulk corpus ingestion into production dataset — `NOT_STARTED`.
 
 ### Phase 5: Multi-Layer Annotation OS & Quality Workflow `[Infrastructure Implemented / Real Annotation Not Started]`

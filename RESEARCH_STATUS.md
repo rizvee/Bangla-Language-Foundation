@@ -5,8 +5,8 @@ Last Updated: 2026-09-06
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Pre-Human Foundation Adversarial Hardening Pass (Complete)
-- **Milestone State**: `PRE_HUMAN_FOUNDATION_HARDENED`
+- **Current Phase**: Phase 4A — Open-Licensed Micro-Ingestion & Real Pipeline Stress Test (Complete)
+- **Milestone State**: `OPEN_SOURCE_PIPELINE_STRESS_TESTED`
 - **Human Review Status**: `DEFERRED_BY_PROJECT_OWNER`
 - **Primary Branch**: `main`
 - **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT` (Gold gate remains strictly closed pending real human reviewer evaluations; total Gold records = 0)
@@ -41,15 +41,15 @@ Last Updated: 2026-09-06
 | **Dual-Target IAA Engine** | Operational | `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` (candidate-level Kappa & preferred set agreement) |
 | **Multi-Rater IAA Metrics** | Operational | `src/blf/quality/advanced_iaa.py` (Fleiss' Kappa and Krippendorff's Alpha, fails closed on empty data) |
 | **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
-| **Ontology Graph & Crosswalks** | Operational | `src/blf/ontology/graph.py` and `src/blf/ontology/ud_crosswalk.py` (BRU & PUD UPOS/FEATS/DEPREL) |
-| **Reversible Ingestion Pipeline**| Operational | `src/blf/pipeline/` (reversible NFC, conservative cleaning, 4-tier deduplicator, manifest tracking) |
+| **Ontology Graph & Crosswalks** | Operational | `src/blf/ontology/graph.py` and `src/blf/ontology/ud_crosswalk.py` (calibrated on empirical `UD_Bengali-BRU` + spec-compatible PUD) |
+| **Reversible Ingestion Pipeline**| Operational | `src/blf/pipeline/` & `src/blf/ingestion/conllu.py` (empirically stress tested on 56 sentences / 320 tokens of `UD_Bengali-BRU`) |
 | **Annotation Promotion FSM** | Operational | `src/blf/annotation/state_machine.py` (RAW -> CLEANED -> ANNOTATION -> VERIFIED -> GOLD/SILVER) |
 | **Constrained Generation** | Active Test-Only | `src/blf/generation/pipeline.py` (tagged `SYNTHETIC_SOFTWARE_TEST_ONLY`, anti-Cartesian restrictions) |
 | **Leakage-Safe Splitter** | Operational | `src/blf/dataset/split_policy.py` (sentence family co-location) & `distribution_audit.py` |
 | **BLF-Bench Probes & Audit** | Operational | `src/blf/benchmarks/` (DOM, CPRED, Polarity, Honorific, Morphotactics probes + ContaminationChecker) |
-| **Automated Tests** | 173 unit tests | 100% passing across 21 test suites (`scripts/verify_all.py`) |
+| **Automated Tests** | 181 unit tests | 100% passing across 22 test suites (`scripts/verify_all.py`) |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
-| **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
+| **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation; Phase 4A stress test on open data) |
 | **Dataset License Decision** | DECISION_PENDING | Documented in `docs/DATA_LICENSE_DECISION.md` & `sources/licensing/redistribution_matrix.json` |
 
 ---
@@ -70,6 +70,7 @@ Last Updated: 2026-09-06
 - **Pre-Pilot Provenance Errata (Phase 2A.2f.1)**: Corrected `NCTB-TG-BANGLA` metadata to match Class 4 English Teacher's Guide PDF artifact with exact URL and narrow occurrence claim binding for `ছবিটাগুলো`; corrected `ACCESSIBLE-DICT-A2I` attribution to include YPSA as implementing organization with a2i support and bound headword `যে ৩` to `PARTICLE_JE_IS_POLYFUNCTIONAL` while keeping publication year and 4-sense model provisional; transformed vector verification set into evidence-bearing `VERIFIED_VECTOR_REGISTRY` mapping traceable `evidence_ids`, `claim_ids`, and `source_ids`, preventing unbound or dead vector combinations from claiming `VERIFIED_COMBINATION`.
 - **Adversarial Scientific & Software Hardening (Audits 1–13)**: Hardened human review governance (mandated `GoldPromotionEvidence`, IAA as diagnostic); audited ontology graph (cycle detection on edge addition, idempotency, audit diagnostics); secured external lexical & UD crosswalks (fail closed without cross-treebank fallbacks); documented honest reversibility in normalization and quarantined stray ZWJ/ZWNJ; preserved word-order minimal pairs and protected sentence families in deduplication; enforced unified connected-component grouping in dataset splitting; implemented granular contamination auditing with `NOT_EVALUABLE` on empty sets; hardened synthetic generation to fail closed on unknown frames, constructions, lemmas, and incompatible roots with canonical provenance schema validation; separated software test quotas from research targets and added descriptive Shannon/Simpson metrics; calibrated legal labels in redistribution matrix and license documentation; aligned roadmap to `IMPLEMENTED` vs `NOT_STARTED`; streamlined CI to canonical `verify_all.py` harness.
 - **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`). Total Gold records strictly remain 0.
+- **Phase 4A Open-Licensed Micro-Ingestion Stress Test**: Implemented CoNLL-U ingestion adapter (`src/blf/ingestion/conllu.py`) and executed empirical pipeline stress test on open data (`UD_Bengali-BRU` v2.15, commit `368fd57`, CC BY-SA 4.0). Ingested 56 sentences and 320 tokens; achieved 100% snapshot reversibility with zero loss of character positions; verified conservative text cleaning (75.71% Bengali character ratio, 0 corrupted control codes); observed 56/56 unique sentences (0 duplicate collisions); calibrated UD crosswalk to 100% empirical UPOS and DEPREL coverage; verified zero benchmark contamination against internal diagnostic evaluation items. Upstream audit revealed `UD_Bengali-PUD` is an unreleased metadata shell (0 data files upstream). Documented in `research/stress-tests/phase4a-ud-micro-ingestion.md` and `.json`. Invariants strictly maintained: 0 Gold records promoted, production corpus `NOT_STARTED`, human review `DEFERRED_BY_PROJECT_OWNER`.
 
 ---
 

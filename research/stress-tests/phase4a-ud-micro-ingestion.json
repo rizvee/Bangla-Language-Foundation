@@ -1,0 +1,116 @@
+{
+  "report_id": "STRESS-TEST-PHASE4A-UD-001",
+  "phase": "PHASE_4A",
+  "execution_type": "OPEN_SOURCE_PIPELINE_STRESS_TEST",
+  "timestamp": "2026-09-06T00:00:00Z",
+  "invariants": {
+    "total_gold_records": 0,
+    "total_production_records": 0,
+    "total_human_judgments": 0,
+    "human_review_status": "DEFERRED_BY_PROJECT_OWNER",
+    "production_corpus_status": "NOT_STARTED"
+  },
+  "upstream_artifacts": {
+    "UD_Bengali-BRU": {
+      "repository": "https://github.com/UniversalDependencies/UD_Bengali-BRU",
+      "commit_sha": "368fd57f51577cbb26bde10ac361927a45688d97",
+      "license": "CC-BY-SA-4.0",
+      "license_file_sha256": "c219395bf819ad073b54261c8774df0ff61e16ae0eacc59474aaeed021fa15ca",
+      "data_files": [
+        {
+          "filename": "bn_bru-ud-test.conllu",
+          "sha256": "8fb0629b35d93561349d7d206d76ab47cbe6bff7f6e52c14244440416f611792",
+          "sentence_count": 56,
+          "token_count": 320
+        }
+      ]
+    },
+    "UD_Bengali-PUD": {
+      "repository": "https://github.com/UniversalDependencies/UD_Bengali-PUD",
+      "commit_sha": "100d41ed26abf36364fca620509848659a84fa05",
+      "license": "CC-BY-SA-4.0",
+      "license_file_sha256": "c219395bf819ad073b54261c8774df0ff61e16ae0eacc59474aaeed021fa15ca",
+      "data_files": [],
+      "status": "SHELL_REPOSITORY_UNRELEASED_UPSTREAM"
+    }
+  },
+  "normalization_metrics": {
+    "total_processed": 56,
+    "perfectly_reversible_snapshots": 56,
+    "reversibility_rate": 1.0,
+    "operations_applied": {}
+  },
+  "cleaning_metrics": {
+    "average_bengali_character_ratio": 0.7571,
+    "removed_control_characters": 0
+  },
+  "deduplication_metrics": {
+    "total_sentences": 56,
+    "unique_sentences": 56,
+    "exact_duplicates": 0
+  },
+  "crosswalk_metrics": {
+    "upos_token_coverage_rate": 1.0,
+    "deprel_token_coverage_rate": 1.0,
+    "observed_upos_tags": {
+      "PUNCT": 73,
+      "VERB": 65,
+      "NOUN": 62,
+      "PRON": 49,
+      "DET": 14,
+      "ADJ": 13,
+      "ADV": 13,
+      "PART": 9,
+      "INTJ": 6,
+      "AUX": 6,
+      "PROPN": 4,
+      "NUM": 2,
+      "SCONJ": 2,
+      "ADP": 2
+    },
+    "observed_deprel_tags": {
+      "punct": 73,
+      "root": 56,
+      "nsubj": 34,
+      "obj": 29,
+      "advmod": 20,
+      "nmod:poss": 18,
+      "compound": 16,
+      "det": 12,
+      "amod": 7,
+      "obl": 7,
+      "discourse": 6,
+      "aux": 6,
+      "nmod": 4,
+      "conj": 4,
+      "advcl": 4,
+      "xcomp": 3,
+      "iobj": 3,
+      "mark": 3,
+      "compound:lvc": 3,
+      "parataxis": 2,
+      "vocative": 2,
+      "acl": 2,
+      "case": 2,
+      "fixed": 1,
+      "acl:relcl": 1,
+      "ccomp": 1,
+      "nsubj:pass": 1
+    },
+    "unmapped_upos_tags": [],
+    "unmapped_deprel_tags": []
+  },
+  "contamination_metrics": {
+    "status": "CLEAN",
+    "total_test_items": 56,
+    "total_training_items": 22,
+    "incidents_count": 0,
+    "checked_dimensions": []
+  },
+  "diversity_metrics": {
+    "upos_shannon_entropy": 2.9761,
+    "upos_simpson_diversity": 0.8414,
+    "deprel_shannon_entropy": 3.6945,
+    "deprel_simpson_diversity": 0.887
+  }
+}
