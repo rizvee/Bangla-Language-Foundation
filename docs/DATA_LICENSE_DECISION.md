@@ -8,7 +8,7 @@
 ## 2. Executive Context & Boundary Definition
 The Bangla Language Foundation (BLF) repository consists of distinct IP and content layers with distinct legal boundaries:
 
-1. **Software & Infrastructure**: Pipeline parsers, normalizers, deduplication engines, validators, and benchmark probes.
+1. **Software & Infrastructure**: Pipeline parsers, normalizers, deduplication engines, validators, and benchmark probes (licensed under Apache-2.0).
 2. **Ontological Structures & Schemas**: Semantic frame definitions, construction templates, inflectional paradigms, and JSON schema specifications created by BLF.
 3. **Third-Party Linguistic Attestations**: Citations, brief illustrative sentences, and rule citations from published academic grammars and dictionaries.
 4. **Third-Party External Corpora**: Public datasets (Common Voice, IndicCorp, BPCC) referenced in source registries.
@@ -16,16 +16,30 @@ The Bangla Language Foundation (BLF) repository consists of distinct IP and cont
 ## 3. Evaluated License Options for Dataset & Ontology Layer
 | License Option | Permissiveness | Copyleft | Commercial Use | Evaluation & Tradeoffs |
 |---|---|---|---|---|
-| **CC BY 4.0** | High | None | Yes | Maximizes downstream adoption across academic and industrial research. Risk: Downstream modifications not contributed back. |
-| **CC BY-SA 4.0** (Recommended) | Moderate | ShareAlike | Yes | Ensures linguistic improvements, extensions, and corrections remain open to the Bangla community. |
+| **CC BY 4.0** | High | None | Yes | Maximizes downstream adoption across academic and industrial research. Tradeoff: Downstream modifications are not required to be contributed back. |
+| **CC BY-SA 4.0** | Moderate | ShareAlike | Yes | Ensures linguistic improvements, extensions, and corrections remain open to the Bangla community under reciprocal terms. |
 | **CC BY-NC-SA 4.0** | Restrictive | ShareAlike | No | Prevents commercial exploitation, but restricts industrial researchers from validating models on the benchmark. |
 | **OpenRAIL-M** | Permissive with Behavioral Restrictions | None | Conditional | Restricts malicious or non-consensual deployment while allowing open research. |
 
-## 4. Third-Party Source Handling & Fair-Use Boundaries
+*Note: No specific license is recommended as final at this stage. Project dataset licensing remains formally `DECISION_PENDING`.*
+
+## 4. Third-Party Source Handling & Legal Classification Calibration
+All third-party source handlings are classified using calibrated legal and redistribution statuses:
+- `LEGAL_STATUS_UNREVIEWED`: Legal copyright or database right status has not undergone jurisdiction-specific formal legal review.
+- `LICENSE_VERIFIED`: Upstream license verified against official repository terms or explicit license text.
+- `LICENSE_PROVISIONAL`: Upstream license recorded from catalog metadata, pending direct physical or artifact verification.
+- `REDISTRIBUTION_REQUIRES_REVIEW`: Any redistribution requires explicit legal and copyright review before public dissemination.
+- `NO_RAW_REDISTRIBUTION`: Raw artifact text, pages, or files are strictly excluded from repository redistribution.
+- `DERIVED_FEATURE_USE_REQUIRES_REVIEW`: Abstracted morphological paradigms, syntactic schemas, and phonetic rules extracted from reference sources are subject to ongoing copyright boundary audit.
+
+Specific Source Boundaries:
 - **Reference Grammars & Dictionaries** (`BA-GRAM-2011`, `BA-REGDICT-1965`, `ODBL-SKC-1926`, `AZAD-SYNTAX-1984`, `THOMPSON-GRAM-2012`):
-  - Abstracted grammatical rules, phonological constraints, and lexical category tags are non-copyrightable facts under intellectual property law.
-  - Short illustrative sentence citations are included strictly under nominative fair use for scientific documentation.
+  - Abstracted grammatical rules, phonological constraints, and lexical category tags are classified as `DERIVED_FEATURE_USE_REQUIRES_REVIEW`.
+  - Short illustrative sentence citations are cataloged under `LEGAL_STATUS_UNREVIEWED` with `NO_RAW_REDISTRIBUTION`.
   - No continuous text passages or whole pages are ingested or redistributed.
+- **Government & Portal Materials** (`NCTB-TG-BANGLA`, `ACCESSIBLE-DICT-A2I`):
+  - No license or public-domain status is inferred merely because materials are government-hosted, open-access, or accessible via web portals.
+  - Retained under `LEGAL_STATUS_UNREVIEWED`, `NO_RAW_REDISTRIBUTION`, and `REDISTRIBUTION_REQUIRES_REVIEW`.
 - **Quarantined Sources**:
   - Datasets with unclear licensing or historical contamination (`SENTIRABANGLA-2022`, `BANGLISH-TRANSLIT-2021`, `UD-BN-BENGAL-2023`, `CHATGAYA-PHONO-2018`) remain quarantined; zero records from these sources enter production or benchmark splits.
 
@@ -33,6 +47,7 @@ The Bangla Language Foundation (BLF) repository consists of distinct IP and cont
 Final selection of the official public dataset license will occur following:
 1. Completion of the Phase 2A controlled human review pilot.
 2. Formal audit of human reviewer consent forms and release agreements.
-3. Final publication approval by the project maintainer.
+3. Formal project legal review of third-party derived feature boundaries.
+4. Final publication approval by the project maintainer.
 
 Until formal sign-off, all linguistic dataset artifacts remain marked as `DECISION_PENDING` and are not distributed publicly.

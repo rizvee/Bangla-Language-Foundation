@@ -24,22 +24,6 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Run Unit Tests
-        run: |
-          python -m unittest discover tests -v
-
-      - name: Run 10-Suite Validation Battery
-        run: |
-          python scripts/validate_all.py
-
-      - name: Validate Documentation Consistency
-        run: |
-          python scripts/check_docs_consistency.py
-
-      - name: Run Anti-AI-Slop & Writing Integrity Scanner
-        run: |
-          python scripts/check_anti_slop.py
-
-      - name: Run End-to-End Verification Battery
+      - name: Run Complete Pre-Human Verification Suite
         run: |
           python scripts/verify_all.py

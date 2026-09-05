@@ -1,14 +1,15 @@
 # Research & Dataset Status — BLF
 
-Last Updated: 2026-09-05
+Last Updated: 2026-09-06
 
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 2A.2f — Epistemic Status Hardening & Final Human-Pilot Freeze (Complete)
-- **Milestone State**: SOFTWARE_AND_RESEARCH_INSTRUMENTATION_FROZEN_FOR_HUMAN_PILOT
+- **Current Phase**: Pre-Human Foundation Adversarial Hardening Pass (Complete)
+- **Milestone State**: `PRE_HUMAN_FOUNDATION_HARDENED`
+- **Human Review Status**: `DEFERRED_BY_PROJECT_OWNER`
 - **Primary Branch**: `main`
-- **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT` (Gold gate remains strictly closed pending real human reviewer evaluations)
+- **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT` (Gold gate remains strictly closed pending real human reviewer evaluations; total Gold records = 0)
 
 ---
 
@@ -46,7 +47,7 @@ Last Updated: 2026-09-05
 | **Constrained Generation** | Active Test-Only | `src/blf/generation/pipeline.py` (tagged `SYNTHETIC_SOFTWARE_TEST_ONLY`, anti-Cartesian restrictions) |
 | **Leakage-Safe Splitter** | Operational | `src/blf/dataset/split_policy.py` (sentence family co-location) & `distribution_audit.py` |
 | **BLF-Bench Probes & Audit** | Operational | `src/blf/benchmarks/` (DOM, CPRED, Polarity, Honorific, Morphotactics probes + ContaminationChecker) |
-| **Automated Tests** | 155 unit tests | 100% passing across 21 test suites (`scripts/verify_all.py`) |
+| **Automated Tests** | 173 unit tests | 100% passing across 21 test suites (`scripts/verify_all.py`) |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License Decision** | DECISION_PENDING | Documented in `docs/DATA_LICENSE_DECISION.md` & `sources/licensing/redistribution_matrix.json` |
@@ -67,7 +68,8 @@ Last Updated: 2026-09-05
 - **Forensic Linguistic Calibration (Phase 2A.2e)**: Calibrated classifier morphotactics (removed global substring blacklist; modeled attested N+টা+গুলো and N+গুলা+CASE without premature standard claims); implemented graded aspectual vector selection (distinguished auto-generation safety from linguistic impossibility); separated Wh-orthography from argument structure construction (Item 030); expanded polyfunctional particle *যে* into 4 evidence-backed senses; calibrated diagnostic items 015, 016, 023, 030, and 040.
 - **Epistemic Status Hardening (Phase 2A.2f)**: Fail-closed on unknown nominal morphotactics (`assess_nominal_morphotactics()` returns `MorphotacticStatus.UNKNOWN` with `auto_generation_safe=False` for arbitrary strings); calibrated `N+টা+গুলো` to `ATTESTED_OFFICIAL_EDUCATIONAL_USAGE`; registered `NCTB-TG-BANGLA` and `ACCESSIBLE-DICT-A2I` as `PROVISIONAL` in source registry; downgraded engineered senses of *যে* to `confidence="MEDIUM"`, `evidence_strength="PROVISIONAL"`, `review_status="NEEDS_HUMAN_REVIEW"`; enforced explicit ambiguity marking in `analyze_particle_je()`; failed closed on unmodeled Wh-constructions (`construction_status="UNKNOWN"`, `is_grammatical=None`); separated vector compatibility into `VERIFIED_COMBINATION` vs `TYPE_LICENSED` vs `UNKNOWN`; locked 15 regression invariants in `tests/test_adversarial_invariants.py`.
 - **Pre-Pilot Provenance Errata (Phase 2A.2f.1)**: Corrected `NCTB-TG-BANGLA` metadata to match Class 4 English Teacher's Guide PDF artifact with exact URL and narrow occurrence claim binding for `ছবিটাগুলো`; corrected `ACCESSIBLE-DICT-A2I` attribution to include YPSA as implementing organization with a2i support and bound headword `যে ৩` to `PARTICLE_JE_IS_POLYFUNCTIONAL` while keeping publication year and 4-sense model provisional; transformed vector verification set into evidence-bearing `VERIFIED_VECTOR_REGISTRY` mapping traceable `evidence_ids`, `claim_ids`, and `source_ids`, preventing unbound or dead vector combinations from claiming `VERIFIED_COMBINATION`.
-- **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`).
+- **Adversarial Scientific & Software Hardening (Audits 1–13)**: Hardened human review governance (mandated `GoldPromotionEvidence`, IAA as diagnostic); audited ontology graph (cycle detection on edge addition, idempotency, audit diagnostics); secured external lexical & UD crosswalks (fail closed without cross-treebank fallbacks); documented honest reversibility in normalization and quarantined stray ZWJ/ZWNJ; preserved word-order minimal pairs and protected sentence families in deduplication; enforced unified connected-component grouping in dataset splitting; implemented granular contamination auditing with `NOT_EVALUABLE` on empty sets; hardened synthetic generation to fail closed on unknown frames, constructions, lemmas, and incompatible roots with canonical provenance schema validation; separated software test quotas from research targets and added descriptive Shannon/Simpson metrics; calibrated legal labels in redistribution matrix and license documentation; aligned roadmap to `IMPLEMENTED` vs `NOT_STARTED`; streamlined CI to canonical `verify_all.py` harness.
+- **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`). Total Gold records strictly remain 0.
 
 ---
 

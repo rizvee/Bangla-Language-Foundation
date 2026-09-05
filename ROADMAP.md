@@ -17,30 +17,30 @@ This roadmap outlines the planned research and engineering phases for the **Bang
   └─ Phase 1D: Conversational Register, Deixis & Pragmatics (Completed)
        │
        ▼
-[Phase 2: Formal Semantic Frames & Cross-Framework Ontology] [COMPLETED]
-  ├─ Phase 2A: Semantic Frame Core & Realization Prototype (Completed)
-  └─ Phase 2B: Full Ontology Graph & UD Crosswalk Mapping (Completed)
+[Phase 2: Formal Semantic Frames & Cross-Framework Ontology] [IMPLEMENTED]
+  ├─ Phase 2A: Semantic Frame Core & Realization Prototype (Implemented)
+  └─ Phase 2B: Full Ontology Graph (Implemented) & UD Crosswalk (Provisional Audit)
        │
        ▼
-[Phase 3: Gold Seed Dataset & Controlled Human Review] [PLANNED / DEFERRED TO PILOT]
+[Phase 3: Gold Seed Dataset & Controlled Human Review] [PLANNED / DEFERRED BY PROJECT OWNER]
        │
        ▼
-[Phase 4: Ingestion, Reversible Normalization & Dedup Engine] [INFRASTRUCTURE COMPLETED]
+[Phase 4: Ingestion, Reversible Normalization & Dedup Engine] [INFRASTRUCTURE IMPLEMENTED / PRODUCTION INGESTION NOT STARTED]
        │
        ▼
-[Phase 5: Multi-Layer Annotation OS & Quality Workflow] [INFRASTRUCTURE COMPLETED]
+[Phase 5: Multi-Layer Annotation OS & Quality Workflow] [INFRASTRUCTURE IMPLEMENTED / REAL ANNOTATION NOT STARTED]
        │
        ▼
-[Phase 6: Constrained Synthetic Generation Pipeline] [INFRASTRUCTURE COMPLETED / TEST ONLY]
+[Phase 6: Constrained Synthetic Generation Pipeline] [INFRASTRUCTURE IMPLEMENTED / PRODUCTION GENERATION NOT STARTED]
        │
        ▼
-[Phase 7: Pilot Dataset Assembly & Distribution Audit] [INFRASTRUCTURE COMPLETED]
+[Phase 7: Pilot Dataset Assembly & Distribution Audit] [INFRASTRUCTURE IMPLEMENTED / PRODUCTION ASSEMBLY NOT STARTED]
        │
        ▼
-[Phase 8: Benchmarking Probes & Contamination Checker] [INFRASTRUCTURE COMPLETED]
+[Phase 8: Benchmarking Probes & Contamination Checker] [INFRASTRUCTURE IMPLEMENTED / EMPIRICAL EVALUATION NOT STARTED]
        │
        ▼
-[Phase 9: V1 Open Release & Research Publication] [PLANNED]
+[Phase 9: V1 Open Release & Research Publication] [PLANNED / TARGET VENUE: TBD]
 ```
 
 ---
@@ -60,49 +60,57 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 - [x] **Phase 1C**: Author construction grammar catalog (22 constructions) and complex predicate engine (8 vector verbs & LVCs).
 - [x] **Phase 1D**: Formalize 3-tier social deixis (`আপনি`/`তুমি`/`তুই`), 17 dialogue acts, and particle semantics.
 
-### Phase 2: Formal Ontology & Constrained Realization `[Completed]`
+### Phase 2: Formal Ontology & Constrained Realization `[Implemented]`
 - [x] **Phase 2A**: Author 24 core semantic frames (`ontology/frames/core_frames.json`) and prototype constrained realizer (`src/blf/generation/realizer.py`).
 - [x] Generate diagnostic minimal-pair sentence families (`data/validation/sentence_families_diagnostic.json`).
 - [x] Establish 100% complete end-to-end derivation provenance backward tracing.
-- [x] **Phase 2B**: Build typed in-memory directed graph `OntologyGraph` (`src/blf/ontology/graph.py`), Universal Dependencies (UD) crosswalk for BRU and PUD (`src/blf/ontology/ud_crosswalk.py`), and external lexical adapter interfaces (`src/blf/ontology/lexical_crosswalk.py`).
+- [x] **Phase 2B Core Graph**: Typed in-memory directed graph `OntologyGraph` (`src/blf/ontology/graph.py`) — `IMPLEMENTED`.
+- [x] **Phase 2B UD Crosswalk**: Universal Dependencies crosswalk for BRU and PUD (`src/blf/ontology/ud_crosswalk.py`) — `IMPLEMENTED / PROVISIONAL_MAPPING_AUDIT`.
+- [x] **Phase 2B Lexical Adapters**: External dictionary adapter interfaces (`src/blf/ontology/lexical_crosswalk.py`) — `SCAFFOLDED`.
+- [ ] **Phase 2B WordNet Alignment**: Princeton/IndoWordNet mapping — `NOT_COMPLETED`.
 
-### Phase 3: Gold Seed Dataset & Controlled Human Review `[Planned]`
+### Phase 3: Gold Seed Dataset & Controlled Human Review `[Planned / Deferred by Project Owner]`
 - [ ] Recruit eligible native-speaker linguistic reviewers and execute informed consent agreements.
 - [ ] Execute independent randomized blinded evaluation in isolated private review sessions on the canonical 40-item pilot queue (`data/review_queue/human_review_pilot_40.json`).
 - [ ] Compute official candidate-level Cohen's Kappa, Fleiss' Kappa, and preferred set agreements.
 - [ ] Adjudicate disagreements under pre-registered protocol and promote initial Gold seed records with full GoldPromotionEvidence packages.
 
-### Phase 4: Ingestion, Reversible Normalization & Dedup Engine `[Infrastructure Completed]`
+### Phase 4: Ingestion, Reversible Normalization & Dedup Engine `[Infrastructure Implemented / Production Ingestion Not Started]`
 - [x] Implement reversible Unicode NFC and punctuation normalization tracking step-level offsets (`src/blf/pipeline/normalization.py`).
 - [x] Enforce ZWJ/ZWNJ ligature preservation policy for legitimate Bengali consonant conjuncts.
 - [x] Build conservative text cleaner preserving Bengali diacritics and signs while removing corrupted control codes (`src/blf/pipeline/cleaning.py`).
 - [x] Implement 4-tier deduplication engine across exact, normalized, morphosyntactic, and semantic near-duplicates (`src/blf/pipeline/deduplication.py`).
 - [x] Author pipeline provenance manifest tracking (`src/blf/pipeline/manifest.py`).
+- [ ] Bulk corpus ingestion into production dataset — `NOT_STARTED`.
 
-### Phase 5: Multi-Layer Annotation OS & Quality Workflow `[Infrastructure Completed]`
+### Phase 5: Multi-Layer Annotation OS & Quality Workflow `[Infrastructure Implemented / Real Annotation Not Started]`
 - [x] Define multi-layer annotation bundle models covering tokenization, syntax, frames, pragmatics, and dialects (`src/blf/annotation/layers.py`).
 - [x] Implement monotonic lifecycle state machine with strict promotion invariants (`src/blf/annotation/state_machine.py`).
 - [x] Build generic conflict queue and arbitrator adjudication resolvers (`src/blf/annotation/adjudication.py`).
 - [x] Implement multi-rater agreement metrics for Fleiss' Kappa and Krippendorff's Alpha failing closed on missing data (`src/blf/quality/advanced_iaa.py`).
+- [ ] Real human annotation campaign execution — `NOT_STARTED`.
 
-### Phase 6: Constrained Synthetic Generation Pipeline `[Infrastructure Completed / Test-Only]`
+### Phase 6: Constrained Synthetic Generation Pipeline `[Infrastructure Implemented / Production Generation Not Started]`
 - [x] Construct generation pipeline enforcing frame selectional restrictions (`[+Animate]`, `[+Edible]`, `[+Liquid]`) and anti-Cartesian argument filtering (`src/blf/generation/pipeline.py`).
 - [x] Attach mandatory synthetic provenance complying with `synthetic_provenance.schema.json`.
 - [x] Enforce execution tag `SYNTHETIC_SOFTWARE_TEST_ONLY` and zero-production-data release invariant.
+- [ ] Production synthetic data expansion — `NOT_STARTED`.
 
-### Phase 7: Pilot Dataset Assembly & Distribution Audit `[Infrastructure Completed]`
+### Phase 7: Pilot Dataset Assembly & Distribution Audit `[Infrastructure Implemented / Production Assembly Not Started]`
 - [x] Build leakage-safe dataset splitter co-locating all sentence family variants in the same partition (`src/blf/dataset/split_policy.py`).
 - [x] Implement distribution auditor measuring coverage across registers, dialects, frames, and constructions (`src/blf/dataset/distribution_audit.py`).
 - [x] Author standardized dataset card template (`docs/dataset-card-template.md`).
+- [ ] Production dataset assembly — `NOT_STARTED`.
 
-### Phase 8: Benchmarking Probes & Contamination Checker `[Infrastructure Completed]`
+### Phase 8: Benchmarking Probes & Contamination Checker `[Infrastructure Implemented / Empirical Evaluation Not Started]`
 - [x] Develop unit-level diagnostic linguistic probes for DOM, complex predicates, negation placement, honorific agreement, and morphotactics (`src/blf/benchmarks/probes.py`).
 - [x] Implement train-test contamination auditor detecting exact matches, n-gram overlap, and sentence family leakage (`src/blf/benchmarks/contamination.py`).
 - [x] Implement BLF-Bench runner reporting structured evaluation contracts without fabricating empirical model numbers (`src/blf/benchmarks/runner.py`).
+- [ ] Empirical model evaluation on benchmark splits — `NOT_STARTED`.
 
-### Phase 9: V1 Open Release & Research Publication `[Planned]`
+### Phase 9: V1 Open Release & Research Publication `[Planned / Target Venue: TBD]`
 - [x] Formulate data licensing evaluation in `docs/DATA_LICENSE_DECISION.md` (marked `DECISION_PENDING`).
 - [x] Author machine-readable source redistribution matrix across all 23 sources (`sources/licensing/redistribution_matrix.json`).
 - [x] Produce unreleased build manifest in `release/release_manifest.json` confirming 0 Gold records.
-- [x] Author comprehensive methodology paper draft skeleton in `papers/methodology_paper_skeleton.md` with explicit empirical placeholders.
+- [x] Author comprehensive methodology paper draft skeleton in `papers/methodology_paper_skeleton.md` with explicit empirical placeholders and `TARGET_VENUE = TBD`.
 - [ ] Execute formal public dataset and methodology paper publication following completion of human reviewer pilot.

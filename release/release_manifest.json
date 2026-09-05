@@ -1,9 +1,10 @@
 {
   "release_version": "0.1.0-preflight",
   "build_timestamp_utc": "2026-09-06T00:00:00Z",
-  "release_status": "PREFLIGHT_STAGED_UNRELEASED",
+  "release_status": "PRE_HUMAN_FOUNDATION_HARDENED",
   "public_release_published": false,
   "gold_gate_status": "READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT",
+  "human_review_status": "DEFERRED_BY_PROJECT_OWNER",
   "epistemic_invariants": {
     "total_production_records": 0,
     "total_gold_records": 0,
@@ -13,13 +14,20 @@
   "included_components": [
     {
       "component_name": "ontology",
-      "status": "SOURCE_GROUNDED",
+      "status": "IMPLEMENTED",
+      "subcomponents": {
+        "core_graph": "IMPLEMENTED",
+        "ud_crosswalk": "IMPLEMENTED_PROVISIONAL_MAPPING_AUDIT",
+        "external_lexical_adapters": "SCAFFOLDED",
+        "wordnet_alignment": "NOT_COMPLETED"
+      },
       "entities_count": 116,
       "schemas_count": 13
     },
     {
       "component_name": "pipeline",
-      "status": "HARDENED",
+      "status": "IMPLEMENTED",
+      "production_ingestion": "NOT_STARTED",
       "capabilities": [
         "reversible_normalization",
         "conservative_cleaning",
@@ -29,7 +37,8 @@
     },
     {
       "component_name": "annotation_os",
-      "status": "SCAFFOLDED",
+      "status": "IMPLEMENTED",
+      "real_annotation": "NOT_STARTED",
       "capabilities": [
         "multi_layer_schemas",
         "promotion_state_machine",
@@ -39,13 +48,15 @@
     },
     {
       "component_name": "constrained_generation",
-      "status": "ACTIVE_TEST_ONLY",
+      "status": "IMPLEMENTED",
+      "production_generation": "NOT_STARTED",
       "tag": "SYNTHETIC_SOFTWARE_TEST_ONLY",
       "production_records_generated": 0
     },
     {
       "component_name": "blf_bench",
-      "status": "SCAFFOLDED",
+      "status": "IMPLEMENTED",
+      "empirical_evaluation": "NOT_STARTED",
       "probes": [
         "DOM",
         "COMPLEX_PREDICATE",
