@@ -28,18 +28,18 @@ jobs:
         run: |
           python -m unittest discover tests -v
 
-      - name: Validate JSON Schemas & Fixtures
+      - name: Run 10-Suite Validation Battery
         run: |
-          python scripts/validate_schemas.py
-
-      - name: Validate Source Registry
-        run: |
-          python scripts/validate_sources.py
+          python scripts/validate_all.py
 
       - name: Validate Documentation Consistency
         run: |
           python scripts/check_docs_consistency.py
 
-      - name: Run Anti-AI-Slop Linter
+      - name: Run Anti-AI-Slop & Writing Integrity Scanner
         run: |
-          python scripts/check_anti_slop.py --path docs/
+          python scripts/check_anti_slop.py
+
+      - name: Run End-to-End Verification Battery
+        run: |
+          python scripts/verify_all.py
