@@ -44,6 +44,21 @@ class TestReversibleNormalization(unittest.TestCase):
         normalized, steps = self.normalizer.normalize(raw_text)
         self.assertTrue(normalized.endswith("।"))
 
+    def test_normalization_detailed(self) -> None:
+        raw_text = "  \"সে\"   বইটি  পড়ে ।  "
+        res = self.normalizer.normalize_detailed(raw_text)
+        self.assertEqual(res.raw_text, raw_text)
+        self.assertTrue(res.lossy)
+        self.assertFalse(res.reversible_without_snapshot)
+        self.assertIsNotNone(res.span_map)
+        self.assertGreater(len(res.operations_applied), 0)
+
+        # Pure NFC without lossy changes is reversible without snapshot
+        nfc_only = "ক\u09CD\u09B7"
+        res_nfc = self.normalizer.normalize_detailed(nfc_only)
+        self.assertFalse(res_nfc.lossy)
+        self.assertTrue(res_nfc.reversible_without_snapshot)
+
 
 class TestConservativeCleaning(unittest.TestCase):
 

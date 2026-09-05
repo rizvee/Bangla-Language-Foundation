@@ -51,6 +51,31 @@ class TestDatasetSplitPolicy(unittest.TestCase):
         with self.assertRaises(LeakageViolationError):
             res.verify_no_leakage()
 
+    def test_fail_closed_on_missing_grouping(self) -> None:
+        splitter = FamilyGroupedSplitter(fail_closed=True)
+        items = [{"item_id": "orphan_1", "text": "কিছু তথ্য"}]
+        with self.assertRaises(LeakageViolationError):
+            splitter.split(items)
+
+    def test_connected_component_multikey_grouping(self) -> None:
+        # A and B share template_id; B and C share near_duplicate_cluster_id
+        # All three must end up in the exact same split!
+        items = [
+            {"item_id": "1", "semantic_template_id": "T-01", "text": "Item 1"},
+            {"item_id": "2", "semantic_template_id": "T-01", "near_duplicate_cluster_id": "C-01", "text": "Item 2"},
+            {"item_id": "3", "near_duplicate_cluster_id": "C-01", "text": "Item 3"},
+            {"item_id": "4", "sentence_family_id": "SF-OTHER", "text": "Item 4"},
+        ]
+        splitter = FamilyGroupedSplitter(train_ratio=0.5, dev_ratio=0.25, test_ratio=0.25, seed=42)
+        res = splitter.split(items)
+
+        # Check that items 1, 2, 3 are in the same partition
+        partitions = [res.train_items, res.dev_items, res.test_items]
+        for part in partitions:
+            part_ids = {it["item_id"] for it in part}
+            intersection = part_ids & {"1", "2", "3"}
+            self.assertTrue(len(intersection) == 0 or len(intersection) == 3, "Connected component items must not be split across partitions")
+
 
 class TestDistributionAuditor(unittest.TestCase):
 

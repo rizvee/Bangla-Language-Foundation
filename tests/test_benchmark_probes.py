@@ -4,7 +4,7 @@ Unit tests for BLF-Bench Diagnostic Probes, Contamination Checker, and Benchmark
 
 import unittest
 
-from blf.benchmarks.contamination import ContaminationChecker
+from blf.benchmarks.contamination import ContaminationChecker, ContaminationStatus
 from blf.benchmarks.probes import (
     ComplexPredicateProbe,
     DOMProbe,
@@ -79,7 +79,7 @@ class TestContaminationChecker(unittest.TestCase):
         rep = self.checker.audit(test, train)
         self.assertFalse(rep.is_clean)
         self.assertEqual(rep.contaminated_items_count, 1)
-        self.assertEqual(rep.incidents[0].incident_type, "EXACT_MATCH")
+        self.assertEqual(rep.incidents[0].incident_type, "RAW_EXACT_MATCH")
 
     def test_family_leakage_detected(self) -> None:
         train = [{"item_id": "tr_1", "sentence_family_id": "SF-100", "text": "আমি ভাত খাই।"}]
@@ -87,6 +87,19 @@ class TestContaminationChecker(unittest.TestCase):
         rep = self.checker.audit(test, train)
         self.assertFalse(rep.is_clean)
         self.assertEqual(rep.incidents[0].incident_type, "FAMILY_LEAKAGE")
+
+    def test_template_leakage_detected(self) -> None:
+        train = [{"item_id": "tr_1", "semantic_template_id": "TMPL-01", "text": "আমি ভাত খাই।"}]
+        test = [{"item_id": "te_1", "semantic_template_id": "TMPL-01", "text": "তুমি ফল খাও।"}]
+        rep = self.checker.audit(test, train)
+        self.assertFalse(rep.is_clean)
+        self.assertEqual(rep.incidents[0].incident_type, "TEMPLATE_LEAKAGE")
+
+    def test_empty_comparison_is_not_evaluable(self) -> None:
+        test = [{"item_id": "te_1", "text": "কিছু পরীক্ষা বাক্য।"}]
+        rep = self.checker.audit(test, [])
+        self.assertEqual(rep.status, ContaminationStatus.NOT_EVALUABLE)
+        self.assertIsNone(rep.is_clean)
 
     def test_clean_split(self) -> None:
         train = [{"item_id": "tr_1", "sentence_family_id": "SF-100", "text": "আমি ভাত খাই।"}]

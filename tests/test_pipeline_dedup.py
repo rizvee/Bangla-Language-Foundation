@@ -37,7 +37,7 @@ class TestMultiTierDeduplication(unittest.TestCase):
         self.assertEqual(r2.tier, DeduplicationTier.TIER_2_NORMALIZED)
         self.assertEqual(r2.duplicate_of, "rec_a")
 
-    def test_tier_3_morpho_signature_match(self) -> None:
+    def test_tier_3_morpho_candidate_similarity(self) -> None:
         t1 = "ছেলেটি বল খেলছে।"
         t2 = "বালকটি বল খেলছে।"
         sig = "BOY-NOM BALL-ACC PLAY-PROG"
@@ -46,11 +46,11 @@ class TestMultiTierDeduplication(unittest.TestCase):
         self.assertFalse(r1.is_duplicate)
 
         r2 = self.dedup.check_and_add("rec_m2", t2, morpho_tag_sequence=sig)
-        self.assertTrue(r2.is_duplicate)
-        self.assertEqual(r2.tier, DeduplicationTier.TIER_3_MORPHOSYNTACTIC)
-        self.assertEqual(r2.duplicate_of, "rec_m1")
+        # Identical POS sequence produces similarity flag, NOT automatic duplicate deletion
+        self.assertFalse(r2.is_duplicate)
+        self.assertTrue(r2.candidate_similarity)
 
-    def test_tier_4_semantic_near_duplicate(self) -> None:
+    def test_tier_4_lexical_overlap_review_flag(self) -> None:
         t1 = "আমাদের গ্রামে অনেক সুন্দর সবুজ মাঠ এবং নদী আছে"
         t2 = "আমাদের গ্রামে অনেক সুন্দর সবুজ মাঠ এবং একটি নদী আছে"
 
@@ -58,9 +58,33 @@ class TestMultiTierDeduplication(unittest.TestCase):
         self.assertFalse(r1.is_duplicate)
 
         r2 = self.dedup.check_and_add("rec_s2", t2)
-        self.assertTrue(r2.is_duplicate)
-        self.assertEqual(r2.tier, DeduplicationTier.TIER_4_SEMANTIC_NEAR_DUPLICATE)
-        self.assertEqual(r2.duplicate_of, "rec_s1")
+        # Lexical overlap flags for review, never automatically deletes
+        self.assertFalse(r2.is_duplicate)
+        self.assertTrue(r2.requires_review)
+        self.assertEqual(r2.tier, DeduplicationTier.TIER_4_LEXICAL_OVERLAP)
+
+    def test_word_order_minimal_pairs_never_collapsed(self) -> None:
+        # Canonical SOV vs Topicalized OSV
+        sov = "আমি বই পড়ি"
+        osv = "বই আমি পড়ি"
+
+        r1 = self.dedup.check_and_add("rec_sov", sov)
+        self.assertFalse(r1.is_duplicate)
+
+        r2 = self.dedup.check_and_add("rec_osv", osv)
+        self.assertFalse(r2.is_duplicate, "Word order permutations must never be collapsed as duplicates!")
+
+    def test_minimal_pair_family_protection(self) -> None:
+        # Polarity minimal pairs with high lexical overlap
+        aff = "সে ভাত খায়"
+        neg = "সে ভাত খায় না"
+
+        r1 = self.dedup.check_and_add("rec_aff", aff, sentence_family_id="SF-001", minimal_pair_id="MP-01")
+        self.assertFalse(r1.is_duplicate)
+
+        r2 = self.dedup.check_and_add("rec_neg", neg, sentence_family_id="SF-001", minimal_pair_id="MP-01")
+        self.assertFalse(r2.is_duplicate)
+        self.assertFalse(r2.requires_review, "Protected minimal pair variants must not be flagged as duplicates")
 
 
 class TestPipelineManifest(unittest.TestCase):
