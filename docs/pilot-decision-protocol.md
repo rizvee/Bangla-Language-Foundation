@@ -24,6 +24,7 @@ For every canonical item $I$ and candidate $C$:
 > **Epistemic Invariant & No Post-Hoc Thresholds**:
 > 1. Human consensus reflects observed empirical pilot agreement under tested prompts, not an unconditional linguistic universal.
 > 2. No post-hoc Cohen's Kappa pass threshold is applied to discard inconvenient disagreements. All disagreements are preserved in the adjudication queue.
+> 3. IAA metrics remain purely descriptive and diagnostic. Gold promotion strictly requires an explicit, verified `GoldPromotionEvidence` package (complete human review, session ID, consent records, submission SHA-256 hashes, decoded records, completeness, and resolved disagreements); it cannot be triggered automatically by a numeric agreement threshold.
 
 ---
 

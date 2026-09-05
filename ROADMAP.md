@@ -68,9 +68,9 @@ This roadmap outlines the planned research and engineering phases for the **Bang
 
 ### Phase 3: Gold Seed Dataset & Controlled Human Review `[Planned]`
 - [ ] Recruit eligible native-speaker linguistic reviewers and execute informed consent agreements.
-- [ ] Execute double-blind, air-gapped evaluation on the canonical 40-item pilot queue (`data/review_queue/human_review_pilot_40.json`).
+- [ ] Execute independent randomized blinded evaluation in isolated private review sessions on the canonical 40-item pilot queue (`data/review_queue/human_review_pilot_40.json`).
 - [ ] Compute official candidate-level Cohen's Kappa, Fleiss' Kappa, and preferred set agreements.
-- [ ] Adjudicate disagreements under pre-registered protocol and promote initial Gold seed records.
+- [ ] Adjudicate disagreements under pre-registered protocol and promote initial Gold seed records with full GoldPromotionEvidence packages.
 
 ### Phase 4: Ingestion, Reversible Normalization & Dedup Engine `[Infrastructure Completed]`
 - [x] Implement reversible Unicode NFC and punctuation normalization tracking step-level offsets (`src/blf/pipeline/normalization.py`).

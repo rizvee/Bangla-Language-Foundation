@@ -26,6 +26,24 @@ class AnnotationRecordState(str, Enum):
     DISPUTED = "DISPUTED"
 
 
+@dataclass(frozen=True)
+class GoldPromotionEvidence:
+    """
+    Explicit evidence package required before any record can achieve GOLD status.
+    IAA metrics are purely descriptive/diagnostic and cannot substitute for verified consensus.
+    """
+    human_review_complete: bool
+    review_session_id: str
+    consent_record_ids: List[str]
+    raw_submission_hashes: List[str]  # SHA-256 hex strings of raw immutable submissions
+    decoded_record_ids: List[str]
+    completeness_passed: bool
+    disagreements_adjudicated_or_explicitly_resolved: bool
+    evidence_review_complete: bool
+    gold_gate_authorization: bool
+    descriptive_iaa_score: Optional[float] = None
+
+
 class IllegalPromotionError(Exception):
     """Raised when an illegal or unverified state transition is attempted."""
     pass
@@ -86,9 +104,8 @@ class PromotionStateMachine:
         target_state: AnnotationRecordState,
         *,
         human_verified: bool = False,
-        iaa_score: Optional[float] = None,
         adjudication_resolved: bool = False,
-        min_iaa_threshold: float = 0.70,
+        evidence: Optional[GoldPromotionEvidence] = None,
     ) -> AnnotationRecordState:
         """
         Executes transition with invariant checks.
@@ -105,15 +122,47 @@ class PromotionStateMachine:
                     f"Record '{record_id}' cannot transition to HUMAN_PILOT_VERIFIED without human verification or resolved adjudication."
                 )
 
-        # Invariant 2: Promotion to GOLD requires human verification AND IAA >= threshold
+        # Invariant 2: Promotion to GOLD requires an explicit verified GoldPromotionEvidence package
         if target_state == AnnotationRecordState.GOLD:
-            if not human_verified:
+            if evidence is None:
                 raise IllegalPromotionError(
-                    f"Record '{record_id}' cannot be promoted to GOLD without verified human consensus."
+                    f"Record '{record_id}' cannot be promoted to GOLD without an explicit GoldPromotionEvidence package."
                 )
-            if iaa_score is None or iaa_score < min_iaa_threshold:
+            if not evidence.human_review_complete:
                 raise IllegalPromotionError(
-                    f"Record '{record_id}' cannot be promoted to GOLD: IAA score ({iaa_score}) is below threshold ({min_iaa_threshold})."
+                    f"Record '{record_id}' cannot be promoted to GOLD: human_review_complete is False."
+                )
+            if not evidence.review_session_id or not evidence.review_session_id.strip():
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: missing review_session_id."
+                )
+            if not evidence.consent_record_ids:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: consent_record_ids is empty."
+                )
+            if not evidence.raw_submission_hashes:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: raw_submission_hashes is empty."
+                )
+            if record_id not in evidence.decoded_record_ids:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: record_id '{record_id}' not found in decoded_record_ids."
+                )
+            if not evidence.completeness_passed:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: completeness_passed is False."
+                )
+            if not evidence.disagreements_adjudicated_or_explicitly_resolved:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: disagreements_adjudicated_or_explicitly_resolved is False."
+                )
+            if not evidence.evidence_review_complete:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: evidence_review_complete is False."
+                )
+            if not evidence.gold_gate_authorization:
+                raise IllegalPromotionError(
+                    f"Record '{record_id}' cannot be promoted to GOLD: gold_gate_authorization is False."
                 )
 
         return target_state

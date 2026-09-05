@@ -26,7 +26,7 @@ BLF categorizes all data entries into three strictly separated tiers:
 ## 2. Quality Tier Specifications
 
 ### 2.1 GOLD Tier
-- **Definition**: Authoritative linguistic seed structures, manually authored sentences by qualified linguists, or real-world/synthetic data that has undergone double-blind human verification.
+- **Definition**: Authoritative linguistic seed structures, manually authored sentences by qualified linguists, or real-world/synthetic data that has undergone independent randomized blinded reviewer evaluation in isolated private review sessions and completed documented consensus adjudication.
 - **Criteria**: 100% adherence to Bangla Academy / verified linguistic rules, verified naturalness score $\ge 0.95$, complete morphological and semantic annotation.
 - **Storage**: `data/gold/`
 

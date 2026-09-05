@@ -31,9 +31,9 @@ Each record adheres to `schemas/v0_1/utterance.schema.json`.
   - **Evaluation Test**: 15% of sentence families
 
 ## 4. Annotations and Provenance
-- **Annotation Method**: Controlled multi-annotator review protocol with explicit double-blind evaluation.
-- **IAA Requirements**: Pooled Cohen's Kappa, Fleiss' Kappa, and Krippendorff's Alpha computed across concurrent reviewer assignments.
-- **Promotion Gate**: Minimum threshold of agreement required before promotion from `HUMAN_PILOT_VERIFIED` to `GOLD`.
+- **Annotation Method**: Controlled multi-annotator review protocol with independent randomized blinded reviewer evaluation in isolated private review sessions.
+- **IAA Requirements**: Descriptive Cohen's Kappa, Fleiss' Kappa, and Krippendorff's Alpha computed across concurrent reviewer assignments.
+- **Promotion Gate**: Explicit GoldPromotionEvidence package (complete human review, consent records, submission SHA-256 hashes, decoded records, completeness, and resolved disagreements) required before promotion from `HUMAN_PILOT_VERIFIED` to `GOLD`. IAA is descriptive/diagnostic rather than a mechanical substitute for consensus.
 
 ## 5. Sociolinguistic Scope and Dialect Coverage
 - Stratified sampling across formal written, informal spoken, colloquial urban, and regional dialect varieties.

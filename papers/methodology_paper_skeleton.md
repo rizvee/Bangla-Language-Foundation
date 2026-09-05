@@ -1,13 +1,13 @@
 # Bangla Language Foundation: A Grounded Ontological and Evaluation Framework for Bangladeshi Standard Bengali
 
 **Authors**: Bangla Language Foundation Research Group  
-**Target Venue**: ACL / EMNLP / LREC-COLING Methodology Paper  
+**Target Venue**: TBD (Pending Human Pilot Completion & Empirical Validation)  
 **Status**: Pre-Human Foundation Framework Skeleton (Empirical Sections Pending Human Pilot)
 
 ---
 
 ## Abstract
-Modern natural language processing systems for Bengali frequently struggle with morphosyntactic consistency, complex predicate licensing, and register-sensitive agreement. These deficiencies arise largely from training on noisy web-scraped text without formal linguistic ground truth. We present the Bangla Language Foundation (BLF), an open research initiative establishing an auditable, provenance-grounded framework for Bangladeshi Standard Bengali (BDSB). BLF integrates: (1) a multi-layer linguistic ontology linking descriptive grammatical sources to computational representations; (2) a derivation graph connecting sentence families down to primary library artifacts; (3) a double-blind, candidate-level human review annotation protocol with dual-target agreement metrics; and (4) BLF-Bench, a diagnostic evaluation suite with strict anti-contamination grouping. [EMPIRICAL METRICS, SAMPLE SIZES, AND INTER-ANNOTATOR AGREEMENT SCORES TO BE INSERTED AFTER FORMAL COMPLETION OF THE 40-ITEM CONTROLLED HUMAN PILOT.]
+Modern natural language processing systems for Bengali frequently struggle with morphosyntactic consistency, complex predicate licensing, and register-sensitive agreement. These deficiencies arise largely from training on noisy web-scraped text without formal linguistic ground truth. We present the Bangla Language Foundation (BLF), an open research initiative establishing an auditable, provenance-grounded framework for Bangladeshi Standard Bengali (BDSB). BLF integrates: (1) a multi-layer linguistic ontology linking descriptive grammatical sources to computational representations; (2) a derivation graph connecting sentence families down to primary library artifacts; (3) an independent randomized blinded candidate-level human review protocol with dual-target agreement metrics; and (4) BLF-Bench, a diagnostic evaluation suite with strict anti-contamination grouping. [EMPIRICAL METRICS, SAMPLE SIZES, AND INTER-ANNOTATOR AGREEMENT SCORES TO BE INSERTED AFTER FORMAL COMPLETION OF THE 40-ITEM CONTROLLED HUMAN PILOT.]
 
 ---
 
@@ -45,14 +45,14 @@ $$\text{SentenceFamily} \longrightarrow \text{SemanticFrame} \longrightarrow \te
 ---
 
 ## 4. Annotation OS and Human Review Protocol
-To ensure high evidentiary standards, human evaluation is conducted under a double-blind, controlled protocol:
+To ensure high evidentiary standards, human evaluation is conducted under an independent randomized blinded, controlled protocol:
 
-- **Reviewer Isolation**: Annotators complete reviews in air-gapped private review packs without access to underlying generation seeds, metadata, or other annotator responses.
+- **Reviewer Isolation**: Annotators complete reviews in isolated private review sessions without access to underlying generation seeds, metadata, or other annotator responses.
 - **Candidate-Level Acceptability**: Reviewers score each variant candidate individually rather than picking a single winner, preserving granular data on marginal or dialectal forms.
 - **Dual Inter-Annotator Agreement (IAA)**:
-  - Pooled Cohen's Kappa, Fleiss' Kappa, and Krippendorff's Alpha for categorical acceptability.
+  - Descriptive Cohen's Kappa, Fleiss' Kappa, and Krippendorff's Alpha for categorical acceptability.
   - Set-theoretic overlap metrics for preferred-candidate selection.
-- **Promotion Invariants**: A linguistic record cannot achieve `GOLD` status through automated algorithms or model self-evaluation. Promotion requires verified human consensus and documented arbitrator adjudication.
+- **Promotion Invariants**: A linguistic record cannot achieve `GOLD` status through automated algorithms or model self-evaluation. Promotion requires verified human consensus, explicit GoldPromotionEvidence documentation (including raw submission SHA-256 hashes and reviewer consent records), and documented arbitrator adjudication.
 
 ---
 
