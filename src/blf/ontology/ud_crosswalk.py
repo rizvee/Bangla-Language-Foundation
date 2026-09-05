@@ -24,6 +24,12 @@ class CrosswalkRelation(str, Enum):
     PROVISIONAL = "PROVISIONAL"
 
 
+class UDEvidenceStatus(str, Enum):
+    UD_SPEC_COMPATIBLE = "UD_SPEC_COMPATIBLE"
+    OBSERVED_IN_BENGALI_BRU = "OBSERVED_IN_BENGALI_BRU"
+    OBSERVED_IN_BENGALI_PUD = "OBSERVED_IN_BENGALI_PUD"
+
+
 class UDCategory(str, Enum):
     UPOS = "UPOS"
     FEATS = "FEATS"
@@ -43,6 +49,7 @@ class CrosswalkEntry:
     ud_tag: str
     relation: CrosswalkRelation
     treebank: UDTreebank
+    evidence_status: UDEvidenceStatus = UDEvidenceStatus.UD_SPEC_COMPATIBLE
     notes: Optional[str] = None
 
 
@@ -50,85 +57,85 @@ class CrosswalkEntry:
 
 UPOS_MAPPINGS: List[CrosswalkEntry] = [
     # Nominal
-    CrosswalkEntry("pos", "noun", UDCategory.UPOS, "NOUN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "noun", UDCategory.UPOS, "NOUN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD),
-    CrosswalkEntry("pos", "proper_noun", UDCategory.UPOS, "PROPN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "proper_noun", UDCategory.UPOS, "PROPN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD),
-    CrosswalkEntry("pos", "pronoun", UDCategory.UPOS, "PRON", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "pronoun", UDCategory.UPOS, "PRON", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD),
+    CrosswalkEntry("pos", "noun", UDCategory.UPOS, "NOUN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "noun", UDCategory.UPOS, "NOUN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD, UDEvidenceStatus.OBSERVED_IN_BENGALI_PUD),
+    CrosswalkEntry("pos", "proper_noun", UDCategory.UPOS, "PROPN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "proper_noun", UDCategory.UPOS, "PROPN", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD, UDEvidenceStatus.OBSERVED_IN_BENGALI_PUD),
+    CrosswalkEntry("pos", "pronoun", UDCategory.UPOS, "PRON", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "pronoun", UDCategory.UPOS, "PRON", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD, UDEvidenceStatus.OBSERVED_IN_BENGALI_PUD),
     # Verbal
-    CrosswalkEntry("pos", "finite_verb", UDCategory.UPOS, "VERB", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "non_finite_verb", UDCategory.UPOS, "VERB", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "UD distinguishes VerbForm=Part/Conv/Inf in FEATS rather than UPOS"),
-    CrosswalkEntry("pos", "auxiliary_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "auxiliary_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD),
-    CrosswalkEntry("pos", "vector_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "In complex predicates, vector verbs often annotated as AUX or compound:lvc"),
+    CrosswalkEntry("pos", "finite_verb", UDCategory.UPOS, "VERB", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "non_finite_verb", UDCategory.UPOS, "VERB", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "UD distinguishes VerbForm=Part/Conv/Inf in FEATS rather than UPOS"),
+    CrosswalkEntry("pos", "auxiliary_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "auxiliary_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD, UDEvidenceStatus.OBSERVED_IN_BENGALI_PUD),
+    CrosswalkEntry("pos", "vector_verb", UDCategory.UPOS, "AUX", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "In complex predicates, vector verbs often annotated as AUX or compound:lvc"),
     # Modifiers
-    CrosswalkEntry("pos", "adjective", UDCategory.UPOS, "ADJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "adverb", UDCategory.UPOS, "ADV", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "determiner", UDCategory.UPOS, "DET", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "numeral", UDCategory.UPOS, "NUM", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("pos", "adjective", UDCategory.UPOS, "ADJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "adverb", UDCategory.UPOS, "ADV", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "determiner", UDCategory.UPOS, "DET", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "numeral", UDCategory.UPOS, "NUM", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # Postpositions & Particles
-    CrosswalkEntry("pos", "postposition", UDCategory.UPOS, "ADP", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "postposition", UDCategory.UPOS, "ADP", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD),
-    CrosswalkEntry("pos", "classifier", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "Bangla classifiers (-ta, -khana) often tagged PART or NOUN/clf"),
-    CrosswalkEntry("pos", "discourse_particle", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "emphatic_particle", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("pos", "postposition", UDCategory.UPOS, "ADP", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "postposition", UDCategory.UPOS, "ADP", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_PUD, UDEvidenceStatus.OBSERVED_IN_BENGALI_PUD),
+    CrosswalkEntry("pos", "classifier", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "Bangla classifiers (-ta, -khana) often tagged PART or NOUN/clf"),
+    CrosswalkEntry("pos", "discourse_particle", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "emphatic_particle", UDCategory.UPOS, "PART", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # Connectives & Punctuation
-    CrosswalkEntry("pos", "coordinating_conjunction", UDCategory.UPOS, "CCONJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "subordinating_conjunction", UDCategory.UPOS, "SCONJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "interjection", UDCategory.UPOS, "INTJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("pos", "punctuation", UDCategory.UPOS, "PUNCT", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("pos", "coordinating_conjunction", UDCategory.UPOS, "CCONJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "subordinating_conjunction", UDCategory.UPOS, "SCONJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "interjection", UDCategory.UPOS, "INTJ", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("pos", "punctuation", UDCategory.UPOS, "PUNCT", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
 ]
 
 FEATS_MAPPINGS: List[CrosswalkEntry] = [
     # Case
-    CrosswalkEntry("case", "nominative", UDCategory.FEATS, "Case=Nom", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("case", "accusative_objective", UDCategory.FEATS, "Case=Acc", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "BLF Differential Object Marking maps to Acc"),
-    CrosswalkEntry("case", "genitive", UDCategory.FEATS, "Case=Gen", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("case", "locative", UDCategory.FEATS, "Case=Loc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("case", "instrumental", UDCategory.FEATS, "Case=Ins", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "Instrumental in Bangla realized via postposition (diye) or locative-instrumental"),
+    CrosswalkEntry("case", "nominative", UDCategory.FEATS, "Case=Nom", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("case", "accusative_objective", UDCategory.FEATS, "Case=Acc", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "BLF Differential Object Marking maps to Acc"),
+    CrosswalkEntry("case", "genitive", UDCategory.FEATS, "Case=Gen", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("case", "locative", UDCategory.FEATS, "Case=Loc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("case", "instrumental", UDCategory.FEATS, "Case=Ins", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "Instrumental in Bangla realized via postposition (diye) or locative-instrumental"),
     # Number
-    CrosswalkEntry("number", "singular", UDCategory.FEATS, "Number=Sing", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("number", "plural", UDCategory.FEATS, "Number=Plur", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("number", "singular", UDCategory.FEATS, "Number=Sing", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("number", "plural", UDCategory.FEATS, "Number=Plur", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # Person
-    CrosswalkEntry("person", "first", UDCategory.FEATS, "Person=1", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("person", "second_intimate", UDCategory.FEATS, "Person=2|Polite=Infm", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("person", "second_familiar", UDCategory.FEATS, "Person=2|Polite=Form", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "Mid-honorific mapping"),
-    CrosswalkEntry("person", "second_honorific", UDCategory.FEATS, "Person=2|Polite=Elev", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("person", "third_ordinary", UDCategory.FEATS, "Person=3|Polite=Infm", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("person", "third_honorific", UDCategory.FEATS, "Person=3|Polite=Elev", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("person", "first", UDCategory.FEATS, "Person=1", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("person", "second_intimate", UDCategory.FEATS, "Person=2|Polite=Infm", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("person", "second_familiar", UDCategory.FEATS, "Person=2|Polite=Form", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "Mid-honorific mapping"),
+    CrosswalkEntry("person", "second_honorific", UDCategory.FEATS, "Person=2|Polite=Elev", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("person", "third_ordinary", UDCategory.FEATS, "Person=3|Polite=Infm", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("person", "third_honorific", UDCategory.FEATS, "Person=3|Polite=Elev", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # Tense and Aspect
-    CrosswalkEntry("tense", "present", UDCategory.FEATS, "Tense=Pres", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("tense", "past", UDCategory.FEATS, "Tense=Past", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("tense", "future", UDCategory.FEATS, "Tense=Fut", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("aspect", "simple", UDCategory.FEATS, "Aspect=Imp", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("aspect", "progressive", UDCategory.FEATS, "Aspect=Prog", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("aspect", "perfect", UDCategory.FEATS, "Aspect=Perf", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("tense", "present", UDCategory.FEATS, "Tense=Pres", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("tense", "past", UDCategory.FEATS, "Tense=Past", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("tense", "future", UDCategory.FEATS, "Tense=Fut", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("aspect", "simple", UDCategory.FEATS, "Aspect=Imp", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("aspect", "progressive", UDCategory.FEATS, "Aspect=Prog", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("aspect", "perfect", UDCategory.FEATS, "Aspect=Perf", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # VerbForm
-    CrosswalkEntry("verb_form", "finite", UDCategory.FEATS, "VerbForm=Fin", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("verb_form", "infinitive", UDCategory.FEATS, "VerbForm=Inf", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("verb_form", "conjunctive_participle", UDCategory.FEATS, "VerbForm=Conv", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "Bangla -e participle as converb"),
-    CrosswalkEntry("verb_form", "conditional_participle", UDCategory.FEATS, "VerbForm=Conv", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "Bangla -le conditional converb"),
+    CrosswalkEntry("verb_form", "finite", UDCategory.FEATS, "VerbForm=Fin", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("verb_form", "infinitive", UDCategory.FEATS, "VerbForm=Inf", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("verb_form", "conjunctive_participle", UDCategory.FEATS, "VerbForm=Conv", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "Bangla -e participle as converb"),
+    CrosswalkEntry("verb_form", "conditional_participle", UDCategory.FEATS, "VerbForm=Conv", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "Bangla -le conditional converb"),
 ]
 
 DEPREL_MAPPINGS: List[CrosswalkEntry] = [
-    CrosswalkEntry("dependency", "subject", UDCategory.DEPREL, "nsubj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "direct_object", UDCategory.DEPREL, "obj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "indirect_object", UDCategory.DEPREL, "iobj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "oblique", UDCategory.DEPREL, "obl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "temporal_oblique", UDCategory.DEPREL, "obl:tmod", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "nominal_modifier", UDCategory.DEPREL, "nmod", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "adverbial_clause", UDCategory.DEPREL, "advcl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "adnominal_clause", UDCategory.DEPREL, "acl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "light_verb_compound", UDCategory.DEPREL, "compound:lvc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "serial_verb_compound", UDCategory.DEPREL, "compound:svc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "case_marker", UDCategory.DEPREL, "case", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "classifier_attachment", UDCategory.DEPREL, "clf", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, "UD clf dependency relation"),
-    CrosswalkEntry("dependency", "discourse_particle", UDCategory.DEPREL, "discourse", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
-    CrosswalkEntry("dependency", "root_predicate", UDCategory.DEPREL, "root", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU),
+    CrosswalkEntry("dependency", "subject", UDCategory.DEPREL, "nsubj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "direct_object", UDCategory.DEPREL, "obj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "indirect_object", UDCategory.DEPREL, "iobj", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "oblique", UDCategory.DEPREL, "obl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "temporal_oblique", UDCategory.DEPREL, "obl:tmod", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "nominal_modifier", UDCategory.DEPREL, "nmod", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "adverbial_clause", UDCategory.DEPREL, "advcl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "adnominal_clause", UDCategory.DEPREL, "acl", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "light_verb_compound", UDCategory.DEPREL, "compound:lvc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "serial_verb_compound", UDCategory.DEPREL, "compound:svc", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "case_marker", UDCategory.DEPREL, "case", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "classifier_attachment", UDCategory.DEPREL, "clf", CrosswalkRelation.CLOSE, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU, "UD clf dependency relation"),
+    CrosswalkEntry("dependency", "discourse_particle", UDCategory.DEPREL, "discourse", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
+    CrosswalkEntry("dependency", "root_predicate", UDCategory.DEPREL, "root", CrosswalkRelation.EXACT, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.OBSERVED_IN_BENGALI_BRU),
     # Provisional or Unmapped items
-    CrosswalkEntry("dependency", "echo_reduplication", UDCategory.DEPREL, "compound:redup", CrosswalkRelation.PROVISIONAL, UDTreebank.UD_BENGALI_BRU, "Proposed extension for South Asian reduplicative morphology"),
-    CrosswalkEntry("dependency", "differential_object_flag", UDCategory.DEPREL, "NO_DIRECT_DEPREL", CrosswalkRelation.NO_DIRECT_MAPPING, UDTreebank.UD_BENGALI_BRU, "DOM in Bangla is morphosyntactic (Case=Acc marking condition), not a distinct dependency relation"),
+    CrosswalkEntry("dependency", "echo_reduplication", UDCategory.DEPREL, "compound:redup", CrosswalkRelation.PROVISIONAL, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.UD_SPEC_COMPATIBLE, "Proposed extension for South Asian reduplicative morphology"),
+    CrosswalkEntry("dependency", "differential_object_flag", UDCategory.DEPREL, "NO_DIRECT_DEPREL", CrosswalkRelation.NO_DIRECT_MAPPING, UDTreebank.UD_BENGALI_BRU, UDEvidenceStatus.UD_SPEC_COMPATIBLE, "DOM in Bangla is morphosyntactic (Case=Acc marking condition), not a distinct dependency relation"),
 ]
 
 
@@ -160,12 +167,17 @@ class UDCrosswalkEngine:
         self,
         blf_category: str,
         blf_tag: str,
-        treebank: UDTreebank = UDTreebank.UD_BENGALI_BRU,
+        treebank: Optional[UDTreebank] = UDTreebank.UD_BENGALI_BRU,
+        allow_fallback: bool = False,
     ) -> Optional[CrosswalkEntry]:
-        matches = self.find_mappings(blf_category=blf_category, blf_tag=blf_tag, treebank=treebank)
-        if matches:
-            return matches[0]
-        # Fallback to any treebank if specific one not found
+        if treebank is not None:
+            matches = self.find_mappings(blf_category=blf_category, blf_tag=blf_tag, treebank=treebank)
+            if matches:
+                return matches[0]
+            if not allow_fallback:
+                return None
+
+        # Fallback only when treebank is None or explicitly authorized
         generic_matches = self.find_mappings(blf_category=blf_category, blf_tag=blf_tag)
         return generic_matches[0] if generic_matches else None
 

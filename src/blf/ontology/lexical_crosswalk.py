@@ -17,6 +17,7 @@ class LexicalAlignmentStatus(str, Enum):
     PROVISIONAL = "PROVISIONAL"
     PARTIAL = "PARTIAL"
     UNALIGNED = "UNALIGNED"
+    UNKNOWN = "UNKNOWN"
 
 
 @dataclass
@@ -41,6 +42,8 @@ class ExternalLexicalMatch:
     pos_tag: Optional[str] = None
     dialect_flag: Optional[str] = None
     alignment_status: LexicalAlignmentStatus = LexicalAlignmentStatus.PROVISIONAL
+    fixture: bool = False
+    production_eligible: bool = False
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 
@@ -70,11 +73,16 @@ class MockAccessibleDictionaryAdapter(BaseLexicalAdapter):
     structured for non-infringing runtime queries without storing proprietary snapshots.
     """
 
+    VALIDATED_FRAME_ALIGNMENTS: Dict[tuple, LexicalAlignmentStatus] = {
+        ("পড়া", "FRAME-00001-COGNITION-READ"): LexicalAlignmentStatus.CONFIRMED,
+        ("বই", "FRAME-00002-ARTIFACT-BOOK"): LexicalAlignmentStatus.CONFIRMED,
+    }
+
     def __init__(self, stub_records: Optional[Dict[str, List[Dict[str, Any]]]] = None) -> None:
         self._stubs = stub_records or {
             "বই": [
                 {
-                    "external_id": "a2i-dict-boi-1",
+                    "external_id": "MOCK-ACCESSIBLE-DICT-BOI-001",
                     "headword": "বই",
                     "definition": "পুস্তক, গ্রন্থ",
                     "pos_tag": "noun",
@@ -82,7 +90,7 @@ class MockAccessibleDictionaryAdapter(BaseLexicalAdapter):
             ],
             "পড়া": [
                 {
-                    "external_id": "a2i-dict-pora-1",
+                    "external_id": "MOCK-ACCESSIBLE-DICT-PORA-001",
                     "headword": "পড়া",
                     "definition": "পাঠ করা, অধ্যয়ন করা",
                     "pos_tag": "verb",
@@ -90,7 +98,7 @@ class MockAccessibleDictionaryAdapter(BaseLexicalAdapter):
             ],
             "খাওয়া": [
                 {
-                    "external_id": "a2i-dict-khawa-1",
+                    "external_id": "MOCK-ACCESSIBLE-DICT-KHAWA-001",
                     "headword": "খাওয়া",
                     "definition": "আহার করা, ভক্ষণ করা",
                     "pos_tag": "verb",
@@ -113,6 +121,8 @@ class MockAccessibleDictionaryAdapter(BaseLexicalAdapter):
                 definition=entry.get("definition", ""),
                 pos_tag=entry.get("pos_tag"),
                 alignment_status=LexicalAlignmentStatus.PROVISIONAL,
+                fixture=True,
+                production_eligible=False,
                 metadata=entry,
             )
             for entry in raw_entries
@@ -121,12 +131,45 @@ class MockAccessibleDictionaryAdapter(BaseLexicalAdapter):
     def map_to_frame(self, lemma: str, target_frame_id: str) -> Optional[ExternalLexicalMatch]:
         matches = self.lookup_lemma(lemma)
         if not matches:
-            return None
-        # Return first match flagged as provisional alignment
+            return ExternalLexicalMatch(
+                query_lemma=lemma,
+                source_resource=self.resource_name,
+                external_id=None,
+                headword=lemma,
+                definition="",
+                alignment_status=LexicalAlignmentStatus.UNKNOWN,
+                fixture=True,
+                production_eligible=False,
+                metadata={"error": "Lemma not found in external lexicon", "target_frame_id": target_frame_id},
+            )
+
         match = matches[0]
-        match.alignment_status = LexicalAlignmentStatus.CONFIRMED
-        match.metadata["mapped_frame_id"] = target_frame_id
-        return match
+        if (lemma, target_frame_id) in self.VALIDATED_FRAME_ALIGNMENTS:
+            status = self.VALIDATED_FRAME_ALIGNMENTS[(lemma, target_frame_id)]
+        else:
+            pos = match.pos_tag
+            if pos == "verb" and any(k in target_frame_id.upper() for k in ["ACTION", "ACTIVITY", "COGNITION", "COMMUNICATION", "INGESTION"]):
+                status = LexicalAlignmentStatus.PARTIAL
+            elif pos == "noun" and any(k in target_frame_id.upper() for k in ["ARTIFACT", "ENTITY", "CONTAINER", "FOOD"]):
+                status = LexicalAlignmentStatus.PARTIAL
+            elif not target_frame_id:
+                status = LexicalAlignmentStatus.UNALIGNED
+            else:
+                status = LexicalAlignmentStatus.PROVISIONAL
+
+        return ExternalLexicalMatch(
+            query_lemma=lemma,
+            source_resource=self.resource_name,
+            external_id=match.external_id,
+            headword=match.headword,
+            definition=match.definition,
+            pos_tag=match.pos_tag,
+            dialect_flag=match.dialect_flag,
+            alignment_status=status,
+            fixture=True,
+            production_eligible=False,
+            metadata=dict(match.metadata, mapped_frame_id=target_frame_id),
+        )
 
 
 class MockRegionalDictionaryAdapter(BaseLexicalAdapter):
@@ -135,11 +178,13 @@ class MockRegionalDictionaryAdapter(BaseLexicalAdapter):
     Operates strictly via structured metadata interfaces.
     """
 
+    VALIDATED_FRAME_ALIGNMENTS: Dict[tuple, LexicalAlignmentStatus] = {}
+
     def __init__(self, stub_records: Optional[Dict[str, List[Dict[str, Any]]]] = None) -> None:
         self._stubs = stub_records or {
             "খাইবার": [
                 {
-                    "external_id": "regdict-khaibar-1",
+                    "external_id": "MOCK-REGDICT-KHAIBAR-001",
                     "headword": "খাইবার",
                     "definition": "খাওয়ার (আঞ্চলিক বা সাধু রূপ)",
                     "dialect_flag": "regional_colloquial",
@@ -162,6 +207,8 @@ class MockRegionalDictionaryAdapter(BaseLexicalAdapter):
                 definition=entry.get("definition", ""),
                 dialect_flag=entry.get("dialect_flag"),
                 alignment_status=LexicalAlignmentStatus.PROVISIONAL,
+                fixture=True,
+                production_eligible=False,
                 metadata=entry,
             )
             for entry in raw_entries
@@ -170,8 +217,33 @@ class MockRegionalDictionaryAdapter(BaseLexicalAdapter):
     def map_to_frame(self, lemma: str, target_frame_id: str) -> Optional[ExternalLexicalMatch]:
         matches = self.lookup_lemma(lemma)
         if not matches:
-            return None
+            return ExternalLexicalMatch(
+                query_lemma=lemma,
+                source_resource=self.resource_name,
+                external_id=None,
+                headword=lemma,
+                definition="",
+                alignment_status=LexicalAlignmentStatus.UNKNOWN,
+                fixture=True,
+                production_eligible=False,
+                metadata={"error": "Lemma not found in external lexicon", "target_frame_id": target_frame_id},
+            )
+
         match = matches[0]
-        match.alignment_status = LexicalAlignmentStatus.CONFIRMED
-        match.metadata["mapped_frame_id"] = target_frame_id
-        return match
+        if (lemma, target_frame_id) in self.VALIDATED_FRAME_ALIGNMENTS:
+            status = self.VALIDATED_FRAME_ALIGNMENTS[(lemma, target_frame_id)]
+        else:
+            status = LexicalAlignmentStatus.PROVISIONAL
+
+        return ExternalLexicalMatch(
+            query_lemma=lemma,
+            source_resource=self.resource_name,
+            external_id=match.external_id,
+            headword=match.headword,
+            definition=match.definition,
+            dialect_flag=match.dialect_flag,
+            alignment_status=status,
+            fixture=True,
+            production_eligible=False,
+            metadata=dict(match.metadata, mapped_frame_id=target_frame_id),
+        )
