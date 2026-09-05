@@ -83,6 +83,11 @@
       "type": "object",
       "description": "Detailed validation outcomes."
     },
+    "provenance_completeness": {
+      "type": "string",
+      "enum": ["COMPLETE", "PARTIAL", "TEST_FIXTURE_ONLY"],
+      "description": "Assessment of provenance completeness for this record."
+    },
     "prompt_or_rule_provenance": {
       "type": "object",
       "required": ["template_id", "prompt_hash"],

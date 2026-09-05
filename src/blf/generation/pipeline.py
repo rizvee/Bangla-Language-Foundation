@@ -257,6 +257,7 @@ class ConstrainedGenerationPipeline:
         polarity: str = "AFFIRMATIVE",
         seed: Optional[int] = None,
         sentence_family_id: Optional[str] = None,
+        provenance_completeness: str = "TEST_FIXTURE_ONLY",
         quarantined_exploratory_mode: bool = False,
     ) -> Dict[str, Any]:
         """
@@ -323,6 +324,7 @@ class ConstrainedGenerationPipeline:
             "production_eligible": False,
             "execution_tag": "SYNTHETIC_SOFTWARE_TEST_ONLY",
             "human_review_status": "DEFERRED_PRE_HUMAN",
+            "provenance_completeness": provenance_completeness,
             "validation_results": {
                 "selectional_restrictions": "PASSED",
                 "morphotactic_invariants": "PASSED",

@@ -10,6 +10,7 @@ Guarantees that no record can achieve GOLD status without verified human consens
 
 from dataclasses import dataclass, field
 from enum import Enum
+import re
 from typing import Any, Dict, List, Optional, Set
 
 
@@ -144,6 +145,11 @@ class PromotionStateMachine:
                 raise IllegalPromotionError(
                     f"Record '{record_id}' cannot be promoted to GOLD: raw_submission_hashes is empty."
                 )
+            for h in evidence.raw_submission_hashes:
+                if not re.match(r"^[0-9a-fA-F]{64}$", h):
+                    raise IllegalPromotionError(
+                        f"Record '{record_id}' cannot be promoted to GOLD: invalid sha256 hex '{h}' in raw_submission_hashes."
+                    )
             if record_id not in evidence.decoded_record_ids:
                 raise IllegalPromotionError(
                     f"Record '{record_id}' cannot be promoted to GOLD: record_id '{record_id}' not found in decoded_record_ids."

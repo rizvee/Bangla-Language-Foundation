@@ -47,6 +47,7 @@ class TestConstrainedGeneration(unittest.TestCase):
         self.assertTrue(valid, f"Provenance validation errors: {errors}")
         self.assertEqual(record["provenance"]["generator_version"], "1.0.0")
         self.assertEqual(record["provenance"]["execution_tag"], "SYNTHETIC_SOFTWARE_TEST_ONLY")
+        self.assertEqual(record["provenance"]["provenance_completeness"], "TEST_FIXTURE_ONLY")
         self.assertFalse(record["provenance"]["production_eligible"])
 
     def test_inanimate_agent_blocked_for_ingestion(self) -> None:

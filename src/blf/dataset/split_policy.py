@@ -25,6 +25,9 @@ class SplitResult:
     train_family_ids: Set[str]
     dev_family_ids: Set[str]
     test_family_ids: Set[str]
+    train_group_ids: Set[str] = field(default_factory=set)
+    dev_group_ids: Set[str] = field(default_factory=set)
+    test_group_ids: Set[str] = field(default_factory=set)
     total_records_by_partition: Dict[str, int] = field(default_factory=dict)
     total_groups_by_partition: Dict[str, int] = field(default_factory=dict)
     cross_partition_group_leakage: int = 0
@@ -32,16 +35,47 @@ class SplitResult:
     excluded_unknown_group_records: List[Dict[str, Any]] = field(default_factory=list)
 
     def verify_no_leakage(self) -> None:
-        """Verifies pairwise disjointness of family IDs across splits."""
+        """Verifies pairwise disjointness of group IDs and family IDs across splits."""
+        # 1. Canonical group ID checks (cross-dimensional)
+        if self.train_group_ids & self.dev_group_ids:
+            overlap = self.train_group_ids & self.dev_group_ids
+            raise LeakageViolationError(f"Train and Dev share group IDs: {overlap}")
+        if self.train_group_ids & self.test_group_ids:
+            overlap = self.train_group_ids & self.test_group_ids
+            raise LeakageViolationError(f"Train and Test share group IDs: {overlap}")
+        if self.dev_group_ids & self.test_group_ids:
+            overlap = self.dev_group_ids & self.test_group_ids
+            raise LeakageViolationError(f"Dev and Test share group IDs: {overlap}")
+
+        # 2. Family ID checks
         if self.train_family_ids & self.dev_family_ids:
             overlap = self.train_family_ids & self.dev_family_ids
-            raise LeakageViolationError(f"Train and Dev share group IDs: {overlap}")
+            raise LeakageViolationError(f"Train and Dev share family IDs: {overlap}")
         if self.train_family_ids & self.test_family_ids:
             overlap = self.train_family_ids & self.test_family_ids
-            raise LeakageViolationError(f"Train and Test share group IDs: {overlap}")
+            raise LeakageViolationError(f"Train and Test share family IDs: {overlap}")
         if self.dev_family_ids & self.test_family_ids:
             overlap = self.dev_family_ids & self.test_family_ids
-            raise LeakageViolationError(f"Dev and Test share group IDs: {overlap}")
+            raise LeakageViolationError(f"Dev and Test share family IDs: {overlap}")
+
+
+CANONICAL_DIMENSION_MAP = {
+    "sentence_family_id": "FAMILY",
+    "family_id": "FAMILY",
+    "semantic_template_id": "TEMPLATE",
+    "template_id": "TEMPLATE",
+    "source_semantic_unit_id": "SOURCE_UNIT",
+    "unit_id": "SOURCE_UNIT",
+    "near_duplicate_cluster_id": "NEAR_DUP_CLUSTER",
+    "cluster_id": "NEAR_DUP_CLUSTER",
+    "conversation_id": "CONVERSATION",
+    "document_id": "DOCUMENT",
+    "source_document_id": "DOCUMENT",
+    "source_segment_id": "SOURCE_SEGMENT",
+    "generation_template_id": "GEN_TEMPLATE",
+    "minimal_pair_id": "MINIMAL_PAIR",
+    "negative_pair_id": "NEGATIVE_PAIR",
+}
 
 
 class FamilyGroupedSplitter:
@@ -70,19 +104,10 @@ class FamilyGroupedSplitter:
 
     def _extract_grouping_keys(self, item: Dict[str, Any]) -> Set[str]:
         keys = set()
-        for field_name in (
-            "sentence_family_id",
-            "family_id",
-            "semantic_template_id",
-            "template_id",
-            "source_semantic_unit_id",
-            "unit_id",
-            "near_duplicate_cluster_id",
-            "cluster_id",
-        ):
+        for field_name, dim_prefix in CANONICAL_DIMENSION_MAP.items():
             val = item.get(field_name)
             if val and isinstance(val, str) and val.strip():
-                keys.add(f"{field_name}:{val.strip()}")
+                keys.add(f"{dim_prefix}:{val.strip()}")
         return keys
 
     def split(self, items: List[Dict[str, Any]]) -> SplitResult:
@@ -178,19 +203,31 @@ class FamilyGroupedSplitter:
         dev_items = [it for gid in dev_groups for it in component_groups[gid]]
         test_items = [it for gid in test_groups for it in component_groups[gid]]
 
+        def _extract_canonical_group_keys(groups: Set[str]) -> Set[str]:
+            all_keys = set()
+            for gid in groups:
+                for part in gid.split("|"):
+                    if part:
+                        all_keys.add(part)
+            return all_keys
+
         def _extract_clean_fams(groups: Set[str]) -> Set[str]:
             fams = set()
             for gid in groups:
                 for part in gid.split("|"):
-                    if ":" in part:
+                    if part.startswith("FAMILY:"):
                         fams.add(part.split(":", 1)[1])
-                    else:
+                    elif ":" not in part:
                         fams.add(part)
             return fams
 
         train_fams = _extract_clean_fams(train_groups)
         dev_fams = _extract_clean_fams(dev_groups)
         test_fams = _extract_clean_fams(test_groups)
+
+        train_gkeys = _extract_canonical_group_keys(train_groups)
+        dev_gkeys = _extract_canonical_group_keys(dev_groups)
+        test_gkeys = _extract_canonical_group_keys(test_groups)
 
         result = SplitResult(
             train_items=train_items,
@@ -199,6 +236,9 @@ class FamilyGroupedSplitter:
             train_family_ids=train_fams,
             dev_family_ids=dev_fams,
             test_family_ids=test_fams,
+            train_group_ids=train_gkeys,
+            dev_group_ids=dev_gkeys,
+            test_group_ids=test_gkeys,
             total_records_by_partition={
                 "train": len(train_items),
                 "dev": len(dev_items),

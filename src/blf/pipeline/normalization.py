@@ -20,6 +20,12 @@ class NormalizationRule(str, Enum):
     ZWJ_ZWNJ_POLICY = "ZWJ_ZWNJ_POLICY"
 
 
+class SpanMappingStatus(str, Enum):
+    EXACT = "EXACT"
+    PARTIAL = "PARTIAL"
+    UNAVAILABLE_AFTER_LOSSY_TRANSFORMATION = "UNAVAILABLE_AFTER_LOSSY_TRANSFORMATION"
+
+
 @dataclass
 class NormalizationOp:
     rule: NormalizationRule
@@ -28,6 +34,8 @@ class NormalizationOp:
     position_before: int
     position_after: int
     lossy: bool
+    action: Optional[str] = None
+    raw_text_snapshot: Optional[str] = None
     notes: Optional[str] = None
 
 
@@ -43,6 +51,12 @@ class NormalizationResult:
     lossy: bool
     reversible_without_snapshot: bool
     span_map: Optional[List[Tuple[int, int, int, int]]] = None  # (raw_start, raw_end, norm_start, norm_end)
+    span_mapping_status: SpanMappingStatus = SpanMappingStatus.EXACT
+
+
+def restore_raw(result: NormalizationResult) -> str:
+    """Restores original unnormalized text directly from the normalization result snapshot."""
+    return result.raw_text
 
 
 class ReversibleNormalizer:
@@ -95,6 +109,8 @@ class ReversibleNormalizer:
                     position_before=0,
                     position_after=0,
                     lossy=False,  # Canonical equivalence is non-lossy
+                    action="COMPOSED",
+                    raw_text_snapshot=raw_text,
                     notes="Unicode NFC normalization applied",
                 )
             )
@@ -102,11 +118,11 @@ class ReversibleNormalizer:
 
         # 2. ZWJ / ZWNJ Policy
         # Valid Bangla ZWJ usage: preceded by Hasanta (e.g. \u09cd\u200d for subjoined consonants or ya-phala)
-        # Stray ZWJ/ZWNJ: at word boundaries, after spaces, or consecutive ZWJ/ZWNJ -> quarantined/stripped
+        # Stray ZWJ/ZWNJ: at word boundaries, after spaces, or consecutive ZWJ/ZWNJ -> removed
         cleaned_chars = []
         n = len(current)
         i = 0
-        stray_zwj_found = False
+        removed_zw_chars = 0
         while i < n:
             ch = current[i]
             if ch in (self.ZWJ, self.ZWNJ):
@@ -114,7 +130,7 @@ class ReversibleNormalizer:
                 if has_valid_preceding:
                     cleaned_chars.append(ch)
                 else:
-                    stray_zwj_found = True
+                    removed_zw_chars += 1
                     is_lossy = True
             else:
                 cleaned_chars.append(ch)
@@ -130,7 +146,9 @@ class ReversibleNormalizer:
                     position_before=0,
                     position_after=0,
                     lossy=True,
-                    notes="Quarantined and stripped stray/spurious ZWJ/ZWNJ characters outside hasanta contexts",
+                    action="REMOVED",
+                    raw_text_snapshot=raw_text,
+                    notes=f"Removed stray/spurious ZWJ/ZWNJ characters outside hasanta contexts (removed_count={removed_zw_chars})",
                 )
             )
             current = zwj_processed
@@ -159,6 +177,8 @@ class ReversibleNormalizer:
                     position_before=0,
                     position_after=0,
                     lossy=True,
+                    action="STANDARDIZED",
+                    raw_text_snapshot=raw_text,
                     notes="Standardized curly quotes to ASCII quotes",
                 )
             )
@@ -176,6 +196,8 @@ class ReversibleNormalizer:
                         position_before=len(current) - 1,
                         position_after=len(period_transformed) - 1,
                         lossy=True,
+                        action="SUBSTITUTED",
+                        raw_text_snapshot=raw_text,
                         notes="Normalized sentence-final period to Bengali Dari",
                     )
                 )
@@ -200,13 +222,20 @@ class ReversibleNormalizer:
                     position_before=0,
                     position_after=0,
                     lossy=True,
+                    action="COLLAPSED",
+                    raw_text_snapshot=raw_text,
                     notes="Collapsed redundant whitespace and trimmed line margins",
                 )
             )
             current = ws_processed
             is_lossy = True
 
-        span_map = [(0, len(raw_text), 0, len(current))]
+        if is_lossy:
+            span_map = None
+            span_mapping_status = SpanMappingStatus.UNAVAILABLE_AFTER_LOSSY_TRANSFORMATION
+        else:
+            span_map = [(0, len(raw_text), 0, len(current))]
+            span_mapping_status = SpanMappingStatus.EXACT
 
         return NormalizationResult(
             raw_text=raw_text,
@@ -215,6 +244,7 @@ class ReversibleNormalizer:
             lossy=is_lossy,
             reversible_without_snapshot=(not is_lossy),
             span_map=span_map,
+            span_mapping_status=span_mapping_status,
         )
 
     def normalize(self, text: str) -> Tuple[str, List[NormalizationOp]]:
@@ -222,12 +252,16 @@ class ReversibleNormalizer:
         res = self.normalize_detailed(text)
         return res.normalized_text, res.operations_applied
 
-    def revert(self, transformed_text: str, steps: List[NormalizationOp]) -> str:
+    def revert(self, transformed_text_or_result: Any, steps: Optional[List[NormalizationOp]] = None) -> str:
         """
-        Restores the initial raw text snapshot recorded in the operations list.
+        Restores the initial raw text snapshot recorded in the operations list or result.
         NOTE: This performs snapshot restoration, not algorithmic inverse string transformation,
         because operations like whitespace collapse and quote standardizations are inherently lossy.
         """
+        if isinstance(transformed_text_or_result, NormalizationResult):
+            return transformed_text_or_result.raw_text
         if not steps:
-            return transformed_text
+            return str(transformed_text_or_result)
+        if steps[0].raw_text_snapshot is not None:
+            return steps[0].raw_text_snapshot
         return steps[0].original_segment

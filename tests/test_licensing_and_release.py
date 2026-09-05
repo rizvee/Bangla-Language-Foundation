@@ -33,7 +33,21 @@ class TestLicensingAndRelease(unittest.TestCase):
         self.assertEqual(len(missing_in_matrix), 0, f"Sources missing in redistribution matrix: {missing_in_matrix}")
 
         # Check quarantined sources cannot be redistributed
+        required_keys = {
+            "upstream_repository",
+            "upstream_commit_sha",
+            "license_file_url",
+            "license_file_sha256",
+            "license_expression",
+            "license_verification_status",
+            "raw_redistribution_state",
+            "derived_use_state",
+        }
         for entry in matrix_data.get("sources", []):
+            for k in required_keys:
+                self.assertIn(k, entry, f"Missing key '{k}' in source '{entry['source_id']}'")
+            self.assertNotIn("fair use", entry.get("notes", "").lower(), f"Unreviewed fair use assertion in source '{entry['source_id']}' notes")
+            self.assertNotIn("fairuse", entry.get("spdx_license", "").lower(), f"Unreviewed FairUse in source '{entry['source_id']}' license")
             if "Quarantined" in entry.get("spdx_license", ""):
                 self.assertFalse(
                     entry.get("redistribution_allowed"),

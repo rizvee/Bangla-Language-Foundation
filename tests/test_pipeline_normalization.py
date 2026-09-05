@@ -5,7 +5,12 @@ Unit tests for BLF Reversible Normalization and Conservative Text Cleaning.
 import unittest
 
 from blf.pipeline.cleaning import ConservativeTextCleaner
-from blf.pipeline.normalization import NormalizationRule, ReversibleNormalizer
+from blf.pipeline.normalization import (
+    NormalizationRule,
+    ReversibleNormalizer,
+    SpanMappingStatus,
+    restore_raw,
+)
 
 
 class TestReversibleNormalization(unittest.TestCase):
@@ -25,6 +30,15 @@ class TestReversibleNormalization(unittest.TestCase):
         reverted = self.normalizer.revert(normalized, steps)
         self.assertEqual(reverted, raw_text)
 
+        # Reversibility test on period-only replacement (verifies no original_segment='.' truncation)
+        raw_period = "আমি ভাত খাই."
+        norm_period, steps_p = self.normalizer.normalize(raw_period)
+        self.assertEqual(norm_period, "আমি ভাত খাই।")
+        self.assertEqual(self.normalizer.revert(norm_period, steps_p), raw_period)
+        res_p = self.normalizer.normalize_detailed(raw_period)
+        self.assertEqual(restore_raw(res_p), raw_period)
+        self.assertEqual(self.normalizer.revert(res_p), raw_period)
+
     def test_zwj_preservation_after_hasanta(self) -> None:
         # Legitimate ligature: র + ্‌ + ZWJ + য
         legitimate_ligature = "\u09B0\u09CD\u200D\u09AF"
@@ -38,6 +52,7 @@ class TestReversibleNormalization(unittest.TestCase):
         self.assertEqual(normalized, "ab")
         rules_applied = [s.rule for s in steps]
         self.assertIn(NormalizationRule.ZWJ_ZWNJ_POLICY, rules_applied)
+        self.assertEqual(steps[0].action, "REMOVED")
 
     def test_period_to_dari(self) -> None:
         raw_text = "আমি ভাত খাই."
@@ -50,7 +65,8 @@ class TestReversibleNormalization(unittest.TestCase):
         self.assertEqual(res.raw_text, raw_text)
         self.assertTrue(res.lossy)
         self.assertFalse(res.reversible_without_snapshot)
-        self.assertIsNotNone(res.span_map)
+        self.assertIsNone(res.span_map)
+        self.assertEqual(res.span_mapping_status, SpanMappingStatus.UNAVAILABLE_AFTER_LOSSY_TRANSFORMATION)
         self.assertGreater(len(res.operations_applied), 0)
 
         # Pure NFC without lossy changes is reversible without snapshot
@@ -58,6 +74,8 @@ class TestReversibleNormalization(unittest.TestCase):
         res_nfc = self.normalizer.normalize_detailed(nfc_only)
         self.assertFalse(res_nfc.lossy)
         self.assertTrue(res_nfc.reversible_without_snapshot)
+        self.assertIsNotNone(res_nfc.span_map)
+        self.assertEqual(res_nfc.span_mapping_status, SpanMappingStatus.EXACT)
 
 
 class TestConservativeCleaning(unittest.TestCase):

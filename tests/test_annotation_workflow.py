@@ -91,11 +91,12 @@ class TestAnnotationStateMachine(unittest.TestCase):
             )
 
         # Cannot promote to GOLD if human_review_complete is False
+        valid_hash = "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
         bad_evidence_1 = GoldPromotionEvidence(
             human_review_complete=False,
             review_session_id="SESSION_01",
             consent_record_ids=["C1"],
-            raw_submission_hashes=["hash1"],
+            raw_submission_hashes=[valid_hash],
             decoded_record_ids=["rec_test"],
             completeness_passed=True,
             disagreements_adjudicated_or_explicitly_resolved=True,
@@ -115,7 +116,7 @@ class TestAnnotationStateMachine(unittest.TestCase):
             human_review_complete=True,
             review_session_id="SESSION_01",
             consent_record_ids=["C1"],
-            raw_submission_hashes=["hash1"],
+            raw_submission_hashes=[valid_hash],
             decoded_record_ids=["other_record"],
             completeness_passed=True,
             disagreements_adjudicated_or_explicitly_resolved=True,
@@ -135,7 +136,7 @@ class TestAnnotationStateMachine(unittest.TestCase):
             human_review_complete=True,
             review_session_id="SESSION_01",
             consent_record_ids=["C1"],
-            raw_submission_hashes=["hash1"],
+            raw_submission_hashes=[valid_hash],
             decoded_record_ids=["rec_test"],
             completeness_passed=True,
             disagreements_adjudicated_or_explicitly_resolved=True,
@@ -155,7 +156,7 @@ class TestAnnotationStateMachine(unittest.TestCase):
             human_review_complete=True,
             review_session_id="SESSION_01",
             consent_record_ids=["C1"],
-            raw_submission_hashes=["hash1"],
+            raw_submission_hashes=[valid_hash],
             decoded_record_ids=["rec_test"],
             completeness_passed=True,
             disagreements_adjudicated_or_explicitly_resolved=False,
@@ -168,6 +169,26 @@ class TestAnnotationStateMachine(unittest.TestCase):
                 AnnotationRecordState.HUMAN_PILOT_VERIFIED,
                 AnnotationRecordState.GOLD,
                 evidence=bad_evidence_4,
+            )
+
+        # Cannot promote if raw_submission_hashes contains an invalid hash format (not 64-char sha256 hex)
+        bad_evidence_hash = GoldPromotionEvidence(
+            human_review_complete=True,
+            review_session_id="SESSION_01",
+            consent_record_ids=["C1"],
+            raw_submission_hashes=["not_a_valid_sha256_hash"],
+            decoded_record_ids=["rec_test"],
+            completeness_passed=True,
+            disagreements_adjudicated_or_explicitly_resolved=True,
+            evidence_review_complete=True,
+            gold_gate_authorization=True,
+        )
+        with self.assertRaises(IllegalPromotionError):
+            PromotionStateMachine.transition(
+                "rec_test",
+                AnnotationRecordState.HUMAN_PILOT_VERIFIED,
+                AnnotationRecordState.GOLD,
+                evidence=bad_evidence_hash,
             )
 
 

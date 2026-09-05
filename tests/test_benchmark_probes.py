@@ -107,6 +107,30 @@ class TestContaminationChecker(unittest.TestCase):
         rep = self.checker.audit(test, train)
         self.assertTrue(rep.is_clean)
         self.assertEqual(rep.contaminated_items_count, 0)
+        self.assertTrue(rep.clean_on_available_checks_only)
+        self.assertFalse(rep.all_required_checks_passed)
+
+    def test_extended_leakage_dimensions(self) -> None:
+        # 1. Source Semantic Unit Leakage
+        train_u = [{"item_id": "tr_u", "source_semantic_unit_id": "SU-01", "text": "বাঘটি বনে থাকে।"}]
+        test_u = [{"item_id": "te_u", "source_semantic_unit_id": "SU-01", "text": "একটি ভিন্ন বাক্য।"}]
+        rep_u = self.checker.audit(test_u, train_u)
+        self.assertFalse(rep_u.is_clean)
+        self.assertEqual(rep_u.incidents[0].incident_type, "SOURCE_UNIT_LEAKAGE")
+
+        # 2. Near Duplicate Cluster Leakage
+        train_c = [{"item_id": "tr_c", "near_duplicate_cluster_id": "NDC-99", "text": "তিনি অফিসে যান।"}]
+        test_c = [{"item_id": "te_c", "near_duplicate_cluster_id": "NDC-99", "text": "সে অফিসে যায়।"}]
+        rep_c = self.checker.audit(test_c, train_c)
+        self.assertFalse(rep_c.is_clean)
+        self.assertEqual(rep_c.incidents[0].incident_type, "NEAR_DUPLICATE_CLUSTER_LEAKAGE")
+
+        # 3. Conversation Leakage
+        train_cv = [{"item_id": "tr_cv", "conversation_id": "CONV-42", "text": "হ্যালো, কেমন আছো?"}]
+        test_cv = [{"item_id": "te_cv", "conversation_id": "CONV-42", "text": "আমি ভালো আছি।"}]
+        rep_cv = self.checker.audit(test_cv, train_cv)
+        self.assertFalse(rep_cv.is_clean)
+        self.assertEqual(rep_cv.incidents[0].incident_type, "CONVERSATION_LEAKAGE")
 
 
 class TestBenchmarkRunner(unittest.TestCase):

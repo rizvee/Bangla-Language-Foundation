@@ -76,6 +76,24 @@ class TestDatasetSplitPolicy(unittest.TestCase):
             intersection = part_ids & {"1", "2", "3"}
             self.assertTrue(len(intersection) == 0 or len(intersection) == 3, "Connected component items must not be split across partitions")
 
+    def test_alias_canonicalization_and_prefix_collision_prevention(self) -> None:
+        # Items with alias fields ('family_id' and 'sentence_family_id') must connect
+        # Items with same identifier across different dimensions ('FAMILY:ID-99' vs 'TEMPLATE:ID-99') must NOT collide
+        items = [
+            {"item_id": "fam_a", "sentence_family_id": "SHARED-FAM", "text": "A"},
+            {"item_id": "fam_b", "family_id": "SHARED-FAM", "text": "B"},
+            {"item_id": "tmpl_item", "semantic_template_id": "SHARED-FAM", "text": "C"},
+        ]
+        splitter = FamilyGroupedSplitter(train_ratio=0.5, dev_ratio=0.25, test_ratio=0.25, seed=42)
+        res = splitter.split(items)
+
+        # fam_a and fam_b must be grouped into the exact same partition
+        part_a = next(p for p in [res.train_items, res.dev_items, res.test_items] if any(it["item_id"] == "fam_a" for it in p))
+        self.assertTrue(any(it["item_id"] == "fam_b" for it in part_a), "Alias fields must connect to same component")
+
+        # Zero leakage must verify cleanly without collision between FAMILY:SHARED-FAM and TEMPLATE:SHARED-FAM
+        res.verify_no_leakage()
+
 
 class TestDistributionAuditor(unittest.TestCase):
 

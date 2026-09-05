@@ -17,7 +17,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Copyrighted reference monograph. Only abstract morphological paradigms, rules, and brief cited examples may be referenced."
+      "notes": "Copyrighted reference monograph. Only abstract morphological paradigms, rules, and brief cited examples may be referenced.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BA-SPELL-2016",
@@ -32,7 +39,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Official orthographic guidelines. Rule citations allowed under nominative fair use."
+      "notes": "Official orthographic guidelines. Rule citations allowed for linguistic citation; raw text redistribution excluded pending review.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BA-REGDICT-1965",
@@ -47,7 +61,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Regional dialect lexicon. Lexical features and phonetic variants extracted via abstract interfaces."
+      "notes": "Regional dialect lexicon. Lexical features and phonetic variants extracted via abstract interfaces.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BA-BENG-ENG-2019",
@@ -62,7 +83,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Standard bilingual dictionary. Headwords and definition senses referenced provisionally without bulk distribution."
+      "notes": "Standard bilingual dictionary. Headwords and definition senses referenced provisionally without bulk distribution.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "ODBL-SKC-1926",
@@ -77,7 +105,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Historic 1926 linguistic monograph in the public domain.",
-      "notes": "Public domain historical linguistics work (Suniti Kumar Chatterji, 1926)."
+      "notes": "Public domain historical linguistics work (Suniti Kumar Chatterji, 1926).",
+      "license_expression": "Public-Domain",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "AZAD-SYNTAX-1984",
@@ -92,7 +127,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Theoretical syntactic treatise. Syntactic schemas and transformations referenced under fair use."
+      "notes": "Theoretical syntactic treatise. Syntactic schemas and transformations referenced for linguistic reference; raw text redistribution excluded pending review.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "THOMPSON-GRAM-2012",
@@ -107,7 +149,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Published academic reference work. Copyright status unreviewed; raw text redistribution excluded.",
-      "notes": "Descriptive reference grammar. Citations and paradigm patterns referenced under fair use."
+      "notes": "Descriptive reference grammar. Citations and paradigm patterns referenced for linguistic reference; raw text redistribution excluded pending review.",
+      "license_expression": "All-Rights-Reserved",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "SOAS-SYLHETI-2014",
@@ -122,7 +171,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Third-party research release under metadata-stated CC-BY-NC-SA-4.0. Formal upstream terms require verification.",
-      "notes": "Academic dialect documentation. Non-commercial derivative research use only."
+      "notes": "Academic dialect documentation. Non-commercial derivative research use only.",
+      "license_expression": "CC-BY-NC-SA-4.0",
+      "license_verification_status": "LICENSE_PROVISIONAL",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "UD-BN-BRU-2021",
@@ -137,7 +193,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under CC-BY-SA-4.0.",
-      "notes": "Universal Dependencies BRAC University treebank. Openly redistributable under CC BY-SA 4.0."
+      "notes": "Universal Dependencies BRAC University treebank. Openly redistributable under CC BY-SA 4.0.",
+      "license_expression": "CC-BY-SA-4.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Bengali-BRU/master/LICENSE.txt",
+      "license_file_sha256": null
     },
     {
       "source_id": "UD-BN-PUD-2017",
@@ -152,7 +215,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under CC-BY-SA-4.0.",
-      "notes": "Parallel Universal Dependencies treebank. Openly redistributable under CC BY-SA 4.0."
+      "notes": "Parallel Universal Dependencies treebank. Openly redistributable under CC BY-SA 4.0.",
+      "license_expression": "CC-BY-SA-4.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": "https://raw.githubusercontent.com/UniversalDependencies/UD_Bengali-PUD/master/LICENSE.txt",
+      "license_file_sha256": null
     },
     {
       "source_id": "BANGLA2B-2022",
@@ -167,7 +237,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under MIT.",
-      "notes": "BanglaBERT benchmark toolkit. Code and models under MIT license."
+      "notes": "BanglaBERT benchmark toolkit. Code and models under MIT license.",
+      "license_expression": "MIT",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BANGLANMT-2020",
@@ -182,7 +259,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Third-party research release under metadata-stated CC-BY-NC-4.0. Formal upstream terms require verification.",
-      "notes": "BanglaNMT dataset. Restricted to non-commercial research."
+      "notes": "BanglaNMT dataset. Restricted to non-commercial research.",
+      "license_expression": "CC-BY-NC-4.0",
+      "license_verification_status": "LICENSE_PROVISIONAL",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "INDICCORP-V2-BN",
@@ -197,7 +281,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under CC-BY-4.0.",
-      "notes": "IndicCorp v2 Bengali monolingual crawl. Open under CC BY 4.0."
+      "notes": "IndicCorp v2 Bengali monolingual crawl. Open under CC BY 4.0.",
+      "license_expression": "CC-BY-4.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BENGLAI-SPEECH-2022",
@@ -212,7 +303,14 @@
       "commercial_use_allowed": true,
       "attribution_required": false,
       "basis": "Verified open repository release under CC0-1.0.",
-      "notes": "Common Voice speech transcriptions dedicated to public domain under CC0."
+      "notes": "Common Voice speech transcriptions dedicated to public domain under CC0.",
+      "license_expression": "CC0-1.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BANGLATLIT-2024",
@@ -227,7 +325,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under CC-BY-4.0.",
-      "notes": "Transliteration benchmark. Open under CC BY 4.0."
+      "notes": "Transliteration benchmark. Open under CC BY 4.0.",
+      "license_expression": "CC-BY-4.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BNSENTMIX-2025",
@@ -242,7 +347,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Verified open repository release under CC-BY-4.0.",
-      "notes": "Code-mixed sentence evaluation benchmark. Open under CC BY 4.0."
+      "notes": "Code-mixed sentence evaluation benchmark. Open under CC BY 4.0.",
+      "license_expression": "CC-BY-4.0",
+      "license_verification_status": "LICENSE_VERIFIED",
+      "derived_use_state": "DERIVED_FEATURE_ALLOWED",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BPCC-BENGALI-2023",
@@ -257,7 +369,14 @@
       "commercial_use_allowed": true,
       "attribution_required": true,
       "basis": "Third-party research release under metadata-stated CC-BY-4.0. Formal upstream terms require verification.",
-      "notes": "Bharat Parallel Corpus Collection Bengali slice. Partially verified."
+      "notes": "Bharat Parallel Corpus Collection Bengali slice. Partially verified.",
+      "license_expression": "CC-BY-4.0",
+      "license_verification_status": "LICENSE_PROVISIONAL",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "BANGLISH-TRANSLIT-2021",
@@ -272,7 +391,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Quarantined source due to defect, web contamination, or missing license documentation.",
-      "notes": "QUARANTINED. Unclear license and noisy machine labels. Blocked from corpus ingestion."
+      "notes": "QUARANTINED. Unclear license and noisy machine labels. Blocked from corpus ingestion.",
+      "license_expression": "Quarantined-Unverified",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "BLOCKED_FROM_USE",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "SENTIRABANGLA-2022",
@@ -287,7 +413,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Quarantined source due to defect, web contamination, or missing license documentation.",
-      "notes": "QUARANTINED. Potential scraped web contamination. Blocked from training and evaluation."
+      "notes": "QUARANTINED. Potential scraped web contamination. Blocked from training and evaluation.",
+      "license_expression": "Quarantined-Unverified",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "BLOCKED_FROM_USE",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "UD-BN-BENGAL-2023",
@@ -302,7 +435,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Quarantined source due to defect, web contamination, or missing license documentation.",
-      "notes": "QUARANTINED. Documented severe UPOS and DEPREL corruption. Excluded from crosswalk mappings."
+      "notes": "QUARANTINED. Documented severe UPOS and DEPREL corruption. Excluded from crosswalk mappings.",
+      "license_expression": "Quarantined-Defective",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "BLOCKED_FROM_USE",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "CHATGAYA-PHONO-2018",
@@ -317,13 +457,20 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Quarantined source due to defect, web contamination, or missing license documentation.",
-      "notes": "QUARANTINED. Non-redistributable thesis data without public distribution consent."
+      "notes": "QUARANTINED. Non-redistributable thesis data without public distribution consent.",
+      "license_expression": "Quarantined-Restricted",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "BLOCKED_FROM_USE",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "NCTB-TG-BANGLA",
       "artifact_id": "ART-NCTB-TG-CLASS4-PDF",
       "license_evidence_id": "EV-NCTB-TG-CHOBITAGULO",
-      "spdx_license": "Government-Educational-FairUse",
+      "spdx_license": "Unreviewed-Government-Educational",
       "source_tier": "TIER_B",
       "verification_status": "LEGAL_STATUS_UNREVIEWED",
       "raw_redistribution_state": "NO_RAW_REDISTRIBUTION",
@@ -332,13 +479,20 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Government/portal educational document. Copyright status unreviewed; no license inferred from hosting alone.",
-      "notes": "National Curriculum and Textbook Board teacher guide. Used strictly for curriculum attestation under educational fair use."
+      "notes": "National Curriculum and Textbook Board teacher guide. Used strictly for curriculum attestation for curriculum attestation; raw text redistribution excluded pending review.",
+      "license_expression": "Unreviewed-Government-Educational",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     },
     {
       "source_id": "ACCESSIBLE-DICT-A2I",
       "artifact_id": "ART-ACCESSIBLE-DICT-WEB",
       "license_evidence_id": "EV-ACCESSIBLE-DICT-JE3",
-      "spdx_license": "Government-Portal-FairUse",
+      "spdx_license": "Unreviewed-Government-Portal",
       "source_tier": "TIER_B",
       "verification_status": "LEGAL_STATUS_UNREVIEWED",
       "raw_redistribution_state": "NO_RAW_REDISTRIBUTION",
@@ -347,7 +501,14 @@
       "commercial_use_allowed": false,
       "attribution_required": true,
       "basis": "Government/portal educational document. Copyright status unreviewed; no license inferred from hosting alone.",
-      "notes": "Online accessible dictionary portal (a2i). Accessed dynamically via adapter interfaces; no static database dump stored."
+      "notes": "Online accessible dictionary portal (a2i). Accessed dynamically via adapter interfaces; no static database dump stored.",
+      "license_expression": "Unreviewed-Government-Portal",
+      "license_verification_status": "LEGAL_STATUS_UNREVIEWED",
+      "derived_use_state": "DERIVED_FEATURE_USE_REQUIRES_REVIEW",
+      "upstream_repository": null,
+      "upstream_commit_sha": null,
+      "license_file_url": null,
+      "license_file_sha256": null
     }
   ]
 }
