@@ -6,8 +6,12 @@ morphosyntactic realization for Bangla complex predicates.
 """
 
 from enum import Enum
-from typing import Any, Dict, List, Optional, Tuple
-from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine, ConjugationError
+from typing import Any, Dict, List, Optional, Set, Tuple
+from blf.linguistics.morphology.verbal_conjugator import (
+    VerbalConjugatorEngine,
+    ConjugationError,
+    VERIFIED_CONJUNCTIVE_PARTICIPLES,
+)
 from blf.linguistics.normalizer import normalize_bangla_text
 
 conjugator = VerbalConjugatorEngine()
@@ -186,6 +190,54 @@ VECTOR_INVENTORY: Dict[str, VectorVerbSpec] = {
 }
 
 
+# Established attested pole + vector combinations with positive evidence
+VERIFIED_VECTOR_COMBINATIONS: Set[Tuple[str, str]] = {
+    ("খা", "ফেলা"),
+    ("খাওয়া", "ফেলা"),
+    ("জান", "ফেলা"),
+    ("জানা", "ফেলা"),
+    ("বোঝ", "ফেলা"),
+    ("বোঝা", "ফেলা"),
+    ("পড়", "ফেলা"),
+    ("পড়া", "ফেলা"),
+    ("পড়", "ফেলা"),
+    ("পড়া", "ফেলা"),
+    ("লিখ", "ফেলা"),
+    ("লেখা", "ফেলা"),
+    ("বল", "ফেলা"),
+    ("বলা", "ফেলা"),
+    ("কর", "ফেলা"),
+    ("করা", "ফেলা"),
+    ("দেখ", "ফেলা"),
+    ("দেখা", "ফেলা"),
+    ("নে", "নেওয়া"),
+    ("নেওয়া", "নেওয়া"),
+    ("কিন", "নেওয়া"),
+    ("কিনা", "নেওয়া"),
+    ("কেনা", "নেওয়া"),
+    ("দে", "দেওয়া"),
+    ("দেওয়া", "দেওয়া"),
+    ("লিখ", "দেওয়া"),
+    ("লেখা", "দেওয়া"),
+    ("পাঠা", "দেওয়া"),
+    ("পাঠানো", "দেওয়া"),
+    ("হাস", "উঠা"),
+    ("হাসা", "উঠা"),
+    ("কাঁদ", "উঠা"),
+    ("কাঁদা", "উঠা"),
+    ("বোল", "উঠা"),
+    ("বলা", "উঠা"),
+    ("বস", "পড়া"),
+    ("বসা", "পড়া"),
+    ("ঘুমা", "পড়া"),
+    ("ঘুমানো", "পড়া"),
+    ("থাক", "যাওয়া"),
+    ("থাকা", "যাওয়া"),
+    ("চল", "যাওয়া"),
+    ("চলা", "যাওয়া"),
+}
+
+
 class ComplexPredicateEngine:
     """Validates and realizes complex predicates (compound verbs and LVCs)."""
 
@@ -205,6 +257,7 @@ class ComplexPredicateEngine:
         """
         Evaluates graded compatibility between a pole verb and an aspectual vector verb.
         Distinguishes auto-generation safety from linguistic impossibility.
+        Separates TYPE_LICENSED from VERIFIED_COMBINATION.
         """
         v_norm = normalize_bangla_text(vector_verb)
         p_norm = normalize_bangla_text(pole_verb)
@@ -223,17 +276,43 @@ class ComplexPredicateEngine:
 
         spec = VECTOR_INVENTORY[v_norm]
 
+        is_known_lemma = p_norm in VERIFIED_CONJUNCTIVE_PARTICIPLES or any(p_norm.startswith(s) for s in VERIFIED_CONJUNCTIVE_PARTICIPLES)
+        is_verified_combo = (p_norm, v_norm) in VERIFIED_VECTOR_COMBINATIONS
+
         if pole_semantic_type in spec.allowed_pole_types:
-            return {
-                "pole_verb": p_norm,
-                "vector_verb": v_norm,
-                "pole_semantic_type": pole_semantic_type,
-                "status": VectorCompatibilityStatus.ALLOWED,
-                "auto_generation_safe": True,
-                "evidence_state": "VERIFIED_STANDARD",
-                "reason": f"Pole type '{pole_semantic_type}' is canonically licensed with vector '{v_norm}'.",
-                "coercion_factors": [],
-            }
+            if is_verified_combo:
+                return {
+                    "pole_verb": p_norm,
+                    "vector_verb": v_norm,
+                    "pole_semantic_type": pole_semantic_type,
+                    "status": VectorCompatibilityStatus.ALLOWED,
+                    "auto_generation_safe": True,
+                    "evidence_state": "VERIFIED_COMBINATION",
+                    "reason": f"Combination of pole '{p_norm}' with vector '{v_norm}' is attested and verified in BDSB.",
+                    "coercion_factors": [],
+                }
+            elif is_known_lemma:
+                return {
+                    "pole_verb": p_norm,
+                    "vector_verb": v_norm,
+                    "pole_semantic_type": pole_semantic_type,
+                    "status": VectorCompatibilityStatus.ALLOWED,
+                    "auto_generation_safe": False,
+                    "evidence_state": "TYPE_LICENSED",
+                    "reason": f"Pole type '{pole_semantic_type}' is licensed by vector '{v_norm}', but specific lexeme combination '{p_norm}+{v_norm}' is not individually verified.",
+                    "coercion_factors": [],
+                }
+            else:
+                return {
+                    "pole_verb": p_norm,
+                    "vector_verb": v_norm,
+                    "pole_semantic_type": pole_semantic_type,
+                    "status": VectorCompatibilityStatus.UNKNOWN,
+                    "auto_generation_safe": False,
+                    "evidence_state": "TYPE_LICENSED",
+                    "reason": f"Semantic type '{pole_semantic_type}' matches vector requirements, but pole verb '{p_norm}' is unmodeled/unregistered; fails closed without lexeme verification.",
+                    "coercion_factors": [],
+                }
 
         if pole_semantic_type in spec.context_dependent_pole_types:
             return {

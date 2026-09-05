@@ -204,8 +204,8 @@
       "candidate_b": "বইগুলোটা নিয়ে এসো।",
       "candidate_c": "বইটাগুলো নিয়ে এসো।",
       "phenomenon": "Classifier and Plural Suffix Ordering & Stacking (N+গুলো vs N+টা+গুলো vs N+গুলো+টা)",
-      "source_evidence": "BA-GRAM-2011 Vol. 2; NCTB Teacher Edition (attestation of N+টা+গুলো pattern)",
-      "system_hypothesis": "Candidate A is the strong canonical/neutral standard form. Candidate C ('বইটাগুলো') belongs to an independently attested N+টা+গুলো pattern (cf. official NCTB educational material 'ছবিটাগুলো'), whose exact lexical/register distribution across BDSB requires human calibration rather than categorical rejection. Candidate B ('বইগুলোটা') represents a separate N+গুলো+টা pattern whose status must not be inferred from N+টা+গুলো and remains register-unresolved unless independently evidenced.",
+      "source_evidence": "BA-GRAM-2011; NCTB-TG-BANGLA (attestation of N+টা+গুলো pattern)",
+      "system_hypothesis": "Candidate A ('বইগুলো') is the canonical neutral standard form. Candidate C ('বইটাগুলো') belongs to an independently attested N+টা+গুলো pattern (cf. official NCTB educational material 'ছবিটাগুলো'), whose status is calibrated as ATTESTED_OFFICIAL_EDUCATIONAL_USAGE rather than productive standard BDSB, requiring human review calibration. Candidate B ('বইগুলোটা') represents a separate N+গুলো+টা pattern whose status must not be inferred from N+টা+গুলো and remains REGISTER_UNRESOLVED.",
       "uncertainty_basis": "Distinction between canonical standard (A), attested but register-variable N+টা+গুলো stacking (C, priority CRITICAL for human review), and unresolved inverted N+গুলো+টা stacking (B)."
     },
     {
@@ -217,8 +217,8 @@
       "candidate_b": "ছেলেটাদেরকে ডাকো।",
       "candidate_c": "ছেলেগুলাকে ডাকো।",
       "phenomenon": "Human Plural Oblique & Colloquial Morphotactics",
-      "source_evidence": "BA-GRAM-2011; Historical & Contemporary Bangladesh Usage Attestation",
-      "system_hypothesis": "Candidate A ('ছেলেদেরকে') is the formal/standard BDSB candidate. Candidate C ('ছেলেগুলাকে') is an attested conversational/regional/popular Bangla form with both historical literary and contemporary Bangladesh attestation, and must not be labeled globally ungrammatical. Candidate B ('ছেলেটাদেরকে') represents an attested colloquial spoken pattern whose BDSB standard register status remains less secure (REGISTER_UNRESOLVED) and requires targeted human review (Priority: HIGH).",
+      "source_evidence": "BA-GRAM-2011; ODBL-SKC-1926; Contemporary Bangladesh Usage Attestation",
+      "system_hypothesis": "Candidate A ('ছেলেদেরকে') is the formal/standard BDSB candidate. Candidate C ('ছেলেগুলাকে') is an attested conversational/regional form with historical literary (ODBL-SKC-1926) and contemporary Bangladesh attestation, and must not be labeled globally ungrammatical. Candidate B ('ছেলেটাদেরকে') represents an attested colloquial spoken pattern whose BDSB standard register status remains REGISTER_UNRESOLVED and requires targeted human review (Priority: HIGH).",
       "uncertainty_basis": "Register distribution across formal standard (A), widespread conversational/popular plural (C), and dialectal/spoken stacked oblique (B) rather than binary grammatical/ungrammatical opposition."
     },
     {
@@ -308,7 +308,7 @@
       "candidate_b": "সে ঢাকায় থেকে ফেলল।",
       "candidate_c": "সে ঢাকায় থাকল।",
       "phenomenon": "Event-Structure & Aspectual Vector Compatibility (যাওয়া vs ফেলা vs Bare Predicate)",
-      "source_evidence": "Azad 1984; Linguistic Event-Structure Calibration",
+      "source_evidence": "AZAD-SYNTAX-1984; THOMPSON-GRAM-2012",
       "system_hypothesis": "Candidate A ('থেকে গেল') is the natural standard for an aspectual 'remain/stay on' reading. Candidate C ('থাকল') is the natural unmarked standard past. Candidate B ('থেকে ফেলল') is a marked, context-dependent candidate requiring telic coercion or unexpected/regretful stance; its exact acceptability and register status require human review (Priority: HIGH) rather than universal ungrammatical classification.",
       "uncertainty_basis": "Graded aspectual compatibility of vector 'ফেলা' with stative posture roots under event coercion, unexpectedness, and subjective speaker evaluation."
     },
@@ -399,8 +399,8 @@
       "candidate_b": "তুমি কি চাও?",
       "candidate_c": "তোমার কী চাই?",
       "phenomenon": "Interrogative Wh-Orthography vs Argument-Structure Construction (Nominative vs Experiencer)",
-      "source_evidence": "BA-SPELL-2016; Syntactic Argument Structure Calibration",
-      "system_hypothesis": "Candidate A ('তুমি কী চাও?') is the neutral standard substantive Wh-question with nominative subject and canonical 'কী' spelling. Candidate B ('তুমি কি চাও?') mixes polar-interrogative particle orthography with transitive Wh-meaning, reflecting digital spelling variation or potential polar ambiguity ('Do you want [it]?'). Candidate C ('তোমার কী চাই?') represents a structurally distinct construction (genitive experiencer + defective/modal predicate 'চাই') rather than an ungrammatical variant; human reviewers should evaluate orthographic distinction, syntactic construction, and intended-meaning fit separately (Priority: CALIBRATION / MEDIUM).",
+      "source_evidence": "BA-SPELL-2016; AZAD-SYNTAX-1984",
+      "system_hypothesis": "Candidate A ('তুমি কী চাও?') is the neutral standard substantive Wh-question with nominative subject and canonical 'কী' spelling (SUPPORTED_STANDARD). Candidate B ('তুমি কি চাও?') mixes polar-interrogative particle orthography with transitive Wh-meaning (POLAR_OR_ORTHOGRAPHIC_AMBIGUITY). Candidate C ('তোমার কী চাই?') represents a structurally distinct construction (genitive experiencer + defective/modal predicate 'চাই') that is not automatically semantically or stylistically equivalent to nominative Candidate A; human reviewers must evaluate register and meaning equivalence separately (Priority: CALIBRATION / MEDIUM).",
       "uncertainty_basis": "Independence of orthographic Wh-spelling rules ('কি' vs 'কী') from argument-structure construction choices (nominative-accusative vs genitive-experiencer)."
     },
     {
@@ -529,8 +529,8 @@
       "candidate_b": "আরে, সে এসে গেছে যে!",
       "candidate_c": "আরে, সে কি এসে গেছে!",
       "phenomenon": "Polyfunctional Discourse Particle 'যে' (Topic-Adjacent vs Clause-Final) & Interrogative Surprise Strategy",
-      "source_evidence": "BA-GRAM-2011; Bangladesh Accessible Dictionary Polyfunctionality Documentation",
-      "system_hypothesis": "Candidates A ('সে যে এসে গেছে!') and B ('সে এসে গেছে যে!') are both grammatically licensed but differ in discourse anchoring, information structure, stance, and mirativity (A: topic-adjacent mirative assertion; B: clause-final evaluative assertion / reproach / reminder). Candidate C ('সে কি এসে গেছে!') employs a distinct 'কি'-based interrogative/surprise strategy and should be evaluated as a pragmatic meaning alternative rather than a simple grammatical vs ungrammatical binary (Priority: HIGH).",
+      "source_evidence": "BA-GRAM-2011; ACCESSIBLE-DICT-A2I",
+      "system_hypothesis": "Candidates A ('সে যে এসে গেছে!') and B ('সে এসে গেছে যে!') are both grammatically licensed with multiple plausible discourse senses (mirative discovery vs emphatic stance; clause-final evaluative reproach vs stance); both are preserved as AMBIGUOUS pending human reviewer calibration. Candidate C ('সে কি এসে গেছে!') employs a distinct 'কি'-based interrogative/surprise strategy and should be evaluated as a distinct pragmatic alternative (Priority: HIGH).",
       "uncertainty_basis": "Polyfunctional pragmatic behavior of 'যে' across syntactic positions (topic-adjacent vs clause-final) and interaction with speaker commitment, mirativity, and illocutionary force."
     }
   ]

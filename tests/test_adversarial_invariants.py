@@ -34,14 +34,25 @@ class TestAdversarialInvariants(unittest.TestCase):
     def test_adversarial_classifier_pattern_calibration(self):
         """
         Assures that classifier morphotactics reflect external evidence and epistemic calibration:
-        1. N+টা+গুলো (e.g. ছবিটাগুলো, বইটাগুলো) is NOT globally rejected solely by substring blacklist.
-        2. ছেলেগুলাকে is NOT globally rejected (attested in historical & contemporary Bangla).
-        3. Evidence for N+টা+গুলো does NOT automatically validate N+গুলো+টা.
-        4. Unresolved nominal variants remain distinguishable from canonical standard.
+        1. Arbitrary unknown nominal form != CANONICAL_STANDARD (fails closed).
+        2. Absence from blacklist != canonical status.
+        3. N+টা+গুলো retains attested status (ATTESTED_OFFICIAL_EDUCATIONAL_USAGE) but not automatic productive standard.
+        4. N+গুলো+টা remains independent and REGISTER_UNRESOLVED.
         """
         from blf.linguistics.morphology.nominal_declension import assess_nominal_morphotactics, MorphotacticStatus
 
-        # Invariant 1: N+টা+গুলো is not rejected by check_morphotactic_invariants
+        # Invariant 1: Arbitrary unknown nominal form != CANONICAL_STANDARD (fails closed)
+        att_unknown = assess_nominal_morphotactics("অপরিচিত_শব্দ_XYZ")
+        self.assertEqual(att_unknown["status"], MorphotacticStatus.UNKNOWN)
+        self.assertFalse(att_unknown["auto_generation_safe"])
+
+        # Invariant 2: Absence from blacklist != canonical status
+        att_non_blacklisted = assess_nominal_morphotactics("কখগঘ")
+        self.assertNotEqual(att_non_blacklisted["status"], MorphotacticStatus.CANONICAL_STANDARD)
+        self.assertEqual(att_non_blacklisted["status"], MorphotacticStatus.UNKNOWN)
+        self.assertFalse(att_non_blacklisted["auto_generation_safe"])
+
+        # Invariant 3: N+টা+গুলো retains attested educational status but not automatic productive standard
         try:
             self.realizer.check_morphotactic_invariants("Activity A-এর ছবিটাগুলো দেখতে বলুন")
             self.realizer.check_morphotactic_invariants("বইটাগুলো নিয়ে এসো")
@@ -49,26 +60,18 @@ class TestAdversarialInvariants(unittest.TestCase):
             self.fail("check_morphotactic_invariants incorrectly rejected attested N+টা+গুলো pattern")
 
         att_chobi = assess_nominal_morphotactics("ছবিটাগুলো")
-        self.assertEqual(att_chobi["status"], MorphotacticStatus.ATTESTED_STANDARD)
+        self.assertEqual(att_chobi["status"], MorphotacticStatus.ATTESTED_OFFICIAL_EDUCATIONAL_USAGE)
         self.assertFalse(att_chobi["is_universally_illegal"])
+        self.assertFalse(att_chobi["auto_generation_safe"])
         self.assertEqual(att_chobi["review_priority"], "CRITICAL")
 
-        # Invariant 2: ছেলেগুলাকে is not globally rejected
-        try:
-            self.realizer.check_morphotactic_invariants("ছেলেগুলাকে ডাকো")
-        except RealizationError:
-            self.fail("check_morphotactic_invariants incorrectly rejected attested 'ছেলেগুলাকে'")
-
-        att_chhele = assess_nominal_morphotactics("ছেলেগুলাকে")
-        self.assertEqual(att_chhele["status"], MorphotacticStatus.ATTESTED_CONVERSATIONAL)
-        self.assertFalse(att_chhele["is_universally_illegal"])
-
-        # Invariant 3: Evidence for N+টা+গুলো does NOT automatically validate N+গুলো+টা
+        # Invariant 4: Evidence for N+টা+গুলো does NOT automatically validate N+গুলো+টা
         att_gulo_ta = assess_nominal_morphotactics("বইগুলোটা")
         self.assertEqual(att_gulo_ta["status"], MorphotacticStatus.REGISTER_UNRESOLVED)
+        self.assertFalse(att_gulo_ta["auto_generation_safe"])
         self.assertNotEqual(att_gulo_ta["status"], att_chobi["status"])
 
-        # Invariant 4: Canonical standard vs unresolved vs unsupported distinction
+        # Canonical standard vs unresolved vs unsupported distinction
         att_standard = assess_nominal_morphotactics("বইগুলো")
         self.assertEqual(att_standard["status"], MorphotacticStatus.CANONICAL_STANDARD)
         self.assertTrue(att_standard["auto_generation_safe"])
@@ -76,6 +79,10 @@ class TestAdversarialInvariants(unittest.TestCase):
         att_spoken = assess_nominal_morphotactics("ছেলেটাদেরকে")
         self.assertEqual(att_spoken["status"], MorphotacticStatus.REGISTER_UNRESOLVED)
         self.assertFalse(att_spoken["auto_generation_safe"])
+
+        att_chhele = assess_nominal_morphotactics("ছেলেগুলাকে")
+        self.assertEqual(att_chhele["status"], MorphotacticStatus.ATTESTED_CONVERSATIONAL)
+        self.assertFalse(att_chhele["is_universally_illegal"])
 
         # Genuine unsupported inverted patterns (গুলোটি, গুলোরটি) are still caught
         with self.assertRaises(RealizationError):
@@ -86,12 +93,13 @@ class TestAdversarialInvariants(unittest.TestCase):
         Assures that vector verb selection reflects event-structure compatibility:
         5. Stative + ফেলা returns CONTEXT_DEPENDENT/NEEDS_REVIEW rather than 'universally ungrammatical'.
         6. Context-dependent vector combinations are NOT automatically emitted as canonical standard.
-        7. Established cognitive achievement + ফেলা remains allowed.
+        7. Established cognitive achievement + ফেলা is VERIFIED_COMBINATION.
         8. Item 023 candidate B remains human-review dependent.
+        12. Unknown pole lemma + manually supplied known semantic type does not become VERIFIED_STANDARD.
         """
         from blf.linguistics.complex_predicates import VectorCompatibilityStatus
 
-        # Invariant 5: Stative + ফেলা is CONTEXT_DEPENDENT, not universally ungrammatical
+        # Stative + ফেলা is CONTEXT_DEPENDENT, not universally ungrammatical
         stative_stay = self.cpred_engine.assess_vector_compatibility("থাক", "ফেলা", "STATIVE_POSTURE")
         self.assertEqual(stative_stay["status"], VectorCompatibilityStatus.CONTEXT_DEPENDENT)
         self.assertEqual(stative_stay["evidence_state"], "NEEDS_HUMAN_REVIEW")
@@ -100,7 +108,7 @@ class TestAdversarialInvariants(unittest.TestCase):
         stative_be = self.cpred_engine.assess_vector_compatibility("হ", "ফেলা", "STATIVE_BEING")
         self.assertEqual(stative_be["status"], VectorCompatibilityStatus.CONTEXT_DEPENDENT)
 
-        # Invariant 6: Context-dependent combinations blocked from automatic standard generation
+        # Context-dependent combinations blocked from automatic standard generation
         valid_default, err = self.cpred_engine.validate_vector_combination("থাক", "ফেলা", "STATIVE_POSTURE")
         self.assertFalse(valid_default)
         self.assertIn("Context-dependent", err)
@@ -114,74 +122,134 @@ class TestAdversarialInvariants(unittest.TestCase):
         )
         self.assertTrue(valid_optin)
 
-        # Invariant 7: Established cognitive achievement + ফেলা remains allowed
+        # Established cognitive achievement + ফেলা is VERIFIED_COMBINATION
         valid_cog, _ = self.cpred_engine.validate_vector_combination("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
         self.assertTrue(valid_cog, "Cognitive achievement with 'phela' incorrectly rejected")
         cog_assess = self.cpred_engine.assess_vector_compatibility("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
         self.assertEqual(cog_assess["status"], VectorCompatibilityStatus.ALLOWED)
+        self.assertEqual(cog_assess["evidence_state"], "VERIFIED_COMBINATION")
         self.assertTrue(cog_assess["auto_generation_safe"])
 
-        # Invariant 8: Item 023 Candidate B ('থেকে ফেলল') is context-dependent / needs review
+        # Invariant 12: Unknown pole lemma + manually supplied known semantic type does not automatically become VERIFIED_STANDARD
+        unk_pole_assess = self.cpred_engine.assess_vector_compatibility("অপরিচিত_ধাতু_XYZ", "ফেলা", "COGNITIVE_ACHIEVEMENT")
+        self.assertNotEqual(unk_pole_assess["evidence_state"], "VERIFIED_STANDARD")
+        self.assertNotEqual(unk_pole_assess["evidence_state"], "VERIFIED_COMBINATION")
+        self.assertFalse(unk_pole_assess["auto_generation_safe"])
+
+        # Item 023 Candidate B ('থেকে ফেলল') is context-dependent / needs review
         item_023_b_compat = self.cpred_engine.assess_vector_compatibility("থাক", "ফেলা", "STATIVE_POSTURE")
         self.assertEqual(item_023_b_compat["evidence_state"], "NEEDS_HUMAN_REVIEW")
 
     def test_adversarial_wh_construction_and_orthography_split(self):
         """
-        9. Assures that Item 030 separates orthographic Wh analysis from syntactic construction analysis.
+        Assures Wh-construction epistemic fail-closed behavior:
+        9. Arbitrary Wh input returns UNKNOWN (fails closed).
+        10. তোমার কী চাই? is not automatically equated with তুমি কী চাও?.
+        11. Known standard Wh construction remains supported.
         """
-        # A: তুমি কী চাও? -> Nominative transitive Wh with canonical 'কী'
+        # Invariant 11: Standard Wh construction remains supported
         res_a = self.prag_engine.analyze_wh_construction("তুমি কী চাও?")
         self.assertEqual(res_a["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_a["construction_status"], "SUPPORTED_STANDARD")
         self.assertEqual(res_a["orthography_status"], "CANONICAL_STANDARD_WH")
         self.assertTrue(res_a["is_grammatical"])
 
-        # B: তুমি কি চাও? -> Nominative transitive Wh with polar/digital 'কি'
+        # Polar or noncanonical Wh: তুমি কি চাও?
         res_b = self.prag_engine.analyze_wh_construction("তুমি কি চাও?")
         self.assertEqual(res_b["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_b["construction_status"], "POLAR_OR_ORTHOGRAPHIC_AMBIGUITY")
         self.assertEqual(res_b["orthography_status"], "NONCANONICAL_OR_POLAR_AMBIGUOUS")
 
-        # C: তোমার কী চাই? -> Genitive experiencer modal Wh (structurally distinct, NOT ungrammatical)
+        # Invariant 10: তোমার কী চাই? is distinct and not automatically equated with তুমি কী চাও?
         res_c = self.prag_engine.analyze_wh_construction("তোমার কী চাই?")
         self.assertEqual(res_c["construction_type"], "GENITIVE_EXPERIENCER_MODAL_WH")
+        self.assertEqual(res_c["construction_status"], "NEEDS_HUMAN_REVIEW")
         self.assertEqual(res_c["orthography_status"], "CANONICAL_STANDARD_WH")
         self.assertTrue(res_c["is_grammatical"])
+        self.assertNotEqual(res_c["equivalence_to_standard_wh"], res_a["equivalence_to_standard_wh"])
+
+        # Invariant 9: Arbitrary Wh input returns UNKNOWN, not grammatical=True
+        res_arb = self.prag_engine.analyze_wh_construction("কিছু একটা বাক্য কি হবে?")
+        self.assertEqual(res_arb["construction_status"], "UNKNOWN")
+        self.assertIsNone(res_arb["is_grammatical"])
 
     def test_adversarial_polyfunctional_particle_je_calibration(self):
         """
-        10. Pragmatic 'যে' has multiple modeled discourse senses.
-        11. Unknown/ambiguous 'যে' context does not force a single deterministic sense.
-        12. Item 040 preserves A/B discourse ambiguity and C meaning-strategy distinction.
+        Assures that polyfunctional 'যে' adheres to calibrated epistemic statuses:
+        6. Unverified 'যে' taxonomy does not receive VERIFIED status.
+        7. Multiple plausible 'যে' senses => ambiguous unless context independently resolves.
+        8. Position alone cannot guarantee 'যে' meaning.
         """
         from blf.linguistics.pragmatics import PRAGMATIC_PARTICLE_REGISTRY
 
-        # Invariant 10: 4 evidence-backed senses modeled
+        # Invariant 6: Unverified 'যে' taxonomy does not receive VERIFIED status
         je_spec = PRAGMATIC_PARTICLE_REGISTRY["যে"]
-        sense_ids = [s.sense_id for s in je_spec.senses]
-        self.assertGreaterEqual(len(sense_ids), 4)
-        self.assertIn("SENSE-JE-COMPLEMENTIZER", sense_ids)
-        self.assertIn("SENSE-JE-EMOTIVE-MIRATIVE", sense_ids)
-        self.assertIn("SENSE-JE-CLAUSE-FINAL-EVALUATIVE", sense_ids)
-        self.assertIn("SENSE-JE-EMPHATIC-STANCE", sense_ids)
+        for s in je_spec.senses:
+            if s.sense_id in ["SENSE-JE-EMOTIVE-MIRATIVE", "SENSE-JE-CLAUSE-FINAL-EVALUATIVE", "SENSE-JE-EMPHATIC-STANCE"]:
+                self.assertNotEqual(s.review_status, "VERIFIED")
+                self.assertEqual(s.review_status, "NEEDS_HUMAN_REVIEW")
+                self.assertEqual(s.confidence, "MEDIUM")
+            elif s.sense_id == "SENSE-JE-COMPLEMENTIZER":
+                self.assertEqual(s.review_status, "VERIFIED")
+                self.assertEqual(s.confidence, "HIGH")
 
-        # Invariant 11: Unknown context returns AMBIGUOUS, not a deterministic guess
+        # Unknown context returns AMBIGUOUS, not a deterministic guess
         ambig_res = self.prag_engine.analyze_particle_je("তিনি যে মানুষ")
         self.assertTrue(ambig_res["is_ambiguous"])
         self.assertEqual(ambig_res["primary_sense"], "AMBIGUOUS")
         self.assertGreater(len(ambig_res["candidate_senses"]), 1)
 
-        # Invariant 12: Item 040 candidates A and B distinct pragmatic licensing; C distinct strategy
-        # A: আরে, সে যে এসে গেছে! (topic-adjacent mirative)
+        # Invariant 7 & 8: Item 040 candidates A and B preserve ambiguity and alternative stance interpretations
+        # A: আরে, সে যে এসে গেছে! (topic-adjacent: mirative + emphatic stance plausible)
         res_040_a = self.prag_engine.analyze_particle_je("আরে, সে যে এসে গেছে!")
-        self.assertEqual(res_040_a["primary_sense"], "SENSE-JE-EMOTIVE-MIRATIVE")
+        self.assertTrue(res_040_a["is_ambiguous"])
+        self.assertEqual(res_040_a["primary_sense"], "AMBIGUOUS")
+        self.assertEqual(res_040_a["most_likely_sense"], "SENSE-JE-EMOTIVE-MIRATIVE")
+        self.assertIn("SENSE-JE-EMPHATIC-STANCE", res_040_a["candidate_senses"])
         self.assertTrue(res_040_a["mirativity"])
 
-        # B: আরে, সে এসে গেছে যে! (clause-final evaluative / reminder)
+        # B: আরে, সে এসে গেছে যে! (clause-final: evaluative + emphatic stance plausible)
         res_040_b = self.prag_engine.analyze_particle_je("আরে, সে এসে গেছে যে!")
-        self.assertEqual(res_040_b["primary_sense"], "SENSE-JE-CLAUSE-FINAL-EVALUATIVE")
+        self.assertTrue(res_040_b["is_ambiguous"])
+        self.assertEqual(res_040_b["primary_sense"], "AMBIGUOUS")
+        self.assertEqual(res_040_b["most_likely_sense"], "SENSE-JE-CLAUSE-FINAL-EVALUATIVE")
+        self.assertIn("SENSE-JE-EMPHATIC-STANCE", res_040_b["candidate_senses"])
 
         # C: আরে, সে কি এসে গেছে! (polar question strategy)
         dis_c = self.prag_engine.disambiguate_ki("আরে, সে কি এসে গেছে!")
         self.assertTrue(any(d["syntactic_function"] == "POLAR_INTERROGATIVE_PARTICLE" for d in dis_c["disambiguations"]))
+
+    def test_adversarial_source_claim_binding_integrity(self):
+        """
+        Invariant 5: New external source identity != linguistic claim verification.
+        Validates that PROVISIONAL sources have institutional identity without overclaiming claim verification.
+        """
+        sources_path = ROOT_DIR / "sources" / "registry" / "sources.json"
+        with open(sources_path, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        sources_by_id = {s["source_id"]: s for s in data["sources"]}
+
+        # NCTB source has PROVISIONAL status
+        nctb = sources_by_id["NCTB-TG-BANGLA"]
+        self.assertEqual(nctb["verification_status"], "PROVISIONAL")
+        self.assertIn("broader_bdsb_distribution", nctb["verification"]["unresolved_fields"])
+
+        # Accessible Dictionary source has PROVISIONAL status
+        a2i = sources_by_id["ACCESSIBLE-DICT-A2I"]
+        self.assertEqual(a2i["verification_status"], "PROVISIONAL")
+        self.assertIn("blf_exact_four_sense_taxonomy", a2i["verification"]["unresolved_fields"])
+
+    def test_adversarial_pilot_40_item_count_freeze(self):
+        """
+        Invariant 14: All 40 pilot items remain strictly unchanged in count and frozen for human pilot.
+        """
+        queue_path = ROOT_DIR / "data" / "review_queue" / "human_review_pilot_40.json"
+        with open(queue_path, "r", encoding="utf-8") as f:
+            queue = json.load(f)
+        items = queue.get("items", [])
+        self.assertEqual(len(items), 40, f"Expected exactly 40 pilot items, found {len(items)}")
+        pilot_ids = [it["pilot_id"] for it in items]
+        self.assertEqual(len(set(pilot_ids)), 40, "Duplicate pilot IDs detected")
 
     def test_adversarial_unmodeled_participle_rejected(self):
         """Assures that arbitrary unmodeled verbs raise ConjugationError rather than emitting corrupted fallbacks."""

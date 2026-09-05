@@ -219,16 +219,16 @@ PRAGMATIC_PARTICLE_REGISTRY: Dict[str, PragmaticParticleSpec] = {
                 scope="Proposition / Clause",
                 discourse_function="Emotive astonishment, mirative discovery, or evidential reminder ('Look, ...!').",
                 register="COLLOQUIAL_STANDARD",
-                confidence="HIGH",
-                confidence_basis="Attested in BA-GRAM-2011 and Bangladesh Accessible Dictionary.",
+                confidence="MEDIUM",
+                confidence_basis="Supported by Bangladesh Accessible Dictionary examples and conversational evidence; BLF-engineered category requiring human reviewer calibration.",
                 host_position="POST_TOPIC_PRE_PREDICATE",
                 speaker_commitment="HIGH",
                 common_ground_relation="NEW_INFORMATION_ASSERTION",
                 evaluation="POSITIVE_OR_NEGATIVE_SURPRISE",
                 mirativity=True,
                 illocution_type="MIRATIVE_ASSERTION",
-                evidence_strength="HIGH",
-                review_status="VERIFIED",
+                evidence_strength="PROVISIONAL",
+                review_status="NEEDS_HUMAN_REVIEW",
             ),
             ParticleSense(
                 sense_id="SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
@@ -236,16 +236,16 @@ PRAGMATIC_PARTICLE_REGISTRY: Dict[str, PragmaticParticleSpec] = {
                 scope="Clause / Utterance",
                 discourse_function="Clause-final evaluative assertion, reminder, mild reproach, or appeal for recognition ('..., you see! / don't you see?').",
                 register="COLLOQUIAL_AND_CONVERSATIONAL",
-                confidence="HIGH",
-                confidence_basis="Documented in Bangladesh Accessible Dictionary (disgust, disappointment, enquiry, remonstrance) and conversational BDSB.",
+                confidence="MEDIUM",
+                confidence_basis="Documented in Bangladesh Accessible Dictionary (disgust, disappointment, enquiry, remonstrance) and conversational BDSB; BLF-engineered category requiring human reviewer calibration.",
                 host_position="CLAUSE_FINAL",
                 speaker_commitment="HIGH",
                 common_ground_relation="APPEAL_TO_COMMON_GROUND_OR_RECOGNITION",
                 evaluation="EVALUATIVE_REPROACH_OR_REMINDER",
                 mirativity=False,
                 illocution_type="EVALUATIVE_EXCLAMATIVE",
-                evidence_strength="HIGH",
-                review_status="VERIFIED",
+                evidence_strength="PROVISIONAL",
+                review_status="NEEDS_HUMAN_REVIEW",
             ),
             ParticleSense(
                 sense_id="SENSE-JE-EMPHATIC-STANCE",
@@ -254,15 +254,15 @@ PRAGMATIC_PARTICLE_REGISTRY: Dict[str, PragmaticParticleSpec] = {
                 discourse_function="Emphatic affirmation, speaker stance, or contrastive focus against doubt.",
                 register="COLLOQUIAL_STANDARD",
                 confidence="MEDIUM",
-                confidence_basis="Attested in Bangladesh Accessible Dictionary (emphasis, disagreement/disapproval) and literary/spoken usage.",
+                confidence_basis="Hypothesized pragmatic stance sense based on lexical descriptions; requires human reviewer calibration.",
                 host_position="TOPIC_ADJACENT",
                 speaker_commitment="STRONG_AFFIRMATION",
                 common_ground_relation="COUNTER_PRESUPPOSITION",
                 evaluation="EMPHATIC_ASSERTION",
                 mirativity=False,
                 illocution_type="EMPHATIC_ASSERTION",
-                evidence_strength="MEDIUM",
-                review_status="VERIFIED",
+                evidence_strength="PROVISIONAL",
+                review_status="NEEDS_HUMAN_REVIEW",
             ),
         ],
     ),
@@ -570,11 +570,13 @@ class PragmaticsEngine:
                     "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
                     "SENSE-JE-EMPHATIC-STANCE",
                 ],
-                "primary_sense": "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
-                "is_ambiguous": False,
+                "primary_sense": "AMBIGUOUS",
+                "most_likely_sense": "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+                "heuristic_candidate_sense": "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+                "is_ambiguous": True,
                 "mirativity": False,
-                "confidence": "HIGH",
-                "reason": "Clause-final evaluative particle encoding reminder, mild reproach, or evaluative conclusion.",
+                "confidence": "MEDIUM",
+                "reason": "Clause-final position allows both evaluative reminder/reproach and emphatic speaker stance; multiple senses plausible without prosodic/pragmatic resolution.",
             }
 
         # 3. Topic-Adjacent / Pre-Predicate Exclamative (Mirative)
@@ -589,11 +591,13 @@ class PragmaticsEngine:
                     "SENSE-JE-EMOTIVE-MIRATIVE",
                     "SENSE-JE-EMPHATIC-STANCE",
                 ],
-                "primary_sense": "SENSE-JE-EMOTIVE-MIRATIVE",
-                "is_ambiguous": False,
+                "primary_sense": "AMBIGUOUS",
+                "most_likely_sense": "SENSE-JE-EMOTIVE-MIRATIVE",
+                "heuristic_candidate_sense": "SENSE-JE-EMOTIVE-MIRATIVE",
+                "is_ambiguous": True,
                 "mirativity": True,
-                "confidence": "HIGH",
-                "reason": "Topic-adjacent exclamative particle encoding speaker astonishment / evidential mirativity.",
+                "confidence": "MEDIUM",
+                "reason": "Topic-adjacent exclamative strongly suggests mirative discovery but preserves alternative emphatic stance interpretation.",
             }
 
         # 4. Unknown or Underspecified Context -> AMBIGUOUS fallback (never guess single sense)
@@ -607,6 +611,8 @@ class PragmaticsEngine:
                 "SENSE-JE-EMPHATIC-STANCE",
             ],
             "primary_sense": "AMBIGUOUS",
+            "most_likely_sense": None,
+            "heuristic_candidate_sense": None,
             "is_ambiguous": True,
             "mirativity": None,
             "confidence": "LOW",
@@ -617,6 +623,7 @@ class PragmaticsEngine:
         """
         Distinguishes Wh-orthography ('কী' vs 'কি') from argument structure construction types
         (e.g. nominative-agentive transitive vs genitive-experiencer modal).
+        Fails closed on unrecognized interrogative patterns to avoid certifying arbitrary text.
         """
         norm = normalize_bangla_text(text)
         clean = norm.replace("?", "").replace("।", "").replace("!", "").replace(",", "")
@@ -625,39 +632,58 @@ class PragmaticsEngine:
         has_ki_orthography = "কি" in tokens
         has_kee_orthography = "কী" in tokens
         has_genitive_subject = any(t in ["তোমার", "আমার", "তার", "তাঁর", "আপনার", "তোমাদের", "আমাদের", "তাদের"] for t in tokens)
+        has_nominative_subject = any(t in ["তুমি", "আমি", "সে", "তিনি", "আপনি", "তোমরা", "আমরা", "তারা"] for t in tokens)
         has_chai_predicate = "চাই" in tokens
+        has_chao_predicate = any(t in ["চাও", "চাই", "চায়", "চান"] for t in tokens)
 
-        # Construction type
+        # 1. Standard Nominative Transitive Wh: তুমি কী চাও?
+        if has_nominative_subject and has_chao_predicate and has_kee_orthography:
+            return {
+                "text": text,
+                "construction_type": "NOMINATIVE_AGENTIVE_TRANSITIVE_WH",
+                "construction_status": "SUPPORTED_STANDARD",
+                "is_grammatical": True,
+                "equivalence_to_standard_wh": "CANONICAL_REFERENCE",
+                "orthography_status": "CANONICAL_STANDARD_WH",
+                "register_note": "Canonical standard nominative-subject transitive Wh-question with finite verb 'চা'.",
+                "orthography_note": "Canonical standard BDSB spelling for substantive Wh-pronoun ('what').",
+            }
+
+        # 2. Polar or Orthographic Ambiguity: তুমি কি চাও?
+        if has_nominative_subject and has_chao_predicate and has_ki_orthography:
+            return {
+                "text": text,
+                "construction_type": "NOMINATIVE_AGENTIVE_TRANSITIVE_WH",
+                "construction_status": "POLAR_OR_ORTHOGRAPHIC_AMBIGUITY",
+                "is_grammatical": True,  # Grammatical as polar question; non-standard spelling for substantive Wh
+                "equivalence_to_standard_wh": "ORTHOGRAPHICALLY_AMBIGUOUS",
+                "orthography_status": "NONCANONICAL_OR_POLAR_AMBIGUOUS",
+                "register_note": "Substantive Wh reading mixes polar interrogative orthography with transitive meaning; also readable as polar question ('Do you want [it]?').",
+                "orthography_note": "Uses 'কি'; standard BDSB substantive Wh-pronoun is 'কী', though 'কি' is common in digital informal writing and polar questions.",
+            }
+
+        # 3. Genitive Experiencer Modal: তোমার কী চাই?
         if has_genitive_subject and has_chai_predicate:
-            construction_type = "GENITIVE_EXPERIENCER_MODAL_WH"
-            is_grammatical = True
-            register_note = "Structurally valid genitive-experiencer construction with modal/defective predicate 'চাই'."
-        elif any(t in ["তুমি", "আমি", "সে", "তিনি", "আপনি"] for t in tokens) and any(t in ["চাও", "চাই", "চায়", "চান"] for t in tokens):
-            construction_type = "NOMINATIVE_AGENTIVE_TRANSITIVE_WH"
-            is_grammatical = True
-            register_note = "Standard nominative-subject transitive Wh-question with finite verb 'চা'."
-        else:
-            construction_type = "GENERAL_INTERROGATIVE"
-            is_grammatical = True
-            register_note = "Standard interrogative clause."
+            return {
+                "text": text,
+                "construction_type": "GENITIVE_EXPERIENCER_MODAL_WH",
+                "construction_status": "NEEDS_HUMAN_REVIEW",
+                "is_grammatical": True,
+                "equivalence_to_standard_wh": "DISTINCT_CONSTRUCTION_NOT_AUTOMATICALLY_EQUIVALENT",
+                "orthography_status": "CANONICAL_STANDARD_WH" if has_kee_orthography else "NONCANONICAL_OR_POLAR_AMBIGUOUS",
+                "register_note": "Structurally valid genitive-experiencer construction with modal/defective predicate 'চাই'; distinct argument structure not automatically equivalent to nominative 'তুমি কী চাও?'; requires human review for BDSB register/meaning equivalence.",
+                "orthography_note": "Canonical standard BDSB spelling for substantive Wh-pronoun ('what')." if has_kee_orthography else "Non-canonical 'কি' orthography in genitive experiencer.",
+            }
 
-        # Orthographic evaluation
-        if has_ki_orthography and not has_kee_orthography:
-            orthography_status = "NONCANONICAL_OR_POLAR_AMBIGUOUS"
-            orthography_note = "Uses 'কি'; standard BDSB substantive Wh-pronoun is 'কী', though 'কি' is common in digital informal writing and polar questions."
-        elif has_kee_orthography:
-            orthography_status = "CANONICAL_STANDARD_WH"
-            orthography_note = "Canonical standard BDSB spelling for substantive Wh-pronoun ('what')."
-        else:
-            orthography_status = "NO_WH_PARTICLE"
-            orthography_note = "No 'কি' or 'কী' token detected."
-
+        # 4. Fail closed on arbitrary/unmodeled input
         return {
             "text": text,
-            "construction_type": construction_type,
-            "is_grammatical": is_grammatical,
-            "orthography_status": orthography_status,
-            "register_note": register_note,
-            "orthography_note": orthography_note,
+            "construction_type": "UNKNOWN",
+            "construction_status": "UNKNOWN",
+            "is_grammatical": None,
+            "equivalence_to_standard_wh": "UNKNOWN",
+            "orthography_status": "CANONICAL_STANDARD_WH" if has_kee_orthography else ("NONCANONICAL_OR_POLAR_AMBIGUOUS" if has_ki_orthography else "NO_WH_PARTICLE"),
+            "register_note": "Unrecognized or unmodeled interrogative input; fails closed without positive grammatical certification.",
+            "orthography_note": "No standard Wh construction pattern recognized.",
         }
 

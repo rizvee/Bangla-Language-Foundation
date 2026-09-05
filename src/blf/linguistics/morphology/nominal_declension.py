@@ -17,13 +17,47 @@ INDEPENDENT_VOWELS = {"অ", "আ", "ই", "ঈ", "উ", "ঊ", "ঋ", "এ", "�
 class MorphotacticStatus(str, Enum):
     """Epistemic register and morphotactic status of nominal forms."""
     CANONICAL_STANDARD = "CANONICAL_STANDARD"
-    ATTESTED_STANDARD = "ATTESTED_STANDARD"
+    ATTESTED_OFFICIAL_EDUCATIONAL_USAGE = "ATTESTED_OFFICIAL_EDUCATIONAL_USAGE"
+    ATTESTED_BANGLADESH_USAGE = "ATTESTED_BANGLADESH_USAGE"
     ATTESTED_CONVERSATIONAL = "ATTESTED_CONVERSATIONAL"
     ATTESTED_REGIONAL = "ATTESTED_REGIONAL"
     MARKED = "MARKED"
     REGISTER_UNRESOLVED = "REGISTER_UNRESOLVED"
     UNSUPPORTED = "UNSUPPORTED"
+    UNKNOWN = "UNKNOWN"
+    UNASSESSED = "UNASSESSED"
     NEEDS_HUMAN_REVIEW = "NEEDS_HUMAN_REVIEW"
+
+
+# Positively recognized BDSB canonical nominal lexicon
+CANONICAL_NOUN_LEXICON = {
+    "মানুষ", "বই", "বাড়ি", "ঢাকা", "ছেলে", "মেয়ে", "কলম", "নদী", "পাখি",
+    "শিক্ষক", "ছাত্র", "ছাত্রী", "গাছ", "ফল", "ফুল", "ঘর", "দেশ", "ছবি",
+    "পানি", "জল", "মাটি", "বাতাস", "রাস্তা", "গাড়ি", "হাত", "পা", "চোখ",
+    "মাথা", "বন্ধু", "ভাই", "বোন", "মা", "বাবা", "টেবিল", "চেয়ার", "কাগজ",
+    "শহর", "গ্রাম", "বিদ্যালয়", "দরজা", "জানালা", "আকাশ", "সূর্য", "চাঁদ",
+    "গরু", "ঘাস", "বিষয়", "ভাত", "পেন্সিল", "বাচ্চা", "বাজার", "লোক",
+}
+
+# Standard morphological suffix sequences in canonical BDSB
+CANONICAL_SUFFIXES = [
+    # Plural + case
+    "গুলোর", "গুলোতে", "গুলোকে", "গুলো",
+    "গুলির", "গুলিতে", "গুলিকে", "গুলি",
+    "দেরকে", "দেরতে", "দের", "রা", "েরা",
+    "গণ", "বৃন্দ", "বর্গ",
+    # Classifier + case
+    "টির", "টিতে", "টিকে", "টি",
+    "টার", "টাতে", "টাকে", "টা",
+    "খানার", "খানাতে", "খানাকে", "খানা",
+    "খানির", "খানিতে", "খানিকে", "খানি",
+    "জনের", "জনকে", "জন",
+    # Direct case endings
+    "য়ের", "ের", "র",
+    "য়ে", "তে", "য়", "ে",
+    "কে",
+    "",  # Bare lemma
+]
 
 
 def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
@@ -31,10 +65,11 @@ def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
     Assesses the morphotactic and register status of a nominal form in BDSB.
     Distinguishes attested colloquial/educational variants from unsupported forms
     without imposing blanket substring blacklists.
+    Fails closed on unknown or unmodeled forms to prevent accidental certification.
     """
     norm = normalize_bangla_text(form)
 
-    # Inverted unsupported plural + diminutive classifier (e.g. গুলোটি,গুলোরটি)
+    # 1. Inverted unsupported plural + diminutive classifier (e.g. গুলোটি,গুলোরটি)
     if "গুলোটি" in norm or "গুলোরটি" in norm:
         return {
             "form": norm,
@@ -46,7 +81,7 @@ def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
             "review_priority": "LOW",
         }
 
-    # Inverted plural + classifier (বইগুলোটা)
+    # 2. Inverted plural + classifier (বইগুলোটা)
     if "গুলোটা" in norm or "গুলারটা" in norm:
         return {
             "form": norm,
@@ -58,19 +93,19 @@ def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
             "review_priority": "MEDIUM",
         }
 
-    # Attested N + classifier + plural (e.g. ছবিটাগুলো, বইটাগুলো)
+    # 3. Attested N + classifier + plural (e.g. ছবিটাগুলো, বইটাগুলো)
     if "টাগুলো" in norm or "টিগুলো" in norm:
         return {
             "form": norm,
-            "status": MorphotacticStatus.ATTESTED_STANDARD,
+            "status": MorphotacticStatus.ATTESTED_OFFICIAL_EDUCATIONAL_USAGE,
             "pattern": "N+টা+গুলো",
             "is_universally_illegal": False,
             "auto_generation_safe": False,
-            "evidence": "Independently attested in official Bangladesh DPE/NCTB teacher-edition material ('ছবিটাগুলো'); distribution in BDSB requires human calibration.",
+            "evidence": "Independently attested in official Bangladesh DPE/NCTB teacher-edition material ('ছবিটাগুলো'); occurrence in educational usage confirmed but general BDSB productive status is unverified.",
             "review_priority": "CRITICAL",
         }
 
-    # Colloquial/historical plural + case (e.g. ছেলেগুলাকে, বইগুলা)
+    # 4. Colloquial/historical plural + case (e.g. ছেলেগুলাকে, বইগুলা)
     if "গুলাকে" in norm or "গুলাতে" in norm or "গুলার" in norm:
         return {
             "form": norm,
@@ -82,7 +117,7 @@ def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
             "review_priority": "HIGH",
         }
 
-    # Colloquial/spoken stacked human oblique (e.g. ছেলেটাদেরকে, মানুষটাদের)
+    # 5. Colloquial/spoken stacked human oblique (e.g. ছেলেটাদেরকে, মানুষটাদের)
     if "টাদের" in norm or "টিদের" in norm:
         return {
             "form": norm,
@@ -94,15 +129,41 @@ def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
             "review_priority": "HIGH",
         }
 
-    # Standard human / inanimate plural or singular
+    # 6. Positive evidence rule: Verify against positively recognized canonical morphology
+    # Strips valid canonical standard suffixes and checks if stem is in recognized lexicon
+    for suffix in CANONICAL_SUFFIXES:
+        if suffix and norm.endswith(suffix):
+            stem = norm[: -len(suffix)]
+            if stem in CANONICAL_NOUN_LEXICON:
+                return {
+                    "form": norm,
+                    "status": MorphotacticStatus.CANONICAL_STANDARD,
+                    "pattern": f"STEM+{suffix}",
+                    "is_universally_illegal": False,
+                    "auto_generation_safe": True,
+                    "evidence": "Positively verified canonical standard BDSB nominal morphology.",
+                    "review_priority": "NONE",
+                }
+        elif not suffix and norm in CANONICAL_NOUN_LEXICON:
+            return {
+                "form": norm,
+                "status": MorphotacticStatus.CANONICAL_STANDARD,
+                "pattern": "BARE_STEM",
+                "is_universally_illegal": False,
+                "auto_generation_safe": True,
+                "evidence": "Positively verified canonical standard BDSB nominal lemma.",
+                "review_priority": "NONE",
+            }
+
+    # 7. Fail closed on unrecognized/unmodeled forms
     return {
         "form": norm,
-        "status": MorphotacticStatus.CANONICAL_STANDARD,
-        "pattern": "CANONICAL",
+        "status": MorphotacticStatus.UNKNOWN,
+        "pattern": "UNKNOWN",
         "is_universally_illegal": False,
-        "auto_generation_safe": True,
-        "evidence": "Canonical standard BDSB nominal morphology.",
-        "review_priority": "NONE",
+        "auto_generation_safe": False,
+        "evidence": "Unrecognized or unmodeled nominal form; fails closed without positive canonical evidence.",
+        "review_priority": "MEDIUM",
     }
 
 

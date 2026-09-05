@@ -121,7 +121,9 @@
           "semantic_function": "Emotive emphasis, unexpected assertion, or evidential mirative discovery.",
           "discourse_function": "Encodes speaker surprise, evidential discovery, or mirativity ('Look, ...!').",
           "register": "COLLOQUIAL_STANDARD",
-          "confidence": "HIGH",
+          "confidence": "MEDIUM",
+          "evidence_status": "EVIDENCE_SUPPORTED_HYPOTHESIS",
+          "review_status": "NEEDS_HUMAN_REVIEW",
           "examples": [{"sentence": "আরে, সে যে এসে গেছে!", "gloss": "Hey, he JE come-PERF.3 ('Look, he has actually arrived!')"}]
         },
         {
@@ -132,7 +134,9 @@
           "semantic_function": "Clause-final evaluative assertion, reminder, reproof, or enquiry.",
           "discourse_function": "Prompts addressee recognition, reminder, mild reproach, or evaluative conclusion ('..., you see / don't you know?').",
           "register": "COLLOQUIAL_AND_CONVERSATIONAL",
-          "confidence": "HIGH",
+          "confidence": "MEDIUM",
+          "evidence_status": "EVIDENCE_SUPPORTED_HYPOTHESIS",
+          "review_status": "NEEDS_HUMAN_REVIEW",
           "examples": [{"sentence": "আরে, সে এসে গেছে যে!", "gloss": "Hey, he come-PERF.3 JE ('Look, he has arrived, you see!')"}]
         },
         {
@@ -144,6 +148,8 @@
           "discourse_function": "Expresses emphatic commitment or contrasting affirmation against doubt.",
           "register": "COLLOQUIAL_STANDARD",
           "confidence": "MEDIUM",
+          "evidence_status": "PROVISIONAL",
+          "review_status": "NEEDS_HUMAN_REVIEW",
           "examples": [{"sentence": "আমি যে যাবই!", "gloss": "I JE go-FUT.1-EMPH ('Indeed, I shall go!')"}]
         }
       ],

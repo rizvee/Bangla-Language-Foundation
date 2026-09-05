@@ -1865,6 +1865,134 @@
       "checksum": null,
       "citation": "Quarantined candidate entry. See sources/registry/source-audit.jsonl.",
       "notes": "Retained exclusively for audit traceability."
+    },
+    {
+      "source_id": "NCTB-TG-BANGLA",
+      "canonical_resource_id": "NCTB-PRIMARY-TEACHER-GUIDE",
+      "title": "Amar Bangla Boi: Shikkhok Shongskoron (Primary Bangla Teacher Edition)",
+      "author_or_org": "National Curriculum and Textbook Board (NCTB) & Directorate of Primary Education (DPE)",
+      "source_tier": "TIER_B",
+      "language": "bn",
+      "region": "Bangladesh",
+      "year": 2021,
+      "edition": "Revised Teacher Edition",
+      "version": null,
+      "release": null,
+      "publisher": "National Curriculum and Textbook Board, Dhaka",
+      "url": "https://dpe.gov.bd",
+      "identifier": "DPE-NCTB-TG-P1",
+      "paper_id": null,
+      "mirror_of": null,
+      "derived_from": null,
+      "supersedes": null,
+      "copyright_status": "Statutory Public Notice",
+      "license": null,
+      "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-NCTB-TG-PRINT",
+          "artifact_type": "RULEBOOK",
+          "canonical_url": "https://dpe.gov.bd",
+          "license": null,
+          "copyright_status": "Statutory Public Notice",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-NCTB-TG-PRINT",
+          "locator": "Amar Bangla Boi Teacher Edition Grade 1",
+          "notes": "Official primary teacher guide evidencing occurrence of nominal form 'ছবিটাগুলো'."
+        }
+      ],
+      "verification_status": "PROVISIONAL",
+      "verification": {
+        "status": "PROVISIONAL",
+        "verified_at": "2026-09-05",
+        "verification_method": "Institutional agency publication identification; exact distribution pending comprehensive empirical audit",
+        "primary_evidence": [
+          {
+            "evidence_id": "EV-NCTB-TG-PRINT",
+            "canonical_url": "https://dpe.gov.bd",
+            "publisher_or_host": "Directorate of Primary Education, Bangladesh",
+            "evidence_type": "Institutional Educational Resource",
+            "resource_title": "Amar Bangla Boi: Shikkhok Shongskoron",
+            "retrieved_title": "Amar Bangla Boi: Shikkhok Shongskoron",
+            "authors_if_applicable": ["NCTB", "DPE"],
+            "identifier_if_applicable": "DPE-NCTB-TG-P1",
+            "accessed_at": "2026-09-05",
+            "locator": "Teacher Edition Grade 1",
+            "supports_fields": ["title", "author_or_org", "year", "publisher"]
+          }
+        ],
+        "claims": [],
+        "verified_fields": ["title", "author_or_org", "year", "publisher"],
+        "unresolved_fields": ["broader_bdsb_distribution"],
+        "verifier_notes": "Source identity verified as official educational publication; establishes narrow textual occurrence of 'ছবিটাগুলো', but does not certify universal standard or productive status across general BDSB."
+      },
+      "checksum": null,
+      "citation": "National Curriculum and Textbook Board, & Directorate of Primary Education. (2021). Amar Bangla Boi: Shikkhok Shongskoron. Dhaka: NCTB.",
+      "notes": "Registered under Phase 2A.2f epistemic hardening as PROVISIONAL evidence for educational usage."
+    },
+    {
+      "source_id": "ACCESSIBLE-DICT-A2I",
+      "canonical_resource_id": "ACCESSIBLE-DICTIONARY-A2I",
+      "title": "Accessible Dictionary (Integrated Online Lexical Platform)",
+      "author_or_org": "a2i (Aspire to Innovate) Programme, ICT Division, Bangladesh",
+      "source_tier": "TIER_B",
+      "language": "bn",
+      "region": "Bangladesh",
+      "year": 2018,
+      "edition": "Digital Platform Edition",
+      "version": null,
+      "release": null,
+      "publisher": "a2i, ICT Division, Government of the People's Republic of Bangladesh",
+      "url": "https://accessibledictionary.gov.bd",
+      "identifier": "a2i-AccessibleDictionary",
+      "paper_id": null,
+      "mirror_of": null,
+      "derived_from": null,
+      "supersedes": null,
+      "copyright_status": "Copyrighted",
+      "license": null,
+      "redistribution": "derived_features_only",
+      "artifacts": [
+        {
+          "artifact_id": "ART-ACCESSIBLE-DICT-WEB",
+          "artifact_type": "DICTIONARY",
+          "canonical_url": "https://accessibledictionary.gov.bd",
+          "license": null,
+          "copyright_status": "Copyrighted",
+          "redistribution": "derived_features_only",
+          "evidence_id": "EV-ACCESSIBLE-DICT-WEB",
+          "locator": "Entry for particle 'যে'",
+          "notes": "Digital dictionary platform documenting multiple polyfunctional senses and discourse usages of 'যে'."
+        }
+      ],
+      "verification_status": "PROVISIONAL",
+      "verification": {
+        "status": "PROVISIONAL",
+        "verified_at": "2026-09-05",
+        "verification_method": "Institutional platform identification; exact BLF sense taxonomy calibration pending human pilot",
+        "primary_evidence": [
+          {
+            "evidence_id": "EV-ACCESSIBLE-DICT-WEB",
+            "canonical_url": "https://accessibledictionary.gov.bd",
+            "publisher_or_host": "a2i Programme, ICT Division, Bangladesh",
+            "evidence_type": "Institutional Lexical Platform",
+            "resource_title": "Accessible Dictionary",
+            "retrieved_title": "Accessible Dictionary",
+            "authors_if_applicable": ["a2i Programme"],
+            "identifier_if_applicable": "a2i-AccessibleDictionary",
+            "accessed_at": "2026-09-05",
+            "locator": "Headword 'যে'",
+            "supports_fields": ["title", "author_or_org", "year", "publisher", "url"]
+          }
+        ],
+        "claims": [],
+        "verified_fields": ["title", "author_or_org", "year", "publisher", "url"],
+        "unresolved_fields": ["blf_exact_four_sense_taxonomy"],
+        "verifier_notes": "Source identity verified as official governmental dictionary platform; supports polyfunctionality of 'যে' across discourse roles, but BLF's 4-sense model remains an evidence-supported hypothesis pending human calibration."
+      },
+      "checksum": null,
+      "citation": "a2i Programme. (2018). Accessible Dictionary. Dhaka: ICT Division, Government of the People's Republic of Bangladesh. https://accessibledictionary.gov.bd",
+      "notes": "Registered under Phase 2A.2f epistemic hardening as PROVISIONAL evidence for particle polyfunctionality."
     }
   ]
 }
