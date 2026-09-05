@@ -104,8 +104,18 @@
     },
     "decoded_timestamp": {
       "type": "string",
-      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z?$",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z?$",
       "description": "ISO UTC timestamp when the record was decoded."
+    },
+    "raw_submission_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "Cryptographic SHA-256 hash of the raw immutable reviewer submission."
+    },
+    "consent_record_id": {
+      "type": "string",
+      "pattern": "^CONSENT-[A-Z0-9_-]+$",
+      "description": "Associated consent record ID."
     }
   },
   "additionalProperties": false

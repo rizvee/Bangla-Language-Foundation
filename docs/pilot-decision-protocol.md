@@ -11,14 +11,19 @@ For every canonical item $I$ and candidate $C$:
 
 | Evaluator A Judgment | Evaluator B Judgment | Preliminary Outcome | Required Pipeline Action |
 |---|---|---|---|
-| `NATURAL_STANDARD` | `NATURAL_STANDARD` | `STANDARD_CANDIDATE_PENDING_ADJUDICATION` | Promoted to Gold candidate pool upon formal adjudication review. |
+| `NATURAL_STANDARD` | `NATURAL_STANDARD` | `STANDARD_CANDIDATE_PENDING_ADJUDICATION` | Candidate achieves initial acceptability consensus; enters Gold consideration pool pending formal adjudication. (Acceptability agreement != automatic Gold). |
 | `NATURAL_STANDARD` | `NATURAL_COLLOQUIAL` | `REGISTER_DIFFERENCE_FLAG` | Investigate register calibration. Do not collapse automatically; tag appropriate style register. |
 | `NATURAL_*` | `UNGRAMMATICAL` | `HIGH_PRIORITY_CONFLICT` | **Mandatory Adjudication**: Expert linguist reviews primary grammar evidence and corpus attestations. |
 | `NATURAL_*` | `UNNATURAL` | `IDIOMATICITY_CONFLICT` | Adjudication review to determine whether phrasing is dialectal, archaic, or awkward. |
 | Any | `NEEDS_CONTEXT` | `CONTEXT_INSPECTION_FLAG` | Inspect pilot context prompt wording for ambiguity before modifying linguistic rules. |
 | Any | `MEANING_DIFFERS` | `SEMANTIC_DRIFT_FLAG` | Inspect translation/gloss and semantic frame constraints. |
 | `UNSURE` | `UNSURE` | `INSUFFICIENT_EVIDENCE` | Excluded from Gold baseline. Flagged for future empirical field collection. |
-| `UNGRAMMATICAL` | `UNGRAMMATICAL` | `REJECTED_UNGRAMMATICAL` | Candidate confirmed ungrammatical; rule invariant reinforced. |
+| `UNGRAMMATICAL` | `UNGRAMMATICAL` | `HUMAN_REVIEW_CONSENSUS_UNGRAMMATICAL` | Candidate achieves empirical rater consensus of ungrammaticality; flagged for confirmation in Stage 2 adjudication before declaring rule invariant. (Two reviewers agreeing UNGRAMMATICAL != universal invariant). |
+
+> [!NOTE]
+> **Epistemic Invariant & No Post-Hoc Thresholds**:
+> 1. Human consensus reflects observed empirical pilot agreement under tested prompts, not an unconditional linguistic universal.
+> 2. No post-hoc Cohen's Kappa pass threshold is applied to discard inconvenient disagreements. All disagreements are preserved in the adjudication queue.
 
 ---
 

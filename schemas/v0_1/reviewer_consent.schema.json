@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/reviewer_consent.schema.json",
+  "title": "BLFReviewerConsentRecord",
+  "description": "Schema for private machine-readable consent records authorizing participation in BLF human evaluation pilots.",
+  "type": "object",
+  "required": [
+    "consent_record_id",
+    "reviewer_pseudonym",
+    "session_id",
+    "information_sheet_version",
+    "consent_confirmed",
+    "consent_confirmed_at",
+    "consent_to_anonymized_research_use",
+    "consent_to_anonymized_public_release",
+    "withdrawal_status"
+  ],
+  "properties": {
+    "consent_record_id": {
+      "type": "string",
+      "pattern": "^CONSENT-[A-Z0-9_-]+$",
+      "description": "Unique consent record identifier."
+    },
+    "reviewer_pseudonym": {
+      "type": "string",
+      "pattern": "^REV-[A-Z0-9_-]+$",
+      "description": "Pseudonymous identifier of the reviewer."
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^SESS-[A-Z0-9_-]+$",
+      "description": "Blinded review session identifier associated with this consent."
+    },
+    "information_sheet_version": {
+      "type": "string",
+      "description": "Version of docs/reviewer-consent-and-ethics.md presented to the reviewer."
+    },
+    "consent_confirmed": {
+      "type": "boolean",
+      "enum": [true],
+      "description": "Whether the reviewer explicitly confirmed informed consent."
+    },
+    "consent_confirmed_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z?$",
+      "description": "ISO UTC timestamp when consent was confirmed."
+    },
+    "consent_to_anonymized_research_use": {
+      "type": "boolean",
+      "enum": [true],
+      "description": "Consent for anonymized judgments to be used for internal scientific research and model evaluation."
+    },
+    "consent_to_anonymized_public_release": {
+      "type": "boolean",
+      "description": "Consent for anonymized aggregate judgments to be included in public open scientific dataset releases."
+    },
+    "withdrawal_status": {
+      "type": "string",
+      "enum": ["ACTIVE", "WITHDRAWN"],
+      "description": "Current status of consent. If WITHDRAWN, data cannot be processed."
+    },
+    "notes": {
+      "type": ["string", "null"],
+      "description": "Optional administrative notes."
+    }
+  },
+  "additionalProperties": false
+}

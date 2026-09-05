@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://bangla-language-foundation.org/schemas/v0_1/reviewer_submission_bundle.schema.json",
+  "title": "BLFReviewerSubmissionBundle",
+  "description": "Schema for a complete blinded reviewer submission bundle containing all 40 analytical pilot evaluations.",
+  "type": "object",
+  "required": [
+    "bundle_id",
+    "session_id",
+    "reviewer_pseudonym",
+    "pilot_version",
+    "consent_record_id",
+    "submitted_at",
+    "reviews"
+  ],
+  "properties": {
+    "bundle_id": {
+      "type": "string",
+      "pattern": "^REV-BUNDLE-[A-Z0-9_-]+$",
+      "description": "Unique bundle identifier."
+    },
+    "session_id": {
+      "type": "string",
+      "pattern": "^SESS-[A-Z0-9_-]+$",
+      "description": "Blinded review session identifier."
+    },
+    "reviewer_pseudonym": {
+      "type": "string",
+      "pattern": "^REV-[A-Z0-9_-]+$",
+      "description": "Pseudonymous identifier of the reviewer."
+    },
+    "pilot_version": {
+      "type": "string",
+      "description": "Version of the analytical pilot."
+    },
+    "consent_record_id": {
+      "type": "string",
+      "pattern": "^CONSENT-[A-Z0-9_-]+$",
+      "description": "Reference to the private consent record authorizing this evaluation."
+    },
+    "submitted_at": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]+)?Z?$",
+      "description": "ISO UTC timestamp when the bundle was finalized and submitted."
+    },
+    "reviews": {
+      "type": "array",
+      "minItems": 40,
+      "maxItems": 40,
+      "description": "Complete collection of exactly 40 analytical pilot item judgments.",
+      "items": {
+        "type": "object",
+        "required": [
+          "opaque_item_id",
+          "candidate_judgments",
+          "preferred_candidates"
+        ],
+        "properties": {
+          "opaque_item_id": {
+            "type": "string",
+            "pattern": "^BLIND-[A-Z0-9_-]+$",
+            "description": "Blinded opaque item identifier."
+          },
+          "candidate_judgments": {
+            "type": "object",
+            "minProperties": 2,
+            "maxProperties": 3,
+            "propertyNames": {
+              "enum": ["A", "B", "C"]
+            },
+            "properties": {
+              "A": {
+                "type": "object",
+                "required": ["acceptability", "certainty"],
+                "properties": {
+                  "acceptability": {
+                    "type": "string",
+                    "enum": [
+                      "NATURAL_STANDARD",
+                      "NATURAL_COLLOQUIAL",
+                      "MARKED_BUT_VALID",
+                      "UNNATURAL",
+                      "UNGRAMMATICAL",
+                      "MEANING_DIFFERS",
+                      "NEEDS_CONTEXT",
+                      "UNSURE"
+                    ]
+                  },
+                  "certainty": {
+                    "type": "string",
+                    "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "B": {
+                "type": "object",
+                "required": ["acceptability", "certainty"],
+                "properties": {
+                  "acceptability": {
+                    "type": "string",
+                    "enum": [
+                      "NATURAL_STANDARD",
+                      "NATURAL_COLLOQUIAL",
+                      "MARKED_BUT_VALID",
+                      "UNNATURAL",
+                      "UNGRAMMATICAL",
+                      "MEANING_DIFFERS",
+                      "NEEDS_CONTEXT",
+                      "UNSURE"
+                    ]
+                  },
+                  "certainty": {
+                    "type": "string",
+                    "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+                  }
+                },
+                "additionalProperties": false
+              },
+              "C": {
+                "type": "object",
+                "required": ["acceptability", "certainty"],
+                "properties": {
+                  "acceptability": {
+                    "type": "string",
+                    "enum": [
+                      "NATURAL_STANDARD",
+                      "NATURAL_COLLOQUIAL",
+                      "MARKED_BUT_VALID",
+                      "UNNATURAL",
+                      "UNGRAMMATICAL",
+                      "MEANING_DIFFERS",
+                      "NEEDS_CONTEXT",
+                      "UNSURE"
+                    ]
+                  },
+                  "certainty": {
+                    "type": "string",
+                    "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "additionalProperties": false
+          },
+          "preferred_candidates": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["A", "B", "C", "NONE"]
+            },
+            "minItems": 1,
+            "maxItems": 3,
+            "uniqueItems": true,
+            "description": "Unique preferred candidate labels or ['NONE']."
+          },
+          "correction": {
+            "type": ["string", "null"],
+            "description": "Optional correction suggested by reviewer."
+          },
+          "comments": {
+            "type": ["string", "null"],
+            "description": "Optional reviewer comments or notes."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -41,28 +41,55 @@ def validate_dict_against_schema(data: Dict[str, Any], schema: Dict[str, Any]) -
             pass
 
     # Built-in fallback validation
-    req_fields = schema.get("required", [])
-    for field in req_fields:
-        if field not in data:
-            errors.append(f"Missing required field: '{field}'")
+    def _validate_node(val: Any, spec: Dict[str, Any], path: str) -> None:
+        expected_type = spec.get("type")
+        if expected_type == "string" and not isinstance(val, str):
+            errors.append(f"{path}: expected string, got {type(val).__name__}")
+        elif expected_type == "integer" and not isinstance(val, int):
+            errors.append(f"{path}: expected int, got {type(val).__name__}")
+        elif expected_type == "number" and not isinstance(val, (int, float)):
+            errors.append(f"{path}: expected number, got {type(val).__name__}")
+        elif expected_type == "boolean" and not isinstance(val, bool):
+            errors.append(f"{path}: expected bool, got {type(val).__name__}")
+        elif expected_type == "array" and not isinstance(val, list):
+            errors.append(f"{path}: expected list, got {type(val).__name__}")
+        elif expected_type == "object" and not isinstance(val, dict):
+            errors.append(f"{path}: expected dict, got {type(val).__name__}")
 
-    props = schema.get("properties", {})
-    for key, val in data.items():
-        if key in props:
-            spec = props[key]
-            expected_type = spec.get("type")
-            if expected_type == "string" and not isinstance(val, str):
-                errors.append(f"Field '{key}' expected string, got {type(val).__name__}")
-            elif expected_type == "integer" and not isinstance(val, int):
-                errors.append(f"Field '{key}' expected int, got {type(val).__name__}")
-            elif expected_type == "number" and not isinstance(val, (int, float)):
-                errors.append(f"Field '{key}' expected number, got {type(val).__name__}")
-            elif expected_type == "array" and not isinstance(val, list):
-                errors.append(f"Field '{key}' expected list, got {type(val).__name__}")
-            elif expected_type == "object" and not isinstance(val, dict):
-                errors.append(f"Field '{key}' expected dict, got {type(val).__name__}")
+        if "enum" in spec and val not in spec["enum"]:
+            errors.append(f"{path}: value '{val}' not in allowed enum {spec['enum']}")
 
-            if "enum" in spec and val not in spec["enum"]:
-                errors.append(f"Field '{key}' value '{val}' not in allowed enum {spec['enum']}")
+        if isinstance(val, list):
+            if spec.get("uniqueItems") and len(val) != len(set(val)):
+                errors.append(f"{path}: list contains duplicates: {val}")
+            item_spec = spec.get("items")
+            if isinstance(item_spec, dict):
+                for idx, item in enumerate(val):
+                    _validate_node(item, item_spec, f"{path}[{idx}]")
 
+        elif isinstance(val, dict):
+            reqs = spec.get("required", [])
+            for r in reqs:
+                if r not in val:
+                    errors.append(f"{path}: Missing required field '{r}'")
+
+            props = spec.get("properties", {})
+            if spec.get("additionalProperties") is False:
+                extra_keys = set(val.keys()) - set(props.keys())
+                if extra_keys:
+                    errors.append(f"{path}: unallowed additional properties: {extra_keys}")
+
+            prop_names = spec.get("propertyNames", {})
+            if "enum" in prop_names:
+                for k in val.keys():
+                    if k not in prop_names["enum"]:
+                        errors.append(f"{path}: property key '{k}' not in allowed enum {prop_names['enum']}")
+
+            for k, child_val in val.items():
+                if k in props:
+                    _validate_node(child_val, props[k], f"{path}.{k}")
+                elif "additionalProperties" in spec and isinstance(spec["additionalProperties"], dict):
+                    _validate_node(child_val, spec["additionalProperties"], f"{path}.{k}")
+
+    _validate_node(data, schema, "$")
     return len(errors) == 0, errors

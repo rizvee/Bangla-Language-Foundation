@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A.2d Review Capture Integrity & Pilot Launch Freeze
+- **Reviewer Submission Bundle Schema**: Created `schemas/v0_1/reviewer_submission_bundle.schema.json` formalizing complete 40-item blinded submission payloads with strict candidate keys (`A`, `B`, `C`), unique preferred candidates, and zero research metadata leakage.
+- **Machine-Readable Reviewer Consent Schema**: Created `schemas/v0_1/reviewer_consent.schema.json` separating consent to research use from consent to anonymized public release.
+- **Fail-Closed Private Session Generator**: Hardened `scripts/create_private_review_session.py` with `--mode REAL|DEMO` (default `REAL`), enforcing pre-existing verified consent records, 128-bit private seeds (`secrets.randbits(128)`), dynamic UTC ISO-8601 timestamps, clean response templates (`submission_template_<reviewer>.json`), and security checks blocking output to tracked paths.
+- **Fail-Closed Review Decoder & Immutability**: Enhanced `scripts/decode_review_submissions.py` to enforce bundle validation, session and reviewer matching, candidate count verification against canonical pilot items, preference policy enforcement, and SHA-256 cryptographic hashing of raw submissions.
+- **De-Primed Calibration Practice Items**: Replaced practice items in `data/review_queue/practice_items.json` with calibration items teaching interface mechanics only (independent rating, ungrammatical identification, and context flagging) without touching analytical pilot phenomena; removed leading facilitator guidance from reviewer view.
+- **Official Study Completeness Gate**: Upgraded `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` with `--enforce-completeness` gate, pooled candidate-level Cohen's Kappa reporting, confusion matrices, and separate preferred-set agreement tracking.
+- **End-to-End DEMO Verification Pipeline**: Created `scripts/run_demo_pipeline.py` verifying full synthetic lifecycle from session generation to dual IAA and disagreement export under explicit `SYNTHETIC_SOFTWARE_TEST_ONLY` status.
+- **Comprehensive Integrity Tests**: Added `tests/test_review_capture_integrity.py` verifying candidate key restrictions, fail-closed decoder behavior, consent gating, template leak prevention, and completeness checks (91 total unit tests passing).
+
 ### Added - Phase 2A.2c Private Blind Sessions, Candidate-Level Judgments & Human Pilot Freeze
 - **Private Session Architecture & Secret Gitignore**: Added `.blf-private/` and `.local-review/` to `.gitignore`; created `scripts/create_private_review_session.py` to generate uncompromised private sessions with randomized item and candidate orders, practice items, and opaque display IDs (`BLIND-R1-*`).
 - **Public Pack Deprecation**: Marked Phase 2A.2b public demo packs and `pilot_40_randomization_mapping.json` as `DEPRECATED_FOR_REAL_REVIEW` / `DEMO_METHODOLOGY_ONLY` due to public git history mapping exposure.

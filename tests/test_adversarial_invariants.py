@@ -150,14 +150,14 @@ class TestAdversarialInvariants(unittest.TestCase):
                     "BLIND-R1-0001": {
                         "canonical_item_id": "PILOT-ITEM-001",
                         "category": "VERB_MORPHOLOGY",
-                        "displayed_to_canonical": {"A": "CAND_B", "B": "CAND_A"},
+                        "displayed_to_canonical": {"A": "CAND_B", "B": "CAND_A", "C": "CAND_C"},
                     }
                 },
                 "REV-B": {
                     "BLIND-R2-0001": {
                         "canonical_item_id": "PILOT-ITEM-001",
                         "category": "VERB_MORPHOLOGY",
-                        "displayed_to_canonical": {"A": "CAND_A", "B": "CAND_B"},
+                        "displayed_to_canonical": {"A": "CAND_A", "B": "CAND_B", "C": "CAND_C"},
                     }
                 }
             }
@@ -171,6 +171,7 @@ class TestAdversarialInvariants(unittest.TestCase):
             "candidate_judgments": {
                 "A": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed A is CAND_B
                 "B": {"acceptability": "UNGRAMMATICAL", "certainty": "VERY_SURE"},     # displayed B is CAND_A
+                "C": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed C is CAND_C
             },
             "preferred_candidates": ["A"],
             "timestamp": "2026-08-28T12:00:00Z",
@@ -184,13 +185,14 @@ class TestAdversarialInvariants(unittest.TestCase):
             "candidate_judgments": {
                 "A": {"acceptability": "UNGRAMMATICAL", "certainty": "VERY_SURE"},     # displayed A is CAND_A
                 "B": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed B is CAND_B
+                "C": {"acceptability": "NATURAL_STANDARD", "certainty": "VERY_SURE"},  # displayed C is CAND_C
             },
             "preferred_candidates": ["B"],  # displayed B is CAND_B
             "timestamp": "2026-08-28T12:00:00Z",
         }
 
-        dec_a = decode_submission(mapping_data, sub_a)
-        dec_b = decode_submission(mapping_data, sub_b)
+        dec_a = decode_submission(mapping_data, sub_a, allow_partial=True)
+        dec_b = decode_submission(mapping_data, sub_b, allow_partial=True)
 
         # Both decoded records should agree that CAND_B is NATURAL_STANDARD and CAND_A is UNGRAMMATICAL
         self.assertEqual(dec_a[0]["canonical_candidate_judgments"]["CAND_B"]["acceptability"], "NATURAL_STANDARD")

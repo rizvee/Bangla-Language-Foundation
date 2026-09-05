@@ -1,33 +1,36 @@
 {
   "title": "BLF Human Review Practice Items",
-  "version": "1.0.0",
-  "purpose": "Training and calibration examples for native evaluators prior to analytical pilot evaluation.",
-  "usage_rule": "Practice items are excluded from Inter-Annotator Agreement (IAA) calculation and Gold dataset promotion.",
+  "version": "2.0.0",
+  "purpose": "Interface calibration examples for native evaluators prior to analytical pilot evaluation.",
+  "usage_rule": "Practice items teach interface mechanics only and are strictly excluded from Inter-Annotator Agreement (IAA) and Gold dataset promotion.",
   "items": [
     {
       "practice_id": "PRACTICE-001",
-      "context": "Casual everyday dining setting at home.",
-      "intended_meaning": "I am having lunch / eating rice.",
-      "candidate_a": "আমি ভাত খাচ্ছি।",
-      "candidate_b": "আমি খাচ্ছি ভাত।",
-      "guidance_for_reviewer": "Candidate A is standard neutral SOV (NATURAL_STANDARD). Candidate B has colloquial postverbal focus (NATURAL_COLLOQUIAL or MARKED_BUT_VALID). Both can be acceptable, with A preferred in neutral context."
+      "context": "Neutral description of morning daybreak in standard everyday speech.",
+      "intended_meaning": "The sun rises in the morning.",
+      "candidate_a": "সকালে সূর্য ওঠে।",
+      "candidate_b": "সকালে রবি ওঠে।",
+      "interface_concept_taught": "Multiple candidates can both be acceptable; rate candidates independently; choose preferred candidate(s).",
+      "facilitator_notes": "Candidate A is common standard. Candidate B has literary lexical choice. Reviewers should rate both independently without feeling compelled to mark one bad if both are valid."
     },
     {
       "practice_id": "PRACTICE-002",
-      "context": "Polite request to a respected teacher or senior colleague.",
-      "intended_meaning": "Please read this document.",
-      "candidate_a": "আপনি এই কাগজটা পড়ো।",
-      "candidate_b": "আপনি এই কাগজটা পড়ুন।",
-      "candidate_c": "তুমি এই কাগজটা পড়ুন।",
-      "guidance_for_reviewer": "Candidate B has correct 2nd person honorific verbal agreement (NATURAL_STANDARD). Candidates A and C have honorific clashes (UNGRAMMATICAL). Preferred: [B]."
+      "context": "Simple description of bird behavior in nature.",
+      "intended_meaning": "The bird flies in the sky.",
+      "candidate_a": "পাখি আকাশে ওড়ে।",
+      "candidate_b": "পাখি আকাশে সাঁতার কাটে।",
+      "candidate_c": "পাখি ওড়ে আকাশ।",
+      "interface_concept_taught": "Rating unacceptable candidates as UNGRAMMATICAL or MEANING_DIFFERS; selecting preferred candidate [A]; offering optional correction if needed.",
+      "facilitator_notes": "Candidate A is natural standard. Candidate B violates semantic selection (MEANING_DIFFERS / UNNATURAL). Candidate C lacks locative case marking (UNGRAMMATICAL)."
     },
     {
       "practice_id": "PRACTICE-003",
-      "context": "Response in a discussion where the speaker was unaware of a recent announcement.",
-      "intended_meaning": "I actually did not know that.",
-      "candidate_a": "আমি তো বিষয়টা জানতাম না।",
-      "candidate_b": "আমি বিষয়টা জানতাম না তো।",
-      "guidance_for_reviewer": "Illustrates particle placement ('তো'). Both forms are idiomatic. If acceptability depends on discourse presupposition, select NEEDS_CONTEXT or MARKED_BUT_VALID."
+      "context": "An isolated utterance without prior conversational context.",
+      "intended_meaning": "He/she came yesterday.",
+      "candidate_a": "গতকাল এসেছিলাম।",
+      "candidate_b": "গতকাল এসেছিল।",
+      "interface_concept_taught": "Using NEEDS_CONTEXT or MEANING_DIFFERS when meaning or acceptability depends on unstated conversational context or person agreement.",
+      "facilitator_notes": "Candidate B matches 3rd person 'he/she came yesterday'. Candidate A has 1st person inflection 'I came yesterday'. If intended meaning is not matched, rater can use MEANING_DIFFERS or note NEEDS_CONTEXT."
     }
   ]
 }

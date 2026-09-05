@@ -63,32 +63,87 @@
     },
     "candidate_judgments": {
       "type": "object",
-      "description": "Independent acceptability and certainty ratings for each displayed candidate label ('A', 'B', 'C').",
+      "description": "Independent acceptability and certainty ratings for each displayed candidate label (strictly 'A', 'B', 'C').",
       "minProperties": 2,
-      "additionalProperties": {
-        "type": "object",
-        "required": ["acceptability", "certainty"],
-        "properties": {
-          "acceptability": {
-            "type": "string",
-            "enum": [
-              "NATURAL_STANDARD",
-              "NATURAL_COLLOQUIAL",
-              "MARKED_BUT_VALID",
-              "UNNATURAL",
-              "UNGRAMMATICAL",
-              "MEANING_DIFFERS",
-              "NEEDS_CONTEXT",
-              "UNSURE"
-            ]
+      "maxProperties": 3,
+      "propertyNames": {
+        "enum": ["A", "B", "C"]
+      },
+      "properties": {
+        "A": {
+          "type": "object",
+          "required": ["acceptability", "certainty"],
+          "properties": {
+            "acceptability": {
+              "type": "string",
+              "enum": [
+                "NATURAL_STANDARD",
+                "NATURAL_COLLOQUIAL",
+                "MARKED_BUT_VALID",
+                "UNNATURAL",
+                "UNGRAMMATICAL",
+                "MEANING_DIFFERS",
+                "NEEDS_CONTEXT",
+                "UNSURE"
+              ]
+            },
+            "certainty": {
+              "type": "string",
+              "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+            }
           },
-          "certainty": {
-            "type": "string",
-            "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
-          }
+          "additionalProperties": false
         },
-        "additionalProperties": false
-      }
+        "B": {
+          "type": "object",
+          "required": ["acceptability", "certainty"],
+          "properties": {
+            "acceptability": {
+              "type": "string",
+              "enum": [
+                "NATURAL_STANDARD",
+                "NATURAL_COLLOQUIAL",
+                "MARKED_BUT_VALID",
+                "UNNATURAL",
+                "UNGRAMMATICAL",
+                "MEANING_DIFFERS",
+                "NEEDS_CONTEXT",
+                "UNSURE"
+              ]
+            },
+            "certainty": {
+              "type": "string",
+              "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+            }
+          },
+          "additionalProperties": false
+        },
+        "C": {
+          "type": "object",
+          "required": ["acceptability", "certainty"],
+          "properties": {
+            "acceptability": {
+              "type": "string",
+              "enum": [
+                "NATURAL_STANDARD",
+                "NATURAL_COLLOQUIAL",
+                "MARKED_BUT_VALID",
+                "UNNATURAL",
+                "UNGRAMMATICAL",
+                "MEANING_DIFFERS",
+                "NEEDS_CONTEXT",
+                "UNSURE"
+              ]
+            },
+            "certainty": {
+              "type": "string",
+              "enum": ["VERY_SURE", "SURE", "SOMEWHAT_UNCERTAIN", "GUESSING"]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
     },
     "preferred_candidates": {
       "type": "array",
@@ -97,6 +152,8 @@
         "enum": ["A", "B", "C", "NONE"]
       },
       "minItems": 1,
+      "maxItems": 3,
+      "uniqueItems": true,
       "description": "List of preferred candidate labels (allows multiple equivalents like ['A', 'B'] or ['NONE'] if all are flawed)."
     },
     "correction": {

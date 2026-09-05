@@ -1,12 +1,12 @@
 # Research & Dataset Status — BLF
 
-Last Updated: 2026-08-28
+Last Updated: 2026-09-05
 
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 2A.2c — Private Blind Sessions, Candidate-Level Judgments & Human Pilot Freeze (Complete)
-- **Milestone State**: Phase 1A-1D, 2A, 2A.1, 2A.2, 2A.2b, and 2A.2c Operational
+- **Current Phase**: Phase 2A.2d — Review Capture Integrity & Pilot Launch Freeze (Complete)
+- **Milestone State**: Phase 1A-1D, 2A, 2A.1, 2A.2, 2A.2b, 2A.2c, and 2A.2d Operational
 - **Primary Branch**: `main`
 - **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`
 
@@ -16,7 +16,7 @@ Last Updated: 2026-08-28
 
 | Metric | Current Value | Notes |
 |---|---|---|
-| **Schemas Authoring** | 17 schemas (`v0.1-draft-2.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm, Linguistic Construction, Complex Predicate, Dialogue Act, Semantic Frame, Corpus Attestation, Human Review Submission, Decoded Review Record, Review Adjudication |
+| **Schemas Authoring** | 19 schemas (`v0.1-draft-2.0`) | Utterance, Sentence Family, Source, Synthetic Provenance, Linguistic Evidence, Linguistic Claim, Linguistic Rule, Linguistic Example, Inflectional Paradigm, Linguistic Construction, Complex Predicate, Dialogue Act, Semantic Frame, Corpus Attestation, Human Review Submission, Reviewer Submission Bundle, Reviewer Consent Record, Decoded Review Record, Review Adjudication |
 | **Verified Sources in Registry** | 16 references | Tier A (4), Tier B (4), Tier D (8) with artifact breakdowns |
 | **Partially Verified Sources** | 1 reference | BPCC Bengali Parallel Component |
 | **Quarantined Sources** | 4 references | Recorded in `sources/registry/source-audit.jsonl` |
@@ -33,10 +33,12 @@ Last Updated: 2026-08-28
 | **Corpus Attestations** | 12 attestations | Audited & classified as `PROVISIONAL` with quarantined unindexed splits (`ontology/attestations/`) |
 | **Diagnostic Candidate Pack** | 156 items | Epistemically labeled in `data/review_queue/linguistic_review_pack.json` marked `PENDING_HUMAN_REVIEW` |
 | **Human Review Pilot** | 40 items | Canonical research pilot in `data/review_queue/human_review_pilot_40.json` |
-| **Practice Items** | 3 items | Calibration examples in `data/review_queue/practice_items.json` |
-| **Private Session Generator** | Ready | `scripts/create_private_review_session.py` (generates uncompromised packs in `.blf-private/`) |
+| **Practice Items** | 3 de-primed items | Calibration examples teaching interface mechanics only in `data/review_queue/practice_items.json` |
+| **Private Session Generator** | Hardened (v2.0.0) | `scripts/create_private_review_session.py` (enforces consent gate, 128-bit seeds, templates in `.blf-private/`) |
+| **Submission Decoder** | Fail-Closed (v2.0.0) | `scripts/decode_review_submissions.py` (bundle schema, candidate key enforcement, SHA-256 raw hashing) |
+| **Dual-Target IAA Engine** | Operational | `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` (candidate-level Kappa & preferred set agreement) |
 | **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
-| **Automated Tests** | 80 unit tests | 100% passing across 15 test suites |
+| **Automated Tests** | 91 unit tests | 100% passing across 16 test suites |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
@@ -51,14 +53,16 @@ Last Updated: 2026-08-28
 - **Structured Interrogative Valency Analyzer**: Implemented in `src/blf/linguistics/pragmatics.py` disambiguating *কি* vs *কী* using verb valency and argument structure with explicit `AMBIGUOUS` fallback.
 - **Calibrated Verbal Conjugation**: Implemented in `src/blf/linguistics/morphology/verbal_conjugator.py` distinguishing indicative *হন* from imperative *হোন* and calibrating negative morphology (*দিইনি*, *নিইনি*, *শিখিনি*).
 - **Corpus Attestation Layer**: Implemented in `schemas/v0_1/corpus_attestation.schema.json`, `src/blf/ontology/attestation.py`, `ontology/attestations/corpus_attestations.json`, and validated by `scripts/validate_attestations.py` and `scripts/audit_attestations.py`.
-- **Private Session Architecture & Decoder**: Implemented in `scripts/create_private_review_session.py`, `scripts/decode_review_submissions.py`, with private mappings stored in `.blf-private/` (gitignored).
-- **Dual-Target IAA Engine**: Implemented in `schemas/v0_1/human_review_decision.schema.json`, `schemas/v0_1/decoded_review_record.schema.json`, `schemas/v0_1/review_adjudication.schema.json`, `src/blf/quality/iaa.py`, and `scripts/compute_iaa.py`.
+- **Review Capture Integrity & Gating (Phase 2A.2d)**: Formalized in `schemas/v0_1/reviewer_submission_bundle.schema.json` and `schemas/v0_1/reviewer_consent.schema.json`. Private sessions enforce consent gates, 128-bit private seeds, dynamic UTC timestamps, and leak-free submission templates.
+- **Fail-Closed Review Decoder & Immutability**: Implemented in `scripts/decode_review_submissions.py` computing cryptographic SHA-256 hashes of raw submissions and validating decoded records against `decoded_review_record.schema.json`.
+- **Dual-Target IAA Engine & Decision Protocol**: Implemented in `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` computing pooled candidate-level Cohen's Kappa, confusion matrices, and preferred set agreements under pre-registered decision rules in `docs/pilot-decision-protocol.md`.
 - **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`).
 
 ---
 
 ## 4. Known Limitations & Research Gaps
 
-1. **Stage 1 Real Human Session Execution**: The private session generator (`scripts/create_private_review_session.py`) awaits invocation when actual native raters are selected prior to Phase 3 Gold seed scaling.
+1. **Reviewer Selection & Consent**: Reviewer status is currently UNKNOWN / NOT YET PROVIDED. Running `create_private_review_session.py` in `REAL` mode strictly fails closed until authenticated native raters provide explicit consent.
 2. **Physical Page Audits**: Bibliographic citations for printed grammar books (Azad 1984, Thompson 2012, BA 2011) remain provisional until verified against physical scans.
 3. **Dialect Representations**: Dialectal markers for Sylheti and Chittagonian are grounded in scholarly field literature; empirical spoken audio transcriptions will be integrated during Gold corpus expansion.
+
