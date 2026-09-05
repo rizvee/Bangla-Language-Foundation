@@ -67,11 +67,17 @@ class TestRealization(unittest.TestCase):
         self.assertEqual(res_vec, "সে ভাত খেয়ে ফেলল।")
 
     def test_invariant_rejections(self):
-        # Reject illegal stacked affixes
+        # Reject genuinely unsupported inverted stacking (plural + singular classifier)
         with self.assertRaises(RealizationError):
-            self.realizer.check_morphotactic_invariants("বইটাগুলো পড়ে")
+            self.realizer.check_morphotactic_invariants("কলমগুলোটি পড়ে")
 
-        # Reject invalid vector selection
+        # Attested N+টা+গুলো pattern does NOT raise blanket error
+        try:
+            self.realizer.check_morphotactic_invariants("বইটাগুলো পড়ে")
+        except RealizationError:
+            self.fail("check_morphotactic_invariants incorrectly raised RealizationError on attested 'বইটাগুলো'")
+
+        # Reject invalid vector selection in automatic standard generation
         with self.assertRaises(RealizationError):
             self.realizer.realize_vector_predicate_sentence(
                 "সে", "খবরটা", "জান", "ফেলা", "STATIVE_COGNITION"

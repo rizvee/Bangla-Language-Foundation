@@ -5,10 +5,10 @@ Last Updated: 2026-09-05
 ---
 
 ## 1. Project Phase
-- **Current Phase**: Phase 2A.2d — Review Capture Integrity & Pilot Launch Freeze (Complete)
-- **Milestone State**: Phase 1A-1D, 2A, 2A.1, 2A.2, 2A.2b, 2A.2c, and 2A.2d Operational
+- **Current Phase**: Phase 2A.2e — Forensic Linguistic Calibration Patch (Complete)
+- **Milestone State**: CALIBRATED_FOR_HUMAN_REVIEW
 - **Primary Branch**: `main`
-- **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`
+- **Gold-Readiness Verdict**: `READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT` (Gold gate remains strictly closed pending real human reviewer evaluations)
 
 ---
 
@@ -26,19 +26,19 @@ Last Updated: 2026-09-05
 | **Provenance-Backed Examples** | 22 examples | Source-cited and verified (`ontology/examples/pilot_examples.json`) |
 | **Inflectional Paradigms** | 14 paradigms | Nouns (4), Pronouns (5), Verbs (5 including `PARADIGM-VERB-HO`) (`ontology/paradigms/`) |
 | **Syntactic Constructions** | 22 constructions | SOV, SV, Ditransitive, Copular, Existential, Polar Ki, Imperatives (`ontology/constructions/`) |
-| **Complex Predicates** | 8 predicates | Telic `phela`, Benefactive `neoa`/`dewa`, Inceptive `utha`, LVC `kora`/`howa` (`ontology/complex_predicates/`) |
+| **Complex Predicates** | 8 predicates | Graded vector compatibility (`ALLOWED`, `CONTEXT_DEPENDENT`, `UNSUPPORTED`) for `phela`, `neoa`, `dewa`, `utha` (`ontology/complex_predicates/`) |
 | **Pragmatic Dialogue Acts** | 17 dialogue acts | Speech acts, honorificity constraints, clitics (`ontology/pragmatics/`) |
-| **Pragmatic Particles** | 7 particles | Multi-sense focus clitics (`-i`, `-o`), discourse markers (`to`, `na`, `je`, `ba`, `ki`) |
+| **Pragmatic Particles** | 7 particles | Polyfunctional senses for `যে` (complementizer, mirative, clause-final evaluative, emphatic stance), focus clitics (`-i`, `-o`), discourse markers (`to`, `na`, `ba`, `ki`) |
 | **Semantic Frames** | 24 core frames | Source-grounded communicative frames across everyday domains (`ontology/frames/`) |
 | **Corpus Attestations** | 12 attestations | Audited & classified as `PROVISIONAL` with quarantined unindexed splits (`ontology/attestations/`) |
 | **Diagnostic Candidate Pack** | 156 items | Epistemically labeled in `data/review_queue/linguistic_review_pack.json` marked `PENDING_HUMAN_REVIEW` |
-| **Human Review Pilot** | 40 items | Canonical research pilot in `data/review_queue/human_review_pilot_40.json` |
+| **Human Review Pilot** | 40 items | Canonical research pilot in `data/review_queue/human_review_pilot_40.json` (items 015, 016, 023, 030, 040 calibrated) |
 | **Practice Items** | 3 de-primed items | Calibration examples teaching interface mechanics only in `data/review_queue/practice_items.json` |
 | **Private Session Generator** | Hardened (v2.0.0) | `scripts/create_private_review_session.py` (enforces consent gate, 128-bit seeds, templates in `.blf-private/`) |
 | **Submission Decoder** | Fail-Closed (v2.0.0) | `scripts/decode_review_submissions.py` (bundle schema, candidate key enforcement, SHA-256 raw hashing) |
 | **Dual-Target IAA Engine** | Operational | `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` (candidate-level Kappa & preferred set agreement) |
 | **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
-| **Automated Tests** | 91 unit tests | 100% passing across 16 test suites |
+| **Automated Tests** | 95 unit tests | 100% passing across 16 test suites |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
 | **Dataset License** | Undecided | Pending source-license and redistribution audit |
@@ -56,6 +56,7 @@ Last Updated: 2026-09-05
 - **Review Capture Integrity & Gating (Phase 2A.2d)**: Formalized in `schemas/v0_1/reviewer_submission_bundle.schema.json` and `schemas/v0_1/reviewer_consent.schema.json`. Private sessions enforce consent gates, 128-bit private seeds, dynamic UTC timestamps, and leak-free submission templates.
 - **Fail-Closed Review Decoder & Immutability**: Implemented in `scripts/decode_review_submissions.py` computing cryptographic SHA-256 hashes of raw submissions and validating decoded records against `decoded_review_record.schema.json`.
 - **Dual-Target IAA Engine & Decision Protocol**: Implemented in `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` computing pooled candidate-level Cohen's Kappa, confusion matrices, and preferred set agreements under pre-registered decision rules in `docs/pilot-decision-protocol.md`.
+- **Forensic Linguistic Calibration (Phase 2A.2e)**: Calibrated classifier morphotactics (removed global substring blacklist; modeled attested N+টা+গুলো and N+গুলা+CASE without premature standard claims); implemented graded aspectual vector selection (distinguished auto-generation safety from linguistic impossibility); separated Wh-orthography from argument structure construction (Item 030); expanded polyfunctional particle *যে* into 4 evidence-backed senses; calibrated diagnostic items 015, 016, 023, 030, and 040.
 - **Gold-Readiness Gate**: Formalized in `research/gold-readiness-report.md` and `.json` with categorical evidence gates (`READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT`).
 
 ---

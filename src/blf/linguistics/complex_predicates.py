@@ -5,11 +5,20 @@ Provides deterministic validation, selectional restriction enforcement, and
 morphosyntactic realization for Bangla complex predicates.
 """
 
+from enum import Enum
 from typing import Any, Dict, List, Optional, Tuple
 from blf.linguistics.morphology.verbal_conjugator import VerbalConjugatorEngine, ConjugationError
 from blf.linguistics.normalizer import normalize_bangla_text
 
 conjugator = VerbalConjugatorEngine()
+
+
+class VectorCompatibilityStatus(str, Enum):
+    """Epistemic compatibility status between a pole verb and an aspectual vector verb."""
+    ALLOWED = "ALLOWED"
+    CONTEXT_DEPENDENT = "CONTEXT_DEPENDENT"
+    UNSUPPORTED = "UNSUPPORTED"
+    UNKNOWN = "UNKNOWN"
 
 
 class VectorVerbSpec:
@@ -21,6 +30,7 @@ class VectorVerbSpec:
         allowed_pole_types: List[str],
         valency_effect: str,
         description: str,
+        context_dependent_pole_types: Optional[List[str]] = None,
     ):
         self.vector_lemma = vector_lemma
         self.vector_root = vector_root
@@ -28,6 +38,7 @@ class VectorVerbSpec:
         self.allowed_pole_types = allowed_pole_types
         self.valency_effect = valency_effect
         self.description = description
+        self.context_dependent_pole_types = context_dependent_pole_types or []
 
 
 VECTOR_INVENTORY: Dict[str, VectorVerbSpec] = {
@@ -48,8 +59,14 @@ VECTOR_INVENTORY: Dict[str, VectorVerbSpec] = {
             "PERCEPTION",
             "COMMUNICATION_RELEASE",
         ],
+        context_dependent_pole_types=[
+            "STATIVE_POSTURE",
+            "STATIVE_BEING",
+            "STATIVE_COGNITION",
+            "STATIVE",
+        ],
         valency_effect="NO_VALENCY_CHANGE",
-        description="Telic completion, irreversible achievement, cognitive boundary transition, or inadvertent utterance.",
+        description="Telic completion, irreversible achievement, cognitive boundary transition, or inadvertent utterance; statives license context-dependent telic coercion or unexpectedness.",
     ),
     "নেওয়া": VectorVerbSpec(
         vector_lemma="নেওয়া",
@@ -182,24 +199,102 @@ class ComplexPredicateEngine:
         """
         return conjugator.get_conjunctive_participle(pole_verb)
 
-    def validate_vector_combination(
+    def assess_vector_compatibility(
         self, pole_verb: str, vector_verb: str, pole_semantic_type: str
+    ) -> Dict[str, Any]:
+        """
+        Evaluates graded compatibility between a pole verb and an aspectual vector verb.
+        Distinguishes auto-generation safety from linguistic impossibility.
+        """
+        v_norm = normalize_bangla_text(vector_verb)
+        p_norm = normalize_bangla_text(pole_verb)
+
+        if v_norm not in VECTOR_INVENTORY:
+            return {
+                "pole_verb": p_norm,
+                "vector_verb": v_norm,
+                "pole_semantic_type": pole_semantic_type,
+                "status": VectorCompatibilityStatus.UNKNOWN,
+                "auto_generation_safe": False,
+                "evidence_state": "UNKNOWN",
+                "reason": f"Unknown vector verb: '{vector_verb}'",
+                "coercion_factors": [],
+            }
+
+        spec = VECTOR_INVENTORY[v_norm]
+
+        if pole_semantic_type in spec.allowed_pole_types:
+            return {
+                "pole_verb": p_norm,
+                "vector_verb": v_norm,
+                "pole_semantic_type": pole_semantic_type,
+                "status": VectorCompatibilityStatus.ALLOWED,
+                "auto_generation_safe": True,
+                "evidence_state": "VERIFIED_STANDARD",
+                "reason": f"Pole type '{pole_semantic_type}' is canonically licensed with vector '{v_norm}'.",
+                "coercion_factors": [],
+            }
+
+        if pole_semantic_type in spec.context_dependent_pole_types:
+            return {
+                "pole_verb": p_norm,
+                "vector_verb": v_norm,
+                "pole_semantic_type": pole_semantic_type,
+                "status": VectorCompatibilityStatus.CONTEXT_DEPENDENT,
+                "auto_generation_safe": False,
+                "evidence_state": "NEEDS_HUMAN_REVIEW",
+                "reason": (
+                    f"Context-dependent vector combination: pole '{p_norm}' ({pole_semantic_type}) with vector '{v_norm}' "
+                    f"requires contextual licensing/coercion (telic coercion, unexpectedness, or evaluative stance); "
+                    f"not universally ungrammatical, but blocked from automatic unconstrained standard generation."
+                ),
+                "coercion_factors": [
+                    "event_boundedness",
+                    "telicity_coercion",
+                    "speaker_evaluation",
+                    "unexpectedness",
+                    "affectedness",
+                ],
+            }
+
+        return {
+            "pole_verb": p_norm,
+            "vector_verb": v_norm,
+            "pole_semantic_type": pole_semantic_type,
+            "status": VectorCompatibilityStatus.UNSUPPORTED,
+            "auto_generation_safe": False,
+            "evidence_state": "UNSUPPORTED",
+            "reason": (
+                f"Selectional restriction violation: Vector '{v_norm}' requires pole types "
+                f"{spec.allowed_pole_types}, got '{pole_semantic_type}'."
+            ),
+            "coercion_factors": [],
+        }
+
+    def validate_vector_combination(
+        self,
+        pole_verb: str,
+        vector_verb: str,
+        pole_semantic_type: str,
+        allow_context_dependent: bool = False,
     ) -> Tuple[bool, Optional[str]]:
         """
         Validates whether a pole verb is selectionally compatible with a vector verb.
+        By default, requires ALLOWED (auto-generation safe). If allow_context_dependent=True,
+        also permits CONTEXT_DEPENDENT combinations.
         """
-        v_norm = normalize_bangla_text(vector_verb)
-        if v_norm not in VECTOR_INVENTORY:
-            return False, f"Unknown vector verb: '{vector_verb}'"
+        assessment = self.assess_vector_compatibility(pole_verb, vector_verb, pole_semantic_type)
+        status = assessment["status"]
 
-        spec = VECTOR_INVENTORY[v_norm]
-        if pole_semantic_type not in spec.allowed_pole_types:
-            return False, (
-                f"Selectional restriction violation: Vector '{v_norm}' "
-                f"requires pole semantic types {spec.allowed_pole_types}, got '{pole_semantic_type}'"
-            )
+        if status == VectorCompatibilityStatus.ALLOWED:
+            return True, None
 
-        return True, None
+        if status == VectorCompatibilityStatus.CONTEXT_DEPENDENT:
+            if allow_context_dependent:
+                return True, None
+            return False, assessment["reason"]
+
+        return False, assessment["reason"]
 
     def realize_compound_verb(
         self, pole_verb: str, vector_verb: str, tense_person_key: str

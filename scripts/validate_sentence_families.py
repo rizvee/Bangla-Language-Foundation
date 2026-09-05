@@ -95,10 +95,10 @@ def validate_sentence_families() -> Tuple[int, int, List[str]]:
     if res_top != "বইটা সে পড়ে।":
         errors.append(f"Realizer failed topicalized OSV: got '{res_top}'")
 
-    # Invariant rejection test: Illegal stacked affixes
+    # Invariant rejection test: Unsupported inverted stacked affixes
     try:
-        realizer.check_morphotactic_invariants("বইটাগুলো")
-        errors.append("Realizer failed to reject illegal stacked affixes 'boi-ta-gulo'")
+        realizer.check_morphotactic_invariants("কলমগুলোটি")
+        errors.append("Realizer failed to reject unsupported inverted stacked affixes 'kolom-gulo-ti'")
     except RealizationError:
         pass
 

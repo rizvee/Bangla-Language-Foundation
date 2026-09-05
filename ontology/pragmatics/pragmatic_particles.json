@@ -99,22 +99,52 @@
     },
     {
       "particle": "যে",
-      "name": "Emotive Assertion / Complementizer",
+      "name": "Polyfunctional Discourse Particle & Complementizer",
       "is_clitic": false,
       "senses": [
-        {
-          "sense_id": "SENSE-JE-EMOTIVE",
-          "name": "Emotive Unexpected Assertion",
-          "scope": "Clause / Predicate",
-          "semantic_function": "Emotive emphasis, unexpected assertion, or evidential reminder.",
-          "examples": [{"sentence": "সে যে আসবে না!", "gloss": "he JE come-FUT.3 not! ('(Turns out) he won't come!')"}]
-        },
         {
           "sense_id": "SENSE-JE-COMPLEMENTIZER",
           "name": "Declarative Complementizer",
           "scope": "Subordinate Clause",
+          "syntactic_position": "Clause-initial or post-matrix verb",
           "semantic_function": "Declarative finite complementizer ('that').",
+          "discourse_function": "Subordination / complementizer introducing declarative content.",
+          "register": "ALL",
+          "confidence": "HIGH",
           "examples": [{"sentence": "আমি জানি যে সে আসবে।", "gloss": "I know that he come-FUT.3 ('I know that he will come.')"}]
+        },
+        {
+          "sense_id": "SENSE-JE-EMOTIVE-MIRATIVE",
+          "name": "Emotive / Mirative Assertion",
+          "scope": "Clause / Predicate",
+          "syntactic_position": "Post-topic or pre-predicate",
+          "semantic_function": "Emotive emphasis, unexpected assertion, or evidential mirative discovery.",
+          "discourse_function": "Encodes speaker surprise, evidential discovery, or mirativity ('Look, ...!').",
+          "register": "COLLOQUIAL_STANDARD",
+          "confidence": "HIGH",
+          "examples": [{"sentence": "আরে, সে যে এসে গেছে!", "gloss": "Hey, he JE come-PERF.3 ('Look, he has actually arrived!')"}]
+        },
+        {
+          "sense_id": "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+          "name": "Clause-Final Enquiry / Reproach / Reminder",
+          "scope": "Clause-Final",
+          "syntactic_position": "Clause-final",
+          "semantic_function": "Clause-final evaluative assertion, reminder, reproof, or enquiry.",
+          "discourse_function": "Prompts addressee recognition, reminder, mild reproach, or evaluative conclusion ('..., you see / don't you know?').",
+          "register": "COLLOQUIAL_AND_CONVERSATIONAL",
+          "confidence": "HIGH",
+          "examples": [{"sentence": "আরে, সে এসে গেছে যে!", "gloss": "Hey, he come-PERF.3 JE ('Look, he has arrived, you see!')"}]
+        },
+        {
+          "sense_id": "SENSE-JE-EMPHATIC-STANCE",
+          "name": "Emphatic Stance / Speaker Commitment",
+          "scope": "Proposition / Topic",
+          "syntactic_position": "Topic-adjacent or pre-verbal",
+          "semantic_function": "Emphatic stance, speaker certainty, or contrastive emphasis.",
+          "discourse_function": "Expresses emphatic commitment or contrasting affirmation against doubt.",
+          "register": "COLLOQUIAL_STANDARD",
+          "confidence": "MEDIUM",
+          "examples": [{"sentence": "আমি যে যাবই!", "gloss": "I JE go-FUT.1-EMPH ('Indeed, I shall go!')"}]
         }
       ],
       "status": "ACTIVE"

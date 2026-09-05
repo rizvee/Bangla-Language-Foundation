@@ -35,14 +35,16 @@ class ConstrainedRealizer:
 
     def check_morphotactic_invariants(self, text: str) -> None:
         """
-        Enforces that no illegal double-determination morphotactics exist in formal/standard generation.
-        In formal BDSB, singular classifier (-টা/-টি) and plural suffix (-রা/-গুলো) cannot stack.
+        Enforces genuinely structural morphotactic invariants for formal/standard generation.
+        Does NOT impose blanket bans on attested educational/colloquial patterns
+        (such as N+টা+গুলো or N+গুলা+CASE), but rejects genuinely unsupported inverted stacking.
         """
         norm = normalize_bangla_text(text)
-        illegal_patterns = ["টাগুলো", "টিরা", "গুলোটি", "গুলোরটি", "টাদের", "টিদের"]
-        for p in illegal_patterns:
+        # Genuinely unsupported inverted stacking (plural suffix followed by singular diminutive classifier)
+        unsupported_structural_patterns = ["গুলোটি", "গুলোরটি"]
+        for p in unsupported_structural_patterns:
             if p in norm:
-                raise RealizationError(f"Illegal double-determination classifier combination detected: '{p}' in '{norm}'")
+                raise RealizationError(f"Unsupported inverted morphotactic combination detected: '{p}' in '{norm}'")
 
     def realize_transitive(
         self,
@@ -184,12 +186,15 @@ class ConstrainedRealizer:
         vector_verb: str,
         pole_semantic_type: str,
         tense_person_key: str = "PAST_SIMP.3_ORD",
+        allow_context_dependent: bool = False,
     ) -> str:
         """
         Synthesizes a sentence with an aspectual compound verb (vector verb).
+        By default, only ALLOWED canonical combinations are generated automatically;
+        CONTEXT_DEPENDENT combinations require explicit opt-in via allow_context_dependent=True.
         """
         valid, err = complex_engine.validate_vector_combination(
-            pole_verb, vector_verb, pole_semantic_type
+            pole_verb, vector_verb, pole_semantic_type, allow_context_dependent=allow_context_dependent
         )
         if not valid:
             raise RealizationError(f"Vector verb constraint violation: {err}")

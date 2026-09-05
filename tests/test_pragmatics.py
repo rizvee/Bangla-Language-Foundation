@@ -104,6 +104,50 @@ class TestPragmatics(unittest.TestCase):
         self.assertIn("SENSE-NA-NEGATION", na_senses)
         self.assertIn("SENSE-NA-CONFIRMATION-TAG", na_senses)
 
+        je_senses = [s.sense_id for s in PRAGMATIC_PARTICLE_REGISTRY["যে"].senses]
+        self.assertIn("SENSE-JE-COMPLEMENTIZER", je_senses)
+        self.assertIn("SENSE-JE-EMOTIVE-MIRATIVE", je_senses)
+        self.assertIn("SENSE-JE-CLAUSE-FINAL-EVALUATIVE", je_senses)
+        self.assertIn("SENSE-JE-EMPHATIC-STANCE", je_senses)
+
+    def test_analyze_particle_je(self):
+        # 1. Complementizer
+        res_comp = self.engine.analyze_particle_je("আমি জানি যে সে আসবে।")
+        self.assertEqual(res_comp["primary_sense"], "SENSE-JE-COMPLEMENTIZER")
+        self.assertFalse(res_comp["is_ambiguous"])
+
+        # 2. Topic-adjacent mirative
+        res_mirative = self.engine.analyze_particle_je("আরে, সে যে এসে গেছে!")
+        self.assertEqual(res_mirative["primary_sense"], "SENSE-JE-EMOTIVE-MIRATIVE")
+        self.assertTrue(res_mirative["mirativity"])
+
+        # 3. Clause-final evaluative / reminder
+        res_final = self.engine.analyze_particle_je("আরে, সে এসে গেছে যে!")
+        self.assertEqual(res_final["primary_sense"], "SENSE-JE-CLAUSE-FINAL-EVALUATIVE")
+
+        # 4. Medial underspecified / ambiguous context
+        res_ambig = self.engine.analyze_particle_je("লোকটা যে ভালো")
+        self.assertTrue(res_ambig["is_ambiguous"])
+        self.assertEqual(res_ambig["primary_sense"], "AMBIGUOUS")
+
+    def test_analyze_wh_construction(self):
+        # Nominative transitive Wh: তুমি কী চাও?
+        res_nom = self.engine.analyze_wh_construction("তুমি কী চাও?")
+        self.assertEqual(res_nom["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_nom["orthography_status"], "CANONICAL_STANDARD_WH")
+        self.assertTrue(res_nom["is_grammatical"])
+
+        # Polar or noncanonical Wh: তুমি কি চাও?
+        res_polar = self.engine.analyze_wh_construction("তুমি কি চাও?")
+        self.assertEqual(res_polar["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_polar["orthography_status"], "NONCANONICAL_OR_POLAR_AMBIGUOUS")
+
+        # Genitive experiencer modal Wh: তোমার কী চাই?
+        res_gen = self.engine.analyze_wh_construction("তোমার কী চাই?")
+        self.assertEqual(res_gen["construction_type"], "GENITIVE_EXPERIENCER_MODAL_WH")
+        self.assertEqual(res_gen["orthography_status"], "CANONICAL_STANDARD_WH")
+        self.assertTrue(res_gen["is_grammatical"])
+
 
 if __name__ == "__main__":
     unittest.main()

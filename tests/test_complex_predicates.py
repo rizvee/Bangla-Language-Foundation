@@ -67,7 +67,9 @@ class TestComplexPredicates(unittest.TestCase):
         self.assertEqual(res_pao, "ক্ষিদে পায়")
 
     def test_selectional_restriction_validation(self):
-        # Valid: dynamic transitive with phela
+        from blf.linguistics.complex_predicates import VectorCompatibilityStatus
+
+        # Valid: dynamic transitive with phela (ALLOWED)
         valid_dyn, _ = self.engine.validate_vector_combination("খা", "ফেলা", "TRANSITIVE_DYNAMIC")
         self.assertTrue(valid_dyn)
 
@@ -75,10 +77,31 @@ class TestComplexPredicates(unittest.TestCase):
         valid_cog, _ = self.engine.validate_vector_combination("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
         self.assertTrue(valid_cog)
 
-        # Invalid: pure stative posture with phela (*theke phela)
-        invalid, err = self.engine.validate_vector_combination("থাক", "ফেলা", "STATIVE_POSTURE")
-        self.assertFalse(invalid)
-        self.assertIn("Selectional restriction violation", err)
+        # Stative posture with phela: CONTEXT_DEPENDENT, not universally impossible
+        assessment = self.engine.assess_vector_compatibility("থাক", "ফেলা", "STATIVE_POSTURE")
+        self.assertEqual(assessment["status"], VectorCompatibilityStatus.CONTEXT_DEPENDENT)
+        self.assertFalse(assessment["auto_generation_safe"])
+        self.assertEqual(assessment["evidence_state"], "NEEDS_HUMAN_REVIEW")
+
+        # By default, automatic generation blocks context-dependent combinations
+        invalid_default, err = self.engine.validate_vector_combination("থাক", "ফেলা", "STATIVE_POSTURE")
+        self.assertFalse(invalid_default)
+        self.assertIn("Context-dependent", err)
+
+        # With explicit opt-in, context-dependent combinations are allowed
+        valid_optin, _ = self.engine.validate_vector_combination(
+            "থাক", "ফেলা", "STATIVE_POSTURE", allow_context_dependent=True
+        )
+        self.assertTrue(valid_optin)
+
+        # Truly unsupported combination
+        unsupported_assessment = self.engine.assess_vector_compatibility("থাক", "ফেলা", "COMPLETELY_UNSUPPORTED_TYPE")
+        self.assertEqual(unsupported_assessment["status"], VectorCompatibilityStatus.UNSUPPORTED)
+        invalid_unsupported, err_unsup = self.engine.validate_vector_combination(
+            "থাক", "ফেলা", "COMPLETELY_UNSUPPORTED_TYPE"
+        )
+        self.assertFalse(invalid_unsupported)
+        self.assertIn("Selectional restriction violation", err_unsup)
 
 
 if __name__ == "__main__":

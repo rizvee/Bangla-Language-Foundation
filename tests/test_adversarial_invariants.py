@@ -31,29 +31,157 @@ class TestAdversarialInvariants(unittest.TestCase):
         self.prag_engine = PragmaticsEngine()
         self.verbal_engine = VerbalConjugatorEngine()
 
-    def test_adversarial_classifier_plural_stacking_rejected(self):
-        """Assures that illegal double-determination morphotactics are strictly caught."""
-        illegal_forms = [
-            "বইটাগুলো পড়লাম",
-            "মানুষটিরা এল",
-            "ছেলেটাদেরকে ডাকো",
-            "কলমগুলোরটি দিন",
-        ]
-        for f in illegal_forms:
-            with self.assertRaises(RealizationError, msg=f"Failed to reject illegal form: {f}"):
-                self.realizer.check_morphotactic_invariants(f)
+    def test_adversarial_classifier_pattern_calibration(self):
+        """
+        Assures that classifier morphotactics reflect external evidence and epistemic calibration:
+        1. N+টা+গুলো (e.g. ছবিটাগুলো, বইটাগুলো) is NOT globally rejected solely by substring blacklist.
+        2. ছেলেগুলাকে is NOT globally rejected (attested in historical & contemporary Bangla).
+        3. Evidence for N+টা+গুলো does NOT automatically validate N+গুলো+টা.
+        4. Unresolved nominal variants remain distinguishable from canonical standard.
+        """
+        from blf.linguistics.morphology.nominal_declension import assess_nominal_morphotactics, MorphotacticStatus
 
-    def test_adversarial_stative_telic_vector_rejected(self):
-        """Assures that stative non-dynamic verbs cannot combine with telic vector 'phela'."""
-        statives = [("থাক", "STATIVE_POSTURE"), ("হ", "STATIVE_BEING")]
-        for verb, sem_type in statives:
-            valid, err = self.cpred_engine.validate_vector_combination(verb, "ফেলা", sem_type)
-            self.assertFalse(valid, f"Stative verb '{verb}' incorrectly permitted with 'phela'")
-            self.assertIn("Selectional restriction violation", err)
+        # Invariant 1: N+টা+গুলো is not rejected by check_morphotactic_invariants
+        try:
+            self.realizer.check_morphotactic_invariants("Activity A-এর ছবিটাগুলো দেখতে বলুন")
+            self.realizer.check_morphotactic_invariants("বইটাগুলো নিয়ে এসো")
+        except RealizationError:
+            self.fail("check_morphotactic_invariants incorrectly rejected attested N+টা+গুলো pattern")
 
-        # Conversely, cognitive achievements MUST be permitted
+        att_chobi = assess_nominal_morphotactics("ছবিটাগুলো")
+        self.assertEqual(att_chobi["status"], MorphotacticStatus.ATTESTED_STANDARD)
+        self.assertFalse(att_chobi["is_universally_illegal"])
+        self.assertEqual(att_chobi["review_priority"], "CRITICAL")
+
+        # Invariant 2: ছেলেগুলাকে is not globally rejected
+        try:
+            self.realizer.check_morphotactic_invariants("ছেলেগুলাকে ডাকো")
+        except RealizationError:
+            self.fail("check_morphotactic_invariants incorrectly rejected attested 'ছেলেগুলাকে'")
+
+        att_chhele = assess_nominal_morphotactics("ছেলেগুলাকে")
+        self.assertEqual(att_chhele["status"], MorphotacticStatus.ATTESTED_CONVERSATIONAL)
+        self.assertFalse(att_chhele["is_universally_illegal"])
+
+        # Invariant 3: Evidence for N+টা+গুলো does NOT automatically validate N+গুলো+টা
+        att_gulo_ta = assess_nominal_morphotactics("বইগুলোটা")
+        self.assertEqual(att_gulo_ta["status"], MorphotacticStatus.REGISTER_UNRESOLVED)
+        self.assertNotEqual(att_gulo_ta["status"], att_chobi["status"])
+
+        # Invariant 4: Canonical standard vs unresolved vs unsupported distinction
+        att_standard = assess_nominal_morphotactics("বইগুলো")
+        self.assertEqual(att_standard["status"], MorphotacticStatus.CANONICAL_STANDARD)
+        self.assertTrue(att_standard["auto_generation_safe"])
+
+        att_spoken = assess_nominal_morphotactics("ছেলেটাদেরকে")
+        self.assertEqual(att_spoken["status"], MorphotacticStatus.REGISTER_UNRESOLVED)
+        self.assertFalse(att_spoken["auto_generation_safe"])
+
+        # Genuine unsupported inverted patterns (গুলোটি, গুলোরটি) are still caught
+        with self.assertRaises(RealizationError):
+            self.realizer.check_morphotactic_invariants("কলমগুলোরটি দিন")
+
+    def test_adversarial_vector_event_structure_calibration(self):
+        """
+        Assures that vector verb selection reflects event-structure compatibility:
+        5. Stative + ফেলা returns CONTEXT_DEPENDENT/NEEDS_REVIEW rather than 'universally ungrammatical'.
+        6. Context-dependent vector combinations are NOT automatically emitted as canonical standard.
+        7. Established cognitive achievement + ফেলা remains allowed.
+        8. Item 023 candidate B remains human-review dependent.
+        """
+        from blf.linguistics.complex_predicates import VectorCompatibilityStatus
+
+        # Invariant 5: Stative + ফেলা is CONTEXT_DEPENDENT, not universally ungrammatical
+        stative_stay = self.cpred_engine.assess_vector_compatibility("থাক", "ফেলা", "STATIVE_POSTURE")
+        self.assertEqual(stative_stay["status"], VectorCompatibilityStatus.CONTEXT_DEPENDENT)
+        self.assertEqual(stative_stay["evidence_state"], "NEEDS_HUMAN_REVIEW")
+        self.assertIn("telicity_coercion", stative_stay["coercion_factors"])
+
+        stative_be = self.cpred_engine.assess_vector_compatibility("হ", "ফেলা", "STATIVE_BEING")
+        self.assertEqual(stative_be["status"], VectorCompatibilityStatus.CONTEXT_DEPENDENT)
+
+        # Invariant 6: Context-dependent combinations blocked from automatic standard generation
+        valid_default, err = self.cpred_engine.validate_vector_combination("থাক", "ফেলা", "STATIVE_POSTURE")
+        self.assertFalse(valid_default)
+        self.assertIn("Context-dependent", err)
+
+        with self.assertRaises(RealizationError):
+            self.realizer.realize_vector_predicate_sentence("সে", "ঢাকায়", "থাক", "ফেলা", "STATIVE_POSTURE")
+
+        # But permitted with explicit context-dependent opt-in
+        valid_optin, _ = self.cpred_engine.validate_vector_combination(
+            "থাক", "ফেলা", "STATIVE_POSTURE", allow_context_dependent=True
+        )
+        self.assertTrue(valid_optin)
+
+        # Invariant 7: Established cognitive achievement + ফেলা remains allowed
         valid_cog, _ = self.cpred_engine.validate_vector_combination("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
         self.assertTrue(valid_cog, "Cognitive achievement with 'phela' incorrectly rejected")
+        cog_assess = self.cpred_engine.assess_vector_compatibility("জান", "ফেলা", "COGNITIVE_ACHIEVEMENT")
+        self.assertEqual(cog_assess["status"], VectorCompatibilityStatus.ALLOWED)
+        self.assertTrue(cog_assess["auto_generation_safe"])
+
+        # Invariant 8: Item 023 Candidate B ('থেকে ফেলল') is context-dependent / needs review
+        item_023_b_compat = self.cpred_engine.assess_vector_compatibility("থাক", "ফেলা", "STATIVE_POSTURE")
+        self.assertEqual(item_023_b_compat["evidence_state"], "NEEDS_HUMAN_REVIEW")
+
+    def test_adversarial_wh_construction_and_orthography_split(self):
+        """
+        9. Assures that Item 030 separates orthographic Wh analysis from syntactic construction analysis.
+        """
+        # A: তুমি কী চাও? -> Nominative transitive Wh with canonical 'কী'
+        res_a = self.prag_engine.analyze_wh_construction("তুমি কী চাও?")
+        self.assertEqual(res_a["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_a["orthography_status"], "CANONICAL_STANDARD_WH")
+        self.assertTrue(res_a["is_grammatical"])
+
+        # B: তুমি কি চাও? -> Nominative transitive Wh with polar/digital 'কি'
+        res_b = self.prag_engine.analyze_wh_construction("তুমি কি চাও?")
+        self.assertEqual(res_b["construction_type"], "NOMINATIVE_AGENTIVE_TRANSITIVE_WH")
+        self.assertEqual(res_b["orthography_status"], "NONCANONICAL_OR_POLAR_AMBIGUOUS")
+
+        # C: তোমার কী চাই? -> Genitive experiencer modal Wh (structurally distinct, NOT ungrammatical)
+        res_c = self.prag_engine.analyze_wh_construction("তোমার কী চাই?")
+        self.assertEqual(res_c["construction_type"], "GENITIVE_EXPERIENCER_MODAL_WH")
+        self.assertEqual(res_c["orthography_status"], "CANONICAL_STANDARD_WH")
+        self.assertTrue(res_c["is_grammatical"])
+
+    def test_adversarial_polyfunctional_particle_je_calibration(self):
+        """
+        10. Pragmatic 'যে' has multiple modeled discourse senses.
+        11. Unknown/ambiguous 'যে' context does not force a single deterministic sense.
+        12. Item 040 preserves A/B discourse ambiguity and C meaning-strategy distinction.
+        """
+        from blf.linguistics.pragmatics import PRAGMATIC_PARTICLE_REGISTRY
+
+        # Invariant 10: 4 evidence-backed senses modeled
+        je_spec = PRAGMATIC_PARTICLE_REGISTRY["যে"]
+        sense_ids = [s.sense_id for s in je_spec.senses]
+        self.assertGreaterEqual(len(sense_ids), 4)
+        self.assertIn("SENSE-JE-COMPLEMENTIZER", sense_ids)
+        self.assertIn("SENSE-JE-EMOTIVE-MIRATIVE", sense_ids)
+        self.assertIn("SENSE-JE-CLAUSE-FINAL-EVALUATIVE", sense_ids)
+        self.assertIn("SENSE-JE-EMPHATIC-STANCE", sense_ids)
+
+        # Invariant 11: Unknown context returns AMBIGUOUS, not a deterministic guess
+        ambig_res = self.prag_engine.analyze_particle_je("তিনি যে মানুষ")
+        self.assertTrue(ambig_res["is_ambiguous"])
+        self.assertEqual(ambig_res["primary_sense"], "AMBIGUOUS")
+        self.assertGreater(len(ambig_res["candidate_senses"]), 1)
+
+        # Invariant 12: Item 040 candidates A and B distinct pragmatic licensing; C distinct strategy
+        # A: আরে, সে যে এসে গেছে! (topic-adjacent mirative)
+        res_040_a = self.prag_engine.analyze_particle_je("আরে, সে যে এসে গেছে!")
+        self.assertEqual(res_040_a["primary_sense"], "SENSE-JE-EMOTIVE-MIRATIVE")
+        self.assertTrue(res_040_a["mirativity"])
+
+        # B: আরে, সে এসে গেছে যে! (clause-final evaluative / reminder)
+        res_040_b = self.prag_engine.analyze_particle_je("আরে, সে এসে গেছে যে!")
+        self.assertEqual(res_040_b["primary_sense"], "SENSE-JE-CLAUSE-FINAL-EVALUATIVE")
+
+        # C: আরে, সে কি এসে গেছে! (polar question strategy)
+        dis_c = self.prag_engine.disambiguate_ki("আরে, সে কি এসে গেছে!")
+        self.assertTrue(any(d["syntactic_function"] == "POLAR_INTERROGATIVE_PARTICLE" for d in dis_c["disambiguations"]))
 
     def test_adversarial_unmodeled_participle_rejected(self):
         """Assures that arbitrary unmodeled verbs raise ConjugationError rather than emitting corrupted fallbacks."""

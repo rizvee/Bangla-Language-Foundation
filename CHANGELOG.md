@@ -9,6 +9,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added - Phase 2A.2e Forensic Linguistic Calibration Patch
+- **Classifier Morphotactics Calibration**: Neutralized blanket surface-string blacklist in `src/blf/generation/realizer.py`; added `assess_nominal_morphotactics()` and `MorphotacticStatus` enum in `src/blf/linguistics/morphology/nominal_declension.py` modeling attested `N+টা+গুলো` (NCTB educational attestation), `N+গুলা+CASE` (historical and contemporary usage), and colloquial `N+টা+দের` without claiming automatic canonical status; enforced that `check_morphotactic_invariants()` rejects only genuinely unsupported inverted patterns (e.g. `গুলোটি`, `গুলোরটি`).
+- **Graded Aspectual Vector Compatibility**: Replaced binary stative ban with graded vector selection architecture in `src/blf/linguistics/complex_predicates.py` (`ALLOWED`, `CONTEXT_DEPENDENT`, `UNSUPPORTED`, `UNKNOWN`); distinguished auto-generation safety (`auto_generation_safe=False` for stative + `ফেলা`) from linguistic impossibility; updated `ontology/complex_predicates/complex_predicates.json` (`CPRED-VECTOR-PHELA-TELIC`) with explicit `stative_compatibility` and coercion factors.
+- **Interrogative Wh-Orthography & Construction Separation**: Added `analyze_wh_construction()` in `src/blf/linguistics/pragmatics.py` separating orthographic Wh-spelling (`কি` vs `কী`) from argument structure constructions (nominative transitive vs genitive experiencer modal); updated `VERB_VALENCY_LEXICON` with perfective and conjunctive forms for `যা` and `আস`.
+- **Polyfunctional Particle `যে` Expansion**: Expanded `ParticleSense` with rich pragmatic attributes (`host_position`, `speaker_commitment`, `mirativity`, `illocution_type`, etc.); modeled 4 evidence-backed senses in `src/blf/linguistics/pragmatics.py` and `ontology/pragmatics/pragmatic_particles.json` (`COMPLEMENTIZER`, `EMOTIVE_MIRATIVE`, `CLAUSE_FINAL_EVALUATIVE`, `EMPHATIC_STANCE`); implemented `analyze_particle_je()` with explicit ambiguity fallback.
+- **Diagnostic Pilot Calibration**: Calibrated 5 analytical items in `data/review_queue/human_review_pilot_40.json`:
+  - `PILOT-ITEM-015`: Modeled N+টা+গুলো (C) as independently attested (NCTB) requiring human calibration; N+গুলো+টা (B) as separate unresolved pattern (Priority: CRITICAL).
+  - `PILOT-ITEM-016`: Modeled `ছেলেগুলাকে` (C) as attested conversational/popular Bangla (not ungrammatical); `ছেলেটাদেরকে` (B) as colloquial unresolved pattern (Priority: HIGH).
+  - `PILOT-ITEM-023`: Modeled `থেকে ফেলল` (B) as marked/context-dependent requiring telic coercion/speaker evaluation rather than universal impossibility (Priority: HIGH).
+  - `PILOT-ITEM-030`: Separated Wh-orthography from argument structure; `তোমার কী চাই?` (C) evaluated as structurally distinct experiencer construction (Priority: CALIBRATION / MEDIUM).
+  - `PILOT-ITEM-040`: Modeled A (`সে যে এসে গেছে!`) and B (`সে এসে গেছে যে!`) as distinct pragmatic anchoring; C as polar surprise strategy (Priority: HIGH).
+- **Comprehensive Regression Test Suite**: Replaced false invariant tests in `tests/test_adversarial_invariants.py` with 12 calibrated regression tests across classifier patterns, vector event structures, Wh constructions, and polyfunctional particles; updated `tests/test_realization.py`, `tests/test_complex_predicates.py`, and `tests/test_pragmatics.py` (total 95 unit tests passing).
+
 ### Added - Phase 2A.2d Review Capture Integrity & Pilot Launch Freeze
 - **Reviewer Submission Bundle Schema**: Created `schemas/v0_1/reviewer_submission_bundle.schema.json` formalizing complete 40-item blinded submission payloads with strict candidate keys (`A`, `B`, `C`), unique preferred candidates, and zero research metadata leakage.
 - **Machine-Readable Reviewer Consent Schema**: Created `schemas/v0_1/reviewer_consent.schema.json` separating consent to research use from consent to anonymized public release.

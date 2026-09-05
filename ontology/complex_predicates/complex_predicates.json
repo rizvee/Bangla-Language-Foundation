@@ -19,7 +19,18 @@
       "selection_restrictions": {
         "allowed_pole_types": ["TRANSITIVE_DYNAMIC", "UNERGATIVE_DYNAMIC", "COGNITIVE_ACHIEVEMENT", "INGESTION", "PERCEPTION", "COMMUNICATION_RELEASE"],
         "cognitive_achievement_allowed": true,
-        "pure_stative_posture_allowed": false
+        "stative_compatibility": {
+          "status": "CONTEXT_DEPENDENT",
+          "automatic_generation": false,
+          "evidence_state": "NEEDS_HUMAN_REVIEW",
+          "coercion_factors": [
+            "event_boundedness",
+            "telicity_coercion",
+            "speaker_evaluation",
+            "unexpectedness",
+            "affectedness"
+          ]
+        }
       },
       "valency_effect": "NO_VALENCY_CHANGE",
       "language_variety": "BDSB_STANDARD",

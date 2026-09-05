@@ -6,11 +6,105 @@ according to BDSB standards, incorporating case allomorphy, classifier
 attachment, number inflection, animacy constraints, and affix ordering.
 """
 
+from enum import Enum
 from typing import Any, Dict, List, Optional
 from blf.linguistics.normalizer import normalize_bangla_text
 
 VOWEL_SIGNS = {"া", "ি", "ী", "ু", "ূ", "ৃ", "ে", "ৈ", "ো", "ৌ"}
 INDEPENDENT_VOWELS = {"অ", "আ", "ই", "ঈ", "উ", "ঊ", "ঋ", "এ", "ঐ", "ও", "ঔ"}
+
+
+class MorphotacticStatus(str, Enum):
+    """Epistemic register and morphotactic status of nominal forms."""
+    CANONICAL_STANDARD = "CANONICAL_STANDARD"
+    ATTESTED_STANDARD = "ATTESTED_STANDARD"
+    ATTESTED_CONVERSATIONAL = "ATTESTED_CONVERSATIONAL"
+    ATTESTED_REGIONAL = "ATTESTED_REGIONAL"
+    MARKED = "MARKED"
+    REGISTER_UNRESOLVED = "REGISTER_UNRESOLVED"
+    UNSUPPORTED = "UNSUPPORTED"
+    NEEDS_HUMAN_REVIEW = "NEEDS_HUMAN_REVIEW"
+
+
+def assess_nominal_morphotactics(form: str) -> Dict[str, Any]:
+    """
+    Assesses the morphotactic and register status of a nominal form in BDSB.
+    Distinguishes attested colloquial/educational variants from unsupported forms
+    without imposing blanket substring blacklists.
+    """
+    norm = normalize_bangla_text(form)
+
+    # Inverted unsupported plural + diminutive classifier (e.g. গুলোটি,গুলোরটি)
+    if "গুলোটি" in norm or "গুলোরটি" in norm:
+        return {
+            "form": norm,
+            "status": MorphotacticStatus.UNSUPPORTED,
+            "pattern": "N+গুলো+টি",
+            "is_universally_illegal": False,
+            "auto_generation_safe": False,
+            "evidence": "Inverted plural suffix + singular diminutive classifier inside standard genitive; unsupported in standard BDSB.",
+            "review_priority": "LOW",
+        }
+
+    # Inverted plural + classifier (বইগুলোটা)
+    if "গুলোটা" in norm or "গুলারটা" in norm:
+        return {
+            "form": norm,
+            "status": MorphotacticStatus.REGISTER_UNRESOLVED,
+            "pattern": "N+গুলো+টা",
+            "is_universally_illegal": False,
+            "auto_generation_safe": False,
+            "evidence": "Separate N+গুলো+টা pattern; status cannot be inferred from N+টা+গুলো; unresolved without independent evidence.",
+            "review_priority": "MEDIUM",
+        }
+
+    # Attested N + classifier + plural (e.g. ছবিটাগুলো, বইটাগুলো)
+    if "টাগুলো" in norm or "টিগুলো" in norm:
+        return {
+            "form": norm,
+            "status": MorphotacticStatus.ATTESTED_STANDARD,
+            "pattern": "N+টা+গুলো",
+            "is_universally_illegal": False,
+            "auto_generation_safe": False,
+            "evidence": "Independently attested in official Bangladesh DPE/NCTB teacher-edition material ('ছবিটাগুলো'); distribution in BDSB requires human calibration.",
+            "review_priority": "CRITICAL",
+        }
+
+    # Colloquial/historical plural + case (e.g. ছেলেগুলাকে, বইগুলা)
+    if "গুলাকে" in norm or "গুলাতে" in norm or "গুলার" in norm:
+        return {
+            "form": norm,
+            "status": MorphotacticStatus.ATTESTED_CONVERSATIONAL,
+            "pattern": "N+গুলা+CASE",
+            "is_universally_illegal": False,
+            "auto_generation_safe": False,
+            "evidence": "Attested in historical literary Bangla and contemporary Bangladesh conversational usage; not ungrammatical.",
+            "review_priority": "HIGH",
+        }
+
+    # Colloquial/spoken stacked human oblique (e.g. ছেলেটাদেরকে, মানুষটাদের)
+    if "টাদের" in norm or "টিদের" in norm:
+        return {
+            "form": norm,
+            "status": MorphotacticStatus.REGISTER_UNRESOLVED,
+            "pattern": "N+টা+দের+CASE",
+            "is_universally_illegal": False,
+            "auto_generation_safe": False,
+            "evidence": "Attested in colloquial spoken patterns; BDSB standard register status remains unresolved; requires human review.",
+            "review_priority": "HIGH",
+        }
+
+    # Standard human / inanimate plural or singular
+    return {
+        "form": norm,
+        "status": MorphotacticStatus.CANONICAL_STANDARD,
+        "pattern": "CANONICAL",
+        "is_universally_illegal": False,
+        "auto_generation_safe": True,
+        "evidence": "Canonical standard BDSB nominal morphology.",
+        "review_priority": "NONE",
+    }
+
 
 
 def is_vowel_final(stem: str) -> bool:

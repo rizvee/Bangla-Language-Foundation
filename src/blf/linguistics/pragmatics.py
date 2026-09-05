@@ -42,9 +42,9 @@ class VerbValency(str, Enum):
 # Registered verb valency lexicon for BDSB
 VERB_VALENCY_LEXICON: Dict[str, Dict[str, Any]] = {
     # Intransitives
-    "যা": {"valency": VerbValency.INTRANSITIVE, "forms": ["যাই", "যাও", "যান", "যাস", "যায়", "যাচ্ছ", "যাচ্ছেন", "যাচ্ছি", "গেলাম", "গেলে", "গেলেন", "গেল", "যাবে", "যাবেন", "যাবি"]},
-    "আস": {"valency": VerbValency.INTRANSITIVE, "forms": ["আসি", "আসো", "আসেন", "আসিস", "আসে", "আসছি", "আসছেন", "এলাম", "এলেন", "এলে", "এলো", "এল", "আসবে", "আসবেন"]},
-    "থাক": {"valency": VerbValency.INTRANSITIVE, "forms": ["থাকি", "থাকো", "থাকেন", "থাকিস", "থাকে", "থাকছি", "থাকছেন", "থাকলাম", "থাকলেন", "থাকবে", "থাকবেন"]},
+    "যা": {"valency": VerbValency.INTRANSITIVE, "forms": ["যাই", "যাও", "যান", "যাস", "যায়", "যাচ্ছ", "যাচ্ছেন", "যাচ্ছি", "গেলাম", "গেলে", "গেলেন", "গেল", "যাবে", "যাবেন", "যাবি", "গেছে", "গিয়েছে", "গিয়েছেন", "গিয়েছি", "গেছি", "গেছ", "গিয়ে"]},
+    "আস": {"valency": VerbValency.INTRANSITIVE, "forms": ["আসি", "আসো", "আসেন", "আসিস", "আসে", "আসছি", "আসছেন", "এলাম", "এলেন", "এলে", "এলো", "এল", "আসবে", "আসবেন", "এসেছে", "এসেছেন", "এসেছি", "এসেছ", "এসে"]},
+    "থাক": {"valency": VerbValency.INTRANSITIVE, "forms": ["থাকি", "থাকো", "থাকেন", "থাকিস", "থাকে", "থাকছি", "থাকছেন", "থাকলাম", "থাকলেন", "থাকবে", "থাকবেন", "থেকে", "থেকেছে"]},
     "ঘুম": {"valency": VerbValency.INTRANSITIVE, "forms": ["ঘুমাও", "ঘুমান", "ঘুমায়", "ঘুমাচ্ছি", "ঘুমাচ্ছেন", "ঘুমাল", "ঘুমালেন", "ঘুমাবে", "ঘুমাবেন"]},
     "বস": {"valency": VerbValency.INTRANSITIVE, "forms": ["বসি", "বসো", "বসেন", "বসিস", "বসে", "বসলাম", "বসলেন", "বসল", "বসবে", "বসবেন"]},
     "দাঁড়া": {"valency": VerbValency.INTRANSITIVE, "forms": ["দাঁড়াও", "দাঁড়ান", "দাঁড়ায়", "দাঁড়িয়েছে", "দাঁড়াল", "দাঁড়ালেন"]},
@@ -78,6 +78,14 @@ class ParticleSense:
     register: str
     confidence: str  # HIGH, MEDIUM, LOW
     confidence_basis: str
+    host_position: Optional[str] = None
+    speaker_commitment: Optional[str] = None
+    common_ground_relation: Optional[str] = None
+    evaluation: Optional[str] = None
+    mirativity: Optional[bool] = None
+    illocution_type: Optional[str] = None
+    evidence_strength: Optional[str] = "HIGH"
+    review_status: Optional[str] = "VERIFIED"
 
 
 @dataclass
@@ -195,16 +203,66 @@ PRAGMATIC_PARTICLE_REGISTRY: Dict[str, PragmaticParticleSpec] = {
                 discourse_function="Finite clause complementation ('that...').",
                 register="ALL",
                 confidence="HIGH",
-                confidence_basis="Standard syntactic complementation.",
+                confidence_basis="Standard syntactic complementation across formal and colloquial BDSB.",
+                host_position="CLAUSE_INITIAL_OR_POST_MATRIX",
+                speaker_commitment="NEUTRAL",
+                common_ground_relation="INTRODUCES_SUBORDINATE_PROPOSITION",
+                evaluation=None,
+                mirativity=False,
+                illocution_type="DECLARATIVE_COMPLEMENTATION",
+                evidence_strength="HIGH",
+                review_status="VERIFIED",
             ),
             ParticleSense(
-                sense_id="SENSE-JE-EMOTIVE-EXCLAMATIVE",
+                sense_id="SENSE-JE-EMOTIVE-MIRATIVE",
                 syntactic_position="Post-topic / pre-predicate",
-                scope="Proposition",
-                discourse_function="Emotive astonishment or evidential reminder ('Look, ...').",
+                scope="Proposition / Clause",
+                discourse_function="Emotive astonishment, mirative discovery, or evidential reminder ('Look, ...!').",
                 register="COLLOQUIAL_STANDARD",
                 confidence="HIGH",
-                confidence_basis="Attested in BA-GRAM-2011.",
+                confidence_basis="Attested in BA-GRAM-2011 and Bangladesh Accessible Dictionary.",
+                host_position="POST_TOPIC_PRE_PREDICATE",
+                speaker_commitment="HIGH",
+                common_ground_relation="NEW_INFORMATION_ASSERTION",
+                evaluation="POSITIVE_OR_NEGATIVE_SURPRISE",
+                mirativity=True,
+                illocution_type="MIRATIVE_ASSERTION",
+                evidence_strength="HIGH",
+                review_status="VERIFIED",
+            ),
+            ParticleSense(
+                sense_id="SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+                syntactic_position="Clause-final",
+                scope="Clause / Utterance",
+                discourse_function="Clause-final evaluative assertion, reminder, mild reproach, or appeal for recognition ('..., you see! / don't you see?').",
+                register="COLLOQUIAL_AND_CONVERSATIONAL",
+                confidence="HIGH",
+                confidence_basis="Documented in Bangladesh Accessible Dictionary (disgust, disappointment, enquiry, remonstrance) and conversational BDSB.",
+                host_position="CLAUSE_FINAL",
+                speaker_commitment="HIGH",
+                common_ground_relation="APPEAL_TO_COMMON_GROUND_OR_RECOGNITION",
+                evaluation="EVALUATIVE_REPROACH_OR_REMINDER",
+                mirativity=False,
+                illocution_type="EVALUATIVE_EXCLAMATIVE",
+                evidence_strength="HIGH",
+                review_status="VERIFIED",
+            ),
+            ParticleSense(
+                sense_id="SENSE-JE-EMPHATIC-STANCE",
+                syntactic_position="Topic-adjacent or pre-verbal",
+                scope="Constituent / Proposition",
+                discourse_function="Emphatic affirmation, speaker stance, or contrastive focus against doubt.",
+                register="COLLOQUIAL_STANDARD",
+                confidence="MEDIUM",
+                confidence_basis="Attested in Bangladesh Accessible Dictionary (emphasis, disagreement/disapproval) and literary/spoken usage.",
+                host_position="TOPIC_ADJACENT",
+                speaker_commitment="STRONG_AFFIRMATION",
+                common_ground_relation="COUNTER_PRESUPPOSITION",
+                evaluation="EMPHATIC_ASSERTION",
+                mirativity=False,
+                illocution_type="EMPHATIC_ASSERTION",
+                evidence_strength="MEDIUM",
+                review_status="VERIFIED",
             ),
         ],
     ),
@@ -460,3 +518,146 @@ class PragmaticsEngine:
         elif c == "ও":
             return norm + "ও"
         return norm + c
+
+    def analyze_particle_je(self, text: str, token_idx: Optional[int] = None) -> Dict[str, Any]:
+        """
+        Analyzes the polyfunctional particle 'যে' across syntactic position,
+        discourse anchoring, mirativity, and illocutionary force.
+        Avoids reduction of particle surface form to deterministic meaning.
+        Returns AMBIGUOUS with candidate senses when context permits multiple readings.
+        """
+        norm = normalize_bangla_text(text)
+        clean = norm.replace("!", "").replace("?", "").replace("।", "").replace(",", "")
+        tokens = clean.split()
+
+        je_indices = [i for i, t in enumerate(tokens) if t == "যে"]
+        if not je_indices:
+            return {
+                "text": text,
+                "particle_present": False,
+                "senses": [],
+                "is_ambiguous": False,
+                "reason": "Particle 'যে' not found in text.",
+            }
+
+        target_idx = token_idx if token_idx is not None else je_indices[0]
+        total = len(tokens)
+
+        # 1. Clause-Initial or Subordinate Complementizer
+        # e.g. "আমি জানি যে সে আসবে"
+        matrix_verbs = ["জানি", "জানেন", "জানে", "মনে", "বলে", "বলল", "বললেন", "দেখল", "দেখলেন"]
+        if target_idx == 0 or (target_idx > 0 and any(tokens[target_idx - 1].startswith(mv) for mv in matrix_verbs)):
+            return {
+                "text": text,
+                "target_token": "যে",
+                "position_type": "CLAUSE_INITIAL_OR_COMPLEMENTIZER",
+                "candidate_senses": ["SENSE-JE-COMPLEMENTIZER"],
+                "primary_sense": "SENSE-JE-COMPLEMENTIZER",
+                "is_ambiguous": False,
+                "mirativity": False,
+                "confidence": "HIGH",
+                "reason": "Syntactic complementizer introducing subordinate declarative proposition.",
+            }
+
+        # 2. Clause-Final Position
+        # e.g. "আরে, সে এসে গেছে যে!"
+        if target_idx == total - 1:
+            return {
+                "text": text,
+                "target_token": "যে",
+                "position_type": "CLAUSE_FINAL",
+                "candidate_senses": [
+                    "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+                    "SENSE-JE-EMPHATIC-STANCE",
+                ],
+                "primary_sense": "SENSE-JE-CLAUSE-FINAL-EVALUATIVE",
+                "is_ambiguous": False,
+                "mirativity": False,
+                "confidence": "HIGH",
+                "reason": "Clause-final evaluative particle encoding reminder, mild reproach, or evaluative conclusion.",
+            }
+
+        # 3. Topic-Adjacent / Pre-Predicate Exclamative (Mirative)
+        # e.g. "আরে, সে যে এসে গেছে!"
+        has_exclamative_context = any(m in norm for m in ["আরে", "বাহ", "বাঃ", "ওমা", "দেখ"]) or ("!" in norm)
+        if has_exclamative_context and target_idx in [1, 2]:
+            return {
+                "text": text,
+                "target_token": "যে",
+                "position_type": "TOPIC_ADJACENT_EXCLAMATIVE",
+                "candidate_senses": [
+                    "SENSE-JE-EMOTIVE-MIRATIVE",
+                    "SENSE-JE-EMPHATIC-STANCE",
+                ],
+                "primary_sense": "SENSE-JE-EMOTIVE-MIRATIVE",
+                "is_ambiguous": False,
+                "mirativity": True,
+                "confidence": "HIGH",
+                "reason": "Topic-adjacent exclamative particle encoding speaker astonishment / evidential mirativity.",
+            }
+
+        # 4. Unknown or Underspecified Context -> AMBIGUOUS fallback (never guess single sense)
+        return {
+            "text": text,
+            "target_token": "যে",
+            "position_type": "MEDIAL_UNDERSPECIFIED",
+            "candidate_senses": [
+                "SENSE-JE-COMPLEMENTIZER",
+                "SENSE-JE-EMOTIVE-MIRATIVE",
+                "SENSE-JE-EMPHATIC-STANCE",
+            ],
+            "primary_sense": "AMBIGUOUS",
+            "is_ambiguous": True,
+            "mirativity": None,
+            "confidence": "LOW",
+            "reason": "Context lacks sufficient syntactic or prosodic markers to force a single deterministic discourse sense; requires human review.",
+        }
+
+    def analyze_wh_construction(self, text: str) -> Dict[str, Any]:
+        """
+        Distinguishes Wh-orthography ('কী' vs 'কি') from argument structure construction types
+        (e.g. nominative-agentive transitive vs genitive-experiencer modal).
+        """
+        norm = normalize_bangla_text(text)
+        clean = norm.replace("?", "").replace("।", "").replace("!", "").replace(",", "")
+        tokens = clean.split()
+
+        has_ki_orthography = "কি" in tokens
+        has_kee_orthography = "কী" in tokens
+        has_genitive_subject = any(t in ["তোমার", "আমার", "তার", "তাঁর", "আপনার", "তোমাদের", "আমাদের", "তাদের"] for t in tokens)
+        has_chai_predicate = "চাই" in tokens
+
+        # Construction type
+        if has_genitive_subject and has_chai_predicate:
+            construction_type = "GENITIVE_EXPERIENCER_MODAL_WH"
+            is_grammatical = True
+            register_note = "Structurally valid genitive-experiencer construction with modal/defective predicate 'চাই'."
+        elif any(t in ["তুমি", "আমি", "সে", "তিনি", "আপনি"] for t in tokens) and any(t in ["চাও", "চাই", "চায়", "চান"] for t in tokens):
+            construction_type = "NOMINATIVE_AGENTIVE_TRANSITIVE_WH"
+            is_grammatical = True
+            register_note = "Standard nominative-subject transitive Wh-question with finite verb 'চা'."
+        else:
+            construction_type = "GENERAL_INTERROGATIVE"
+            is_grammatical = True
+            register_note = "Standard interrogative clause."
+
+        # Orthographic evaluation
+        if has_ki_orthography and not has_kee_orthography:
+            orthography_status = "NONCANONICAL_OR_POLAR_AMBIGUOUS"
+            orthography_note = "Uses 'কি'; standard BDSB substantive Wh-pronoun is 'কী', though 'কি' is common in digital informal writing and polar questions."
+        elif has_kee_orthography:
+            orthography_status = "CANONICAL_STANDARD_WH"
+            orthography_note = "Canonical standard BDSB spelling for substantive Wh-pronoun ('what')."
+        else:
+            orthography_status = "NO_WH_PARTICLE"
+            orthography_note = "No 'কি' or 'কী' token detected."
+
+        return {
+            "text": text,
+            "construction_type": construction_type,
+            "is_grammatical": is_grammatical,
+            "orthography_status": orthography_status,
+            "register_note": register_note,
+            "orthography_note": orthography_note,
+        }
+
