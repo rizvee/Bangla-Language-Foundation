@@ -1,0 +1,72 @@
+{
+  "release_version": "0.1.0-preflight",
+  "build_timestamp_utc": "2026-09-06T00:00:00Z",
+  "release_status": "PREFLIGHT_STAGED_UNRELEASED",
+  "public_release_published": false,
+  "gold_gate_status": "READY_FOR_CONTROLLED_HUMAN_REVIEW_PILOT",
+  "epistemic_invariants": {
+    "total_production_records": 0,
+    "total_gold_records": 0,
+    "human_review_pilot_records": 40,
+    "human_review_pilot_status": "FROZEN_PENDING_RECRUITMENT"
+  },
+  "included_components": [
+    {
+      "component_name": "ontology",
+      "status": "SOURCE_GROUNDED",
+      "entities_count": 116,
+      "schemas_count": 13
+    },
+    {
+      "component_name": "pipeline",
+      "status": "HARDENED",
+      "capabilities": [
+        "reversible_normalization",
+        "conservative_cleaning",
+        "4_tier_deduplication",
+        "provenance_logging"
+      ]
+    },
+    {
+      "component_name": "annotation_os",
+      "status": "SCAFFOLDED",
+      "capabilities": [
+        "multi_layer_schemas",
+        "promotion_state_machine",
+        "conflict_queues",
+        "multi_rater_iaa"
+      ]
+    },
+    {
+      "component_name": "constrained_generation",
+      "status": "ACTIVE_TEST_ONLY",
+      "tag": "SYNTHETIC_SOFTWARE_TEST_ONLY",
+      "production_records_generated": 0
+    },
+    {
+      "component_name": "blf_bench",
+      "status": "SCAFFOLDED",
+      "probes": [
+        "DOM",
+        "COMPLEX_PREDICATE",
+        "POLARITY",
+        "HONORIFIC_AGREEMENT",
+        "NOMINAL_MORPHOTACTICS"
+      ],
+      "contamination_checker": "ENABLED"
+    }
+  ],
+  "licensing_status": {
+    "code_license": "Apache-2.0",
+    "dataset_license": "DECISION_PENDING",
+    "redistribution_matrix": "sources/licensing/redistribution_matrix.json"
+  },
+  "preflight_verification_checklist": {
+    "automated_unit_tests": "PASSED",
+    "json_schema_validation": "PASSED",
+    "source_registry_audit": "PASSED",
+    "provenance_graph_integrity": "PASSED",
+    "anti_ai_slop_audit": "PASSED",
+    "documentation_consistency": "PASSED"
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "version": "1.0.0",
+  "generated_at": "2026-09-06T00:00:00Z",
+  "description": "Machine-readable source licensing and redistribution compliance matrix for BLF.",
+  "sources": [
+    {
+      "source_id": "BA-GRAM-2011",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_A",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Copyrighted reference monograph. Only abstract morphological paradigms, rules, and brief cited examples may be referenced."
+    },
+    {
+      "source_id": "BA-SPELL-2016",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_A",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Official orthographic guidelines. Rule citations allowed under nominative fair use."
+    },
+    {
+      "source_id": "BA-REGDICT-1965",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_A",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Regional dialect lexicon. Lexical features and phonetic variants extracted via abstract interfaces."
+    },
+    {
+      "source_id": "BA-BENG-ENG-2019",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_A",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Standard bilingual dictionary. Headwords and definition senses referenced provisionally without bulk distribution."
+    },
+    {
+      "source_id": "ODBL-SKC-1926",
+      "spdx_license": "Public-Domain",
+      "source_tier": "TIER_A",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Public domain historical linguistics work (Suniti Kumar Chatterji, 1926)."
+    },
+    {
+      "source_id": "AZAD-SYNTAX-1984",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_B",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Theoretical syntactic treatise. Syntactic schemas and transformations referenced under fair use."
+    },
+    {
+      "source_id": "THOMPSON-GRAM-2012",
+      "spdx_license": "All-Rights-Reserved",
+      "source_tier": "TIER_B",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Descriptive reference grammar. Citations and paradigm patterns referenced under fair use."
+    },
+    {
+      "source_id": "SOAS-SYLHETI-2014",
+      "spdx_license": "CC-BY-NC-SA-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Academic dialect documentation. Non-commercial derivative research use only."
+    },
+    {
+      "source_id": "UD-BN-BRU-2021",
+      "spdx_license": "CC-BY-SA-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Universal Dependencies BRAC University treebank. Openly redistributable under CC BY-SA 4.0."
+    },
+    {
+      "source_id": "UD-BN-PUD-2017",
+      "spdx_license": "CC-BY-SA-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Parallel Universal Dependencies treebank. Openly redistributable under CC BY-SA 4.0."
+    },
+    {
+      "source_id": "BANGLA2B-2022",
+      "spdx_license": "MIT",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "BanglaBERT benchmark toolkit. Code and models under MIT license."
+    },
+    {
+      "source_id": "BANGLANMT-2020",
+      "spdx_license": "CC-BY-NC-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "BanglaNMT dataset. Restricted to non-commercial research."
+    },
+    {
+      "source_id": "INDICCORP-V2-BN",
+      "spdx_license": "CC-BY-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "IndicCorp v2 Bengali monolingual crawl. Open under CC BY 4.0."
+    },
+    {
+      "source_id": "BENGLAI-SPEECH-2022",
+      "spdx_license": "CC0-1.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": false,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Common Voice speech transcriptions dedicated to public domain under CC0."
+    },
+    {
+      "source_id": "BANGLATLIT-2024",
+      "spdx_license": "CC-BY-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Transliteration benchmark. Open under CC BY 4.0."
+    },
+    {
+      "source_id": "BNSENTMIX-2025",
+      "spdx_license": "CC-BY-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Code-mixed sentence evaluation benchmark. Open under CC BY 4.0."
+    },
+    {
+      "source_id": "BPCC-BENGALI-2023",
+      "spdx_license": "CC-BY-4.0",
+      "source_tier": "TIER_C",
+      "redistribution_allowed": true,
+      "commercial_use_allowed": true,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": false,
+      "handling_notes": "Bharat Parallel Corpus Collection Bengali slice. Partially verified."
+    },
+    {
+      "source_id": "BANGLISH-TRANSLIT-2021",
+      "spdx_license": "Quarantined-Unverified",
+      "source_tier": "TIER_E",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "QUARANTINED. Unclear license and noisy machine labels. Blocked from corpus ingestion."
+    },
+    {
+      "source_id": "SENTIRABANGLA-2022",
+      "spdx_license": "Quarantined-Unverified",
+      "source_tier": "TIER_E",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "QUARANTINED. Potential scraped web contamination. Blocked from training and evaluation."
+    },
+    {
+      "source_id": "UD-BN-BENGAL-2023",
+      "spdx_license": "Quarantined-Defective",
+      "source_tier": "TIER_E",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "QUARANTINED. Documented severe UPOS and DEPREL corruption. Excluded from crosswalk mappings."
+    },
+    {
+      "source_id": "CHATGAYA-PHONO-2018",
+      "spdx_license": "Quarantined-Restricted",
+      "source_tier": "TIER_E",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "QUARANTINED. Non-redistributable thesis data without public distribution consent."
+    },
+    {
+      "source_id": "NCTB-TG-BANGLA",
+      "spdx_license": "Government-Educational-FairUse",
+      "source_tier": "TIER_B",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "National Curriculum and Textbook Board teacher guide. Used strictly for curriculum attestation under educational fair use."
+    },
+    {
+      "source_id": "ACCESSIBLE-DICT-A2I",
+      "spdx_license": "Government-Portal-FairUse",
+      "source_tier": "TIER_B",
+      "redistribution_allowed": false,
+      "commercial_use_allowed": false,
+      "attribution_required": true,
+      "fair_use_nominative_citation_only": true,
+      "handling_notes": "Online accessible dictionary portal (a2i). Accessed dynamically via adapter interfaces; no static database dump stored."
+    }
+  ]
+}
