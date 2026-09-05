@@ -33,16 +33,23 @@ Last Updated: 2026-09-05
 | **Semantic Frames** | 24 core frames | Source-grounded communicative frames across everyday domains (`ontology/frames/`) |
 | **Corpus Attestations** | 12 attestations | Audited & classified as `PROVISIONAL` with quarantined unindexed splits (`ontology/attestations/`) |
 | **Diagnostic Candidate Pack** | 156 items | Epistemically labeled in `data/review_queue/linguistic_review_pack.json` marked `PENDING_HUMAN_REVIEW` |
-| **Human Review Pilot** | 40 items | Canonical research pilot in `data/review_queue/human_review_pilot_40.json` (items 015, 016, 023, 030, 040 calibrated with registered provisional sources) |
+| **Human Review Pilot** | 40 items | Canonical research pilot in `data/review_queue/human_review_pilot_40.json` (frozen pending human reviewer recruitment) |
 | **Practice Items** | 3 de-primed items | Calibration examples teaching interface mechanics only in `data/review_queue/practice_items.json` |
 | **Private Session Generator** | Hardened (v2.0.0) | `scripts/create_private_review_session.py` (enforces consent gate, 128-bit seeds, templates in `.blf-private/`) |
 | **Submission Decoder** | Fail-Closed (v2.0.0) | `scripts/decode_review_submissions.py` (bundle schema, candidate key enforcement, SHA-256 raw hashing) |
 | **Dual-Target IAA Engine** | Operational | `src/blf/quality/iaa.py` and `scripts/compute_iaa.py` (candidate-level Kappa & preferred set agreement) |
+| **Multi-Rater IAA Metrics** | Operational | `src/blf/quality/advanced_iaa.py` (Fleiss' Kappa and Krippendorff's Alpha, fails closed on empty data) |
 | **Provenance Graph Integrity** | 100% Traceable | 0 broken links from Utterance to Primary Source (`scripts/validate_provenance_graph.py`) |
-| **Automated Tests** | 98 unit tests | 100% passing across 16 test suites |
+| **Ontology Graph & Crosswalks** | Operational | `src/blf/ontology/graph.py` and `src/blf/ontology/ud_crosswalk.py` (BRU & PUD UPOS/FEATS/DEPREL) |
+| **Reversible Ingestion Pipeline**| Operational | `src/blf/pipeline/` (reversible NFC, conservative cleaning, 4-tier deduplicator, manifest tracking) |
+| **Annotation Promotion FSM** | Operational | `src/blf/annotation/state_machine.py` (RAW -> CLEANED -> ANNOTATION -> VERIFIED -> GOLD/SILVER) |
+| **Constrained Generation** | Active Test-Only | `src/blf/generation/pipeline.py` (tagged `SYNTHETIC_SOFTWARE_TEST_ONLY`, anti-Cartesian restrictions) |
+| **Leakage-Safe Splitter** | Operational | `src/blf/dataset/split_policy.py` (sentence family co-location) & `distribution_audit.py` |
+| **BLF-Bench Probes & Audit** | Operational | `src/blf/benchmarks/` (DOM, CPRED, Polarity, Honorific, Morphotactics probes + ContaminationChecker) |
+| **Automated Tests** | 155 unit tests | 100% passing across 21 test suites (`scripts/verify_all.py`) |
 | **Rule Test Coverage** | 100% (20/20) | Documented in `research/linguistic-knowledge/rule-test-coverage.md` |
 | **Dataset Scale** | 0 production records | In research & knowledge modeling (no mass generation) |
-| **Dataset License** | Undecided | Pending source-license and redistribution audit |
+| **Dataset License Decision** | DECISION_PENDING | Documented in `docs/DATA_LICENSE_DECISION.md` & `sources/licensing/redistribution_matrix.json` |
 
 ---
 
